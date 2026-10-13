@@ -229,7 +229,7 @@ const PROJECTS = [
     name: "Gap 3D Fit", org: "Gap", area: "E-commerce · 3D sizing UX", tags: ["E-comm", "UX Design"],
     title: "Turning sizing uncertainty into a 61% add-to-bag decision.",
     desc: "Technical product designer and team lead on Gap's 3D Fit viewer: fit logic, UX flow, UI and testing across web and iOS.",
-    metric: { value: "61%", label: "Add-to-bag lift" }, href: "/case-study?case="1", tint: ["#A4A6A3", "#E7E8E5", "#D6D7D4"],
+    metric: { value: "61%", label: "Add-to-bag lift" }, href: "/case-study?case=1", tint: ["#A4A6A3", "#E7E8E5", "#D6D7D4"],
     cs: {
       meta: [["Role", "Technical Product Designer"], ["Timeline", "6 months"], ["Skills", "UX flow, fit logic, UI, testing, 3D optimization · Web, iOS"], ["Team", "2 PMs, 1 designer, 1 UXR"]],
       sections: [
@@ -256,7 +256,7 @@ const PROJECTS = [
     name: "AI Studio", org: "AI Studio", area: "Creative tools", tags: ["0→1 Product", "AI Design"],
     title: "Reduced lead time by 3 months and accelerated end-to-end workflow with AI Studio.",
     desc: "A 0→1 AI design product for creative tools. This case study is password protected.",
-    metric: { value: "3×", label: "Faster workflow" }, href: "/case-study?case="2", tint: ["#A9AE7F", "#DADBC4", "#C7CBAF"],
+    metric: { value: "3×", label: "Faster workflow" }, href: "/case-study?case=2", tint: ["#A9AE7F", "#DADBC4", "#C7CBAF"],
     cs: {
       meta: [["Role", "Product Designer"], ["Timeline", "Password protected"], ["Skills", "0→1 product, AI design, creative tools"], ["Team", "Shared on request"]],
       sections: [
@@ -271,7 +271,7 @@ const PROJECTS = [
     name: "Trailhead Solve", org: "Trailhead", area: "Enterprise · Agentic AI", tags: ["Ed-tech", "UX Research"],
     title: "An AI-powered re-engagement strategy Trailhead power users preferred over ChatGPT.",
     desc: "Improving power-user retention with an agentic AI RAG bot: Trailhead Solve, a dashboard redesign and a RAG assistant.",
-    metric: { value: "22.7%", label: "Retention lift" }, href: "/case-study?case="3", tint: ["#BDCFDE", "#EBDAD3", "#E4EAEE"],
+    metric: { value: "22.7%", label: "Retention lift" }, href: "/case-study?case=3", tint: ["#BDCFDE", "#EBDAD3", "#E4EAEE"],
     cs: {
       meta: [["Role", "Product Designer (Apprentice)"], ["Timeline", "Aug 2025 – Apr 2026"], ["Skills", "Conversational UX, RAG workflows, power-user research, dashboard design"], ["Team", "Product, research, engineering"]],
       sections: [
@@ -294,7 +294,7 @@ const PROJECTS = [
     name: "CotonAI Modes", org: "CotonAI", area: "Agentic AI · Fashion", tags: ["AI Agents", "UX Design"],
     title: "Designing structured, mode-based UX in an AI platform for fashion teams.",
     desc: "End-to-end design of Modes at CotonAI: replacing prompt-heavy AI with structured entry points mapped to real fashion workflows.",
-    metric: { value: "125%", label: "Feature adoption lift" }, href: "/case-study?case="4", tint: ["#9CB09E", "#E3EAE0", "#C9D5C8"],
+    metric: { value: "125%", label: "Feature adoption lift" }, href: "/case-study?case=4", tint: ["#9CB09E", "#E3EAE0", "#C9D5C8"],
     cs: {
       meta: [["Role", "Founding Product Designer"], ["Timeline", "Aug 2025 – Present"], ["Skills", "Interaction architecture, AI UX, design systems, prototyping, analytics"], ["Team", "Founder, PM, engineering"]],
       sections: [
