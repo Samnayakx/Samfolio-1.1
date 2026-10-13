@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About — Sambit Nayak</title>
+  <meta name="description" content="About Sambit Nayak: product designer and engineer building AI-native products, with experience at Salesforce, Gap Inc. and two startups." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+  <link rel="stylesheet" href="/site.css" />
+</head>
+<body>
+  <div class="loader" id="loader" aria-hidden="true"><div class="loader__bg"></div><svg></svg></div>
+  <noscript><style>.loader{display:none}</style></noscript>
+  <script src="/loader.js"></script>
+  <header class="header">
+    <div class="navgroup" data-nav="work">
+      <nav class="seg" aria-label="Primary">
+        <a class="seg__item seg__brand" href="/" aria-label="Sambit Nayak, home"><svg class="logo" aria-hidden="true"></svg></a>
+        <button class="seg__item only-desktop" type="button" id="work-tab" aria-expanded="false" aria-controls="work-panel">Work <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <a class="seg__item only-desktop" href="/about" aria-current="true">About</a>
+        <a class="seg__item only-desktop" href="/writing">Writing</a>
+        <a class="seg__item only-desktop" href="/playground">Playground</a>
+        <button class="seg__item only-mobile" type="button" id="menu-tab" aria-expanded="false" aria-controls="work-panel" aria-label="Menu">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <rect x="2" y="2" width="2" height="2"/><rect x="7" y="2" width="2" height="2"/><rect x="12" y="2" width="2" height="2"/>
+            <rect x="2" y="7" width="2" height="2"/><rect x="7" y="7" width="2" height="2"/><rect x="12" y="7" width="2" height="2"/>
+            <rect x="2" y="12" width="2" height="2"/><rect x="7" y="12" width="2" height="2"/><rect x="12" y="12" width="2" height="2"/>
+          </svg>
+        </button>
+      </nav>
+      <div class="panel" id="work-panel">
+        <div class="pcard only-mobile pcard--plain">
+          <div class="pcard__main">
+            <p class="pcard__label">Navigate</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/#work">Work</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/writing">Writing</a></li>
+              <li><a href="/playground">Playground</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pcard is-active">
+          <div class="pcard__main">
+            <p class="pcard__label">Case studies ( <span data-work-count>04</span> )</p>
+            <ul class="pcard__list" role="list" id="nav-projects"></ul>
+          </div>
+          <div class="pcard__thumb" id="nav-thumb" aria-hidden="true"></div>
+        </div>
+        <div class="pcard pcard--plain pcard--more">
+          <div class="pcard__main">
+            <p class="pcard__label">More</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/playground">Playground</a></li>
+              <li><a href="/writing">Writing</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="navgroup" data-nav="contact">
+      <div class="seg">
+        <span class="seg__item seg__time" title="Local time in San Francisco, California">San Francisco <time id="nav-clock" data-clock>--:--</time></span>
+        <button class="seg__item" type="button" id="contact-tab" aria-expanded="false" aria-controls="contact-panel">Contact <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <button class="icon-btn" type="button" id="theme" aria-label="Switch to dark mode">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+      <div class="panel panel--right" id="contact-panel"></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="about-intro" aria-labelledby="about-title">
+      <div class="about-intro__text">
+        <p class="eyebrow">About ( Sambit )</p>
+        <p class="welcome">Product designer - engineer</p>
+        <h1 class="about-intro__title" id="about-title">Hi there, I’m Sambit.</h1>
+        <p class="about-intro__lede">I’m a product designer building AI-native products from 0 to 1. I’m the founding product designer at CotonAI, an enterprise agentic AI fashion platform, and recently designed Trailhead Solve at Salesforce.</p>
+        <p class="about-intro__lede about-intro__lede--2">I started in fashion design and spent four years at Gap Inc. (Drapr, YC W20) shipping 3D Fit and AI workflows used 120M+ times. My real obsession is building tools: systems that help people create faster, make better decisions, and turn messy ideas into usable products.</p>
+        <ul class="facts" role="list">
+          <li><span class="facts__label">Based in</span><span class="facts__value">San Francisco, CA</span></li>
+          <li><span class="facts__label">Local time</span><span class="facts__value"><time data-clock>--:--</time></span></li>
+          <li><span class="facts__label">Currently</span><span class="facts__value">Building CotonAI</span></li>
+        </ul>
+      </div>
+      <figure class="portrait">
+        <div class="portrait__frame">
+          <div class="pixel-me" data-pixel-me></div>
+        </div>
+        <figcaption class="portrait__cap"><span>Sambit Nayak</span><span>San Francisco, CA</span></figcaption>
+      </figure>
+    </section>
+
+    <section class="sheet" aria-labelledby="exp-title">
+      <div class="work__inner">
+        <div class="work__head work__head--flush">
+          <div class="work__label"><p class="work__eyebrow">Background</p><p class="work__sub">Where I’ve worked, where I studied and what I do outside of design.</p></div>
+          <div class="work__headline"><h2 class="work__title work__title--md" id="exp-title">Experience, education and origins.</h2></div>
+        </div>
+
+        <div class="cs__row">
+          <div class="cs__label"><span>01</span><h2>Experience</h2></div>
+          <div class="cs__content">
+            <ul class="tl" role="list">
+              <li><span class="tl__role">Founding Product Designer<em>CotonAI Inc.</em></span><span class="tl__when">Aug 2025 – Present</span></li>
+              <li><span class="tl__role">Product Designer (Apprentice)<em>Salesforce</em></span><span class="tl__when">Aug 2025 – Apr 2026</span></li>
+              <li><span class="tl__role">Founding Product Designer<em>Darzy.AI</em></span><span class="tl__when">May – Aug 2025</span></li>
+              <li><span class="tl__role">Product Designer<em>Gap Inc.</em></span><span class="tl__when">Nov 2021 – Jul 2025</span></li>
+              <li><span class="tl__role">Co-Founder / Head of Design<em>WeWeave3D</em></span><span class="tl__when">Nov 2020 – Oct 2021</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cs__row">
+          <div class="cs__label"><span>02</span><h2>Education &amp; origins</h2></div>
+          <div class="cs__content">
+            <ul class="tl" role="list">
+              <li><span class="tl__role">MS Human-Computer Interaction<em>Indiana University Indianapolis</em></span><span class="tl__when">Aug 2024 – Apr 2026</span></li>
+              <li><span class="tl__role">Bachelor’s in Design<em>NIFT New Delhi</em></span><span class="tl__when">Nov 2020 – Oct 2021</span></li>
+              <li><span class="tl__role">Origins<em>Odisha, India</em></span><span class="tl__when"></span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cs__row">
+          <div class="cs__label"><span>03</span><h2>Outside of design</h2></div>
+          <div class="cs__content">
+            <ul class="tl tl--plain" role="list">
+              <li><span class="tl__role">Exploring new cities and coastlines</span></li>
+              <li><span class="tl__role">Sketching product ideas and side projects</span></li>
+              <li><span class="tl__role">Collecting references: maps, posters, and odd artifacts</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cs__row">
+          <div class="cs__label"><span>04</span><h2>Find me</h2></div>
+          <div class="cs__content">
+            <p>Find me on <a class="inline" href="https://x.com/sambit_nayak_" target="_blank" rel="noopener">Twitter</a>, <a class="inline" href="https://www.linkedin.com/in/sambitnayakux/" target="_blank" rel="noopener">LinkedIn</a>, reach out via <a class="inline" href="mailto:sambitnayak.ux@gmail.com">email</a>, or read on <a class="inline" href="https://sambitnayak2.substack.com/" target="_blank" rel="noopener">Substack</a>.</p>
+            <div class="modes__cta modes__cta--left">
+              <a class="btn" href="https://cal.com/sambit-nayak/30min?overlayCalendar=true" target="_blank" rel="noopener">Book a call <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5"/></svg></a>
+              <a class="btn btn--ghost" href="/#work">See my work</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer data-footer></footer>
+
+  <script src="/site.js"></script>
+  <script src="/portrait.js"></script>
+</body>
+</html>
