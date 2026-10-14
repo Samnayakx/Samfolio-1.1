@@ -1671,57 +1671,75 @@ function openLightbox(src, alt, opener) {
   }
 
   if (page === "playground") {
-    const T = [["#F6C7D6", "#F8E2C8", "#F3EEE8"], ["#8FB0C8", "#EBDDD3", "#DCE7EE"], ["#E8B79B", "#F6EFE0", "#F1D8C4"], ["#A9AE7F", "#DADBC4", "#C7CBAF"], ["#BDCFDE", "#EBDAD3", "#E4EAEE"], ["#9CB09E", "#E3EAE0", "#C9D5C8"]];
+    // Only finished pieces go on the board. Interaction studies run live (js/playground.js); every tile opens the overlay.
     const LAB = [
-      ["PROTO-01", "Connection onboarding", "Mobile · 2026", "Onboarding", "Connect your Spotify account to see your top artists and get personalized recommendations.", "prototype"],
-      ["PROTO-02", "AI UX Studio", "Landing page", "Studio site", "A multidisciplinary practice designing intelligent, human-centered experiences at the intersection of AI technology and product design.", "prototype"],
-      ["PROTO-03", "Jenyi", "AI journal · 2026", "Voice · Mobile editorial", "Your journal starts here. Speak freely and Jenyi turns voice into entries you'll actually revisit.", "prototype"],
-      ["PROTO-04", "Intercom MCP", "Web · MCP · 2026", "Agent integration", "An MCP integration so agents can read and act on Intercom conversations with clear guardrails.", "prototype"],
-      ["PROTO-05", "Payman AI", "Landing page · 2026", "Fintech · Agentic banking", "A redesign of paymanai.com, inspired by replay.ai: agentic banking for banks and credit unions.", "landing", "/payman", "/assets/images/playground/payman-thumb.jpg"],
-      ["SUB-AMEX-01", "Membership App", "Concept", "Mobile · iOS", "Rewards flow & card management UI", "mobile"],
-      ["SUB-LOG-07", "Brand System", "Shipped", "Print · B2B", "Business card system & identity touchpoints", "brand"],
-      ["SUB-ICO-12", "Line Icon Set", "Library", "Design system", "4×8 minimal icon grid for product UI", "system"],
-      ["SUB-APL-03", "Intelligence Stamp", "Exploration", "Brand · Physical", "Apple Intelligence postage stamp visual", "brand"],
-      ["SUB-TIG-09", "Platform Branding", "In review", "Fintech · B2B", "Card system for intelligent finance platform", "brand"],
-      ["SUB-AI-18", "Prompt Bar", "Prototype", "AI · Product UI", "Generative prompt bar & model controls", "ai"],
-      ["SUB-MRC-04", "AI Recruiting", "Concept", "Landing · Web", "Hero narrative for global talent network", "landing"],
-      ["SUB-VSW-11", "View Switcher", "Component", "Controls · iOS", "List/grid toggle with neumorphic affordance", "system"],
-      ["SUB-MNU-06", "Menu Control", "Component", "Navigation", "Glass toggle track with glowing thumb", "system"],
-      ["SUB-SLD-15", "Control Kit", "System", "Dark UI", "Sliders, palettes & export controls", "system"],
-      ["SUB-IND-08", "Studio Follow-up", "Prototype", "Agent · CAD", "Follow-up card with CAD package delivery", "ai"],
-      ["SUB-PLN-02", "Plant Health", "Concept", "Agtech · Web", "Crop diagnostics landing & data story", "landing"],
-      ["SUB-MOD-21", "Material Studies", "Research", "3D · Architecture", "Stacked mood board: materials, light & form", "research"],
+      { code: "INT-07", title: "Market Select", status: "Interaction · Flow", area: "DeFi · Yield", tag: "interaction", demo: "marketSelect", bg: "#2B3150", dark: true, bleed: true, wide: true, ptr: "none",
+        scope: "Pick where your money earns. Choose markets or let AI pick, review a split weighted by APR, hold to deposit, and the whole card folds down to a single summary. The more you touch it, the smaller it gets.",
+        hint: "Tap markets to toggle them, then Next. Or try Auto Select or the sparkle. On the review step, press and hold to deposit. Tap the summary to start again.", tags: ["Flow", "Motion", "Hold to confirm", "AI"] },
+      { code: "INT-01", title: "Search to Ask", status: "Interaction", area: "Input · AI", tag: "interaction", demo: "searchAsk", bg: "#F7F7F6", ptr: "none",
+        scope: "One field, two jobs. Tap the sparkle and the Search pill slides over to become Ask, with a send button ready.",
+        hint: "Click the sparkle to switch to Ask, and the magnifier to switch back.", tags: ["Morph", "Input", "AI"],
+        credit: { name: "salt", handle: "saltjsx", url: "https://x.com/saltjsx/status/2107481515022270657" } },
+      { code: "INT-02", title: "Segmented Navigation", status: "Interaction", area: "Navigation · Component", tag: "interaction", demo: "segmentedNav", bg: "#000", dark: true, ptr: "hover",
+        scope: "Ten links in a compact bar. Ticks magnify under the cursor, and the one you're on opens into a labelled pill.",
+        hint: "Move across the bar. Keyboard: Tab through the links.", tags: ["Navigation", "Magnify", "Component"],
+        credit: { name: "Till Janek", handle: "tilljanek", url: "https://x.com/tilljanek/status/2105929799613243856" } },
+      { code: "INT-03", title: "Bounding Box", status: "Interaction", area: "Canvas · Editor", tag: "interaction", demo: "boundingBox", bg: "#F3F3F3", ptr: "none",
+        scope: "A selection box study: zoom out from the corner, drag any handle to resize, and read the size live as you go.",
+        hint: "Drag a corner or an edge. Hover a size readout to type an exact value, then press Enter.", tags: ["Canvas", "Resize", "Wireframe"],
+        credit: { name: "Azlen", handle: "azlenelza", url: "https://x.com/azlenelza/status/2106600214593462393" } },
+      { code: "INT-04", title: "Clouds That Wiggle", status: "Interaction", area: "Logo · Motion", tag: "interaction", demo: "clouds", bg: "#FFFFFF", ptr: "hover",
+        scope: "A logo that reacts to touch: hover a cloud and it wobbles like jelly before settling back into shape.",
+        hint: "Hover over any cloud.", tags: ["Logo", "Motion", "SVG filter"],
+        credit: { name: "Oğuz Yağız Kara", handle: "oguzyagizkara", url: "https://x.com/oguzyagizkara/status/2105694365922541784" } },
+      { code: "PROTO-05", title: "Payman AI", status: "Landing page · 2026", area: "Fintech · Agentic banking", tag: "landing", href: "/payman", thumb: "/assets/images/playground/payman-thumb.jpg", bg: "#DCEFEB", wide: true,
+        scope: "A redesign of paymanai.com, inspired by replay.ai: agentic banking for banks and credit unions.", tags: ["Landing page", "Fintech", "Web"] },
     ];
     setCount(LAB.length);
     const list = document.querySelector("[data-lab]");
-    const tiles = LAB.map(([code, title, status, area, scope, tag, href, thumb], i) => {
-      const li = el("li", "lab__tile grain");
+    const tiles = LAB.map((it, i) => {
+      const li = el("li", "lab__tile");
       li.style.setProperty("--i", i);
-      li.dataset.tag = tag;
-      (thumb ? ["#3C9A98", "#C6E6DF", "#86C6C0"] : T[i % T.length]).forEach((c, k) => li.style.setProperty(`--t${k + 1}`, c));
-      const top = el("div", "lab__top"); top.append(el("span", "", code), el("span", "", status));
+      li.dataset.tag = it.tag;
+      const top = el("div", "lab__top"); top.append(el("span", "", it.code), el("span", "", it.status));
       const bottom = el("div", "lab__bottom");
-      bottom.append(el("h3", "lab__title", title), el("p", "lab__area", area), el("p", "lab__scope", scope));
+      bottom.append(el("h3", "lab__title", it.title), el("p", "lab__area", it.area), el("p", "lab__scope", it.scope));
       li.append(top);
-      if (thumb) {
+      if (it.demo) {
+        // Live interaction: the demo plays a loop in the tile, and is fully interactive in the overlay
+        li.classList.add("lab__tile--ix", it.ptr === "hover" ? "lab__tile--hover" : "lab__tile--noptr");
+        if (it.dark) li.classList.add("lab__tile--dark");
+        if (it.bleed) li.classList.add("lab__tile--bleed");
+        li.style.setProperty("--ix-bg", it.bg);
+        const stage = el("div", "lab__stage"); li.appendChild(stage);
+        window.Playground && window.Playground.DEMOS[it.demo](stage, { auto: true });
+      } else if (it.thumb) {
         // Contextual thumbnail: the page itself inside a small browser frame, cropped by the tile
-        li.classList.add("lab__tile--shot");
+        li.classList.add("lab__tile--shot", "grain");
+        ["#3C9A98", "#C6E6DF", "#86C6C0"].forEach((c, k) => li.style.setProperty(`--t${k + 1}`, c));
         const shot = el("div", "lab__shot"), bar = el("div", "lab__shotbar"), img = el("img");
-        bar.append(el("i"), el("i"), el("i"), el("span", "", href.replace(/^\//, "") === "payman" ? "paymanai.com" : ""));
-        img.src = thumb; img.alt = `Preview of the ${title} page`; img.loading = "lazy"; img.decoding = "async";
+        bar.append(el("i"), el("i"), el("i"), el("span", "", "paymanai.com"));
+        img.src = it.thumb; img.alt = `Preview of the ${it.title} page`; img.loading = "lazy"; img.decoding = "async";
         shot.append(bar, img); li.appendChild(shot);
+        li.addEventListener("pointermove", (e) => {
+          const r = li.getBoundingClientRect();
+          li.style.setProperty("--gx", `${((e.clientX - r.left) / r.width) * 100}%`);
+          li.style.setProperty("--gy", `${((e.clientY - r.top) / r.height) * 100}%`);
+        });
       }
+      if (it.wide) li.classList.add("lab__tile--wide");
       li.append(bottom);
-      if (href) { const a = el("a", "lab__cover"); a.href = href; a.setAttribute("aria-label", `Open ${title}`); li.appendChild(a); }
-      li.addEventListener("pointermove", (e) => {
-        const r = li.getBoundingClientRect();
-        li.style.setProperty("--gx", `${((e.clientX - r.left) / r.width) * 100}%`);
-        li.style.setProperty("--gy", `${((e.clientY - r.top) / r.height) * 100}%`);
+      const open = el("button", "lab__cover"); open.type = "button"; open.setAttribute("aria-label", `Open ${it.title}`);
+      li.appendChild(open);
+      li.addEventListener("click", (e) => {
+        if (e.target.closest("a, input")) return;
+        const shown = LAB.filter((_, k) => !tiles[k].hidden);
+        window.Playground && window.Playground.openOverlay(shown, shown.indexOf(it), open);
       });
       list.appendChild(li);
       return li;
     });
-    wireChips(tiles);
+    wireChips(tiles, () => list.classList.toggle("is-filtered", tiles.some((t) => t.hidden)));
     new IntersectionObserver(([e], io) => { if (e.isIntersecting) { list.classList.add("in"); io.disconnect(); } }, { threshold: 0.05 }).observe(list);
   }
 
