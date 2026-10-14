@@ -1,3 +1,12 @@
+// Vercel Web Analytics. The script is served by Vercel once Analytics is enabled on the project.
+window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+if (!document.querySelector('script[src="/_vercel/insights/script.js"]')) {
+  const insights = document.createElement("script");
+  insights.defer = true;
+  insights.src = "/_vercel/insights/script.js";
+  document.head.appendChild(insights);
+}
+
 // Payman AI page: barcode strip, count-up, steps stage, security tabs, CTA collage, demo video, demo form
 (() => {
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;

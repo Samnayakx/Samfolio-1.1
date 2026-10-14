@@ -1,3 +1,12 @@
+// Vercel Web Analytics. The script is served by Vercel once Analytics is enabled on the project.
+window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+if (!document.querySelector('script[src="/_vercel/insights/script.js"]')) {
+  const insights = document.createElement("script");
+  insights.defer = true;
+  insights.src = "/_vercel/insights/script.js";
+  document.head.appendChild(insights);
+}
+
 // ── Dot-matrix glyphs: 11×11 bitmaps, "#" = lit dot ──
 const GLYPHS = {
   // About page characters (13×13, "e" = blinking eye)
@@ -1725,6 +1734,7 @@ function openLightbox(src, alt, opener) {
     const id = Math.min(n, Math.max(1, parseInt(new URLSearchParams(location.search).get("case") || "1", 10) || 1));
     const p = PROJECTS[id - 1];
     const root = document.querySelector("[data-case]");
+    document.body.dataset.caseId = id;
     p.tint.forEach((c, k) => root.style.setProperty(`--t${k + 1}`, c));
     root.style.setProperty("--ac", "#B7471D");
     document.title = `${p.name}: case study — Sambit Nayak`;

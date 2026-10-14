@@ -18,6 +18,8 @@ body[data-page="case"] {
 .cs__hero-media { margin-top: 12px; border-radius: 24px; }
 /* All displayed source media follows the restricted palette, including enlargement. */
 body[data-page="case"] :is(img, video, canvas) { filter: grayscale(1); }
+/* Salesforce (Trailhead) keeps its original colour */
+body[data-page="case"][data-case-id="1"] :is(img, video, canvas) { filter: none; }
 body[data-page="case"] .case__tile { background: #e8e8e8; }
 .cs .shot__tile { background: #e8e8e8; border-radius: 24px; padding: clamp(12px, 2.5vw, 32px); }
 .cs :is(.bento, .dash) { gap: 12px; padding: 0; background: none; }
