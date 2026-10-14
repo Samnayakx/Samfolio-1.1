@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How to Approach UX for Agentic Systems — Sambit Nayak</title>
+  <meta name="description" content="Agentic UX starts with memory design: clarity through compression, and decisions through structure." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+  <link rel="stylesheet" href="/css/site.css" />
+</head>
+<body data-page="essay">
+  <div class="loader" id="loader" aria-hidden="true"><div class="loader__bg"></div><svg></svg></div>
+  <noscript><style>.loader{display:none}</style></noscript>
+  <script src="/js/loader.js"></script>
+  <header class="header">
+    <div class="navgroup" data-nav="work">
+      <nav class="seg" aria-label="Primary">
+        <a class="seg__item seg__brand" href="/" aria-label="Sambit Nayak, home"><svg class="logo" aria-hidden="true"></svg></a>
+        <button class="seg__item only-desktop" type="button" id="work-tab" aria-expanded="false" aria-controls="work-panel">Work <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <a class="seg__item only-desktop" href="/about">About</a>
+        <a class="seg__item only-desktop" href="/writing" aria-current="true">Writing</a>
+        <a class="seg__item only-desktop" href="/playground">Playground</a>
+        <button class="seg__item only-mobile" type="button" id="menu-tab" aria-expanded="false" aria-controls="work-panel" aria-label="Menu">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <rect x="2" y="2" width="2" height="2"/><rect x="7" y="2" width="2" height="2"/><rect x="12" y="2" width="2" height="2"/>
+            <rect x="2" y="7" width="2" height="2"/><rect x="7" y="7" width="2" height="2"/><rect x="12" y="7" width="2" height="2"/>
+            <rect x="2" y="12" width="2" height="2"/><rect x="7" y="12" width="2" height="2"/><rect x="12" y="12" width="2" height="2"/>
+          </svg>
+        </button>
+      </nav>
+      <div class="panel" id="work-panel">
+        <div class="pcard only-mobile pcard--plain">
+          <div class="pcard__main">
+            <p class="pcard__label">Navigate</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/#work">Work</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/writing">Writing</a></li>
+              <li><a href="/playground">Playground</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pcard is-active">
+          <div class="pcard__main">
+            <p class="pcard__label">Case studies ( <span data-work-count>04</span> )</p>
+            <ul class="pcard__list" role="list" id="nav-projects"></ul>
+          </div>
+          <div class="pcard__thumb" id="nav-thumb" aria-hidden="true"></div>
+        </div>
+        <div class="pcard pcard--plain pcard--more">
+          <div class="pcard__main">
+            <p class="pcard__label">More</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/playground">Playground</a></li>
+              <li><a href="/writing">Writing</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="navgroup" data-nav="contact">
+      <div class="seg">
+        <span class="seg__item seg__time" title="Local time in San Francisco, California">San Francisco <time id="nav-clock" data-clock>--:--</time></span>
+        <button class="seg__item" type="button" id="contact-tab" aria-expanded="false" aria-controls="contact-panel">Contact <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <button class="icon-btn" type="button" id="theme" aria-label="Switch to dark mode">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+      <div class="panel panel--right" id="contact-panel"></div>
+    </div>
+  </header>
+
+  <main id="top">
+    <article class="sheet sheet--first">
+      <div class="work__inner">
+        <div class="work__head">
+          <div class="work__label">
+            <p class="work__eyebrow"><a href="/writing">Writing</a> · Feb 28, 2026</p>
+            <p class="work__sub">3 min read · 11 min listen</p>
+          </div>
+          <div class="work__headline">
+            <h1 class="work__title" id="essay-title">How to Approach UX for Agentic Systems</h1>
+            <p class="cs__lede">Clarity through compression. Decisions through structure.</p>
+          </div>
+        </div>
+
+        <div class="essay">
+          <div class="essay__meta">
+            <a href="/writing">All writing</a>
+            <a href="https://sambitnayak2.substack.com/p/how-to-approach-ux-for-agentic-systems" target="_blank" rel="noopener">Substack</a>
+          </div>
+          <div class="essay__body">
+            <figure class="essay__mark">
+              <img src="/assets/images/writing/agentic-cover.jpg" alt="">
+            </figure>
+            <figure class="essay__audio">
+              <figcaption>Listen · 11 min</figcaption>
+              <audio controls preload="none" src="https://sambitnayak2.substack.com/api/v1/audio/upload/f577ed06-3a33-4d7f-a7e3-1c6f29d6097d/src">
+                <a href="https://sambitnayak2.substack.com/p/how-to-approach-ux-for-agentic-systems">Listen on Substack</a>
+              </audio>
+            </figure>
+
+            <h2>Agentic UX starts with Memory Design</h2>
+            <p>Most teams think agentic UX is about chat.</p>
+            <p>It’s not.</p>
+            <p>It’s about how the system remembers.</p>
+            <p>Everyone building AI right now talks about longer context windows. Persistent memory. Retrieval pipelines. Store everything so the model “knows” more.</p>
+            <p>That’s the wrong framing.</p>
+            <p>Memory in intelligent systems is not about recall. It’s about selective forgetting.</p>
+            <p>Humans don’t function by storing everything. We compress. We abstract. We discard noise. We keep patterns that matter for the current decision.</p>
+            <p>Agentic UX should be designed the same way.</p>
+
+            <h2>Storage Is Cheap. Clarity Is Not.</h2>
+            <p>Traditional software treats memory like storage. Data goes in. It stays there. You retrieve it when needed.</p>
+            <p>Agentic systems shouldn’t behave like databases. They should behave like perception.</p>
+            <p>When a user provides input, a document, an image, a dashboard, a query, the system should not “remember” it in full fidelity. It should interpret it.</p>
+            <p>Extract:</p>
+            <ul>
+              <li>The entities</li>
+              <li>The relationships</li>
+              <li>The constraints</li>
+              <li>The intent</li>
+              <li>The risk signals</li>
+            </ul>
+            <p>Then discard the rest.</p>
+            <p>Raw data is not intelligence. Structured abstraction is. This is not just backend design. It determines the interface.</p>
+            <hr>
+
+            <h2>Memory Architecture Shapes UX</h2>
+            <p>Most AI products throw everything into one giant context window and hope reasoning emerges.</p>
+            <p>It doesn’t scale.</p>
+            <p>A better approach is layered agents with scoped memory:</p>
+            <ul>
+              <li>A perception layer understands the input.</li>
+              <li>An interpretation layer connects it to user goals.</li>
+              <li>A strategy layer references patterns and history.</li>
+              <li>A coordinating layer decides.</li>
+            </ul>
+            <p>Each layer compresses before passing information forward.</p>
+            <p>If every layer sees everything, the system becomes noisy.<br>If each layer sees what it needs, the system becomes decisive.</p>
+            <p>And decisiveness is what users experience as “good UX.”</p>
+            <hr>
+
+            <h2>Decision as Alignment</h2>
+            <p>In most enterprise tools, users assemble context manually.</p>
+            <p>They:</p>
+            <ul>
+              <li>Pull reports</li>
+              <li>Compare options</li>
+              <li>Cross reference past performance</li>
+              <li>Check constraints</li>
+              <li>Then decide</li>
+            </ul>
+            <p>The software exposes the complexity.</p>
+            <p>An agentic system should collapse it.</p>
+            <p>When memory is compressed correctly, the final output is not a data dump. It’s an aligned suggestion.</p>
+            <p>Does this action fit the goal?<br>Does it match past outcomes?<br>Does it respond to current conditions?<br>Is there leverage here?</p>
+            <p>The user shouldn’t rebuild that chain every time.</p>
+            <p><em>That collapse is the UX.</em></p>
+            <hr>
+
+            <h2>Why Total Recall Fails</h2>
+            <p>More memory sounds powerful. It often makes systems worse.</p>
+            <p>Too much context leads to:</p>
+            <ul>
+              <li>Conflicting signals</li>
+              <li>Slower reasoning</li>
+              <li>Overfitting to edge cases</li>
+              <li>Higher hallucination risk</li>
+              <li>Lower trust</li>
+            </ul>
+            <p>A system that tries to remember everything cannot prioritize.</p>
+            <p>Selective forgetting forces hierarchy. It enforces structure. It reduces ambiguity.</p>
+            <p><strong>Clarity creates trust.</strong></p>
+            <hr>
+
+            <h2>Designing the Interface</h2>
+            <p>Once you accept that agents compress internally, the interface must reflect that.</p>
+            <p>An agent is not a query engine. It is a decision participant.</p>
+            <p>So the UX must structure judgment.</p>
+            <p>You are designing:</p>
+            <ul>
+              <li>What the system is allowed to decide</li>
+              <li>What it must justify</li>
+              <li>What it should surface</li>
+              <li>What it should hide</li>
+            </ul>
+            <p>Good agentic interfaces reduce ambiguity before action.</p>
+            <p>That means:</p>
+            <ul>
+              <li>Scoped inputs instead of open prompts</li>
+              <li>Mode based interaction instead of a single chat stream</li>
+              <li>Explicit goal framing before execution</li>
+              <li>Progressive disclosure of reasoning</li>
+              <li>Clear boundaries between suggestion and automation</li>
+            </ul>
+            <p>If the user manages every parameter, it is not an agent.<br>If the agent acts without boundaries, it is not trustworthy.</p>
+            <hr>
+
+            <h2>What Agentic UX Feels Like</h2>
+            <p>Minimal input.<br>Internal compression.<br>Relevant options surfaced.<br>User confirms or adjusts.</p>
+            <p>If it feels intuitive, it’s not because it’s simple.</p>
+            <p>It’s because the system already filtered what doesn’t matter.</p>
+
+            <h2>The Real Design question</h2>
+            <p>Memory in agentic AI is not a storage problem. It’s a prioritization problem.</p>
+            <p>The key questions are:</p>
+            <ul>
+              <li>What does this layer truly need?</li>
+              <li>What can be abstracted?</li>
+              <li>What can be discarded safely?</li>
+              <li>What should never reach the user?</li>
+            </ul>
+            <p>Intelligence emerges from structured compression, not accumulation.</p>
+            <p>The future of agentic UX is not chat.</p>
+            <p>It is structured delegation.</p>
+
+            <div class="essay__foot">
+              <p class="essay__source">First published on <a class="inline" href="https://sambitnayak2.substack.com/p/how-to-approach-ux-for-agentic-systems" target="_blank" rel="noopener">Substack</a>.</p>
+              <nav class="cs__next" aria-label="More writing">
+                <a href="/writing/confidence-is-the-missing-layer"><small>Previous</small><strong>Confidence in AI interfaces</strong></a>
+                <a href="/writing"><small>Index</small><strong>All writing</strong></a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer data-footer></footer>
+  <script src="/js/site.js"></script>
+</body>
+</html>

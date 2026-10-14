@@ -1,0 +1,83 @@
+/* Shared infographic art direction. Scoped to the case-study template. */
+body[data-page="case"] {
+  --accent-yellow: 183 71 29; --accent-red: 183 71 29; --ok: 183 71 29;
+  --focus: #B7471D; --ac: #B7471D;
+}
+.cs { --t1: #dedede !important; --t2: #f4f4f4 !important; --t3: #e8e8e8 !important; }
+.cs__infographic { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px; }
+.cs__poster { position: relative; min-width: 0; min-height: 420px; padding: clamp(24px, 3.8vw, 48px); border-radius: 24px; overflow: hidden; display: flex; flex-direction: column; }
+.cs__poster--orange { background: #B7471D; color: #fff; }
+.cs__poster--dark { background: #202020; color: #fff; }
+.cs__poster-label { position: relative; z-index: 1; font: 400 12px/1.4 var(--font-mono); text-transform: uppercase; letter-spacing: .04em; }
+.cs__poster-value { margin: auto 0 24px; font: 500 clamp(68px, 9vw, 140px)/.9 var(--font-body); letter-spacing: -.07em; }
+.cs__poster-caption { margin: 0; max-width: 16ch; font: 500 clamp(26px, 3.2vw, 44px)/1.02 var(--font-body); letter-spacing: -.045em; }
+.cs__orbits { position: absolute; width: 78%; height: 85%; right: -14%; top: -5%; opacity: .65; }
+.cs__poster-nav { position: relative; margin-top: auto; padding-top: 120px; display: flex; flex-direction: column; gap: 12px; }
+.cs__poster-nav a { width: fit-content; color: inherit; font: 400 clamp(16px, 1.9vw, 24px)/1.2 var(--font-body); text-decoration: none; background: #202020; padding: 3px 8px 3px 0; }
+.cs__poster-nav a:hover { text-decoration: underline; text-underline-offset: 5px; }
+.cs__hero-media { margin-top: 12px; border-radius: 24px; }
+/* All displayed source media follows the restricted palette, including enlargement. */
+body[data-page="case"] :is(img, video, canvas) { filter: grayscale(1); }
+body[data-page="case"] .case__tile { background: #e8e8e8; }
+.cs .shot__tile { background: #e8e8e8; border-radius: 24px; padding: clamp(12px, 2.5vw, 32px); }
+.cs :is(.bento, .dash) { gap: 12px; padding: 0; background: none; }
+.cs .bento { grid-auto-rows: minmax(220px, auto); }
+.cs :is(.bt, .dt) { border-radius: 24px; padding: clamp(24px, 3vw, 40px); --muted: color-mix(in srgb, currentColor 82%, transparent); --faint: color-mix(in srgb, currentColor 20%, transparent); }
+.cs .bt--ac { background: #B7471D; color: #fff; }
+.cs .bt--soft, .cs .bt--light { background: #dedede; color: #202020; }
+.cs .bt--white { background: #fff; color: #202020; }
+.cs .bt--mid { background: #bcbcbc; color: #202020; }
+.cs .bt--graphite { background: #484848; color: #fff; }
+.cs .bt--dark { background: #202020; color: #fff; }
+.cs .bt__value { font-family: var(--font-body); font-weight: 500; letter-spacing: -.06em; font-size: clamp(40px, 23cqw, 112px); }
+.cs .bt__title { font: 500 clamp(23px, 8cqw, 38px)/1.05 var(--font-body); letter-spacing: -.04em; }
+.cs .bt__sub { font-size: 15px; line-height: 1.4; }
+.cs .bt__body { font-size: 15px; line-height: 1.5; }
+.cs .bt__ring { width: min(100%, 280px); margin: 24px auto; }
+.cs .bt__ring circle { stroke-width: 9; }
+.cs .bt__ring strong { font-family: var(--font-body); font-weight: 500; letter-spacing: -.05em; }
+.cs .bt__bar i { background: currentColor; }
+.cs .bt__dial > span.is-at, .cs .bt__key.is-hi { background: #B7471D; color: #fff; }
+.cs .bt__card { border-radius: 16px; }
+.cs .bt__plot i { border-radius: 3px; }
+.cs .dt { --sec-fg: #202020; --sec-muted: #4b4b4b; --sec-ring: #bcbcbc; background: #dedede; color: var(--sec-fg); container-type: inline-size; min-height: 300px; }
+.cs .dt:nth-child(3n + 1) { --sec-fg: #fff; --sec-muted: #fff; --sec-ring: #ffffff66; background: #B7471D; --ac: #fff; }
+.cs .dt:nth-child(3n + 2) { --sec-fg: #fff; --sec-muted: #d8d8d8; --sec-ring: #ffffff66; background: #202020; }
+.cs .dt__value { font: 500 clamp(40px, 20cqw, 100px)/.95 var(--font-body); letter-spacing: -.055em; overflow-wrap: anywhere; }
+.cs .dt__note { font-size: 15px; line-height: 1.45; }
+.cs .dt__track, .cs .dt--waffle .dt__chart i { background: color-mix(in srgb, currentColor 18%, transparent); }
+.cs .dt--kpi .dt__value { margin-block: auto; }
+.cs :is(.cs__cards li, .cs__steps li, .cs__trade, .cs__stats > div) { background: #e8e8e8; color: #202020; --sec-fg: #202020; --sec-muted: #505050; --sec-ring: #bcbcbc; border-radius: 24px; box-shadow: none; padding: 28px; }
+.cs .cs__steps--cards .cs__n { font: 500 64px/1 var(--font-body); color: #B7471D; letter-spacing: -.06em; margin-bottom: 24px; }
+.cs .cs__stats strong { font-family: var(--font-body); font-weight: 500; letter-spacing: -.05em; }
+.cs .ap { --ap-accent: #B7471D; --ap-success: #d8d8d8; --ap-warning: #B7471D; border-radius: 24px; }
+.cs .ap__primary, .cs .ap__success button { color: #fff; }
+.cs .ph { border-radius: 24px; background: #e8e8e8; color: #505050; }
+.cs .ph :is(.ph__tag, figcaption) { color: #505050; }
+@media (max-width: 767px) {
+  .cs__infographic { grid-template-columns: 1fr; }
+  .cs__poster { min-height: 330px; }
+  .cs__poster-value { font-size: clamp(64px, 20vw, 120px); }
+  .cs__poster-caption { font-size: 34px; }
+  .cs__poster-nav a { font-size: 20px; }
+  .cs :is(.bt, .dt) { padding: 24px; }
+  .cs .bt { min-height: 240px; }
+  .cs .bt__list li { grid-template-columns: 24px minmax(0, 1fr); }
+  .cs .bt__right { grid-column: 2; white-space: normal; text-align: left; }
+}
+/* Keep prototype state colours within the same palette. */
+.cs .ap__brand i { box-shadow: 5px 5px 0 #666; }
+.cs .ap__trace li.blocked { background: rgb(183 71 29 / .12); }
+.cs .ap__primary { color: #fff !important; }
+.cs .ap__progress li.active i { color: #fff; }
+@media (prefers-reduced-motion: reduce) {
+  .cs .dt__chart *, .cs .dt__chart *::after { transition: none !important; }
+  .cs .dt__track i { width: var(--w); }
+  .cs .dt--meter .dt__chart i::after { width: var(--f); }
+  .cs .dt--donut .arc { stroke-dashoffset: var(--to); }
+  .cs .dt--trend .line { stroke-dashoffset: 0; }
+  .cs .dt--trend .area, .cs .dt--trend .pt { opacity: 1; }
+}
+body[data-page="case"] .loader { filter: grayscale(1); }
+/* Neutral UI values keep the case-study palette consistent in both themes. */
+body[data-page="case"] { --greyscale-200: 216 216 216; --greyscale-700: 133 133 133; --greyscale-900: 89 89 89; }

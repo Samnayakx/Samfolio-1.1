@@ -828,3 +828,23 @@ body { background: rgb(var(--greyscale-100)); color: rgb(var(--greyscale-black))
 | Draw pixel icons as square pixels on a transparent ground | Use round dots, a ghost grid or a grey tile behind pixel icons |
 | Pair full-bleed media with 8px-gutter grids | Use wide gutters or boxed hero images |
 | Use opacity and transform motion at 100–500ms | Use bouncy springs, parallax or long sequences |
+
+## Case-study infographic direction (October 2026)
+
+This section supersedes the earlier project-tint, accent and card rules for all
+case-study pages. Implementation: `css/case-studies.css`, loaded after `site.css`.
+
+- Strict palette: black / charcoal, neutral greys, white, and dark orange `#B7471D`.
+  Orange panels use white text. Do not introduce pastel or brand-colour tints.
+- Use flat, rounded panels (24px corners, 12px gutters), oversized sans-serif
+  numerals, compact labels, and one clear idea per panel. No gradient backgrounds.
+- Each case opens with a metric poster and a concentric-line contents panel.
+  Contents links navigate to the corresponding sections. Preserve product demos.
+- Use rings only for genuine proportions, bars for comparisons, and large type
+  for counts and relative lifts. A 61% lift is not a 61% share of a whole.
+- Existing research, result qualifications, concept labels and missing-media
+  placeholders remain visible. Never invent data to fill a chart.
+- Screenshots, videos, navigation previews and enlarged media are displayed in
+  greyscale on case-study pages; source assets remain unmodified.
+- All tile families share the same palette and typography. Stack on mobile;
+  preserve semantic labels, keyboard navigation and reduced-motion behavior.

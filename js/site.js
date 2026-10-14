@@ -226,67 +226,116 @@ document.querySelectorAll(".glyph").forEach((svg) => {
 const BOOK_A_CALL = "https://cal.com/sambit-nayak/30min?overlayCalendar=true";
 const PROJECTS = [
   {
-    name: "Gap 3D Fit", org: "Gap", area: "E-commerce · 3D sizing UX", tags: ["E-comm", "UX Design"],
-    title: "Turning sizing uncertainty into a 61% add-to-bag decision.",
-    desc: "Technical product designer and team lead on Gap's 3D Fit viewer: fit logic, UX flow, UI and testing across web and iOS.",
-    metric: { value: "61%", label: "Add-to-bag lift" }, href: "/case-study?case=1", tint: ["#A4A6A3", "#E7E8E5", "#D6D7D4"],
-    cs: {
-      meta: [["Role", "Technical Product Designer"], ["Timeline", "6 months"], ["Skills", "UX flow, fit logic, UI, testing, 3D optimization · Web, iOS"], ["Team", "2 PMs, 1 designer, 1 UXR"]],
-      sections: [
-        { title: "Problem", media: ["Old sizing flow screenshot"], statement: "Problem: the old flow showed fit, but shoppers still felt risk.",
-          text: ["Denim made sizing harder: one size had to explain multiple body zones without turning checkout into a long form.", "We saw an opportunity to help shoppers trust a size and move forward, instead of guessing and returning."] },
-        { title: "Research", media: ["Sizing research insights / user feedback"], statement: "Research: confidence, not measurements, was the missing piece.",
-          text: ["Sizing breakdowns kept coming back to trust: what shoppers saw was precise, but not convincing."],
-          cards: [["Measurements were not enough", "Charts were precise; comfort was not."], ["Fit was multi-zone", "Waist, hip, thigh, calf, and inseam all mattered."], ["The answer needed a reason", "A size recommendation without evidence felt risky."], ["Every extra input had a cost", "More personalization could also mean more drop-off."]] },
-        { title: "Solution", media: ["Final 3D Fit flow: baseline → calibration → tuning", "Explainable fit screen"], statement: "Solution: ask less upfront, show more evidence when trust is at stake.",
-          text: ["The final flow made fit easier to trust without adding friction. Each step either improved the model or helped shoppers verify the recommendation."],
-          steps: [["Baseline input"], ["Fit calibration"], ["Optional tuning"], ["Explainable fit"]],
-          trades: [
-            { n: "Decision 1", t: "Accuracy vs completion rate", rows: [["User need", "Credible sizing."], ["Business need", "Purchase momentum."], ["Constraint", "Too many inputs caused drop-off."], ["Compromise", "Baseline first, tuning optional."]], note: "Complexity moved later, after the value was clear." },
-            { n: "Decision 2", t: "Explainability vs purchase velocity", rows: [["User need", "Evidence behind the size."], ["Business need", "Fast purchase flow."], ["Constraint", "Too much rationale slowed action."], ["Compromise", "Fast answer, optional reason."]], note: "The recommendation became inspectable without becoming heavy." },
-            { n: "Decision 3", t: "Fit fidelity vs mobile performance", rows: [["User need", "Realistic body-zone fit."], ["Business need", "Reach mobile shoppers."], ["Constraint", "Fidelity slowed performance."], ["Compromise", "Use copy to support visuals."]], note: "Fit copy became interface logic: short, local, decision-tied." },
-          ] },
-        { title: "Impact", media: ["Results chart or before/after"], dash: [{ type: "donut", w: 4, label: "Add-to-bag", value: "61%", pct: 61, chip: "Lift", note: "Lift after the redesign" }], statement: "Impact: a 61% add-to-bag lift.", 
-          text: ["The strongest signal was not more 3D realism. It was reducing sizing ambiguity at the moment shoppers decided whether to trust a size and add to bag.", "The visual was not the product. Confidence was what shoppers believed, understood, and felt ready to do next. I would cut more today: every control should earn its place at the moment of doubt."],
-          cards: [["Product", "Connected confidence to commerce signals"], ["Engineering", "Balanced 3D assets with mobile performance"], ["Research", "Mapped trust breakdowns"], ["Fit language", "Aligned product, research, and merchandising terms"]] },
-      ],
-    },
-  },
-  {
-    name: "AI Studio", org: "AI Studio", area: "Creative tools", tags: ["0→1 Product", "AI Design"],
-    title: "Reduced lead time by 3 months and accelerated end-to-end workflow with AI Studio.",
-    desc: "A 0→1 AI design product for creative tools. This case study is password protected.",
-    metric: { value: "3×", label: "Faster workflow" }, href: "/case-study?case=2", tint: ["#A9AE7F", "#DADBC4", "#C7CBAF"],
-    cs: {
-      meta: [["Role", "Product Designer"], ["Timeline", "Password protected"], ["Skills", "0→1 product, AI design, creative tools"], ["Team", "Shared on request"]],
-      sections: [
-        { title: "Problem", media: ["Product hero or workflow image"], statement: "Problem: creative work took too long to get from idea to finished output.",
-          text: ["AI Studio is a 0→1 product for creative tools, where AI shortens the path from idea to finished work."] },
-        { title: "Impact", media: ["Results or workflow comparison"], dash: [{ type: "bars", w: 6, label: "Workflow speed", value: "3×", chip: "Faster", rows: [["Before", 1, "1×"], ["With AI Studio", 3, "3×"]], note: "Lead time reduced by 3 months" }], statement: "Impact: reduced lead time by 3 months.", 
-          text: ["Book a call and I'll share the passcode and walk you through the full case study: research, solution and results."], cta: { label: "Book a call", href: BOOK_A_CALL } },
-      ],
-    },
-  },
-  {
     name: "Trailhead Solve", org: "Trailhead", area: "Enterprise · Agentic AI", tags: ["Ed-tech", "UX Research"],
     title: "An AI-powered re-engagement strategy Trailhead power users preferred over ChatGPT.",
     desc: "Improving power-user retention with an agentic AI RAG bot: Trailhead Solve, a dashboard redesign and a RAG assistant.",
-    metric: { value: "22.7%", label: "Retention lift" }, href: "/case-study?case=3", tint: ["#BDCFDE", "#EBDAD3", "#E4EAEE"],
+    metric: { value: "22.7%", label: "Retention lift" }, thumb: { video: "/assets/images/trailhead/video-trailhead-promo-web.mp4", poster: "/assets/images/trailhead/video-trailhead-promo-web-poster.webp", alt: "Trailhead Solve product video", navPoster: "/assets/images/trailhead/video-trailhead-chatbot-poster.webp" }, href: "/case-study?case=1", tint: ["#BDCFDE", "#EBDAD3", "#E4EAEE"], accent: "#2F7DC4",
     cs: {
-      meta: [["Role", "Product Designer (Apprentice)"], ["Timeline", "Aug 2025 – Apr 2026"], ["Skills", "Conversational UX, RAG workflows, power-user research, dashboard design"], ["Team", "Product, research, engineering"]],
+      meta: [["Role", "Product Designer (Apprentice)"], ["Timeline", "Aug 2025 – Apr 2026"], ["Skills", "Conversational UX, RAG workflows, power-user research, dashboard design"], ["Team", "Team of five with the Salesforce Trailhead product team"], ["Credit", "Team project with Cyril Stephen"]],
       sections: [
-        { title: "Problem", media: ["Trailhead power-user journey"], statement: "Problem: power users were leaving Trailhead for ChatGPT, YouTube, and Slack the moment they hit a real Salesforce problem at work.",
-          text: ["Salesforce Trailhead was built for the climb: learning, upskilling, and getting certified. But once users became more competent and were in work environments, their needs shifted from learning paths to real problems at work.", "So they left for ChatGPT, YouTube, and Slack communities, where their needs were met. Aside from coming back a few times a year to renew certifications, the platform offered little of practical, immediate value. Re-engagement was the actual problem, not retention."] },
-        { title: "Research", media: ["Interview synthesis / affinity map"], statement: "Research: power users needed practical value at work, not another beginner path.",
-          text: ["Interviews surfaced a career-stage mismatch: Trailhead still worked for certification, but felt misaligned once people were solving real Salesforce problems daily."],
-          cards: [["Re-engagement", "The job was bringing power users back, not holding beginners longer"], ["Where they went", "ChatGPT, YouTube, and Slack communities met their real work needs"]],
-          quote: "Trailhead's learning content is just too basic for where I'm at in my career." },
-        { title: "Solution", media: ["Solve chat interface", "Dashboard redesign"], statement: "Solution: two layers, working together.",
-          text: ["Solve intercepts the ChatGPT moment; the dashboard turns each question into what to learn, where to contribute, and what path fits their level."],
-          steps: [["Solve", "Plain-language questions with sourced Trailhead answers."], ["Community", "Where to contribute, based on what you asked."], ["Learn", "What path fits your level."]] },
-        { title: "Impact", media: ["Side-by-side test results"], dash: [{ type: "meter", w: 4, label: "Preferred Solve", value: "6/8", n: 8, v: 6, note: "Power users who preferred Solve over ChatGPT" }, { type: "meter", w: 4, label: "Confidence", value: "4.5/5", n: 5, v: 4.5, note: "Average confidence in Solve’s answers" }, { type: "donut", w: 4, label: "Retention", value: "22.7%", pct: 22.7, chip: "Lift", note: "Retention lift" }], statement: "Impact: six out of eight power users preferred Solve over ChatGPT for Salesforce product questions.", 
-          text: ["Each participant brought a real work problem, ran it through ChatGPT and Solve side by side, then rated confidence and preference.", "Trailhead won when experienced users had practical reasons to return: solving real work problems, contributing to community, and seeing learning paths that matched their career stage."],
-          cards: [["Solve", "Intercept the ChatGPT moment with grounded answers"], ["Dashboard", "Turn questions into learning gaps and contribution opportunities"], ["Validation", "Preference testing beat opinion surveys"]] },
+        { title: "Overview", statement: "Overview: built for the climb, and it loses experts at the top.",
+          text: ["Trailhead is Salesforce's free online learning platform, taking millions of professionals from beginner to certified expert. It was built for the climb, and it loses the experts the moment they reach the top.",
+            "Our team of five partnered with the Salesforce Trailhead product team to research, design, and build for the platform's most experienced users: the power users who built their careers on Trailhead and then quietly stopped coming back.",
+            "This is a team project. The research, findings, prototype and media here are shared work with my teammate Cyril Stephen."],
+          bento: { label: "Summary", tiles: [
+            { k: "text", tone: "dark", w: 4, label: "Problem", title: "Experts took their questions elsewhere.", body: "Salesforce's most experienced users were taking their questions to ChatGPT and Slack instead of Trailhead's own community, and between milestones, nothing gave them a reason to come back." },
+            { k: "text", tone: "soft", w: 4, label: "Solution", title: "Answers, plus prompts.", body: "Plain-language answers to real Salesforce problems inside Trailhead, paired with proactive prompts that surface what's relevant next without being asked." },
+            { k: "num", tone: "ac", w: 4, label: "Outcome", value: "6/8", sub: "Given the same Salesforce question, 6 of 8 power users preferred Solve over ChatGPT.", bar: 75 }] },
+          media: [{ video: "/assets/images/trailhead/video-trailhead-promo-web.mp4", poster: "/assets/images/trailhead/video-trailhead-promo-web-poster.webp", alt: "Promo video for the Trailhead Solve project", cap: "Project promo" }] },
+
+        { title: "Problem", statement: "Problem: power users were quietly drifting.",
+          text: ["Salesforce's most valuable power users were disengaging, and for a company built on community and advocacy, that is an expensive thing to lose.",
+            "Salesforce's ecosystem runs on its community: experienced users who answer questions, mentor newcomers, and champion the platform. Those power users were the engine of it, and they were showing up less and contributing less.",
+            "They weren't unhappy users churning, they were quietly drifting. So the problem we set out to solve was re-engagement, not retention: winning back the attention of the platform's most valuable advocates."] },
+
+        { title: "Research", statement: "Research: opinion gave warmth. Behavior gave the pattern.",
+          text: ["Research operations, led by Cyril Stephen, reached 650+ Salesforce professionals across the US, India, Canada, Europe, and the Middle East, qualified 72 as power users, and interviewed 12 across two rounds.",
+            "Round one focused on opinion: how people felt about Trailhead and what would make it more inspiring. It gave us warm, agreeable answers and no real direction.",
+            "Round two focused on behavior: what people actually do, where they drop off, whether they use the community and why not, whether certifications even matter to their goals. That is where the real pattern surfaced."],
+          bento: { label: "Research reach", tiles: [
+            { k: "num", tone: "ac", w: 4, label: "Reached", value: "650+", sub: "Salesforce professionals across the US, India, Canada, Europe and the Middle East." },
+            { k: "num", tone: "dark", w: 4, label: "Qualified", value: "72", sub: "Power users." },
+            { k: "num", tone: "light", w: 4, label: "Interviewed", value: "12", sub: "Across two rounds." },
+            { k: "list", tone: "graphite", w: 12, label: "Two rounds", rows: [["R1", "Opinion: how people felt about Trailhead", "Warm, no direction"], ["R2", "Behavior: what people actually do", "The real pattern"]] }] } },
+
+        { title: "Findings", statement: "Findings: engagement dropped where the certification path ended.",
+          text: ["Power users dropped off right after milestones like certification. And between those moments, they took their questions to ChatGPT and YouTube for a faster answer, despite a community on the platform built for exactly those questions.", "Engagement drops off exactly where the certification path ends."],
+          bento: { label: "Findings", tiles: [
+            { k: "bars", tone: "white", w: 6, h: 2, label: "Share of power users", max: 100, bars: [["Post-milestone", 64], ["Workarounds", 45], ["Too shallow", 45], ["Personalization", 36]], sub: "Percent of interviewed power users." },
+            { k: "num", tone: "ac", w: 3, label: "Post-milestone", value: "64%", unit: "", sub: "Disengaged after major milestones like certifications" },
+            { k: "num", tone: "dark", w: 3, label: "Workarounds", value: "45%", sub: "Supplemented Trailhead with ChatGPT, YouTube, and Slack" },
+            { k: "num", tone: "light", w: 3, label: "Depth", value: "45%", sub: "Found the content too shallow for their experience" },
+            { k: "num", tone: "mid", w: 3, label: "Personalization", value: "36%", sub: "Were unhappy with the existing personalization" }] },
+          media: [{ src: "/assets/images/trailhead/case-study-trailhead-5.webp", alt: "Graph comparing Trailhead engagement against the learner journey from certification to real-world problem solving.", cap: "Engagement against the learner journey, from certification to real-world problem solving" }] },
+
+        { title: "Ideation", statement: "Ideation: two ideas, built to be killed.",
+          text: ["Of everything we explored, two ideas stood out, so we skipped wireframes and vibe-coded them into working proofs of concept.",
+            "We explored a wide range of directions for bringing power users back: community engagement, status, skill visibility. The two strongest earned a quick build, enough to try each idea for ourselves. Neither held up, and killing them shaped the two features we shipped."] },
+
+        { title: "Exploration 1", statement: "Exploration 1: an AI version of themselves. Killed.",
+          text: ["We almost gave power users an AI version of themselves to run their community presence. We killed it to protect Trailhead's trust.",
+            "The idea was status plus leverage: power users become group leaders, and an AI trained on their posts answers community questions on their behalf.",
+            "We took it down two paths, and both broke. Underneath all of it, our research was clear that these users didn't want to engage with the community anyway."],
+          bento: { label: "Why it broke", tiles: [
+            { k: "text", tone: "dark", w: 4, label: "Path 1", title: "Fully automated.", body: "Undisclosed AI speaking as a real person damages trust." },
+            { k: "text", tone: "graphite", w: 4, label: "Path 2", title: "Disclosed or approve-first.", body: "Clashed with Trailhead's warm, human brand and real anti-AI anxiety. The approval version stopped saving anyone time, the entire point." },
+            { k: "text", tone: "soft", w: 4, label: "Underneath", title: "They didn't want to.", body: "Our research was clear these users didn't want to engage with the community anyway." }] } },
+
+        { title: "Exploration 2", statement: "Exploration 2: a public skill profile. Killed.",
+          text: ["We designed a public skill profile meant to pressure power users into staying current, then killed it because it only worked if employers bought in.",
+            "The idea borrowed from GitHub's contribution graph. Make someone's skill currency public, and the visibility itself pressures them to keep it up. A shareable Trailhead profile would show certifications, badges, and skill levels tied to how current your learning is, replacing the scattered cert posts people drop on LinkedIn. Keep it public, and people come back to keep it current."],
+          bento: { label: "Why it was killed", tiles: [
+            { k: "text", tone: "dark", w: 6, label: "Reason 1", title: "Adoption was out of our hands.", body: "It only works if the outside world treats the profile as a credential." },
+            { k: "text", tone: "soft", w: 6, label: "Reason 2", title: "Engagement for its own sake.", body: "Even if it caught on, it would drive engagement for the sake of engagement, not a meaningful, lasting reason to return." }] },
+          media: [{ src: "/assets/images/trailhead/case-study-trailhead-7.webp", alt: "Public skill profile concept UI showing certifications, badges and skill currency.", cap: "The shareable Trailhead profile showing certifications, badges, and skill currency, the idea we killed.", narrow: true }] },
+
+        { title: "The bet", statement: "The bet: Salesforce's own data beats any general AI.",
+          text: ["We bet that plain-language answers drawn from Salesforce's own data would beat any general AI tool, and shipped two connected experiences to prove it.",
+            "ChatGPT runs on public data. Slack answers depend on whoever happens to reply. We bet Salesforce's proprietary knowledge could beat both. Access to that data, and to Agentforce, was never on the table, so we built on OpenAI with curated Salesforce documentation and focused on proving the experience.",
+            "That bet became two features: Solve catches power users at the moment they would otherwise open ChatGPT, and a proactive system that resurfaces what's relevant next so returning is worth it. Neither works alone."],
+          bento: { label: "Two connected features", tiles: [
+            { k: "text", tone: "ac", w: 6, label: "01 · Solve", title: "Catch the ChatGPT moment.", body: "Plain-language answers to real Salesforce problems, grounded in curated documentation." },
+            { k: "text", tone: "dark", w: 6, label: "02 · Proactive prompts", title: "Make returning worth it.", body: "Resurface what's relevant next, without being asked." }] } },
+
+        { title: "Solve", statement: "Solution 01 · Solve: a plain-language answer, calibrated to you.",
+          text: ["Solve answers a real Salesforce problem in plain language, on the spot, calibrated to your expertise and backed by sources you can check.",
+            "That last point mattered to us. We designed for the moment the AI can't help, not just the moment it can."],
+          steps: [["Ask in plain language", "Ask a problem in plain language and get a specific, actionable answer that cites Salesforce documentation."], ["Set the depth", "Choose Beginner, Intermediate, or Advanced, so you are never over-explained or underserved."], ["Never a dead end", "When Solve can't fully help, it drafts a ready-to-post Trailblazer Community question from your conversation, so you get an answer either way."]],
+          media: [{ video: "/assets/images/trailhead/video-trailhead-chatbot.mp4", poster: "/assets/images/trailhead/video-trailhead-chatbot-poster.webp", alt: "Solve answering a Salesforce question in plain language", cap: "Solve answering" }] },
+
+        { title: "Proactive prompts", statement: "Solution 02 · Proactive prompts: the platform does the noticing.",
+          text: ["Without being asked, the system surfaces what's relevant to each expert: skill gaps against the market, follow-ups from their questions, and renewals before they lapse.",
+            "None of this waits for a request. The platform does the noticing and brings the next step to the user."],
+          steps: [["Renewals", "Before a certification lapses, it flags the renewal on its own, closing a notification gap users complained about."], ["Skill gaps", "Unprompted, it measures a user's skill profile against what the market is hiring for and builds a path to close the gap it finds."], ["Follow-ups", "It reads the questions they asked Solve and recommends what to learn next, so the follow-up finds them."]],
+          media: [{ src: "/assets/images/trailhead/case-study-trailhead-4.webp", alt: "Personalised dashboard full view showing trending skills and personalized trail recommendations.", cap: "Dashboard full view: trending skills and personalized trail recommendations", narrow: true }] },
+
+        { title: "The build", statement: "The build: from Figma to a working app, with no handoff.",
+          text: ["Figma MCP took each component straight into Cursor and Claude Code, where we wired it to the OpenAI API and shipped Solve as a working app, not a mockup.",
+            "After designing each component in Figma against Trailhead's design system, we built it one piece at a time, no handoff, no rebuild from a spec. Taking a concept from design to working software ourselves is what let us test it like a real product instead of a slideshow."],
+          bento: { label: "The stack", tiles: [
+            { k: "list", tone: "dark", w: 6, label: "What was running", rows: [["01", "React front end"], ["02", "Express and SQLite back end"], ["03", "OpenAI for responses"], ["04", "Voice input"], ["05", "Expertise calibration"], ["06", "Community-post drafting"]] },
+            { k: "list", tone: "soft", w: 6, label: "Design to software", rows: [["1", "Design in Figma", "Trailhead design system"], ["2", "Figma MCP", "Component to code"], ["3", "Cursor, Claude Code", "Wired to OpenAI"], ["✓", "Shipped as a working app", "Not a mockup"]] }] } },
+
+        { title: "Agentic testing", statement: "Agentic testing: 12 AI agents before real users.",
+          text: ["Real power users were hard to get hold of, so we built 12 AI agents from our research data to catch the obvious problems before spending anyone's real time.",
+            "We turned our research into 12 AI agents and ran them through the flows to surface usability problems first. By the time real users arrived, the rough edges were already smoothed, and their time went to what actually needed a person."],
+          bento: { label: "Agentic testing", tiles: [
+            { k: "num", tone: "ac", w: 4, label: "Built from our research", value: "12", unit: "agents", sub: "Run through the flows to surface usability problems first." },
+            { k: "text", tone: "dark", w: 8, label: "Why", title: "Real users' time went to what needed a person.", body: "By the time real power users arrived, the rough edges were already smoothed." }] } },
+
+        { title: "Impact", statement: "Impact: 6 of 8 power users preferred Solve.",
+          text: ["Part I. We tested whether Solve could replace the reflex to open ChatGPT. Given the same Salesforce question, 6 of 8 power users preferred Solve. Each participant took a question about the Salesforce product they work with, asked it to both ChatGPT and Solve, and compared.",
+            "Part II. The prototype pulled power users back into the content, lifting session duration 35% and cutting drop-off 22%. This was the half of the problem we most needed to prove: that experts who used to leave after a milestone would stay."],
+          bento: { label: "Impact", tiles: [
+            { k: "num", tone: "ac", w: 4, label: "Preferred Solve over ChatGPT", value: "6/8", sub: "Same Salesforce question, side by side.", bar: 75 },
+            { k: "donut", tone: "light", w: 4, label: "Confidence in Solve's answers", value: "4.5/5", pct: 90 },
+            { k: "num", tone: "dark", w: 4, label: "Session duration", value: "+35%", sub: "Power users stayed in the content." },
+            { k: "num", tone: "graphite", w: 4, label: "Drop-off after milestones", value: "−22%", sub: "Experts who used to leave after a milestone stayed." },
+            { k: "text", tone: "soft", w: 8, label: "Why it matters", title: "The half of the problem we most needed to prove.", body: "Experts who used to leave after a milestone would stay, and the prototype showed it." }] } },
+
+        { title: "Learning", statement: "Learning: designing around code, then shipping it.",
+          text: ["Using AI coding agents to build and ship a working product turned a limitation into something a designer can now do. This project left no room to design around code."],
+          quote: "I had never been comfortable in code, and had never prototyped with it, so teaching myself to ship this as working software is the barrier I'm proudest of clearing.", quoteBy: "Cyril Stephen, teammate on this project" },
       ],
     },
   },
@@ -294,7 +343,7 @@ const PROJECTS = [
     name: "CotonAI Modes", org: "CotonAI", area: "Agentic AI · Fashion", tags: ["AI Agents", "UX Design"],
     title: "Designing structured, mode-based UX in an AI platform for fashion teams.",
     desc: "End-to-end design of Modes at CotonAI: replacing prompt-heavy AI with structured entry points mapped to real fashion workflows.",
-    metric: { value: "125%", label: "Feature adoption lift" }, href: "/case-study?case=4", tint: ["#9CB09E", "#E3EAE0", "#C9D5C8"],
+    metric: { value: "125%", label: "Feature adoption lift" }, href: "/case-study?case=2", tint: ["#9CB09E", "#E3EAE0", "#C9D5C8"],
     cs: {
       meta: [["Role", "Founding Product Designer"], ["Timeline", "Aug 2025 – Present"], ["Skills", "Interaction architecture, AI UX, design systems, prototyping, analytics"], ["Team", "Founder, PM, engineering"]],
       sections: [
@@ -315,10 +364,135 @@ const PROJECTS = [
             { n: "Decision 5", t: "Scaling the design system with AI", rows: [["Step 1", "Designed tokens in the Figma library."], ["Step 2", "Collaborated with dev to finalize the token specification, using shadcn as the base layer."], ["Step 3", "Created an .md file and pushed it as a UI library."], ["Result", "Every new custom UI pulls from the same GitHub repo, with no redesigning again and again."]] },
           ] },
         { title: "Impact", media: ["Impact metrics / client results"], dash: [{ type: "kpi", w: 4, label: "Images generated", value: "6000+", note: "In editorial mode on CotonAI" }, { type: "kpi", w: 4, label: "Cost saved", value: "$5k+", note: "Deciding UX flows and which AI models to work with" }, { type: "kpi", w: 4, label: "Enterprise pilot", value: "$$$", chip: "Paid", note: "Converted the MVP to a paid pilot with an enterprise client" }, { type: "waffle", w: 8, label: "Client time saved", value: "584 hrs", cells: 80, filled: 73, note: "In one season, about 73 working days at 8 hours a day. Each square is one day." }, { type: "kpi", w: 4, label: "Feature adoption", value: "125%", chip: "↑ vs V1", note: "After redesigning the Modes bar" }], statement: "Impact: a paid pilot, 584 hours saved for a client, and 125% higher adoption.",
-          
+
           text: ["Designing CotonAI shifted my perspective on AI interfaces from feature design to interaction architecture. Early experimentation with open prompting revealed that the real challenge wasn't model capability, but how people translate intent into action. Introducing modes was a strategic move to reduce ambiguity, stabilize outcomes, and align AI behavior with how designers already think visually.", "Successful AI products are not built by adding more controls, but by shaping interaction models that make complex technology feel predictable, trustworthy, and native to human workflows."],
           quote: "While building CotonAI, I realized designers can directly influence business decisions through human-centered thinking, amplified by AI.", quoteBy: "Sambit Nayak",
           cards: [["Risk: over-structuring", "Could reduce creative freedom. Mitigation: modes guide the entry point, not the output style."], ["Risk: power users feel constrained", "Mitigation: Open mode retained for advanced control."], ["Risk: mode explosion", "Could confuse users. Mitigation: submodes nested inside parent workflows."]] },
+      ],
+    },
+  },
+  {
+    name: "AI Studio", org: "AI Studio", area: "Creative tools", tags: ["0→1 Product", "AI Design"],
+    title: "Reduced lead time by 3 months and accelerated end-to-end workflow with AI Studio.",
+    desc: "A 0→1 AI design product for creative tools. This case study is password protected.",
+    metric: { value: "3×", label: "Faster workflow" }, href: "/case-study?case=3", tint: ["#A9AE7F", "#DADBC4", "#C7CBAF"],
+    cs: {
+      meta: [["Role", "Product Designer"], ["Timeline", "Password protected"], ["Skills", "0→1 product, AI design, creative tools"], ["Team", "Shared on request"]],
+      sections: [
+        { title: "Problem", media: ["Product hero or workflow image"], statement: "Problem: creative work took too long to get from idea to finished output.",
+          text: ["AI Studio is a 0→1 product for creative tools, where AI shortens the path from idea to finished work."] },
+        { title: "Impact", media: ["Results or workflow comparison"], dash: [{ type: "bars", w: 6, label: "Workflow speed", value: "3×", chip: "Faster", rows: [["Before", 1, "1×"], ["With AI Studio", 3, "3×"]], note: "Lead time reduced by 3 months" }], statement: "Impact: reduced lead time by 3 months.",
+          text: ["Book a call and I'll share the passcode and walk you through the full case study: research, solution and results."], cta: { label: "Book a call", href: BOOK_A_CALL } },
+      ],
+    },
+  },
+  {
+    name: "Arcade Control Plane", org: "Arcade.dev", area: "Take-home · Agent infrastructure", tags: ["Dev tools", "AI Agents"],
+    title: "Turning Arcade from an infrastructure inventory into an agent deployment control plane.",
+    desc: "A take-home redesign of Arcade.dev. I chose the problem, set the north star, scoped the build and shipped a working prototype of the path to a first authorized tool call.",
+    metric: { value: "1", label: "North star: first authorized tool call" }, thumb: { video: "/assets/images/arcade/video-arcade-promo.mp4", poster: "/assets/images/arcade/video-arcade-promo-poster.webp", alt: "Arcade prototype video: picking a goal, running a task in the Playground and authorizing Linear mid-run", navPoster: "/assets/images/arcade/video-arcade-auth-poster.webp" }, href: "/case-study?case=4", tint: ["#F6A6CF", "#FFDDEE", "#FFF7FB"], accent: "#F0299B",
+    cs: {
+      meta: [["Role", "Product Designer, end to end"], ["Format", "Take-home challenge, solo"], ["Skills", "Product strategy, IA, onboarding, AI UX, prototyping"], ["Tools", "Figma, shadcn/ui, Cursor + Figma MCP, ChatGPT"]],
+      sections: [
+        { title: "Context", statement: "Context: Arcade wins when the first tool call works.",
+          text: ["Arcade is the auth and tool-calling layer for AI agents. No PM, no spec: I owned the problem, the scope and how to measure it."],
+          bento: { label: "Context at a glance", tiles: [
+            { k: "num", tone: "ac", w: 4, label: "North star", value: "1", sub: "First successful, authorized, reviewable tool call." },
+            { k: "stack", tone: "mid", w: 4, label: "How I worked", rows: [["Product flows tried", "All", "Logged wins and failures", "white"], ["AI engineer interview", "30", "Minutes, with shadowing", "light"]] },
+            { k: "text", tone: "dark", w: 4, label: "Shipped", title: "A deck and a working prototype in code.", body: "Figma and shadcn/ui first, then Cursor with the Figma MCP." }] } },
+
+        { title: "Problem", statement: "Problem: users meet the architecture before the value.",
+          text: ["The dashboard is a resource inventory. Users have to assemble Arcade's runtime in their heads before anything runs."],
+          bento: { label: "The problem in numbers", tiles: [
+            { k: "num", tone: "dark", w: 4, label: "Old dashboard", value: "≈8k", sub: "Tools exposed by default." },
+            { k: "num", tone: "light", w: 4, label: "Sidebar", value: "18", sub: "Flat items, named after backend objects." },
+            { k: "num", tone: "soft", w: 4, label: "First decision", value: "3", sub: "Paths to pick before any value: code, gateway, sandbox." },
+            { k: "list", tone: "graphite", w: 12, label: "Diagnosis", rows: [["01", "Resource inventory", "18 items"], ["02", "Decision paralysis", "3 paths"], ["03", "Fragmented setup", "4 places"], ["04", "Weak feedback", "No next step"]] }] } },
+
+        { title: "Strategy", statement: "Strategy: build one path, completely.",
+          text: ["Everything served one moment. I built the path to it end to end and labelled the rest."],
+          bento: { label: "Scope", tiles: [
+            { k: "donut", tone: "light", w: 4, h: 2, label: "Sidebar built", value: "4/12", pct: 33, sub: "Plus onboarding and the code wizard, outside the sidebar." },
+            { k: "list", tone: "dark", w: 8, label: "Built", rows: [["✓", "Dashboard", "4 states"], ["✓", "Playground", "Chat + Execute"], ["✓", "Tool catalog", "39 integrations"], ["✓", "Servers", "Gateway wizard"]] },
+            { k: "text", tone: "soft", w: 8, label: "Deferred", title: "Users, policies, runs, audit and usage wait.", body: "They matter, but none gets a new user closer to the first call." }] } },
+
+        { title: "Navigation", statement: "Navigation: group by the job, not the object.",
+          text: ["Same features, regrouped into Build, Roll out and Observe. Ten old items were really one job."],
+          bento: { label: "Information architecture", tiles: [
+            { k: "bars", tone: "white", w: 8, h: 2, label: "Items per group", bars: [["Home", 1, 1], ["Build", 2, 3], ["Roll out", 10, 5], ["Observe", 1, 3], ["Footer", 4, 4]], legend: ["Before", "After"], sub: "Mapping is my reading of the redesign." },
+            { k: "num", tone: "ac", w: 4, label: "Sidebar", value: "18→12", sub: "Destinations, grouped into three jobs." },
+            { k: "num", tone: "dark", w: 4, label: "Roll out", value: "10→5", sub: "Backend objects folded into jobs." }] },
+          media: [{ src: "/assets/images/arcade/nav-old-new.jpg", alt: "Old Arcade sidebar with 18 ungrouped destinations next to the new sidebar grouped into Build, Roll out and Observe.", cap: "Old sidebar (left), redesign (right)", narrow: true }] },
+
+        { title: "Onboarding", statement: "Onboarding: intent before infrastructure.",
+          text: ["Ask what they want done, recommend the fastest path, keep expert paths one click away."],
+          bento: { label: "Path to a first call", tiles: [
+            { k: "list", tone: "graphite", w: 6, label: "Before", rows: [["1", "Land on a resource dashboard"], ["2", "Pick code, gateway or sandbox"], ["3", "Assemble docs, config, OAuth"], ["?", "Hope the first call works"]] },
+            { k: "list", tone: "soft", w: 6, label: "After", rows: [["1", "Pick an outcome", "5 goals"], ["2", "Choose a path", "1 recommended"], ["3", "Connect & run", "Inline auth"], ["✓", "Trace, then Project Home"]] },
+            { k: "keys", tone: "dark", w: 4, label: "Three paths", hi: 0, keys: [["▶", "Playground"], ["⇄", "MCP gateway"], ["</>", "SDK"], ["↗", "Explore first"]] },
+            { k: "num", tone: "light", w: 4, label: "Expert wizards", value: "8", unit: "steps", sub: "Gateway and SDK each, with live status beside every step." },
+            { k: "text", tone: "ac", w: 4, label: "Default", title: "Sandbox first.", body: "“Sandbox runs are safe to test. You can promote to production later.”" }] },
+          media: [{ src: "/assets/images/arcade/onboarding-goal.jpg", alt: "Onboarding step one: What do you want to get done? with five outcome cards.", cap: "Step 1: pick an outcome" }, { src: "/assets/images/arcade/onboarding-path.jpg", alt: "Onboarding step two: choose Playground, MCP gateway or SDK, with the proposed tool bundle and its auth status.", cap: "Step 2: choose how to use it" }] },
+
+        { title: "Playground", statement: "Playground: a runtime simulator, not a chat box.",
+          text: ["Every run shows the same eight checks. When a tool needs access, the run pauses and asks in place."],
+          bento: { label: "Execution visibility", tiles: [
+            { k: "dial", tone: "graphite", w: 4, h: 2, label: "Checks per run", n: 8, at: 3, value: "8", center: "Paused at 3" },
+            { k: "list", tone: "dark", w: 4, h: 2, label: "The trace", title: "Paused for one scope: issues:create.", rows: [["✓", "User intent"], ["✓", "Tool selected"], ["●", "Authorization", "Now"], ["○", "Scope check"], ["○", "Policy check"], ["○", "Tool execution"], ["○", "Result returned"], ["○", "Audit log saved"]] },
+            { k: "num", tone: "ac", w: 4, label: "To authorize", value: "1", unit: "click", sub: "“Continue to Linear”, inside the run." },
+            { k: "stack", tone: "mid", w: 4, label: "In the Playground", rows: [["Modes", "2", "Chat · Execute", "white"], ["Tools ready", "64", "Across 20+ apps", "light"]] }] },
+          media: [{ src: "/assets/images/arcade/playground-chat.jpg", alt: "Playground chat with an execution map and an eight-step execution visibility rail.", cap: "Chat, execution map and trace rail" }, { src: "/assets/images/arcade/playground-auth.jpg", alt: "Playground paused at step three, authorization required, showing the user, required scope and a Continue to Linear button.", cap: "Authorization, at the moment it's needed" }] },
+
+        { title: "Project Home", statement: "Project Home: one page, four states.",
+          text: ["The dashboard follows the user's progress, and every blocker ships with its fix."],
+          bento: { label: "Project Home", tiles: [
+            { k: "keys", tone: "dark", w: 4, h: 2, label: "States", hi: 2, keys: [["0/3", "Empty"], ["1/3", "Needs auth"], ["3/4", "First run"], ["4/4", "Active"]] },
+            { k: "num", tone: "ac", w: 4, label: "First run", value: "3/4", sub: "Setup done. Next: enable test users.", bar: 75 },
+            { k: "donut", tone: "light", w: 4, label: "Success rate", value: "91%", pct: 91 },
+            { k: "list", tone: "graphite", w: 8, label: "Blockers, ranked", rows: [["▲", "Salesforce auth expired", "Fix now"], ["▲", "Slack missing chat:write", "Reauthorize"], ["■", "Slack approval pending", "Review"], ["▼", "Gateway has no client", "Copy config"]] }] },
+          media: [{ src: "/assets/images/arcade/dashboard-needs-auth.jpg", alt: "Dashboard in the Needs auth state, with a setup checklist and a single next action.", cap: "Needs auth: one next action" }, { src: "/assets/images/arcade/dashboard-active.jpg", alt: "Dashboard in the Active state with KPIs, project summary and a recent execution map.", cap: "Active: health, runs and blockers (prototype data)" }] },
+
+        { title: "Measurement", statement: "Measurement: time to a safe agent in production.",
+          text: ["Scale it if time to first call drops without new auth drop-off. Rethink it if users run but never open a trace."],
+          bento: { label: "Metrics and rollout", tiles: [
+            { k: "bars", tone: "soft", w: 6, h: 2, label: "Activation funnel", bars: [["Start", 100], ["M2", 84], ["Auth", 68], ["M1", 54], ["M3", 42], ["M4", 30], ["M5", 20]], sub: "Illustrative shape. No data until it's instrumented." },
+            { k: "list", tone: "dark", w: 6, h: 2, label: "Five metrics", title: "Measured by safe production use, not time in the dashboard.", rows: [["M1", "Time to first authorized call", "Activation"], ["M2", "Setup completion by path", "Onboarding"], ["M3", "First trace opened", "Understanding"], ["M4", "Repeat call in week 1", "Retention"], ["M5", "Invited user activation", "Rollout"]] },
+            { k: "timeline", tone: "white", w: 12, label: "Same design, three levels of build", phases: [["2 weeks", "Validate", "Built", 2, "Prototype, tested with 5–10 agent builders."], ["4 weeks", "Beta", "Next", 2, "Onboarding and Playground MVP, instrumented."], ["8 weeks", "Production", "Later", 4, "Live node canvas, real-time runs, readiness score."]] }] } },
+
+        { title: "Outcome", statement: "Outcome: a working path to the first call.",
+          text: ["Simulated data, no production results yet. The metrics above decide whether it scales.", "The call I'd want to own as a first designer: pick the moment that matters, build the path to it, and be honest about what waits."],
+          bento: { label: "Risks", tiles: [
+            { k: "text", tone: "dark", w: 4, label: "Risk", title: "The guided path hides power.", body: "Mitigation: “Explore dashboard first” stays one click away." },
+            { k: "text", tone: "graphite", w: 4, label: "Risk", title: "Sandbox success doesn't transfer.", body: "Mitigation: First run ends in “Enable test users”." },
+            { k: "text", tone: "light", w: 4, label: "Risk", title: "Simulated data.", body: "Mitigation: the 2-week plan tests with real agent builders." }] },
+          cta: { label: "View the prototype", href: "https://arcadedevv.vercel.app/" } },
+      ],
+    },
+  },
+  {
+    name: "Gap 3D Fit", org: "Gap", area: "E-commerce · 3D sizing UX", tags: ["E-comm", "UX Design"],
+    title: "Turning sizing uncertainty into a 61% add-to-bag decision.",
+    desc: "Technical product designer and team lead on Gap's 3D Fit viewer: fit logic, UX flow, UI and testing across web and iOS.",
+    metric: { value: "61%", label: "Add-to-bag lift" }, href: "/case-study?case=5", tint: ["#A4A6A3", "#E7E8E5", "#D6D7D4"],
+    cs: {
+      meta: [["Role", "Technical Product Designer"], ["Timeline", "6 months"], ["Skills", "UX flow, fit logic, UI, testing, 3D optimization · Web, iOS"], ["Team", "2 PMs, 1 designer, 1 UXR"]],
+      sections: [
+        { title: "Problem", media: ["Old sizing flow screenshot"], statement: "Problem: the old flow showed fit, but shoppers still felt risk.",
+          text: ["Denim made sizing harder: one size had to explain multiple body zones without turning checkout into a long form.", "We saw an opportunity to help shoppers trust a size and move forward, instead of guessing and returning."] },
+        { title: "Research", media: ["Sizing research insights / user feedback"], statement: "Research: confidence, not measurements, was the missing piece.",
+          text: ["Sizing breakdowns kept coming back to trust: what shoppers saw was precise, but not convincing."],
+          cards: [["Measurements were not enough", "Charts were precise; comfort was not."], ["Fit was multi-zone", "Waist, hip, thigh, calf, and inseam all mattered."], ["The answer needed a reason", "A size recommendation without evidence felt risky."], ["Every extra input had a cost", "More personalization could also mean more drop-off."]] },
+        { title: "Solution", media: ["Final 3D Fit flow: baseline → calibration → tuning", "Explainable fit screen"], statement: "Solution: ask less upfront, show more evidence when trust is at stake.",
+          text: ["The final flow made fit easier to trust without adding friction. Each step either improved the model or helped shoppers verify the recommendation."],
+          steps: [["Baseline input"], ["Fit calibration"], ["Optional tuning"], ["Explainable fit"]],
+          trades: [
+            { n: "Decision 1", t: "Accuracy vs completion rate", rows: [["User need", "Credible sizing."], ["Business need", "Purchase momentum."], ["Constraint", "Too many inputs caused drop-off."], ["Compromise", "Baseline first, tuning optional."]], note: "Complexity moved later, after the value was clear." },
+            { n: "Decision 2", t: "Explainability vs purchase velocity", rows: [["User need", "Evidence behind the size."], ["Business need", "Fast purchase flow."], ["Constraint", "Too much rationale slowed action."], ["Compromise", "Fast answer, optional reason."]], note: "The recommendation became inspectable without becoming heavy." },
+            { n: "Decision 3", t: "Fit fidelity vs mobile performance", rows: [["User need", "Realistic body-zone fit."], ["Business need", "Reach mobile shoppers."], ["Constraint", "Fidelity slowed performance."], ["Compromise", "Use copy to support visuals."]], note: "Fit copy became interface logic: short, local, decision-tied." },
+          ] },
+        { title: "Impact", media: ["Results chart or before/after"], dash: [{ type: "kpi", w: 4, label: "Add-to-bag", value: "+61%", chip: "Lift", note: "Lift after the redesign" }], statement: "Impact: a 61% add-to-bag lift.",
+          text: ["The strongest signal was not more 3D realism. It was reducing sizing ambiguity at the moment shoppers decided whether to trust a size and add to bag.", "The visual was not the product. Confidence was what shoppers believed, understood, and felt ready to do next. I would cut more today: every control should earn its place at the moment of doubt."],
+          cards: [["Product", "Connected confidence to commerce signals"], ["Engineering", "Balanced 3D assets with mobile performance"], ["Research", "Mapped trust breakdowns"], ["Fit language", "Aligned product, research, and merchandising terms"]] },
       ],
     },
   },
@@ -333,6 +507,17 @@ const svgEl = (tag, attrs = {}) => {
 // A typographic tile: the project's headline metric, set large on its gradient
 function metricTile(p, el, small = false) {
   p.tint.forEach((c, k) => el.style.setProperty(`--t${k + 1}`, c));
+  if (p.thumb) {
+    // Product media instead of the metric: the video plays while visible; the small nav preview shows its poster frame
+    el.classList.add("case__tile--media");
+    if (small) { const img = document.createElement("img"); img.className = "case__img"; img.src = p.thumb.navPoster || p.thumb.poster; img.alt = p.thumb.alt; el.appendChild(img); return; }
+    const v = document.createElement("video");
+    v.className = "case__vid"; v.muted = true; v.loop = true; v.playsInline = true; v.preload = "none"; v.poster = p.thumb.poster; v.setAttribute("aria-label", p.thumb.alt);
+    const src = document.createElement("source"); src.src = p.thumb.video; src.type = "video/mp4"; v.appendChild(src);
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) v.controls = false;
+    else new IntersectionObserver(([e]) => { e.isIntersecting && !document.hidden ? v.play().catch(() => {}) : v.pause(); }, { threshold: 0.4 }).observe(v);
+    el.appendChild(v); return;
+  }
   const m = document.createElement("div");
   m.className = "metric" + (small ? " metric--sm" : "");
   m.innerHTML = "<strong></strong><span></span>";
@@ -1191,7 +1376,7 @@ function dashTile(v) {
   const head = el("div", "dt__head"); head.appendChild(el("span", "dt__label", v.label));
   if (v.chip) head.appendChild(el("span", "dt__chip", v.chip));
   t.append(head, el("strong", "dt__value", v.value));
-  const chart = el("div", "dt__chart"); chart.setAttribute("aria-hidden", "true");
+  const chart = el("div", "dt__chart"); if (["meter", "waffle", "donut"].includes(v.type)) chart.setAttribute("aria-hidden", "true");
   if (v.type === "bars") {
     const max = Math.max(...v.rows.map((r) => r[1]));
     v.rows.forEach(([label, val, shown], i) => {
@@ -1227,6 +1412,244 @@ function dashTile(v) {
   return t;
 }
 
+function arcadePrototype(kind) {
+  const shell = el("div", `ap ap--${kind}`);
+  shell.innerHTML = `
+    <div class="ap__bar">
+      <span class="ap__brand"><i></i>ARCADE</span>
+      <span class="ap__sandbox">INTERACTIVE PROTOTYPE</span>
+    </div>
+    <div class="ap__body"></div>
+    <p class="ap__hint"></p>`;
+  const body = shell.querySelector(".ap__body");
+  const hint = shell.querySelector(".ap__hint");
+
+  if (kind === "ia") {
+    hint.textContent = "Switch views to compare what the navigation asks users to understand.";
+    shell.querySelector(".ap__bar").insertAdjacentHTML("beforeend", `
+      <div class="ap__toggle" role="group" aria-label="Navigation version">
+        <button type="button" aria-pressed="true" data-ia="before">Current</button>
+        <button type="button" aria-pressed="false" data-ia="after">Proposed</button>
+      </div>`);
+    const before = ["Tools", "Servers", "Secrets", "OAuth providers", "Users", "Policies", "Logs", "API keys", "Usage"];
+    const groups = [
+      ["Build", "Project Home · Playground · Tools · Agents"],
+      ["Roll out", "Gateways · Users & Access · Auth · Policies"],
+      ["Observe", "Runs & Traces · Audit logs · Usage"],
+    ];
+    const render = (view) => {
+      body.innerHTML = view === "before"
+        ? `<div class="ap__ia-copy"><span>RESOURCE MODEL</span><strong>Find the object you need.</strong><p>The sidebar mirrors the backend. The user assembles the workflow.</p></div><div class="ap__resource-list">${before.map((x, i) => `<span><b>${String(i + 1).padStart(2, "0")}</b>${x}</span>`).join("")}</div>`
+        : `<div class="ap__ia-copy"><span>JOB MODEL</span><strong>Move the work forward.</strong><p>The architecture is still available, grouped by the job it supports.</p></div><div class="ap__job-list">${groups.map(([h, t], i) => `<button type="button"><b>0${i + 1}</b><span><strong>${h}</strong><small>${t}</small></span><i>→</i></button>`).join("")}</div>`;
+    };
+    render("before");
+    shell.querySelectorAll("[data-ia]").forEach((btn) => btn.addEventListener("click", () => {
+      shell.querySelectorAll("[data-ia]").forEach((b) => b.setAttribute("aria-pressed", b === btn));
+      render(btn.dataset.ia);
+    }));
+  }
+
+  if (kind === "onboarding") {
+    hint.textContent = "Choose a goal, then a path. The prototype keeps architecture choices behind user intent.";
+    const goals = [
+      ["Triage inbound issues", "GitHub · Linear · Slack"],
+      ["Stay on top of inbox", "Gmail · Slack"],
+      ["Plan my day", "Calendar · Gmail"],
+    ];
+    const paths = [
+      ["Try in Playground", "Recommended", "Prove Arcade can execute safely."],
+      ["Connect to Cursor / Claude", "MCP gateway", "Use tools inside an AI client."],
+      ["Build into my app", "SDK", "Call execute() from your backend."],
+    ];
+    let goal = "";
+    const progress = (step) => `<ol class="ap__progress">${["Pick a goal", "Choose how", "Connect & run"].map((x, i) => `<li class="${i < step ? "done" : i === step ? "active" : ""}"><i>${i < step ? "✓" : i + 1}</i>${x}</li>`).join("")}</ol>`;
+    const renderGoals = () => {
+      body.innerHTML = `${progress(0)}<div class="ap__screen-head"><span>STEP 01</span><h3>What do you want to get done?</h3><p>Pick an outcome. We’ll prepare the right tools.</p></div><div class="ap__goal-grid">${goals.map(([h, t]) => `<button type="button" data-goal="${h}"><strong>${h}</strong><span>${t}</span><i>Choose goal →</i></button>`).join("")}</div>`;
+      body.querySelectorAll("[data-goal]").forEach((btn) => btn.addEventListener("click", () => { goal = btn.dataset.goal; renderPaths(); }));
+    };
+    const renderPaths = () => {
+      body.innerHTML = `${progress(1)}<div class="ap__screen-head"><button class="ap__back" type="button">← Goals</button><span>STEP 02</span><h3>How do you want to use this?</h3><p>For <strong>${goal.toLowerCase()}</strong>. You can change paths anytime.</p></div><div class="ap__tool-bundle"><span>PROPOSED TOOLS</span><b>GitHub <i>Connected</i></b><b>Linear <em>Needs auth</em></b><b>Slack <em>Needs auth</em></b></div><div class="ap__path-grid">${paths.map(([h, badge, t], i) => `<button type="button" data-path="${h}" class="${i === 0 ? "recommended" : ""}"><small>${badge}</small><strong>${h}</strong><span>${t}</span><i>Continue →</i></button>`).join("")}</div>`;
+      body.querySelector(".ap__back").addEventListener("click", renderGoals);
+      body.querySelectorAll("[data-path]").forEach((btn) => btn.addEventListener("click", () => {
+        body.innerHTML = `${progress(2)}<div class="ap__success"><span>READY TO RUN</span><strong>${goal}</strong><p>${btn.dataset.path} is prepared with three tools and visible authorization state.</p><button type="button">Open Playground →</button></div>`;
+        body.querySelector(".ap__success button").addEventListener("click", renderGoals);
+      }));
+    };
+    renderGoals();
+  }
+
+  if (kind === "runtime") {
+    hint.textContent = "Run the prompt. Authorization pauses in context, then the same execution resumes.";
+    const checks = ["User intent", "Tool selected", "Authorization", "Scope check", "Policy check", "Tool execution", "Result returned", "Audit log saved"];
+    body.innerHTML = `
+      <div class="ap__play-main">
+        <div class="ap__play-head"><span>CHAT</span><small>SANDBOX · ACTING AS SAMBIT</small></div>
+        <div class="ap__prompt">Create a Linear issue from the latest failed deployment.</div>
+        <div class="ap__response"><span>ARCADE</span><strong>Ready to execute one authorized action.</strong><p data-runtime-copy>The run will show every check between intent and audit log.</p></div>
+        <button class="ap__primary" type="button" data-runtime-action>Run safely →</button>
+      </div>
+      <ol class="ap__trace">${checks.map((x, i) => `<li data-check="${i}"><i>${String(i + 1).padStart(2, "0")}</i><span>${x}</span><b>Waiting</b></li>`).join("")}</ol>`;
+    const action = body.querySelector("[data-runtime-action]");
+    const copy = body.querySelector("[data-runtime-copy]");
+    const rows = [...body.querySelectorAll("[data-check]")];
+    let phase = "idle";
+    let timers = [];
+    const clear = () => { timers.forEach(clearTimeout); timers = []; };
+    const mark = (i, status) => {
+      rows[i].className = status;
+      rows[i].querySelector("b").textContent = status === "done" ? "Passed" : status === "blocked" ? "Needs auth" : "Running";
+    };
+    const runRange = (from, to, done) => {
+      for (let i = from; i <= to; i++) timers.push(setTimeout(() => {
+        if (i > from) mark(i - 1, "done");
+        mark(i, "running");
+        if (i === to) timers.push(setTimeout(done, 420));
+      }, (i - from) * 420));
+    };
+    action.addEventListener("click", () => {
+      if (phase === "idle" || phase === "done") {
+        clear(); rows.forEach((r) => { r.className = ""; r.querySelector("b").textContent = "Waiting"; });
+        phase = "running"; action.disabled = true; action.textContent = "Checking runtime…";
+        copy.textContent = "Arcade is resolving the user, selected tool and required access.";
+        runRange(0, 2, () => {
+          mark(2, "blocked"); phase = "auth"; action.disabled = false; action.textContent = "Continue to Linear →";
+          copy.innerHTML = "Authorization required for <code>issues:create</code>. The model never sees your token.";
+        });
+      } else if (phase === "auth") {
+        phase = "running"; action.disabled = true; action.textContent = "Resuming run…"; mark(2, "done");
+        copy.textContent = "Authorized. Resuming from the exact check where the run paused.";
+        runRange(3, 7, () => {
+          mark(7, "done"); phase = "done"; action.disabled = false; action.textContent = "Run again ↻";
+          copy.textContent = "Workflow succeeded. The result and complete audit trace are ready to review.";
+        });
+      }
+    });
+  }
+
+  if (kind === "dashboard") {
+    hint.textContent = "Switch maturity states. The destination stays stable while its priority changes.";
+    const states = ["Empty", "Needs auth", "First run", "Active"];
+    shell.querySelector(".ap__bar").insertAdjacentHTML("beforeend", `<div class="ap__toggle ap__toggle--states" role="group" aria-label="Dashboard maturity">${states.map((s, i) => `<button type="button" aria-pressed="${i === 0}" data-state="${i}">${s}</button>`).join("")}</div>`);
+    const screens = [
+      ["YOUR PROJECT IS READY", "Connect a tool and run your first agent action.", [["01", "Pick tools"], ["02", "Connect auth"], ["03", "Test action"]], "Choose tools →"],
+      ["1 STEP BLOCKING YOUR RUN", "Authorize GitHub to run the first action.", [["✓", "Tools selected"], ["02", "GitHub needs auth"], ["03", "First trace waiting"]], "Authorize GitHub →"],
+      ["FIRST TRACE SUCCEEDED", "The action ran safely and every check is reviewable.", [["✓", "Authorized"], ["✓", "Execution passed"], ["✓", "Audit log saved"]], "Enable test users →"],
+      ["3 AGENTS RUNNING", "Two issues need attention across live operations.", [["99.2%", "Success rate"], ["14.8k", "Tool calls"], ["2", "Blocked users"]], "Review blockers →"],
+    ];
+    const render = (i) => {
+      const [k, h, cards, cta] = screens[i];
+      body.innerHTML = `<div class="ap__dash-head"><span>DASHBOARD / ${states[i].toUpperCase()}</span><h3>${h}</h3></div><div class="ap__dash-grid">${cards.map(([v, l], n) => `<div class="${i === 3 && n === 2 ? "warn" : ""}"><strong>${v}</strong><span>${l}</span><i>${i < 3 ? (n < i + 1 ? "Complete" : "Waiting") : n === 2 ? "Review" : "Healthy"}</i></div>`).join("")}</div><button class="ap__primary" type="button">${cta}</button>`;
+    };
+    render(0);
+    shell.querySelectorAll("[data-state]").forEach((btn) => btn.addEventListener("click", () => {
+      shell.querySelectorAll("[data-state]").forEach((b) => b.setAttribute("aria-pressed", b === btn));
+      render(Number(btn.dataset.state));
+    }));
+  }
+  return shell;
+}
+
+function caseViz(kind) {
+  const figure = el("figure", `cv cv--${kind}`);
+  if (kind === "metrics") {
+    const metrics = [
+      ["01", "Activation", "Time to first authorized call"],
+      ["02", "Completion", "Setup completion by path"],
+      ["03", "Understanding", "First trace discovery"],
+      ["04", "Retention", "Week 1 repeat tool calls"],
+      ["05", "Rollout", "Invited user activation"],
+    ];
+    figure.innerHTML = `
+      <figcaption>Measurement system · leading signals roll up to one product outcome</figcaption>
+      <div class="cv__north"><span>NORTH STAR</span><strong>Time to production</strong><small>Safe agent deployment</small></div>
+      <div class="cv__metrics">${metrics.map(([n, k, v]) => `<div><i>${n}</i><span>${k}</span><strong>${v}</strong></div>`).join("")}</div>
+      <p>These are proposed instrumentation points for a take-home concept, not observed production results.</p>`;
+  }
+  return figure;
+}
+
+
+// ── Case-study bento board: solid tiles on a dark ground, one idea per tile (kinds: num, stack, bars, donut, dial, list, keys, text, timeline) ──
+function bento(v) {
+  const board = el("figure", "bento cs__wide");
+  if (v.label) board.setAttribute("aria-label", v.label);
+  v.tiles.forEach((t, i) => board.appendChild(bentoTile(t, i)));
+  new IntersectionObserver(([e], io) => { if (e.isIntersecting) { board.classList.add("in"); io.disconnect(); } }, { threshold: 0.12 }).observe(board);
+  return board;
+}
+
+function bentoTile(t, i) {
+  const tile = el("div", `bt bt--${t.k} bt--${t.tone || "white"} bt--w${t.w || 4}` + (t.h ? ` bt--h${t.h}` : ""));
+  tile.style.setProperty("--i", i);
+  if (t.label) tile.appendChild(el("span", "bt__label", t.label));
+
+  if (t.k === "num") {
+    const v = el("strong", "bt__value", t.value); if (t.unit) v.appendChild(el("small", "", t.unit));
+    tile.appendChild(v); if (t.sub) tile.appendChild(el("span", "bt__sub", t.sub));
+    if (t.bar != null) { const bar = el("div", "bt__bar"), f = el("i"); f.style.setProperty("--w", `${t.bar}%`); bar.appendChild(f); tile.appendChild(bar); }
+  } else if (t.k === "stack") {
+    t.rows.forEach(([label, value, sub, tone]) => {
+      const r = el("div", `bt__card bt--${tone || "white"}`), top = el("div", "bt__cardtop");
+      top.append(el("span", "bt__cardlabel", label), el("strong", "", value)); r.appendChild(top);
+      if (sub) r.appendChild(el("span", "bt__sub", sub)); tile.appendChild(r);
+    });
+  } else if (t.k === "bars") {
+    const max = t.max || Math.max(...t.bars.flatMap((b) => b.slice(1).filter((n) => typeof n === "number")));
+    const chart = el("div", "bt__chart");
+    t.bars.forEach(([label, a, b], k) => {
+      const col = el("div", "bt__col"), plot = el("div", "bt__plot");
+      const add = (n, cls) => { const bar = el("i", cls); bar.style.setProperty("--h", `${(n / max) * 100}%`); bar.style.setProperty("--k", k); bar.title = String(n); plot.appendChild(bar); };
+      if (typeof b === "number") { add(a, "is-before"); add(b, "is-after"); } else { const tr = el("i", "is-track"); plot.appendChild(tr); add(a, "is-after"); }
+      col.append(plot, el("span", "bt__axis", label)); chart.appendChild(col);
+    });
+    tile.appendChild(chart);
+    if (t.legend) { const lg = el("div", "bt__legend"); t.legend.forEach((x, k) => { const s = el("span"); s.append(el("i", k ? "is-after" : "is-before"), document.createTextNode(x)); lg.appendChild(s); }); tile.appendChild(lg); }
+    if (t.sub) tile.appendChild(el("span", "bt__sub", t.sub));
+  } else if (t.k === "donut") {
+    const C = 2 * Math.PI * 40, svg = svgEl("svg", { viewBox: "0 0 100 100", "aria-hidden": "true" });
+    svg.append(svgEl("circle", { cx: 50, cy: 50, r: 40, class: "trk" }), svgEl("circle", { cx: 50, cy: 50, r: 40, class: "arc", "stroke-dasharray": C, "stroke-dashoffset": C, style: `--to:${C * (1 - t.pct / 100)}`, transform: "rotate(-90 50 50)" }));
+    const ring = el("div", "bt__ring"); ring.append(svg, el("strong", "", t.value)); tile.appendChild(ring);
+    if (t.sub) tile.appendChild(el("span", "bt__sub", t.sub));
+  } else if (t.k === "dial") {
+    const dial = el("div", "bt__dial");
+    for (let k = 1; k <= t.n; k++) { const n = el("span", k === t.at ? "is-at" : "", String(k)); n.style.setProperty("--a", `${((k - 1) / t.n) * 360}deg`); dial.appendChild(n); }
+    const mid = el("div", "bt__dialmid"); mid.append(el("strong", "", t.value), el("span", "", t.center)); dial.appendChild(mid);
+    tile.appendChild(dial); if (t.sub) tile.appendChild(el("span", "bt__sub", t.sub));
+  } else if (t.k === "list") {
+    if (t.title) tile.appendChild(el("b", "bt__title", t.title));
+    const ul = el("ul", "bt__list"); ul.setAttribute("role", "list");
+    t.rows.forEach(([mark, label, right]) => { const li = el("li"); li.append(el("span", "bt__mark", mark), el("span", "", label), el("span", "bt__right", right || "")); ul.appendChild(li); });
+    tile.appendChild(ul);
+  } else if (t.k === "keys") {
+    const g = el("div", "bt__keys");
+    t.keys.forEach(([glyph, cap], k) => { const key = el("div", "bt__key" + (k === t.hi ? " is-hi" : "")); key.append(el("strong", "", glyph), el("span", "", cap)); g.appendChild(key); });
+    tile.appendChild(g);
+  } else if (t.k === "text") {
+    tile.append(el("b", "bt__title", t.title), el("span", "bt__body", t.body));
+  } else if (t.k === "timeline") {
+    const g = el("div", "bt__time");
+    t.phases.forEach(([wk, name, status, span, body], k) => {
+      const ph = el("div", "bt__phase" + (status === "Built" ? " is-on" : "")); ph.style.gridColumn = `span ${span}`; ph.style.setProperty("--k", k);
+      const top = el("div", "bt__phasetop"); top.append(el("span", "", wk), el("span", "bt__chip", status));
+      ph.append(el("i"), top, el("b", "", name), el("span", "bt__body", body)); g.appendChild(ph);
+    });
+    tile.appendChild(g);
+  }
+  return tile;
+}
+
+// Lightbox: click a screenshot to read it at full size
+function openLightbox(src, alt, opener) {
+  const lb = el("div", "lb"); lb.setAttribute("role", "dialog"); lb.setAttribute("aria-modal", "true"); lb.setAttribute("aria-label", alt || "Screenshot");
+  const img = el("img"); img.src = src; img.alt = alt || "";
+  const close = el("button", "", "Close"); close.type = "button";
+  const done = () => { lb.classList.remove("is-open"); document.removeEventListener("keydown", onKey); setTimeout(() => { lb.remove(); opener && opener.focus(); }, 200); };
+  const onKey = (e) => { if (e.key === "Escape") done(); };
+  lb.addEventListener("click", done); document.addEventListener("keydown", onKey);
+  lb.append(img, close); document.body.appendChild(lb);
+  requestAnimationFrame(() => { lb.classList.add("is-open"); close.focus(); });
+}
+
   // Filter chips: show the items whose data-tag matches, hide the rest
   function wireChips(items, onChange) {
     const chips = [...document.querySelectorAll("[data-chips] .chip")];
@@ -1242,34 +1665,45 @@ function dashTile(v) {
     const T = [["#F6C7D6", "#F8E2C8", "#F3EEE8"], ["#8FB0C8", "#EBDDD3", "#DCE7EE"], ["#E8B79B", "#F6EFE0", "#F1D8C4"], ["#A9AE7F", "#DADBC4", "#C7CBAF"], ["#BDCFDE", "#EBDAD3", "#E4EAEE"], ["#9CB09E", "#E3EAE0", "#C9D5C8"]];
     const LAB = [
       ["PROTO-01", "Connection onboarding", "Mobile · 2026", "Onboarding", "Connect your Spotify account to see your top artists and get personalized recommendations.", "prototype"],
-      ["PROTO-02", "AI UX Studio", "Web", "Studio site", "A multidisciplinary practice designing intelligent, human-centered experiences at the intersection of AI technology and product design.", "prototype"],
+      ["PROTO-02", "AI UX Studio", "Landing page", "Studio site", "A multidisciplinary practice designing intelligent, human-centered experiences at the intersection of AI technology and product design.", "prototype"],
       ["PROTO-03", "Jenyi", "AI journal · 2026", "Voice · Mobile editorial", "Your journal starts here. Speak freely and Jenyi turns voice into entries you'll actually revisit.", "prototype"],
       ["PROTO-04", "Intercom MCP", "Web · MCP · 2026", "Agent integration", "An MCP integration so agents can read and act on Intercom conversations with clear guardrails.", "prototype"],
+      ["PROTO-05", "Payman AI", "Landing page · 2026", "Fintech · Agentic banking", "A redesign of paymanai.com, inspired by replay.ai: agentic banking for banks and credit unions.", "landing", "/payman", "/assets/images/playground/payman-thumb.jpg"],
       ["SUB-AMEX-01", "Membership App", "Concept", "Mobile · iOS", "Rewards flow & card management UI", "mobile"],
       ["SUB-LOG-07", "Brand System", "Shipped", "Print · B2B", "Business card system & identity touchpoints", "brand"],
       ["SUB-ICO-12", "Line Icon Set", "Library", "Design system", "4×8 minimal icon grid for product UI", "system"],
       ["SUB-APL-03", "Intelligence Stamp", "Exploration", "Brand · Physical", "Apple Intelligence postage stamp visual", "brand"],
       ["SUB-TIG-09", "Platform Branding", "In review", "Fintech · B2B", "Card system for intelligent finance platform", "brand"],
       ["SUB-AI-18", "Prompt Bar", "Prototype", "AI · Product UI", "Generative prompt bar & model controls", "ai"],
-      ["SUB-MRC-04", "AI Recruiting", "Concept", "Landing · Web", "Hero narrative for global talent network", "web"],
+      ["SUB-MRC-04", "AI Recruiting", "Concept", "Landing · Web", "Hero narrative for global talent network", "landing"],
       ["SUB-VSW-11", "View Switcher", "Component", "Controls · iOS", "List/grid toggle with neumorphic affordance", "system"],
       ["SUB-MNU-06", "Menu Control", "Component", "Navigation", "Glass toggle track with glowing thumb", "system"],
       ["SUB-SLD-15", "Control Kit", "System", "Dark UI", "Sliders, palettes & export controls", "system"],
       ["SUB-IND-08", "Studio Follow-up", "Prototype", "Agent · CAD", "Follow-up card with CAD package delivery", "ai"],
-      ["SUB-PLN-02", "Plant Health", "Concept", "Agtech · Web", "Crop diagnostics landing & data story", "web"],
+      ["SUB-PLN-02", "Plant Health", "Concept", "Agtech · Web", "Crop diagnostics landing & data story", "landing"],
       ["SUB-MOD-21", "Material Studies", "Research", "3D · Architecture", "Stacked mood board: materials, light & form", "research"],
     ];
     setCount(LAB.length);
     const list = document.querySelector("[data-lab]");
-    const tiles = LAB.map(([code, title, status, area, scope, tag], i) => {
+    const tiles = LAB.map(([code, title, status, area, scope, tag, href, thumb], i) => {
       const li = el("li", "lab__tile grain");
       li.style.setProperty("--i", i);
       li.dataset.tag = tag;
-      T[i % T.length].forEach((c, k) => li.style.setProperty(`--t${k + 1}`, c));
+      (thumb ? ["#3C9A98", "#C6E6DF", "#86C6C0"] : T[i % T.length]).forEach((c, k) => li.style.setProperty(`--t${k + 1}`, c));
       const top = el("div", "lab__top"); top.append(el("span", "", code), el("span", "", status));
       const bottom = el("div", "lab__bottom");
       bottom.append(el("h3", "lab__title", title), el("p", "lab__area", area), el("p", "lab__scope", scope));
-      li.append(top, bottom);
+      li.append(top);
+      if (thumb) {
+        // Contextual thumbnail: the page itself inside a small browser frame, cropped by the tile
+        li.classList.add("lab__tile--shot");
+        const shot = el("div", "lab__shot"), bar = el("div", "lab__shotbar"), img = el("img");
+        bar.append(el("i"), el("i"), el("i"), el("span", "", href.replace(/^\//, "") === "payman" ? "paymanai.com" : ""));
+        img.src = thumb; img.alt = `Preview of the ${title} page`; img.loading = "lazy"; img.decoding = "async";
+        shot.append(bar, img); li.appendChild(shot);
+      }
+      li.append(bottom);
+      if (href) { const a = el("a", "lab__cover"); a.href = href; a.setAttribute("aria-label", `Open ${title}`); li.appendChild(a); }
       li.addEventListener("pointermove", (e) => {
         const r = li.getBoundingClientRect();
         li.style.setProperty("--gx", `${((e.clientX - r.left) / r.width) * 100}%`);
@@ -1292,12 +1726,30 @@ function dashTile(v) {
     const p = PROJECTS[id - 1];
     const root = document.querySelector("[data-case]");
     p.tint.forEach((c, k) => root.style.setProperty(`--t${k + 1}`, c));
+    root.style.setProperty("--ac", "#B7471D");
     document.title = `${p.name}: case study — Sambit Nayak`;
     document.querySelector("[data-cs-num]").textContent = pad2(id);
     document.querySelector("[data-cs-client]").textContent = `${p.org} · ${p.area}`;
     document.querySelector("[data-cs-title]").textContent = p.title;
     document.querySelector("[data-cs-desc]").textContent = p.desc;
-    metricTile(p, document.querySelector("[data-cs-tile]"));
+    const hero = document.querySelector("[data-cs-tile]");
+    hero.className = "cs__infographic";
+    const outcome = el("div", "cs__poster cs__poster--orange");
+    outcome.append(el("span", "cs__poster-label", p.org), el("strong", "cs__poster-value", p.metric.value), el("h2", "cs__poster-caption", p.metric.label));
+    const map = el("div", "cs__poster cs__poster--dark");
+    map.appendChild(el("span", "cs__poster-label", "Inside the case study"));
+    const rings = svgEl("svg", { viewBox: "0 0 320 320", class: "cs__orbits", "aria-hidden": "true" });
+    [138, 108, 78, 48].forEach((r, i) => rings.appendChild(svgEl("circle", { cx: 160, cy: 160, r, fill: "none", stroke: "currentColor", "stroke-width": 1.5, "stroke-dasharray": `${2 * Math.PI * r * .89} ${2 * Math.PI * r * .11}`, transform: `rotate(${i * 65 - 80} 160 160)` })));
+    map.appendChild(rings);
+    const contents = el("nav", "cs__poster-nav"); contents.setAttribute("aria-label", "Case study highlights");
+    p.cs.sections.filter((sec) => !sec.title.startsWith("Exploration")).slice(0, 4).forEach((sec, i) => {
+      const a = el("a", "", `${pad2(i + 1)} / ${sec.title}`);
+      a.href = "#" + sec.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"); contents.appendChild(a);
+    });
+    map.appendChild(contents); hero.append(outcome, map);
+    if (p.thumb) {
+      const media = el("div", "case__tile cs__hero-media"); metricTile(p, media); hero.after(media);
+    }
 
     const meta = document.querySelector("[data-cs-meta]");
     meta.style.setProperty("--n", Math.min(5, p.cs.meta.length));
@@ -1314,14 +1766,51 @@ function dashTile(v) {
       if (sec.dash) { const g = el("div", "dash"); sec.dash.forEach((v) => g.appendChild(dashTile(v))); c.appendChild(g);
         new IntersectionObserver(([e], io) => { if (e.isIntersecting) { g.classList.add("in"); io.disconnect(); } }, { threshold: 0.25 }).observe(g); }
       (sec.text || []).forEach((t) => c.appendChild(el("p", "", t)));
-      if (sec.media) { const g = el("div", "cs__media cs__media--" + Math.min(sec.media.length, 3)); sec.media.forEach((m) => { const f = el("figure", "ph"); f.append(el("span", "ph__tag", "Placeholder"), el("figcaption", "", m)); g.appendChild(f); }); c.appendChild(g); }
+      if (sec.bento) c.appendChild(bento(sec.bento));
+      if (sec.viz) c.appendChild(caseViz(sec.viz));
+      if (sec.prototype) c.appendChild(arcadePrototype(sec.prototype));
+      if (sec.media) {
+        const shotItems = sec.media.filter((m) => typeof m !== "string");
+        const cols = shotItems.length ? Math.min(shotItems.length, 3) : Math.min(sec.media.length, 3);
+        const g = el("div", "cs__media cs__media--" + cols); sec.media.forEach((m) => {
+        // A string is a placeholder; { src, alt, cap, narrow } is a real image
+        if (typeof m === "string") { const f = el("figure", "ph"); f.append(el("span", "ph__tag", "Placeholder"), el("figcaption", "", m)); g.appendChild(f); return; }
+        if (m.video) {
+          // { video, poster, alt, cap }: muted looping clip that plays only while visible
+          const f = el("figure", "shot shot--video"), tile = el("div", "shot__tile"), v = el("video");
+          v.muted = true; v.loop = true; v.playsInline = true; v.preload = "none"; v.poster = m.poster || ""; v.setAttribute("aria-label", m.alt || m.cap || "Video");
+          const src = el("source"); src.src = m.video; src.type = "video/mp4"; v.appendChild(src);
+          if (matchMedia("(prefers-reduced-motion: reduce)").matches) v.controls = true;
+          else new IntersectionObserver(([e]) => { e.isIntersecting && !document.hidden ? v.play().catch(() => {}) : v.pause(); }, { threshold: 0.45 }).observe(v);
+          tile.appendChild(v); f.appendChild(tile); if (m.cap) f.appendChild(el("figcaption", "", m.cap)); g.appendChild(f); return;
+        }
+        const f = el("figure", "shot" + (m.narrow ? " shot--narrow" : "")), tile = el("button", "shot__tile"), img = el("img");
+        tile.type = "button"; tile.setAttribute("aria-label", `Enlarge: ${m.cap || m.alt}`);
+        img.alt = m.alt || m.cap || ""; img.loading = "lazy"; img.decoding = "async";
+        img.addEventListener("load", () => img.classList.add("is-loaded")); img.src = m.src;
+        if (img.complete) img.classList.add("is-loaded");
+        tile.addEventListener("click", () => openLightbox(m.src, img.alt, tile));
+        tile.appendChild(img); f.appendChild(tile);
+        if (m.cap) { const fc = el("figcaption"); fc.append(el("span", "", m.cap), el("span", "", "Click to enlarge")); f.appendChild(fc); }
+        g.appendChild(f);
+      }); c.appendChild(g); }
       if (sec.quote) { const q = el("blockquote", "cs__quote"); q.append(el("p", "", `“${sec.quote}”`), el("footer", "", sec.quoteBy || "Power user interview")); c.appendChild(q); }
       if (sec.cards) { const ul = el("ul", "cs__cards cs__cards--2"); ul.setAttribute("role", "list"); sec.cards.forEach(([h, t]) => { const li = el("li"); li.append(el("h3", "", h), el("p", "", t)); ul.appendChild(li); }); c.appendChild(ul); }
-      if (sec.trades) { const g = el("div", "cs__trades"); sec.trades.forEach((t) => {
-        const card = el("div", "cs__trade"); card.append(el("span", "cs__trade-n", t.n), el("h3", "", t.t));
-        const dl = el("dl"); t.rows.forEach(([k, v]) => { const r = el("div"); r.append(el("dt", "", k), el("dd", "", v)); dl.appendChild(r); }); card.appendChild(dl);
-        if (t.note) card.appendChild(el("p", "cs__trade-note", t.note));
-        g.appendChild(card); }); c.appendChild(g); }
+      if (sec.trades) {
+        const n = sec.trades.length;
+        const cols = n === 1 ? 1 : n === 2 ? 2 : 3;
+        const g = el("div", "cs__trades cs__trades--" + cols);
+        sec.trades.forEach((t) => {
+          const card = el("div", "cs__trade");
+          card.append(el("span", "cs__trade-n", t.n), el("h3", "", t.t));
+          const dl = el("dl");
+          t.rows.forEach(([k, v]) => { const r = el("div"); r.append(el("dt", "", k), el("dd", "", v)); dl.appendChild(r); });
+          card.appendChild(dl);
+          if (t.note) card.appendChild(el("p", "cs__trade-note", t.note));
+          g.appendChild(card);
+        });
+        c.appendChild(g);
+      }
       if (sec.steps) { const ol = el("ol", "cs__steps cs__steps--cards"); ol.setAttribute("role", "list"); sec.steps.forEach(([h, t], k) => { const li = el("li"); li.append(el("span", "cs__n", pad2(k + 1)), el("h3", "", h)); if (t) li.appendChild(el("p", "", t)); ol.appendChild(li); }); c.appendChild(ol); }
       if (sec.cta) { const a = el("a", "btn", sec.cta.label); a.href = sec.cta.href; a.target = "_blank"; a.rel = "noopener"; a.style.alignSelf = "flex-start"; c.appendChild(a); }
       row.append(label, c); body.appendChild(row);

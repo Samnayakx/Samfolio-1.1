@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Confidence Is the Missing Layer in AI Interfaces — Sambit Nayak</title>
+  <meta name="description" content="When should AI ask, and when should it act? A confidence layer for agent interfaces: act, suggest, or ask." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+  <link rel="stylesheet" href="/css/site.css" />
+</head>
+<body data-page="essay">
+  <div class="loader" id="loader" aria-hidden="true"><div class="loader__bg"></div><svg></svg></div>
+  <noscript><style>.loader{display:none}</style></noscript>
+  <script src="/js/loader.js"></script>
+  <header class="header">
+    <div class="navgroup" data-nav="work">
+      <nav class="seg" aria-label="Primary">
+        <a class="seg__item seg__brand" href="/" aria-label="Sambit Nayak, home"><svg class="logo" aria-hidden="true"></svg></a>
+        <button class="seg__item only-desktop" type="button" id="work-tab" aria-expanded="false" aria-controls="work-panel">Work <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <a class="seg__item only-desktop" href="/about">About</a>
+        <a class="seg__item only-desktop" href="/writing" aria-current="true">Writing</a>
+        <a class="seg__item only-desktop" href="/playground">Playground</a>
+        <button class="seg__item only-mobile" type="button" id="menu-tab" aria-expanded="false" aria-controls="work-panel" aria-label="Menu">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <rect x="2" y="2" width="2" height="2"/><rect x="7" y="2" width="2" height="2"/><rect x="12" y="2" width="2" height="2"/>
+            <rect x="2" y="7" width="2" height="2"/><rect x="7" y="7" width="2" height="2"/><rect x="12" y="7" width="2" height="2"/>
+            <rect x="2" y="12" width="2" height="2"/><rect x="7" y="12" width="2" height="2"/><rect x="12" y="12" width="2" height="2"/>
+          </svg>
+        </button>
+      </nav>
+      <div class="panel" id="work-panel">
+        <div class="pcard only-mobile pcard--plain">
+          <div class="pcard__main">
+            <p class="pcard__label">Navigate</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/#work">Work</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/writing">Writing</a></li>
+              <li><a href="/playground">Playground</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pcard is-active">
+          <div class="pcard__main">
+            <p class="pcard__label">Case studies ( <span data-work-count>04</span> )</p>
+            <ul class="pcard__list" role="list" id="nav-projects"></ul>
+          </div>
+          <div class="pcard__thumb" id="nav-thumb" aria-hidden="true"></div>
+        </div>
+        <div class="pcard pcard--plain pcard--more">
+          <div class="pcard__main">
+            <p class="pcard__label">More</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/playground">Playground</a></li>
+              <li><a href="/writing">Writing</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="navgroup" data-nav="contact">
+      <div class="seg">
+        <span class="seg__item seg__time" title="Local time in San Francisco, California">San Francisco <time id="nav-clock" data-clock>--:--</time></span>
+        <button class="seg__item" type="button" id="contact-tab" aria-expanded="false" aria-controls="contact-panel">Contact <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <button class="icon-btn" type="button" id="theme" aria-label="Switch to dark mode">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+      <div class="panel panel--right" id="contact-panel"></div>
+    </div>
+  </header>
+
+  <main id="top">
+    <article class="sheet sheet--first">
+      <div class="work__inner">
+        <div class="work__head">
+          <div class="work__label">
+            <p class="work__eyebrow"><a href="/writing">Writing</a> · Mar 7, 2026</p>
+            <p class="work__sub">2 min read · Product design · Agentic UX</p>
+          </div>
+          <div class="work__headline">
+            <h1 class="work__title" id="essay-title">Confidence Is the Missing Layer in AI Interfaces</h1>
+            <p class="cs__lede">When Should AI Ask and When Should It Act?</p>
+          </div>
+        </div>
+
+        <div class="essay">
+          <div class="essay__meta">
+            <a href="/writing">All writing</a>
+            <a href="https://sambitnayak2.substack.com/p/confidence-is-the-missing-layer-in" target="_blank" rel="noopener">Substack</a>
+          </div>
+          <div class="essay__body">
+            <figure class="essay__mark">
+              <img src="/assets/images/writing/confidence-cover.jpg" alt="">
+            </figure>
+
+            <h2>Confidence Is the Interface</h2>
+            <p>Most AI tools today follow the same pattern.</p>
+            <p>The system performs an action and then asks what to do next.</p>
+            <figure>
+              <img src="/assets/images/writing/confidence-claude.png" alt="Claude Code asking clarifying questions, with a list of options and a type-something field.">
+              <figcaption>Claude Code pausing to ask what to do next</figcaption>
+            </figure>
+            <p>You see this in tools like <strong>Claude</strong> and <strong>Cursor</strong>. After editing code, the system pauses and asks:</p>
+            <ul>
+              <li>Run migrations</li>
+              <li>Update API layer</li>
+              <li>Generate tests</li>
+              <li>Something else</li>
+            </ul>
+            <p>At first this feels helpful. The AI is guiding the workflow.</p>
+            <p>But over time something becomes clear.</p>
+            <p>The AI isn’t actually deciding anything.<br>It’s just asking questions.</p>
+
+            <h2>Why This Pattern Exists</h2>
+            <p>The option-based model exists mainly for <em>safety</em>.</p>
+            <p>AI systems are still unreliable, so confirmations <strong>help prevent costly mistakes</strong> when modifying code, deleting files, or changing databases.</p>
+            <p>It has benefits:</p>
+            <ul>
+              <li>Faster than writing prompts</li>
+              <li>Shows the system’s suggested next step</li>
+              <li>Keeps users in control of risky actions</li>
+            </ul>
+            <p>But when this becomes the default interaction model, the experience starts to break.</p>
+
+            <h3>The Real Issue</h3>
+            <p>Most AI interfaces treat every decision as equally uncertain.</p>
+            <p>That’s the mistake.</p>
+            <p><em>Agents should behave differently depending on confidence.</em></p>
+            <p>When confidence is high, the system should act automatically.</p>
+            <p>When confidence is moderate, it should offer options.</p>
+            <p>When confidence is low, it should ask a clarifying question.</p>
+            <pre><code>High confidence → act
+Medium confidence → suggest
+Low confidence → ask</code></pre>
+            <p>Right now many systems operate entirely in the middle state.</p>
+            <p>They ask constantly.</p>
+
+            <h2>The Solution : The Confidence UX Layer</h2>
+            <figure>
+              <img src="/assets/images/writing/confidence-states.jpg" alt="Bar chart of confidence levels: high confidence acts automatically, medium confidence suggests options, low confidence asks for clarification.">
+            </figure>
+            <p>Imagine the system evaluating every decision through three states.</p>
+            <h3>High confidence</h3>
+            <p>The system executes silently.</p>
+            <p>Example:<br>A code schema changed, so the system regenerates types automatically.</p>
+            <h3>Medium confidence</h3>
+            <p>The system proposes options.</p>
+            <p>Example:<br>Looks like you want a Dark mode UI. Which design system should I use?</p>
+            <ul>
+              <li>Shadcn</li>
+              <li>Radix</li>
+              <li>Type here</li>
+            </ul>
+            <h3>Low confidence</h3>
+            <p>The system asks for clarification.</p>
+            <p>Example:<br>What are you trying to generate here?</p>
+            <p>The key idea is simple.</p>
+            <p><em>Most actions should fall into the first category.</em></p>
+            <p><em>Good agents act more than they ask.</em></p>
+
+            <h2>The Future Interaction Pattern</h2>
+            <p>Option-driven interfaces are a transitional design.</p>
+            <p>They exist because models are still unreliable and safety matters.</p>
+            <p>But the long-term direction is different.</p>
+            <p>Agents will move toward:</p>
+            <pre><code>Autonomous execution
++ rare high-quality interventions</code></pre>
+            <p>The system will act continuously in the background, surfacing decisions only when human judgment is truly required.</p>
+            <p>When that happens, the interface will change.</p>
+            <p>The AI will stop asking what to do.</p>
+            <p>And start behaving like someone who already knows.</p>
+
+            <div class="essay__foot">
+              <p class="essay__source">First published on <a class="inline" href="https://sambitnayak2.substack.com/p/confidence-is-the-missing-layer-in" target="_blank" rel="noopener">Substack</a>.</p>
+              <nav class="cs__next" aria-label="More writing">
+                <a href="/writing"><small>Index</small><strong>All writing</strong></a>
+                <a href="/writing/ux-for-agentic-systems"><small>Next</small><strong>UX for agentic systems</strong></a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer data-footer></footer>
+  <script src="/js/site.js"></script>
+</body>
+</html>
