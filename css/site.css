@@ -798,6 +798,7 @@ html.is-loading { overflow: hidden; }
 .post__link .case__cta { margin-top: var(--space-2); }
 .post__link:hover .case__cta svg { transform: translateX(3px); }
 .post__tile { aspect-ratio: 16 / 9; }
+.post--feature .post__tile { aspect-ratio: 21 / 9; }
 .post__tile--light { background: #f3f3f3; }
 .post__cover { width: auto; height: 100%; max-width: 100%; object-fit: contain; display: block; }
 
@@ -815,6 +816,8 @@ html.is-loading { overflow: hidden; }
 .essay__body h3 { font-size: 22px; line-height: 1.25; }
 .essay__body p, .essay__body li { margin: 0; font: 400 17px/1.65 var(--font-body); color: var(--sec-muted); }
 .essay__body strong { color: var(--sec-fg); font-weight: 500; }
+.essay__body sup { margin-left: 2px; font: 500 11px/1 var(--font-mono); vertical-align: super; }
+.essay__body sup a { color: var(--sec-fg); text-decoration: underline; text-underline-offset: 2px; }
 .essay__body ul { margin: 0; padding: 0 0 0 1.15em; display: flex; flex-direction: column; gap: var(--space-2); }
 .essay__body pre { margin: 0; padding: var(--space-4) var(--space-5); border-radius: var(--radius-lg); background: rgb(var(--greyscale-black)); color: rgb(var(--greyscale-white)); font: 400 13px/1.55 var(--font-mono); overflow-x: auto; white-space: pre-wrap; }
 .essay__body figure { margin: var(--space-2) 0; }
@@ -824,6 +827,15 @@ html.is-loading { overflow: hidden; }
 .essay__body hr { width: 100%; border: 0; border-top: 1px solid var(--sec-line); margin: var(--space-3) 0; }
 .essay__audio { display: flex; flex-direction: column; gap: var(--space-2); }
 .essay__audio audio { width: min(100%, 440px); }
+.essay__evidence { margin: var(--space-2) 0; padding: var(--space-5); border-radius: var(--radius-lg); background: var(--sec-card-hover); display: grid; grid-template-columns: minmax(120px, 1fr) 2fr; gap: var(--space-2) var(--space-5); align-items: end; }
+.essay__evidence > span { grid-column: 1 / -1; font: 400 11px/1.25 var(--font-mono); text-transform: uppercase; letter-spacing: .04em; color: var(--sec-muted); }
+.essay__evidence > strong { font: 400 clamp(48px, 8vw, 80px)/.9 var(--font-ntype); letter-spacing: -.03em; color: var(--sec-fg); }
+.essay__evidence > p { align-self: end; max-width: 32ch; font-size: 14px; line-height: 1.5; }
+.essay__sources { margin-top: var(--space-7); padding-top: var(--space-6); border-top: 1px solid var(--sec-line); display: flex; flex-direction: column; gap: var(--space-4); }
+.essay__sources h2 { margin-top: 0; }
+.essay__sources ol { margin: 0; padding-left: 1.4em; display: flex; flex-direction: column; gap: var(--space-3); }
+.essay__sources li { font-size: 14px; line-height: 1.55; }
+.essay__sources a { color: var(--sec-fg); text-decoration: underline; text-underline-offset: 3px; }
 .essay__foot { margin-top: var(--space-8); display: flex; flex-direction: column; gap: var(--space-6); }
 .essay__source { margin: 0; }
 .subscribe { display: flex; flex-wrap: wrap; gap: var(--space-2); max-width: 520px; }
@@ -891,6 +903,8 @@ html.is-loading { overflow: hidden; }
 }
 @media (max-width: 767px) {
   .post, .cs__row { padding-bottom: var(--space-8); }
+  .post--feature .post__tile { aspect-ratio: 16 / 9; }
+  .essay__evidence { grid-template-columns: 1fr; }
   .cs__stats, .cs__cards, .cs__steps, .cs__two, .cs__feature--split, .cs__next { grid-template-columns: 1fr; }
   .cs__stats--big { grid-template-columns: 1fr; }
   .cs__feature--flip .ph { order: 0; }
@@ -1407,5 +1421,11 @@ a.inline:hover { opacity: .7; }
 .case__vid { display: block; max-width: 100%; max-height: 100%; width: auto; height: 100%; object-fit: contain; border-radius: 6px; background: #000; transition: transform .9s var(--ease-expressive); }
 .case__link:hover .case__vid { transform: scale(1.02); }
 .case__tile--media { padding: var(--space-5); }
+.case__tile--bleed { padding: 0; }
+.case__tile--bleed :is(.case__vid, .case__img) { width: 100%; height: 100%; max-width: none; max-height: none; object-fit: cover; border-radius: 0; background: none; }
 @media (prefers-reduced-motion: reduce) { .case__link:hover .case__vid { transform: none; } }
 .pcard__thumb .case__img { width: 100%; height: 100%; max-width: none; max-height: none; object-fit: cover; object-position: center; border-radius: 0; }
+
+/* Photo thumbnails: white type with a soft shadow so it holds on the bright crops */
+.case__tile--photo .metric { color: #fff; text-shadow: 0 1px 28px rgba(0, 0, 0, .28); }
+.case__tile--photo .metric span { color: rgba(255, 255, 255, .88); }

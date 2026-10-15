@@ -83,11 +83,11 @@
         <div class="work__head">
           <div class="work__label">
             <p class="work__eyebrow"><a href="/writing">Writing</a> · Feb 28, 2026</p>
-            <p class="work__sub">3 min read · 11 min listen</p>
+            <p class="work__sub">8 min read · 11 min listen</p>
           </div>
           <div class="work__headline">
-            <h1 class="work__title" id="essay-title">How to Approach UX for Agentic Systems</h1>
-            <p class="cs__lede">Clarity through compression. Decisions through structure.</p>
+            <h1 class="work__title" id="essay-title">How to approach UX for agentic systems</h1>
+            <p class="cs__lede">Useful memory is not total recall. It is the smallest set of context that improves the next decision.</p>
           </div>
         </div>
 
@@ -107,120 +107,91 @@
               </audio>
             </figure>
 
-            <h2>Agentic UX starts with Memory Design</h2>
-            <p>Most teams think agentic UX is about chat.</p>
-            <p>It’s not.</p>
-            <p>It’s about how the system remembers.</p>
-            <p>Everyone building AI right now talks about longer context windows. Persistent memory. Retrieval pipelines. Store everything so the model “knows” more.</p>
-            <p>That’s the wrong framing.</p>
-            <p>Memory in intelligent systems is not about recall. It’s about selective forgetting.</p>
-            <p>Humans don’t function by storing everything. We compress. We abstract. We discard noise. We keep patterns that matter for the current decision.</p>
-            <p>Agentic UX should be designed the same way.</p>
+            <h2>Agentic UX starts with memory design</h2>
+            <p>Most teams begin an agent interface with chat. But the quality of an agent is often decided one layer earlier: what enters its working context, what persists, and what gets discarded.</p>
+            <p>The popular shorthand is that a larger context window creates a better memory. The research is less reassuring. In “Lost in the Middle,” model performance was strongest when relevant information appeared at the beginning or end of the context and dropped when the same information sat in the middle. In one condition, GPT-3.5 Turbo scored below its <strong>56.1% closed-book baseline</strong> when the relevant document was buried among 20–30 documents.<sup><a href="#source-1" aria-label="See source 1">1</a></sup></p>
+            <aside class="essay__evidence" aria-label="Key evidence">
+              <span>Evidence ( 01 )</span>
+              <strong>56.1%</strong>
+              <p>The closed-book baseline that one long-context condition fell below when evidence was placed in the middle.</p>
+            </aside>
+            <p>Capacity is not the same as usable attention. A system can technically hold a fact and still fail to use it at the right moment.</p>
 
-            <h2>Storage Is Cheap. Clarity Is Not.</h2>
-            <p>Traditional software treats memory like storage. Data goes in. It stays there. You retrieve it when needed.</p>
-            <p>Agentic systems shouldn’t behave like databases. They should behave like perception.</p>
-            <p>When a user provides input, a document, an image, a dashboard, a query, the system should not “remember” it in full fidelity. It should interpret it.</p>
-            <p>Extract:</p>
-            <ul>
-              <li>The entities</li>
-              <li>The relationships</li>
-              <li>The constraints</li>
-              <li>The intent</li>
-              <li>The risk signals</li>
-            </ul>
-            <p>Then discard the rest.</p>
-            <p>Raw data is not intelligence. Structured abstraction is. This is not just backend design. It determines the interface.</p>
-            <hr>
+            <h2>More context can create less clarity</h2>
+            <p>Another study added irrelevant details to grade-school math problems. Across the problems that models could originally solve, no more than <strong>18%</strong> were solved consistently across every type of irrelevant context.<sup><a href="#source-2" aria-label="See source 2">2</a></sup> The extra information did not add knowledge. It added competition for attention.</p>
+            <p>For product teams, this changes the design question. Do not ask, “How much can the agent remember?” Ask, “What is the minimum context that reliably improves this decision?”</p>
+            <pre><code>Stored memory ≠ active context
+Active context ≠ reliable recall
+Reliable recall ≠ good judgment</code></pre>
 
-            <h2>Memory Architecture Shapes UX</h2>
-            <p>Most AI products throw everything into one giant context window and hope reasoning emerges.</p>
-            <p>It doesn’t scale.</p>
-            <p>A better approach is layered agents with scoped memory:</p>
-            <ul>
-              <li>A perception layer understands the input.</li>
-              <li>An interpretation layer connects it to user goals.</li>
-              <li>A strategy layer references patterns and history.</li>
-              <li>A coordinating layer decides.</li>
-            </ul>
-            <p>Each layer compresses before passing information forward.</p>
-            <p>If every layer sees everything, the system becomes noisy.<br>If each layer sees what it needs, the system becomes decisive.</p>
-            <p>And decisiveness is what users experience as “good UX.”</p>
-            <hr>
+            <h2>Four kinds of memory</h2>
+            <p>A useful agent separates memory by purpose instead of pouring everything into one transcript.</p>
+            <h3>Working memory</h3>
+            <p>The current goal, constraints, recent tool results, and unresolved decisions. It should be small, inspectable, and allowed to expire with the task.</p>
+            <h3>Episodic memory</h3>
+            <p>What happened in earlier sessions: decisions, outcomes, corrections, and exceptions. Store the event and its consequence, not an undifferentiated conversation log.</p>
+            <h3>Semantic memory</h3>
+            <p>Stable facts about the user, organization, and domain. Each item needs provenance, recency, and a way for the user to correct it.</p>
+            <h3>Procedural memory</h3>
+            <p>How work should be done: policies, workflows, permissions, and tool instructions. This belongs in governed rules, not in a model’s improvised recollection.</p>
 
-            <h2>Decision as Alignment</h2>
-            <p>In most enterprise tools, users assemble context manually.</p>
-            <p>They:</p>
+            <h2>Compression needs a contract</h2>
+            <p>“Summarize the conversation” is not a memory strategy. Compression should be structured around the decisions the agent will make later. A practical memory record can preserve:</p>
             <ul>
-              <li>Pull reports</li>
-              <li>Compare options</li>
-              <li>Cross reference past performance</li>
-              <li>Check constraints</li>
-              <li>Then decide</li>
+              <li><strong>Goal:</strong> what outcome the user is pursuing.</li>
+              <li><strong>Entities:</strong> people, projects, files, and systems involved.</li>
+              <li><strong>Constraints:</strong> deadlines, permissions, exclusions, and risk limits.</li>
+              <li><strong>Decisions:</strong> what was chosen, by whom, and why.</li>
+              <li><strong>Evidence:</strong> the source and timestamp behind each durable fact.</li>
+              <li><strong>Open loops:</strong> unresolved questions and promised follow-ups.</li>
             </ul>
-            <p>The software exposes the complexity.</p>
-            <p>An agentic system should collapse it.</p>
-            <p>When memory is compressed correctly, the final output is not a data dump. It’s an aligned suggestion.</p>
-            <p>Does this action fit the goal?<br>Does it match past outcomes?<br>Does it respond to current conditions?<br>Is there leverage here?</p>
-            <p>The user shouldn’t rebuild that chain every time.</p>
-            <p><em>That collapse is the UX.</em></p>
-            <hr>
+            <p>The raw material can remain in storage for audit or retrieval. The compressed record is what earns a place in active context.</p>
 
-            <h2>Why Total Recall Fails</h2>
-            <p>More memory sounds powerful. It often makes systems worse.</p>
-            <p>Too much context leads to:</p>
-            <ul>
-              <li>Conflicting signals</li>
-              <li>Slower reasoning</li>
-              <li>Overfitting to edge cases</li>
-              <li>Higher hallucination risk</li>
-              <li>Lower trust</li>
-            </ul>
-            <p>A system that tries to remember everything cannot prioritize.</p>
-            <p>Selective forgetting forces hierarchy. It enforces structure. It reduces ambiguity.</p>
-            <p><strong>Clarity creates trust.</strong></p>
-            <hr>
+            <h2>Retrieval is an interface decision</h2>
+            <p>Memory becomes UX when the system decides what to surface. If every layer sees everything, the agent becomes noisy. If each step sees only the evidence relevant to its decision, the agent can become faster and more legible.</p>
+            <p>A later evaluation across <strong>eight long-context models</strong> reproduced the middle-position degradation. Randomly permuting documents and selecting a consensus answer improved accuracy by as much as <strong>24%</strong> on the tested single-document QA tasks.<sup><a href="#source-3" aria-label="See source 3">3</a></sup></p>
+            <aside class="essay__evidence" aria-label="Retrieval evidence">
+              <span>Evidence ( 02 )</span>
+              <strong>+24%</strong>
+              <p>Maximum reported accuracy lift from document permutation and medoid voting in a long-context evaluation.</p>
+            </aside>
+            <p>The lesson is not that every product should run the same technique. It is that retrieval order, filtering, and verification are product behavior—not invisible implementation details.</p>
 
-            <h2>Designing the Interface</h2>
-            <p>Once you accept that agents compress internally, the interface must reflect that.</p>
-            <p>An agent is not a query engine. It is a decision participant.</p>
-            <p>So the UX must structure judgment.</p>
-            <p>You are designing:</p>
+            <h2>Design the memory controls</h2>
+            <p>Users need more than a generic “memory on” toggle. They need controls that match the system’s actual behavior:</p>
             <ul>
-              <li>What the system is allowed to decide</li>
-              <li>What it must justify</li>
-              <li>What it should surface</li>
-              <li>What it should hide</li>
+              <li><strong>Before saving:</strong> show what will persist and why it may help.</li>
+              <li><strong>While using:</strong> reveal which memories influenced an answer or action.</li>
+              <li><strong>After correcting:</strong> distinguish “fix this response” from “update this permanently.”</li>
+              <li><strong>When stale:</strong> ask for reconfirmation instead of silently reusing an old fact.</li>
+              <li><strong>On deletion:</strong> make the scope explicit and confirm that derived summaries are removed too.</li>
             </ul>
-            <p>Good agentic interfaces reduce ambiguity before action.</p>
-            <p>That means:</p>
-            <ul>
-              <li>Scoped inputs instead of open prompts</li>
-              <li>Mode based interaction instead of a single chat stream</li>
-              <li>Explicit goal framing before execution</li>
-              <li>Progressive disclosure of reasoning</li>
-              <li>Clear boundaries between suggestion and automation</li>
-            </ul>
-            <p>If the user manages every parameter, it is not an agent.<br>If the agent acts without boundaries, it is not trustworthy.</p>
-            <hr>
+            <p>These controls turn memory from a vague promise into an inspectable product surface.</p>
 
-            <h2>What Agentic UX Feels Like</h2>
-            <p>Minimal input.<br>Internal compression.<br>Relevant options surfaced.<br>User confirms or adjusts.</p>
-            <p>If it feels intuitive, it’s not because it’s simple.</p>
-            <p>It’s because the system already filtered what doesn’t matter.</p>
-
-            <h2>The Real Design question</h2>
-            <p>Memory in agentic AI is not a storage problem. It’s a prioritization problem.</p>
-            <p>The key questions are:</p>
+            <h2>Measure usefulness, not volume</h2>
+            <p>Token count and number of saved memories are capacity metrics. They do not tell you whether memory helps. A stronger evaluation tracks:</p>
             <ul>
-              <li>What does this layer truly need?</li>
-              <li>What can be abstracted?</li>
-              <li>What can be discarded safely?</li>
-              <li>What should never reach the user?</li>
+              <li><strong>Retrieval precision:</strong> how often selected memories are relevant to the current task.</li>
+              <li><strong>Retrieval recall:</strong> how often essential context is available when needed.</li>
+              <li><strong>Correction persistence:</strong> whether a user’s fix survives future sessions.</li>
+              <li><strong>Stale-memory rate:</strong> how often outdated context changes a recommendation.</li>
+              <li><strong>Decision lift:</strong> whether memory improves task success against a no-memory baseline.</li>
             </ul>
-            <p>Intelligence emerges from structured compression, not accumulation.</p>
-            <p>The future of agentic UX is not chat.</p>
-            <p>It is structured delegation.</p>
+            <p>Anthropic’s long-context experiments found that extracting relevant quotes into a scratchpad improved recall in every head-to-head comparison they reported, though with some latency cost.<sup><a href="#source-4" aria-label="See source 4">4</a></sup> That is a measurable design tradeoff: more visible evidence and better accuracy in exchange for time.</p>
+
+            <h2>The interface is structured delegation</h2>
+            <p>Good agentic UX does not expose the full complexity of retrieval, ranking, and compression. It exposes the parts a person needs to judge the result: the goal the system inferred, the evidence it used, the durable facts it changed, and the action it proposes.</p>
+            <p>If the experience feels simple, it should be because the system filtered deliberately—not because it hid uncertainty. The future of agentic UX is not an infinite conversation. It is structured delegation supported by selective, correctable memory.</p>
+
+            <section class="essay__sources" aria-labelledby="sources-title">
+              <h2 id="sources-title">Sources</h2>
+              <ol>
+                <li id="source-1"><a href="https://arxiv.org/html/2307.03172v3" target="_blank" rel="noopener">Liu et al., “Lost in the Middle” (2023)</a> — positional effects in long-context use.</li>
+                <li id="source-2"><a href="https://arxiv.org/html/2302.00093v3" target="_blank" rel="noopener">Shi et al., “Large Language Models Can Be Easily Distracted by Irrelevant Context” (2023)</a>.</li>
+                <li id="source-3"><a href="https://arxiv.org/html/2407.03651v2" target="_blank" rel="noopener">Ravaut et al., “Evaluating Language Model Context Windows” (2024)</a> — eight-model evaluation and medoid voting.</li>
+                <li id="source-4"><a href="https://www.anthropic.com/research/prompting-long-context" target="_blank" rel="noopener">Anthropic, “Prompting Claude’s long context window”</a> — quantitative recall experiments.</li>
+              </ol>
+            </section>
 
             <div class="essay__foot">
               <p class="essay__source">First published on <a class="inline" href="https://sambitnayak2.substack.com/p/how-to-approach-ux-for-agentic-systems" target="_blank" rel="noopener">Substack</a>.</p>

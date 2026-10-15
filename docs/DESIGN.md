@@ -829,22 +829,51 @@ body { background: rgb(var(--greyscale-100)); color: rgb(var(--greyscale-black))
 | Pair full-bleed media with 8px-gutter grids | Use wide gutters or boxed hero images |
 | Use opacity and transform motion at 100–500ms | Use bouncy springs, parallax or long sequences |
 
-## Case-study infographic direction (October 2026)
+## Case-study long-form direction (October 2026)
 
-This section supersedes the earlier project-tint, accent and card rules for all
-case-study pages. Implementation: `css/case-studies.css`, loaded after `site.css`.
+This section supersedes the Airbnb listing direction and §9.12's case-study template.
+Every UX case study uses the **layout and UI of rachelchen.tech/projects/openai**, set in
+this system's type: NType substitute for headings (sentence case), Geist for body, and
+uppercase Geist Mono for every label and link. Implementation: the `page === "case"`
+block in `js/site.js` and the `.study` rules in `css/case-studies.css`.
 
-- Strict palette: black / charcoal, neutral greys, white, and dark orange `#B7471D`.
-  Orange panels use white text. Do not introduce pastel or brand-colour tints.
-- Use flat, rounded panels (24px corners, 12px gutters), oversized sans-serif
-  numerals, compact labels, and one clear idea per panel. No gradient backgrounds.
-- Each case opens with a metric poster and a concentric-line contents panel.
-  Contents links navigate to the corresponding sections. Preserve product demos.
-- Use rings only for genuine proportions, bars for comparisons, and large type
-  for counts and relative lifts. A 61% lift is not a 61% share of a whole.
-- Existing research, result qualifications, concept labels and missing-media
-  placeholders remain visible. Never invent data to fill a chart.
-- Screenshots, videos, navigation previews and enlarged media are displayed in
-  greyscale on case-study pages; source assets remain unmodified.
-- All tile families share the same palette and typography. Stack on mobile;
-  preserve semantic labels, keyboard navigation and reduced-motion behavior.
+**Page order:** breadcrumb (`← WORK / PROJECT`) → 16:9 hero → eyebrow, title, lead and
+meta row → sections, each preceded by a hairline → previous / next cards.
+
+| Part | Spec |
+|---|---|
+| Grid | `.study`: contents rail (min 180px) · 922px main track · free column. Inside the track, a **688px reading column**; `.is-wide` items (hero, breadcrumb, interface studies, prototypes) span the full 922px |
+| Contents rail | Sticky at `--space-12`. Section titles in mono 12px caps, muted. The current section turns accent with a 6px **square** marker to its left (scroll-spy). A "Book a call ›" link sits below. Hidden below 1024px |
+| Hero | The product video, or the project name (NType 32–48px) on a soft gradient of the project's tint. Square corners |
+| Title block | Mono eyebrow `Case study ( 01 ) · Org`, NType h1 32–40px, Geist 16px muted lead, then a meta row (`auto-fit, minmax(150px)`): mono caps label over a Geist 15px value |
+| Section | Mono caps label (the section title) → NType heading 26–32px (the statement) → Geist 15px/1.55 muted paragraphs, max 64ch. Hairline above, `--space-9` before and `--space-7` after it |
+| Three-up | Cards, steps and decision rows render as a borderless 3-column list (2 columns for 2 or 4 items): Geist 15px/500 title over a muted line. Steps carry an accent mono index |
+| Decisions | NType 20–22px subheading `Decision 1: …`, then its rows as a three-up |
+| Figure panel | `--greyscale-100` ground (dm-light in dark mode), 1px hairline, square corners, mono caps caption in the top left. Data tiles inside are white 4px-radius cards; the accent marks only the data |
+| Media | One item full column width, two items side by side, square corners, Geist 13px muted captions |
+| Quote | NType 22–26px with a mono caps attribution. No border or fill |
+| Button | DESIGN.md §9.2 primary: 40px, 4px radius, mono caps, trailing chevron |
+
+Rules carried over: case accent `#B7471D`, never invent data (placeholders stay
+visible and carry an ID that `docs/CODEX-IMAGE-PROMPTS.md` refers to), media in
+full colour. Motion follows §7:
+ease-out `cubic-bezier(.23, 1, .32, 1)`, 150–250ms, reveals once, reduced motion honoured.
+
+## Playground motion (Material 3), October 2026
+
+INT-08 to INT-12 (onboarding tour, API key and install, day timeline, glass sliders, podcast player)
+use Material 3 motion, declared once as `--m3-*` tokens on `.ix` and `.sl` in `css/playground.css`:
+
+| Token | Value | Use |
+|---|---|---|
+| `--m3-std` | `cubic-bezier(.2, 0, 0, 1)` | Small moves: underline, selection highlight, icon morph, press |
+| `--m3-dec` | `cubic-bezier(.05, .7, .1, 1)` | Entrances: previews, tiles, menus |
+| `--m3-acc` | `cubic-bezier(.3, 0, .8, .15)` | Exits, shorter than the entrance they pair with |
+
+Durations: 100–200ms for hover, press and icon swaps; 250–400ms for selection, tabs and panels.
+Patterns: **shared axis** (12px on Y) for preview and tab swaps, **fade through** for text swaps, a **lift** for
+the selected collaborator card, exponential smoothing in `requestAnimationFrame` for slider fills and playheads,
+press scale .97. Only opacity, transform, clip-path and colour animate. Loops run only while on screen and are
+off under `prefers-reduced-motion`; every control still works. Photos (`assets/images/playground/avatar-1..3.jpg`,
+`moss.jpg`, `sunset.jpg`) are optional: initials and CSS gradients stand in until they exist.
+INT-13 and INT-15 (compose bar, empty sessions) follow the same tokens and rules.

@@ -83,11 +83,11 @@
         <div class="work__head">
           <div class="work__label">
             <p class="work__eyebrow"><a href="/writing">Writing</a> · Mar 7, 2026</p>
-            <p class="work__sub">2 min read · Product design · Agentic UX</p>
+            <p class="work__sub">7 min read · Product design · Agentic UX</p>
           </div>
           <div class="work__headline">
-            <h1 class="work__title" id="essay-title">Confidence Is the Missing Layer in AI Interfaces</h1>
-            <p class="cs__lede">When Should AI Ask and When Should It Act?</p>
+            <h1 class="work__title" id="essay-title">Confidence is the missing layer in AI interfaces</h1>
+            <p class="cs__lede">Autonomy should be earned by evidence, bounded by risk, and visible in the interface.</p>
           </div>
         </div>
 
@@ -101,82 +101,85 @@
               <img src="/assets/images/writing/confidence-cover.jpg" alt="">
             </figure>
 
-            <h2>Confidence Is the Interface</h2>
-            <p>Most AI tools today follow the same pattern.</p>
-            <p>The system performs an action and then asks what to do next.</p>
+            <h2>Confidence is not a feeling</h2>
+            <p>Many AI products use the same interaction loop: generate an answer, offer a few next steps, and ask the user to choose. It feels safe because a person remains in control. It also transfers every small decision back to that person.</p>
+            <p>The alternative is not unlimited autonomy. It is <strong>risk-adjusted autonomy</strong>: the system acts when evidence is strong and the consequence is easy to reverse, proposes when ambiguity is manageable, and pauses when the cost of being wrong is high.</p>
             <figure>
               <img src="/assets/images/writing/confidence-claude.png" alt="Claude Code asking clarifying questions, with a list of options and a type-something field.">
-              <figcaption>Claude Code pausing to ask what to do next</figcaption>
+              <figcaption>An agent pausing to ask what to do next</figcaption>
             </figure>
-            <p>You see this in tools like <strong>Claude</strong> and <strong>Cursor</strong>. After editing code, the system pauses and asks:</p>
+            <p>The difficult part is that a model saying “I’m confident” is not sufficient evidence. A 2024 study of GPT, LLaMA 2, and Claude found an average <strong>47% error rate among answers the models expressed confidently</strong>. Users still relied heavily on those answers, whether or not uncertainty was shown.<sup><a href="#source-1" aria-label="See source 1">1</a></sup></p>
+            <aside class="essay__evidence" aria-label="Key evidence">
+              <span>Evidence ( 01 )</span>
+              <strong>47%</strong>
+              <p>Average error rate among model answers expressed with confidence in one multi-model study.</p>
+            </aside>
+            <p>So the product cannot route actions from verbal confidence alone. Confidence has to be a measured system property: grounded in task-specific evaluations, tool results, agreement checks, missing information, and the historical error rate for that exact class of action.</p>
+
+            <h2>The missing variable is consequence</h2>
+            <p>Even calibrated confidence does not answer the product question by itself. A 5% chance of choosing the wrong icon is not equivalent to a 5% chance of sending the wrong email. The interface needs to evaluate at least four signals:</p>
             <ul>
-              <li>Run migrations</li>
-              <li>Update API layer</li>
-              <li>Generate tests</li>
-              <li>Something else</li>
+              <li><strong>Evidence:</strong> Is the answer grounded in current, relevant sources?</li>
+              <li><strong>Ambiguity:</strong> Is the user’s intent specific enough to act on?</li>
+              <li><strong>Impact:</strong> What happens if the action is wrong?</li>
+              <li><strong>Reversibility:</strong> Can the user inspect and undo it?</li>
             </ul>
-            <p>At first this feels helpful. The AI is guiding the workflow.</p>
-            <p>But over time something becomes clear.</p>
-            <p>The AI isn’t actually deciding anything.<br>It’s just asking questions.</p>
+            <p>NIST’s AI Risk Management Framework makes the same distinction operationally: knowledge limits, human oversight, and threshold values should be defined and measured for the use case, not assumed from a general model score.<sup><a href="#source-2" aria-label="See source 2">2</a></sup></p>
+            <pre><code>Autonomy = evidence × reversibility
+Escalation = ambiguity × impact</code></pre>
 
-            <h2>Why This Pattern Exists</h2>
-            <p>The option-based model exists mainly for <em>safety</em>.</p>
-            <p>AI systems are still unreliable, so confirmations <strong>help prevent costly mistakes</strong> when modifying code, deleting files, or changing databases.</p>
-            <p>It has benefits:</p>
-            <ul>
-              <li>Faster than writing prompts</li>
-              <li>Shows the system’s suggested next step</li>
-              <li>Keeps users in control of risky actions</li>
-            </ul>
-            <p>But when this becomes the default interaction model, the experience starts to break.</p>
-
-            <h3>The Real Issue</h3>
-            <p>Most AI interfaces treat every decision as equally uncertain.</p>
-            <p>That’s the mistake.</p>
-            <p><em>Agents should behave differently depending on confidence.</em></p>
-            <p>When confidence is high, the system should act automatically.</p>
-            <p>When confidence is moderate, it should offer options.</p>
-            <p>When confidence is low, it should ask a clarifying question.</p>
-            <pre><code>High confidence → act
-Medium confidence → suggest
-Low confidence → ask</code></pre>
-            <p>Right now many systems operate entirely in the middle state.</p>
-            <p>They ask constantly.</p>
-
-            <h2>The Solution : The Confidence UX Layer</h2>
+            <h2>A four-state confidence layer</h2>
             <figure>
               <img src="/assets/images/writing/confidence-states.jpg" alt="Bar chart of confidence levels: high confidence acts automatically, medium confidence suggests options, low confidence asks for clarification.">
             </figure>
-            <p>Imagine the system evaluating every decision through three states.</p>
-            <h3>High confidence</h3>
-            <p>The system executes silently.</p>
-            <p>Example:<br>A code schema changed, so the system regenerates types automatically.</p>
-            <h3>Medium confidence</h3>
-            <p>The system proposes options.</p>
-            <p>Example:<br>Looks like you want a Dark mode UI. Which design system should I use?</p>
+            <h3>Act</h3>
+            <p>Use when evidence is strong, impact is low, and the change is reversible. Regenerating local types after a schema change can happen automatically, with a concise activity record and undo.</p>
+            <h3>Propose</h3>
+            <p>Use when several valid paths exist. The agent should recommend one option and explain the deciding signal, instead of presenting an unranked menu.</p>
             <ul>
-              <li>Shadcn</li>
-              <li>Radix</li>
-              <li>Type here</li>
+              <li>Recommended action</li>
+              <li>Evidence used</li>
+              <li>Expected effect</li>
+              <li>Alternative path</li>
             </ul>
-            <h3>Low confidence</h3>
-            <p>The system asks for clarification.</p>
-            <p>Example:<br>What are you trying to generate here?</p>
-            <p>The key idea is simple.</p>
-            <p><em>Most actions should fall into the first category.</em></p>
-            <p><em>Good agents act more than they ask.</em></p>
+            <h3>Ask</h3>
+            <p>Use when one missing fact would materially change the result. Ask one targeted question, state why it matters, and preserve the work already completed.</p>
+            <h3>Stop</h3>
+            <p>Use when the action is irreversible, outside policy, or too consequential for inferred consent. This is a boundary, not a confidence level.</p>
 
-            <h2>The Future Interaction Pattern</h2>
-            <p>Option-driven interfaces are a transitional design.</p>
-            <p>They exist because models are still unreliable and safety matters.</p>
-            <p>But the long-term direction is different.</p>
-            <p>Agents will move toward:</p>
-            <pre><code>Autonomous execution
-+ rare high-quality interventions</code></pre>
-            <p>The system will act continuously in the background, surfacing decisions only when human judgment is truly required.</p>
-            <p>When that happens, the interface will change.</p>
-            <p>The AI will stop asking what to do.</p>
-            <p>And start behaving like someone who already knows.</p>
+            <h2>What deployed systems reveal</h2>
+            <p>Confirmation data from ChatGPT agent shows why this boundary matters. OpenAI reports <strong>91.0% confirmation recall</strong> across relevant actions, and between <strong>99.9% and 100%</strong> for tested critical categories such as high-stakes communications, financial transactions, and permission edits.<sup><a href="#source-3" aria-label="See source 3">3</a></sup> The goal is not to ask before everything. It is to catch the small set of actions where a miss carries real cost.</p>
+            <aside class="essay__evidence" aria-label="Deployment evidence">
+              <span>Evidence ( 02 )</span>
+              <strong>91.0%</strong>
+              <p>Reported confirmation recall across actions that required user confirmation in ChatGPT agent evaluations.</p>
+            </aside>
+            <p>That suggests a better design target than “fewer confirmations”: maximize useful work completed without intervention while maintaining near-perfect escalation on consequential actions.</p>
+
+            <h2>Measure the policy, not the prompt</h2>
+            <p>A confidence layer should ship with an evaluation set built from real tasks. For every action class, teams can track:</p>
+            <ul>
+              <li><strong>Calibration:</strong> when the system predicts 80% reliability, is it right about eight times out of ten?</li>
+              <li><strong>Coverage:</strong> what share of work can it complete without escalation?</li>
+              <li><strong>Critical miss rate:</strong> how often does it act when it should have stopped?</li>
+              <li><strong>False interruption rate:</strong> how often does it ask when it could safely proceed?</li>
+              <li><strong>Recovery cost:</strong> how much effort does an incorrect action take to detect and undo?</li>
+            </ul>
+            <p>Google’s study of 76 software engineers found signs of automation complacency and increasing reliance on AI over the course of a programming task.<sup><a href="#source-4" aria-label="See source 4">4</a></sup> That is why “human in the loop” is not enough by itself. A person who is interrupted too often learns to approve automatically. Oversight has to be scarce enough to remain meaningful.</p>
+
+            <h2>Good agents act—and leave evidence</h2>
+            <p>The mature interaction pattern is not silent automation. It is autonomous execution with a legible trail: what changed, why the system believed it was safe, what source or rule it used, and how to reverse it.</p>
+            <p>Confidence belongs in the interface, but not as a decorative percentage. It should determine the mode of interaction and be constrained by consequence. The result is an agent that asks fewer questions because it can justify more actions—and knows exactly when it must stop.</p>
+
+            <section class="essay__sources" aria-labelledby="sources-title">
+              <h2 id="sources-title">Sources</h2>
+              <ol>
+                <li id="source-1"><a href="https://arxiv.org/abs/2401.06730" target="_blank" rel="noopener">Zhou et al., “Relying on the Unreliable” (2024)</a> — model uncertainty and user reliance.</li>
+                <li id="source-2"><a href="https://airc.nist.gov/airmf-resources/playbook/measure/" target="_blank" rel="noopener">NIST AI RMF Playbook: Measure</a> — oversight, uncertainty, thresholds, and evaluation.</li>
+                <li id="source-3"><a href="https://deploymentsafety.openai.com/chatgpt-agent/user-confirmations" target="_blank" rel="noopener">OpenAI, ChatGPT agent user confirmations</a> — confirmation recall evaluations.</li>
+                <li id="source-4"><a href="https://research.google/pubs/take-it-leave-it-or-fix-it-measuring-productivity-and-trust-in-human-ai-collaboration/" target="_blank" rel="noopener">Qian and Wexler, “Take it, Leave it, or Fix it” (IUI 2024)</a> — a study of 76 software engineers.</li>
+              </ol>
+            </section>
 
             <div class="essay__foot">
               <p class="essay__source">First published on <a class="inline" href="https://sambitnayak2.substack.com/p/confidence-is-the-missing-layer-in" target="_blank" rel="noopener">Substack</a>.</p>

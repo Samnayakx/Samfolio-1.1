@@ -24,7 +24,7 @@
 3. **Documentary, not decorative.** Paper surface, hairline frame, reference IDs, classification labels. The page reads like a controlled document. Decoration (barcode strip, collage) is allowed only as *data-like* texture, never illustration.
 4. **Authority through type.** One serif display voice for every headline and number. Large, tight, calm. The serif is the "signed statement"; the mono is the "system record".
 5. **Teal is institutional, yellow is a signal.** Deep teal carries trust and depth. Mauve (from the halftone artwork) adds warmth. Yellow appears only as a highlight or status mark, never as a background.
-6. **Evidence over claims.** Prefer a sourced number (55%, 199M+), a logged event ("5 payments · $12,480.00") or a table row over a promise. Every stat carries its source in mono.
+6. **Evidence over claims.** Prefer a sourced number (55%, 200M+), a logged event ("5 payments · $12,480.00") or a table row over a promise. Every stat carries its source in mono.
 7. **Quiet, explicit motion.** Motion explains sequence (the four steps, the count-up, the bars filling) and never performs. Opacity and transform only; everything respects reduced motion.
 8. **Flat and honest.** Two-dimensional, hairline-separated, no gradients on surfaces except the two deliberate dark "stage" sections. No perspective or 3D (the earlier tilted-sheet hero was removed on purpose).
 9. **Bank-held by default.** Copy and layout always put the institution in control: "Your rules", "Bank-held, instant", "Inside your bank".
@@ -157,7 +157,7 @@ Newsreader is a free stand-in for replay.ai's licensed serif; the logo itself us
 | Pattern | Spec |
 |---|---|
 | **Reveal** | `.rv`: `opacity 0→1`, `translateY(14px)→0`, `.7s cubic-bezier(.2,.7,.2,1)`, once per element via IntersectionObserver (threshold .15) |
-| **Count-up** | 55 and 199 over 1500ms, ease-out cubic (`1 − (1−p)³`), once, when ≥ 60% visible |
+| **Count-up** | 55 and 200 over 1500ms, ease-out cubic (`1 − (1−p)³`), once, when ≥ 60% visible |
 | **Tier bars** | `opacity .4s` + `scaleX(.2→1)` `.6s`, staggered `70ms × index`, triggered when the section is 20% visible |
 | **Steps stage** | Auto-advances every **5200ms** while the section is ≥ 30% visible; a 2px cyan progress line fills (`scaleX`, linear) under the active step; clicking a step jumps and restarts the timer; pauses when the tab is hidden |
 | **Chat reveal** | Items appear (`opacity` + `translateY(8px)`, `.4s`) cumulatively as steps progress: 1 request → 2 reply & table → 3 approval code → 4 "Done" |
@@ -294,15 +294,12 @@ Narrative arc: **Risk → Control → Process → Proof → Fit → Reassurance 
 
 ---
 
-## 14. Playground tile (portfolio listing)
+## 14. Case study listing
 
-The Payman project appears in `/playground` as **PROTO-05 · Payman AI** (`Landing page · 2026`, `Fintech · Agentic banking`), filter group **Landing pages**, linking to `/payman`.
-
-- **Thumbnail:** a live capture of this page's hero inside a mini browser frame (`assets/images/playground/payman-thumb.jpg`), not a logo or abstract art — the tile previews the real page.
-- **Tint:** Payman teal gradient `["#3C9A98", "#C6E6DF", "#86C6C0"]` (brand-contextual, replacing the rotating default tints).
-- **Frame:** inset 20px each side, top 56px, height 47% of the tile, 8px top radius, 1px ring, 18px bar with 3 dots and a `paymanai.com` pill; image `object-fit: cover; object-position: top`. Bleeds into the tile's lower text zone. Hover lifts it 6px.
-- **Text:** the one-line description is hidden on this tile; title and category remain.
-- Re-capture the thumbnail whenever the hero changes.
+Payman is **UX case study 07** (`/case-study?case=7`), moved out of the Playground. The tile on the Work list is a teal metric tile
+(`4`, "Steps from question to payment, each one logged"; tint `["#3C9A98", "#C6E6DF", "#86C6C0"]`). The case study follows the
+Contra branding arc (see `CASE-STUDY-STORYTELLING.md`, section 5) and links to the prototype at `/payman`. The screenshot used in it is
+`assets/images/playground/payman-thumb.jpg`; re-capture it whenever the hero changes.
 
 ---
 

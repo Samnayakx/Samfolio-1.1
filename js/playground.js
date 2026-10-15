@@ -38,33 +38,6 @@
     up: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg>',
   };
 
-  // ── 01 · Search ↔ Ask (after salt, @saltjsx) ──
-  function searchAsk(stage, { auto }) {
-    const c = h("div", "ix ix-sa");
-    c.innerHTML = `
-      <div class="sa__shell">
-        <span class="sa__pill" aria-hidden="true"></span>
-        <button class="sa__q" type="button" aria-label="Search">${ICON.search}</button>
-        <span class="sa__word sa__word--search">Search</span>
-        <button class="sa__spark" type="button" aria-label="Ask AI">${ICON.sparkle}</button>
-        <span class="sa__word sa__word--ask">Ask</span>
-        <button class="sa__send" type="button" aria-label="Send" tabindex="-1">${ICON.up}</button>
-      </div>`;
-    stage.appendChild(c);
-    const f = fit(stage, c, 460, 176);
-    const set = (ask) => { c.classList.toggle("is-ask", ask); c.querySelector(".sa__send").tabIndex = ask ? 0 : -1; };
-    c.querySelector(".sa__spark").addEventListener("click", () => set(true));
-    c.querySelector(".sa__q").addEventListener("click", () => set(false));
-    c.querySelector(".sa__send").addEventListener("click", (e) => { e.currentTarget.animate([{ transform: "scale(1)" }, { transform: "scale(.9)" }, { transform: "scale(1)" }], { duration: 260, easing: "ease-out" }); });
-    let stopLoop = null;
-    if (auto && !reduce) stopLoop = whileVisible(c, () => {
-      let on = true;
-      (async () => { while (on) { await wait(1500); if (!on) break; set(!c.classList.contains("is-ask")); } })();
-      return () => { on = false; };
-    });
-    return () => { f.stop(); stopLoop && stopLoop(); };
-  }
-
   // ── 02 · Bounding box (after Azlen, @azlenelza) ──
   function boundingBox(stage, { auto }) {
     const W = 520, H = 340;
@@ -565,7 +538,495 @@
     return () => { f.stop(); ro.disconnect(); stopBg && stopBg(); stopLoop && stopLoop(); cancelAnimationFrame(hraf); };
   }
 
-  const DEMOS = { searchAsk, boundingBox, segmentedNav, clouds, marketSelect };
+  // ── Material motion: tokens (mirrored in CSS as --m3-*), pointer drag and clipboard helpers ──
+  const M3 = { std: "cubic-bezier(.2,0,0,1)", dec: "cubic-bezier(.05,.7,.1,1)", acc: "cubic-bezier(.3,0,.8,.15)" };
+  const pad2 = (n) => String(Math.floor(n)).padStart(2, "0");
+  const mmss = (s) => `${pad2(s / 60)}:${pad2(s % 60)}`;
+  function drag(el, onMove, { onStart, onEnd } = {}) {
+    const down = (e) => {
+      if (e.button > 0) return;
+      try { el.setPointerCapture(e.pointerId); } catch {} onStart && onStart(e); onMove(e);
+      const move = (ev) => onMove(ev);
+      const up = (ev) => { el.removeEventListener("pointermove", move); el.removeEventListener("pointerup", up); el.removeEventListener("pointercancel", up); onEnd && onEnd(ev); };
+      el.addEventListener("pointermove", move); el.addEventListener("pointerup", up); el.addEventListener("pointercancel", up);
+    };
+    el.addEventListener("pointerdown", down);
+    return () => el.removeEventListener("pointerdown", down);
+  }
+  const copyText = async (t) => { try { await navigator.clipboard.writeText(t); return true; } catch { return false; } };
+  const IC = {
+    copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="8.5" y="3.5" width="12" height="12" rx="3"/><path d="M15.5 20.5h-9a3 3 0 0 1-3-3v-9"/></svg>',
+    check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>',
+    cursor: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3.5 19.5 10l-6.2 1.7L10.6 18 5 3.5Z" fill="#3a3a3a" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>',
+  };
+
+  // ── 08 · Onboarding tour: a card whose preview changes with the selected feature (shared axis + fade through) ──
+  function onboardingTour(stage, { auto }) {
+    const STEPS = [
+      ["Generate Pages", "Enter your prompt and get your first generation.", '<path d="M12 3 3.5 8 12 13l8.5-5L12 3Z"/><path d="m3.5 12 8.5 5 8.5-5"/>'],
+      ["Components", "Create reusable components for your projects.", '<path d="M12 4.5 15 8l-3 3.5L9 8l3-3.5ZM12 12.5l3 3.5-3 3.5L9 16l3-3.5ZM4.5 12l3-3 3 3-3 3-3-3ZM13.5 12l3-3 3 3-3 3-3-3Z" transform="translate(0 -.5) scale(.98)"/>'],
+      ["Quick Prototyping", "Create flows and prototype them in minutes.", '<path d="M9 7.5v9l7.5-4.5L9 7.5Z"/>'],
+      ["Code Export", "Get the frontend code for each design.", '<path d="M7 3.5h7l4 4V20a.5.5 0 0 1-.5.5h-10A.5.5 0 0 1 7 20V3.5Z"/><path d="m10.5 12-1.5 1.5 1.5 1.5M13.5 12l1.5 1.5-1.5 1.5"/>'],
+      ["Teams & Collaboration", "Collaborate on projects with your team.", '<rect x="5" y="4" width="14" height="16" rx="2.5"/><circle cx="12" cy="10.5" r="2.2"/><path d="M8 17c.6-2 2.2-3 4-3s3.4 1 4 3"/>'],
+    ];
+    const COPY = [
+      ["Generate Pages", "Describe a page in a sentence and get a first layout you can refine, with real structure instead of a flat image."],
+      ["Components", "Turn any part of a design into a reusable component and keep every project in sync."],
+      ["Quick Prototyping", "Link screens into a flow and click through it right away, with no separate prototyping step."],
+      ["Code Export", "Export clean frontend code for each design, ready to drop into your project."],
+      ["Teams & Collaborations", "Work seamlessly with your teammates by inviting them to your organization. Share projects, track iterations and manage team members in one place."],
+    ];
+    const PEOPLE = [["Bessie Cooper", "bessie.cooper@gmail.com", "Engineering", "BC", 1], ["Arlene McCoy", "arlene.mccoy@gmail.com", "Product", "AM", 2], ["Esther Howard", "esther.howard@gmail.com", "Designer", "EH", 3]];
+    const av = (p) => `<span class="pm__av" data-t="${p[3]}"><img src="/assets/images/playground/avatar-${p[4]}.jpg" alt="" onerror="this.remove()"></span>`;
+    const c = h("div", "ix ix-pm");
+    c.innerHTML = `
+      <div class="pm__left">
+        <div class="pm__logo"><svg viewBox="0 0 20 16" aria-hidden="true">${Array.from({ length: 4 }, (_, r) => Array.from({ length: 5 }, (_, k) => (k + r > 2 ? `<rect x="${k * 4}" y="${r * 4}" width="3" height="3" rx=".6"/>` : "")).join("")).join("")}</svg>Polymet</div>
+        <h3 class="pm__h">Welcome to the Polymet.</h3>
+        <p class="pm__sub">Thanks for joining Polymet. Were happy to have you here!</p>
+        <div class="pm__list" role="tablist" aria-label="Features" aria-orientation="vertical">
+          <span class="pm__sel" aria-hidden="true"></span>
+          ${STEPS.map(([t, d, ic], i) => `<button class="pm__item" type="button" role="tab" data-i="${i}"><span class="pm__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">${ic}</svg></span><span class="pm__txt"><b>${t}</b><small>${d}</small></span></button>`).join("")}
+        </div>
+        <div class="pm__foot"><span class="pm__chip"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="3" y="2" width="10" height="12" rx="1.5"/><path d="M5.5 5.5h5M5.5 8h5"/></svg>Polymet Academy</span><span>Pricing</span></div>
+      </div>
+      <div class="pm__right">
+        <div class="pm__view">
+          <div class="pm__scene" data-s="0"><div class="pm__prompt"><span class="pm__type">Landing page for a coffee roaster</span><i class="pm__caret"></i></div><div class="pm__gen"><i></i><i></i><i></i></div></div>
+          <div class="pm__scene" data-s="1"><div class="pm__grid">${Array.from({ length: 6 }, (_, k) => `<i style="--k:${k}"></i>`).join("")}</div></div>
+          <div class="pm__scene" data-s="2"><div class="pm__flow"><b class="pm__scr"></b><i class="pm__link"></i><b class="pm__scr"></b><i class="pm__link"></i><b class="pm__scr"></b><span class="pm__cur">${IC.cursor}</span></div></div>
+          <div class="pm__scene" data-s="3"><div class="pm__code">${[62, 38, 74, 50, 66, 30].map((w, k) => `<i style="--w:${w}%;--k:${k}"></i>`).join("")}</div></div>
+          <div class="pm__scene" data-s="4"><div class="pm__users">${PEOPLE.map((p, k) => `<div class="pm__user pm__user--${k}">${av(p)}<span class="pm__who"><b>${p[0]}</b><small>${p[1]}</small></span><em>${p[2]}</em></div>`).join("")}<span class="pm__cur">${IC.cursor}</span><i class="pm__ping"></i></div></div>
+        </div>
+        <div class="pm__copy"><h4 class="pm__ttl"></h4><p class="pm__dsc"></p></div>
+        <button class="pm__cta" type="button">Start Designing</button>
+      </div>`;
+    stage.appendChild(c);
+    const f = fit(stage, c, 800, 540, 0.92);
+    const items = [...c.querySelectorAll(".pm__item")], scenes = [...c.querySelectorAll(".pm__scene")];
+    const sel = c.querySelector(".pm__sel"), copy = c.querySelector(".pm__copy"), ttl = c.querySelector(".pm__ttl"), dsc = c.querySelector(".pm__dsc");
+    let cur = -1, swap = 0;
+    const place = () => { const it = items[cur]; if (it) { sel.style.height = `${it.offsetHeight}px`; sel.style.transform = `translateY(${it.offsetTop}px)`; } };
+    const go = (i) => {
+      if (i === cur) return;
+      const first = cur === -1; cur = i;
+      items.forEach((b, k) => { b.setAttribute("aria-selected", k === i); b.tabIndex = k === i ? 0 : -1; });
+      scenes.forEach((s, k) => s.classList.toggle("is-on", k === i));
+      place();
+      const set = () => { ttl.textContent = COPY[i][0]; dsc.textContent = COPY[i][1]; copy.classList.remove("is-out"); };
+      clearTimeout(swap);
+      if (first || reduce) set(); else { copy.classList.add("is-out"); swap = setTimeout(set, 120); }
+    };
+    items.forEach((b, i) => {
+      b.addEventListener("click", () => go(i));
+      b.addEventListener("keydown", (e) => {
+        const d = e.key === "ArrowDown" ? 1 : e.key === "ArrowUp" ? -1 : 0; if (!d) return;
+        e.preventDefault(); const n = (i + d + items.length) % items.length; go(n); items[n].focus();
+      });
+    });
+    c.querySelector(".pm__cta").addEventListener("click", () => go(0));
+    c.style.visibility = "hidden"; go(4);
+    requestAnimationFrame(() => { place(); c.style.visibility = ""; });
+    document.fonts && document.fonts.ready.then(place);
+    let stopLoop = null;
+    if (auto && !reduce) stopLoop = whileVisible(c, () => { const id = setInterval(() => go((cur + 1) % STEPS.length), 3400); return () => clearInterval(id); });
+    return () => { clearTimeout(swap); f.stop(); stopLoop && stopLoop(); };
+  }
+
+  // ── 09 · API key and install snippets: reveal, copy, sliding tab underline ──
+  function apiKey(stage, { auto }) {
+    const KEY = "8f3a-27c1-b9e0-41d6", MASK = "****-****-****-****";
+    const URL_ = "https://mosaic.example/r/mosaic-util.json";
+    const CMD = { NPM: ["npx", `shadcn@latest add mosaic-util --url=${URL_}`], BUN: ["bunx --bun", `shadcn@latest add mosaic-util --url=${URL_}`], YARN: ["yarn dlx", `shadcn@latest add mosaic-util --url=${URL_}`], PNPM: ["pnpm dlx", `shadcn@latest add mosaic-util --url=${URL_}`] };
+    const c = h("div", "ix ix-ak");
+    c.innerHTML = `
+      <p class="ak__lbl">API Key</p>
+      <div class="ak__field">
+        <span class="ak__key" aria-live="polite">${MASK}</span>
+        <button class="ak__btn ak__reveal" type="button"><span class="ak__spark">${ICON.sparkle}</span><span class="ak__rl">Reveal</span></button>
+        <button class="ak__btn ak__copy" type="button"><span class="ak__ic"><span class="ak__i1">${IC.copy}</span><span class="ak__i2">${IC.check}</span></span><span class="ak__cl">Copy</span></button>
+      </div>
+      <div class="ak__card ak__cmd">
+        <div class="ak__tabs" role="tablist" aria-label="Package manager">${Object.keys(CMD).map((k, i) => `<button class="ak__tab" type="button" role="tab" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}">${k}</button>`).join("")}<i class="ak__ul" aria-hidden="true"></i><span class="ak__term">Terminal</span></div>
+        <div class="ak__line"><code class="ak__run"></code><button class="ak__cp" type="button" aria-label="Copy command"><span class="ak__i1">${IC.copy}</span><span class="ak__i2">${IC.check}</span></button></div>
+      </div>
+      <div class="ak__card ak__code">
+        <button class="ak__cp" type="button" aria-label="Copy code"><span class="ak__i1">${IC.copy}</span><span class="ak__i2">${IC.check}</span></button>
+        <pre><code><span class="r">export const</span> <span class="b">metadata</span> = {
+  openGraph<span class="r">:</span> {
+    images<span class="r">:</span> [
+      {
+        url<span class="r">:</span> <span class="g">'https://mosaic.example/use?url=https://your-site.com'</span>,
+        width<span class="r">:</span> <span class="b">1200</span>,
+        height<span class="r">:</span> <span class="b">630</span>,
+      },
+    ],
+  },
+}</code></pre>
+      </div>`;
+    stage.appendChild(c);
+    const f = fit(stage, c, 480, 590, 0.92);
+    const $ = (s) => c.querySelector(s);
+    const keyEl = $(".ak__key"), rl = $(".ak__rl"), cl = $(".ak__cl"), reveal = $(".ak__reveal"), copyBtn = $(".ak__copy");
+    const tabs = [...c.querySelectorAll(".ak__tab")], ul = $(".ak__ul"), run = $(".ak__run");
+    let shown = false, tw = 0, tabSwap = 0, doneT = new Map(), curTab = 0;
+    const setKey = (on) => {
+      shown = on; clearInterval(tw); reveal.classList.toggle("is-on", on);
+      const from = on ? MASK : KEY, to = on ? KEY : MASK;
+      if (reduce) keyEl.textContent = to;
+      else { let n = 0; tw = setInterval(() => { n++; keyEl.textContent = to.slice(0, n) + from.slice(n); if (n >= to.length) clearInterval(tw); }, 24); }
+      rl.classList.add("is-out"); setTimeout(() => { rl.textContent = on ? "Hide" : "Reveal"; rl.classList.remove("is-out"); }, reduce ? 0 : 100);
+    };
+    const flash = (btn, label) => {
+      clearTimeout(doneT.get(btn)); btn.classList.add("is-done"); label && (label.textContent = "Copied");
+      doneT.set(btn, setTimeout(() => { btn.classList.remove("is-done"); label && (label.textContent = "Copy"); }, 1600));
+    };
+    const place = () => { const t = tabs[curTab]; ul.style.width = `${t.offsetWidth}px`; ul.style.transform = `translateX(${t.offsetLeft}px)`; };
+    const paint = (name) => { const [bin, rest] = CMD[name]; run.innerHTML = `<span class="p">${bin}</span> ${rest}`; };
+    const setTab = (i, instant) => {
+      curTab = i; tabs.forEach((t, k) => { t.setAttribute("aria-selected", k === i); t.tabIndex = k === i ? 0 : -1; });
+      place(); clearTimeout(tabSwap);
+      if (instant || reduce) paint(tabs[i].textContent); else { run.classList.add("is-out"); tabSwap = setTimeout(() => { paint(tabs[i].textContent); run.classList.remove("is-out"); }, 110); }
+    };
+    reveal.addEventListener("click", () => setKey(!shown));
+    copyBtn.addEventListener("click", async () => { await copyText(KEY); flash(copyBtn, cl); });
+    c.querySelectorAll(".ak__cp").forEach((b) => b.addEventListener("click", async () => { await copyText(b.closest(".ak__cmd") ? `${CMD[tabs[curTab].textContent].join(" ")}` : c.querySelector(".ak__code code").textContent); flash(b); }));
+    tabs.forEach((t, i) => {
+      t.addEventListener("click", () => setTab(i));
+      t.addEventListener("keydown", (e) => { const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0; if (!d) return; e.preventDefault(); const n = (i + d + tabs.length) % tabs.length; setTab(n); tabs[n].focus(); });
+    });
+    paint("NPM"); requestAnimationFrame(place); document.fonts && document.fonts.ready.then(place);
+    let stopLoop = null;
+    if (auto && !reduce) stopLoop = whileVisible(c, () => {
+      let on = true;
+      (async () => {
+        while (on) {
+          await wait(1400); for (const i of [1, 2, 3, 0]) { if (!on) return; setTab(i); await wait(1100); }
+          if (!on) return; setKey(true); await wait(1400); flash(copyBtn, cl); await wait(2200); setKey(false); await wait(900);
+        }
+      })();
+      return () => { on = false; };
+    });
+    return () => { clearInterval(tw); clearTimeout(tabSwap); doneT.forEach(clearTimeout); f.stop(); stopLoop && stopLoop(); };
+  }
+
+  // ── 10 · Day timeline: a draggable playhead over two tracks, with a live event count ──
+  function timelineScrub(stage, { auto }) {
+    const W = 720, H = 460, X0 = 48, X1 = 672, H0 = 6, H1 = 24, PXH = (X1 - X0) / (H1 - H0);
+    const xOf = (hr) => X0 + (hr - H0) * PXH;
+    const TRACKS = [{ y: 232, segs: [[6, 12], [12, 16], [16, 21], [21, 24]] }, { y: 352, stub: [6, 7], segs: [[7, 8], [8, 14], [14, 17.5], [17.5, 24]] }];
+    const CUTS = [12, 16, 21, 8, 14, 17.5];
+    const c = h("div", "ix ix-tl");
+    c.innerHTML = `
+      <div class="tl__chip"><span class="tl__date">7th April</span><span class="tl__plus" aria-live="polite">+5</span></div>
+      <button class="tl__play" type="button" aria-label="Play"><svg class="tl__ip" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4.500 2.800v10.400L13 8 4.500 2.800Z"/></svg><svg class="tl__ipause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.500" y="2.800" width="3" height="10.400" rx=".8"/><rect x="9.500" y="2.800" width="3" height="10.400" rx=".8"/></svg></button>
+      <div class="tl__ruler" aria-hidden="true"><i class="tl__base"></i>${Array.from({ length: H1 - H0 + 1 }, (_, k) => { const hr = H0 + k, major = hr % 3 === 0; return `<i class="tl__tick${major ? " is-major" : ""}" style="left:${xOf(hr)}px"></i>${major ? `<span class="tl__lbl" data-h="${hr}" style="left:${xOf(hr)}px">${hr}</span>` : ""}`; }).join("")}</div>
+      ${TRACKS.map((tr) => `<div class="tl__track" style="top:${tr.y}px">${tr.stub ? `<i class="tl__stub" style="left:${xOf(tr.stub[0])}px;width:${(tr.stub[1] - tr.stub[0]) * PXH - 4}px"></i>` : ""}${tr.segs.map(([a, b]) => `<i class="tl__seg" style="left:${xOf(a)}px;width:${(b - a) * PXH}px"></i>`).join("")}</div>`).join("")}
+      <div class="tl__ph"><span class="tl__tip" aria-hidden="true">18:20</span><span class="tl__grip" aria-hidden="true"><i></i><i></i><i></i></span><span class="tl__cap"><svg viewBox="0 0 16 12" aria-hidden="true"><path d="M1 1h14L8 11 1 1Z" fill="currentColor"/></svg><i class="tl__ln"></i><i class="tl__dot"></i></span><i class="tl__dot tl__dot--b"></i><i class="tl__ln tl__ln--b"></i></div>
+      <div class="tl__hit" role="slider" tabindex="0" aria-label="Time of day" aria-valuemin="${H0}" aria-valuemax="${H1}"></div>`;
+    stage.appendChild(c);
+    const f = fit(stage, c, W, H, 0.94);
+    const $ = (s) => c.querySelector(s);
+    const ph = $(".tl__ph"), hit = $(".tl__hit"), plus = $(".tl__plus"), tip = $(".tl__tip"), play = $(".tl__play"), labels = [...c.querySelectorAll(".tl__lbl")];
+    hit.style.cssText = `left:${X0 - 24}px;width:${X1 - X0 + 48}px`;
+    let target = 18.3, pos = target, playing = false, dragging = false, count = -1, hot = null, raf = 0, last = performance.now();
+    const fmt = (hr) => `${pad2(hr)}:${pad2((hr % 1) * 60)}`;
+    const eventsAt = (hr) => CUTS.filter((x) => x <= hr).length;
+    const setPlaying = (on) => { playing = on; play.classList.toggle("is-on", on); play.setAttribute("aria-label", on ? "Pause" : "Play"); };
+    const fromEvent = (e) => { const r = hit.getBoundingClientRect(), fx = clamp((e.clientX - r.left) / r.width, 0, 1); const hr = H0 + ((fx * (X1 - X0 + 48) - 24) / (X1 - X0)) * (H1 - H0); return clamp(hr, H0, H1); };
+    const unDrag = drag(hit, (e) => { target = fromEvent(e); }, { onStart: () => { dragging = true; setPlaying(false); c.classList.add("is-drag"); }, onEnd: () => { dragging = false; c.classList.remove("is-drag"); } });
+    hit.addEventListener("keydown", (e) => {
+      const d = e.key === "ArrowRight" ? 0.25 : e.key === "ArrowLeft" ? -0.25 : 0;
+      if (d) { e.preventDefault(); setPlaying(false); target = clamp(Math.round((target + d) * 4) / 4, H0, H1); }
+      else if (e.key === " ") { e.preventDefault(); setPlaying(!playing); }
+      else if (e.key === "Home") target = H0; else if (e.key === "End") target = H1;
+    });
+    play.addEventListener("click", () => { if (!playing && target >= H1 - 0.01) target = pos = H0; setPlaying(!playing); });
+    const tick = (now) => {
+      const dt = Math.min(0.05, (now - last) / 1000); last = now;
+      if (playing) { target += dt / 1.4; if (target >= H1) { target = H1; setPlaying(false); } }
+      pos += (target - pos) * (1 - Math.exp(-dt * (dragging ? 26 : 14)));
+      ph.style.transform = `translateX(${xOf(pos)}px)`;
+      const n = eventsAt(pos);
+      if (n !== count) { count = n; plus.textContent = `+${n}`; plus.classList.remove("bump"); void plus.offsetWidth; plus.classList.add("bump"); }
+      let best = null, bd = 99; labels.forEach((l) => { const d = Math.abs(+l.dataset.h - pos); if (d < bd) { bd = d; best = l; } });
+      if (best !== hot) { hot && hot.classList.remove("is-hot"); best && bd < 1.6 && best.classList.add("is-hot"); hot = bd < 1.6 ? best : null; }
+      tip.textContent = fmt(pos); hit.setAttribute("aria-valuenow", pos.toFixed(2)); hit.setAttribute("aria-valuetext", fmt(pos));
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    let stopLoop = null;
+    if (auto && !reduce) stopLoop = whileVisible(c, () => {
+      let on = true;
+      (async () => {
+        while (on) {
+          target = 18.3; await wait(1200); if (!on) return;
+          for (const hr of [9.5, 14.8, 22, 18.3]) { if (!on) return; target = hr; await wait(1500); }
+          await wait(900);
+        }
+      })();
+      return () => { on = false; };
+    });
+    return () => { cancelAnimationFrame(raf); unDrag(); f.stop(); stopLoop && stopLoop(); };
+  }
+
+  // ── 11 · Glass sliders: four image adjustments that filter the photo behind them ──
+  function glassSliders(stage, { auto }) {
+    const ROWS = [
+      { key: "brightness", name: "Brightness", min: 0, max: 200, def: 100, unit: "%", css: (v) => `brightness(${v}%)` },
+      { key: "contrast", name: "Contrast", min: 0, max: 200, def: 100, unit: "%", css: (v) => `contrast(${v}%)` },
+      { key: "hue", name: "Hue", min: -180, max: 180, def: 0, unit: "°", css: (v) => `hue-rotate(${v}deg)` },
+      { key: "saturation", name: "Saturation", min: 0, max: 200, def: 100, unit: "%", css: (v) => `saturate(${v}%)` },
+    ];
+    const root = h("div", "sl");
+    root.innerHTML = `<div class="sl__bg"></div><div class="sl__shade"></div>`;
+    const cv = h("div", "ix ix-sl");
+    cv.innerHTML = ROWS.map((r) => `
+      <div class="sl__row" data-k="${r.key}" role="slider" tabindex="0" aria-label="${r.name}" aria-valuemin="${r.min}" aria-valuemax="${r.max}">
+        <div class="sl__fill"></div><i class="sl__h"></i>
+        <span class="sl__name">${r.name}</span><span class="sl__val"></span>
+      </div>`).join("");
+    root.appendChild(cv); stage.appendChild(root);
+    const f = fit(stage, cv, 700, 330, 0.9);
+    const bg = root.querySelector(".sl__bg");
+    const st = {}; ROWS.forEach((r) => { st[r.key] = { r, el: cv.querySelector(`[data-k="${r.key}"]`), v: r.def, shown: 0 }; });
+    const frac = (s) => (s.v - s.r.min) / (s.r.max - s.r.min);
+    const apply = () => {
+      bg.style.filter = ["blur(2px)", ...ROWS.map((r) => r.css(st[r.key].v))].join(" ");
+      ROWS.forEach((r) => { const s = st[r.key], txt = `${s.v}${r.unit}`; s.el.querySelector(".sl__val").textContent = txt; s.el.setAttribute("aria-valuenow", s.v); s.el.setAttribute("aria-valuetext", txt); });
+    };
+    const setVal = (key, v) => { const s = st[key]; s.v = clamp(Math.round(v), s.r.min, s.r.max); apply(); };
+    let raf = 0, last = performance.now(), active = null;
+    const tick = (now) => {
+      const dt = Math.min(0.05, (now - last) / 1000); last = now;
+      ROWS.forEach((r) => { const s = st[r.key]; s.shown += (frac(s) - s.shown) * (1 - Math.exp(-dt * (active === s ? 30 : 16))); s.el.style.setProperty("--f", s.shown.toFixed(4)); });
+      raf = requestAnimationFrame(tick);
+    };
+    ROWS.forEach((r) => {
+      const s = st[r.key], el = s.el;
+      drag(el, (e) => { const b = el.getBoundingClientRect(), x = clamp((e.clientX - b.left) / b.width, 0, 1); setVal(r.key, r.min + x * (r.max - r.min)); }, { onStart: () => { active = s; el.classList.add("is-drag"); }, onEnd: () => { active = null; el.classList.remove("is-drag"); } });
+      el.addEventListener("dblclick", () => setVal(r.key, r.def));
+      el.addEventListener("keydown", (e) => {
+        const d = e.key === "ArrowRight" || e.key === "ArrowUp" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowDown" ? -1 : 0;
+        if (d) { e.preventDefault(); setVal(r.key, s.v + d * (e.shiftKey ? 20 : 5)); } else if (e.key === "Home" || e.key === "0") { e.preventDefault(); setVal(r.key, r.def); }
+      });
+    });
+    apply(); ROWS.forEach((r) => { st[r.key].shown = frac(st[r.key]); });
+    raf = requestAnimationFrame(tick);
+    let stopLoop = null;
+    if (auto && !reduce) stopLoop = whileVisible(root, () => {
+      let on = true;
+      (async () => {
+        while (on) {
+          await wait(1200);
+          for (const [k, v] of [["brightness", 150], ["contrast", 140], ["hue", 90], ["saturation", 160], ["hue", -120], ["brightness", 70], ["saturation", 40], ["contrast", 100], ["hue", 0], ["brightness", 100], ["saturation", 100]]) { if (!on) return; setVal(k, v); await wait(900); }
+        }
+      })();
+      return () => { on = false; };
+    });
+    return () => { cancelAnimationFrame(raf); f.stop(); stopLoop && stopLoop(); };
+  }
+
+  // ── 12 · Podcast player: a transcript that follows playback, a segmented timeline, pins and speed ──
+  function podcastPlayer(stage, { auto }) {
+    const DUR = 314, SPEEDS = [1, 1.25, 1.5, 2];
+    const LINES = [
+      [4, "Alex", "Thanks for having me. I have been thinking about memory in products for a long time."],
+      [38, "You", "Let us start there. Where should memory live, in the product or in the person?"],
+      [62, "Alex", "In the product. People should carry intent, not state. When a tool forgets, it pushes that work back onto you."],
+      [96, "You", "And how do you show that without it feeling like surveillance?"],
+      [111, "Alex", "You make it visible and reversible. Say what was kept, why it was kept, and give one clear way to take it back."],
+      [150, "You", "That sounds like a design rule more than a feature."],
+      [166, "Alex", "It is. Every remembered thing needs a visible edge, a source and an undo."],
+      [204, "You", "What would you cut first?"],
+      [216, "Alex", "Anything that remembers silently. Start small, earn trust, then widen what it keeps."],
+      [286, "You", "That is a good place to stop."],
+    ];
+    const SEGS = LINES.map(([t, who], i) => [t, Math.min((LINES[i + 1] ? LINES[i + 1][0] : DUR) - 3, t + (i % 2 ? 26 : 34)), who]);
+    const c = h("div", "ix ix-pp");
+    c.innerHTML = `
+      <div class="pp__tx" aria-live="off"><div class="pp__lines">${LINES.map(([t, who, txt], i) => `<button class="pp__ln" type="button" data-i="${i}" aria-label="Jump to ${mmss(t)}"><small>${who} <span>${mmss(t)}</span></small><span>${txt}</span></button>`).join("")}</div></div>
+      <div class="pp__trk">
+        <div class="pp__pins"></div>
+        <div class="pp__bar" role="slider" tabindex="0" aria-label="Playback position" aria-valuemin="0" aria-valuemax="${DUR}">
+          ${SEGS.map(([a, b, who]) => `<i class="pp__seg pp__seg--${who === "You" ? "p" : "g"}" style="left:${(a / DUR) * 100}%;width:max(14px,${((b - a) / DUR) * 100}%)"></i>`).join("")}
+          <i class="pp__head"></i>
+        </div>
+        <div class="pp__times"><span class="pp__el">01:50</span><span class="pp__rem">-03:24</span></div>
+      </div>
+      <div class="pp__ctl">
+        <button class="pp__spd" type="button" aria-label="Playback speed">1x</button>
+        <button class="pp__skip" type="button" data-d="-5" aria-label="Back 5 seconds"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.500 6.500 6 10l3.500 3.500"/><path d="M6 10h10a8 8 0 1 1-8 8"/></svg><b>5</b></button>
+        <button class="pp__play" type="button" aria-label="Play"><svg class="pp__i1" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.200v13.600L19 12 8 5.200Z"/></svg><svg class="pp__i2" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="4.500" width="4.200" height="15" rx="1.200"/><rect x="13.800" y="4.500" width="4.200" height="15" rx="1.200"/></svg></button>
+        <button class="pp__skip" type="button" data-d="5" aria-label="Forward 5 seconds"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22.500 6.500 26 10l-3.500 3.500"/><path d="M26 10H16a8 8 0 1 0 8 8"/></svg><b>5</b></button>
+        <button class="pp__set" type="button" aria-label="Options" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.900" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="9" cy="7" r="2" fill="#000"/><circle cx="15" cy="12" r="2" fill="#000"/><circle cx="8" cy="17" r="2" fill="#000"/></svg></button>
+        <div class="pp__menu" hidden><button type="button" class="pp__pin">Pin this moment</button></div>
+      </div>
+      <i class="pp__home" aria-hidden="true"></i>`;
+    stage.appendChild(c);
+    const f = fit(stage, c, 380, 560, 0.94);
+    const $ = (s) => c.querySelector(s);
+    const lines = [...c.querySelectorAll(".pp__ln")], box = $(".pp__lines"), tx = $(".pp__tx"), bar = $(".pp__bar"), head = $(".pp__head"), el = $(".pp__el"), rem = $(".pp__rem");
+    const playBtn = $(".pp__play"), spd = $(".pp__spd"), set = $(".pp__set"), menu = $(".pp__menu"), pins = $(".pp__pins");
+    let t = 110, playing = false, si = 0, cur = -1, off = 0, offT = 0, raf = 0, last = performance.now(), dragging = false;
+    const PINS = [14, 30];
+    const drawPins = () => { pins.replaceChildren(...PINS.map((p) => { const i = h("i", "pp__pn"); i.style.left = `${(p / DUR) * 100}%`; i.innerHTML = '<svg viewBox="0 0 12 14" fill="currentColor" aria-hidden="true"><path d="M3 1h6v1.5L8 3.500v3L10 9H6.700V13h-1.400V9H2l2-2.500v-3L3 2.500V1Z"/></svg>'; return i; })); };
+    const setPlaying = (on) => { playing = on; playBtn.classList.toggle("is-on", on); playBtn.setAttribute("aria-label", on ? "Pause" : "Play"); };
+    const seek = (s) => { t = clamp(s, 0, DUR); };
+    const frac = (e) => { const r = bar.getBoundingClientRect(); return clamp((e.clientX - r.left) / r.width, 0, 1); };
+    const unDrag = drag(bar, (e) => seek(frac(e) * DUR), { onStart: () => { dragging = true; c.classList.add("is-scrub"); }, onEnd: () => { dragging = false; c.classList.remove("is-scrub"); } });
+    bar.addEventListener("keydown", (e) => { const d = e.key === "ArrowRight" ? 5 : e.key === "ArrowLeft" ? -5 : 0; if (d) { e.preventDefault(); seek(t + d); } else if (e.key === " ") { e.preventDefault(); setPlaying(!playing); } });
+    playBtn.addEventListener("click", () => { if (!playing && t >= DUR - 0.2) seek(0); setPlaying(!playing); });
+    c.querySelectorAll(".pp__skip").forEach((b) => b.addEventListener("click", () => { seek(t + +b.dataset.d); b.classList.remove("is-tap"); void b.offsetWidth; b.classList.add("is-tap"); }));
+    spd.addEventListener("click", () => { si = (si + 1) % SPEEDS.length; spd.textContent = `${SPEEDS[si]}x`; });
+    lines.forEach((l, i) => l.addEventListener("click", () => seek(LINES[i][0])));
+    const toggleMenu = (on) => { menu.hidden = !on; set.setAttribute("aria-expanded", on); };
+    set.addEventListener("click", (e) => { e.stopPropagation(); toggleMenu(menu.hidden); });
+    $(".pp__pin").addEventListener("click", () => { if (PINS.length < 12) { PINS.push(Math.round(t)); drawPins(); } toggleMenu(false); });
+    const onDoc = (e) => { if (!menu.hidden && !menu.contains(e.target)) toggleMenu(false); };
+    document.addEventListener("click", onDoc);
+    drawPins();
+    const tick = (now) => {
+      const dt = Math.min(0.05, (now - last) / 1000); last = now;
+      if (playing && !dragging) { t += dt * SPEEDS[si]; if (t >= DUR) { t = DUR; setPlaying(false); } }
+      head.style.transform = `translateX(${(t / DUR) * 100}%)`;
+      el.textContent = mmss(t); rem.textContent = `-${mmss(DUR - t)}`; bar.setAttribute("aria-valuenow", Math.round(t)); bar.setAttribute("aria-valuetext", mmss(t));
+      let n = -1; LINES.forEach((l, i) => { if (l[0] <= t) n = i; });
+      if (n !== cur) { cur = n; lines.forEach((l, i) => { l.classList.toggle("is-now", i === n); l.classList.toggle("is-past", i < n); }); if (n >= 0) offT = lines[n].offsetTop - 12; else offT = 0; }
+      off += (offT - off) * (1 - Math.exp(-dt * 9));
+      box.style.transform = `translateY(${-off}px)`;
+      raf = requestAnimationFrame(tick);
+    };
+    document.fonts && document.fonts.ready.then(() => { cur = -2; });
+    raf = requestAnimationFrame(tick);
+    setTimeout(() => { off = offT; }, 60);
+    let stopLoop = null;
+    if (auto && !reduce) stopLoop = whileVisible(c, () => { setPlaying(true); if (t > DUR - 20) seek(60); return () => setPlaying(false); });
+    return () => { cancelAnimationFrame(raf); document.removeEventListener("click", onDoc); unDrag(); f.stop(); stopLoop && stopLoop(); };
+  }
+
+
+  // ── 13 · Compose bar in three themes: type, refine, dictate, send (the message lands in the feed) ──
+  function composeBars(stage, { auto }) {
+    const DICT = ["Remember", "to", "book", "a", "table", "for", "Friday", "and", "ask", "if", "they", "have", "a", "quiet", "corner."];
+    const TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h14M10 7V5h4v2M7 7l.8 12h8.4L17 7M10.200 11v5M13.800 11v5"/></svg>';
+    const RING = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.500" stroke-dasharray="1.400 3.100"/><circle cx="12" cy="12" r="4.800"/></svg>';
+    const MIC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><rect x="9" y="4" width="6" height="10" rx="3"/><path d="M6.500 11.500a5.500 5.500 0 0 0 11 0M12 17v3"/></svg>';
+    const c = h("div", "ix ix-cb");
+    c.innerHTML = ["dark", "light", "sun"].map((th) => `
+      <div class="cb cb--${th}">
+        <div class="cb__feed" aria-live="polite"></div>
+        <div class="cb__bar">
+          <textarea class="cb__in" rows="1" placeholder="Write your thoughts..." aria-label="Write your thoughts (${th} theme)"></textarea>
+          <div class="cb__row">
+            <button class="cb__ic cb__trash" type="button" aria-label="Clear">${TRASH}</button>
+            <button class="cb__ic cb__magic" type="button" aria-label="Refine the text">${RING}</button>
+            <button class="cb__ic cb__mic" type="button" aria-label="Dictate"><span class="cb__i1">${MIC}</span><span class="cb__i2"><i></i><i></i><i></i><i></i></span></button>
+            <button class="cb__send" type="button" aria-label="Send">${ICON.up}</button>
+          </div>
+        </div>
+      </div>`).join("");
+    stage.appendChild(c);
+    const f = fit(stage, c, 1100, 380, 0.94);
+    const bars = [...c.querySelectorAll(".cb")].map((el) => {
+      const q = (s) => el.querySelector(s), inp = q(".cb__in"), feed = q(".cb__feed"), send = q(".cb__send"), trash = q(".cb__trash"), magic = q(".cb__magic"), mic = q(".cb__mic");
+      let dict = 0, listening = null;
+      const sync = () => {
+        inp.style.height = "auto"; inp.style.height = `${Math.min(110, inp.scrollHeight)}px`;
+        const has = inp.value.trim().length > 0; send.disabled = !has; trash.disabled = !inp.value.length; magic.disabled = !has;
+      };
+      const post = () => {
+        const v = inp.value.trim(); if (!v) return;
+        const b = h("p", "cb__msg"); b.textContent = v; feed.appendChild(b);
+        while (feed.children.length > 3) feed.firstChild.remove();
+        inp.value = ""; sync(); stopMic();
+      };
+      const stopMic = () => { clearInterval(listening); listening = null; mic.classList.remove("is-on"); mic.setAttribute("aria-pressed", "false"); };
+      const refine = (s) => { s = s.replace(/\s+/g, " ").trim(); s = s.charAt(0).toUpperCase() + s.slice(1); return /[.!?]$/.test(s) ? s : s + "."; };
+      inp.addEventListener("input", sync);
+      inp.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); post(); } });
+      send.addEventListener("click", post);
+      trash.addEventListener("click", () => { inp.value = ""; sync(); stopMic(); inp.focus(); });
+      magic.addEventListener("click", () => {
+        if (magic.classList.contains("is-busy")) return;
+        magic.classList.add("is-busy"); inp.classList.add("is-busy");
+        setTimeout(() => { inp.value = refine(inp.value); sync(); magic.classList.remove("is-busy"); inp.classList.remove("is-busy"); }, reduce ? 0 : 700);
+      });
+      mic.addEventListener("click", () => {
+        if (listening) return stopMic();
+        mic.classList.add("is-on"); mic.setAttribute("aria-pressed", "true");
+        listening = setInterval(() => { inp.value += (inp.value && !/\s$/.test(inp.value) ? " " : "") + DICT[dict++ % DICT.length]; sync(); if (dict % DICT.length === 0) stopMic(); }, 380);
+      });
+      sync();
+      return { inp, post, sync, feed, stopMic };
+    });
+    let stopLoop = null;
+    if (auto && !reduce) stopLoop = whileVisible(c, () => {
+      let on = true;
+      const lines = ["Call mum on Sunday", "Draft the launch note", "Walk before sunset"];
+      (async () => {
+        while (on) {
+          bars.forEach((b) => { b.feed.replaceChildren(); b.inp.value = ""; b.sync(); });
+          await wait(900);
+          for (let i = 0; i < 3 && on; i++) {
+            for (const ch of lines[i]) { if (!on) return; bars[i].inp.value += ch; bars[i].sync(); await wait(55); }
+            await wait(450); if (!on) return; bars[i].post(); await wait(500);
+          }
+          await wait(2200);
+        }
+      })();
+      return () => { on = false; };
+    });
+    return () => { bars.forEach((b) => b.stopMic()); f.stop(); stopLoop && stopLoop(); };
+  }
+
+  // ── 15 · Empty state: a stack of windows you can shuffle, with pixel glyphs that drift against the pointer ──
+  function emptySessions(stage, { auto }) {
+    const GLYPHS = [
+      { c: "#F26B0F", x: 30, y: 215, r: -8, d: 1.1, g: ["#.#.#", ".#.#.", "#.#.#", ".#.#.", "#.#.#"] },
+      { c: "#0A8CFF", x: 90, y: 70, r: -14, d: 1.4, g: ["####.", "#...#", "#.##.", "....#", ".##.."] },
+      { c: "#F5D90A", x: 285, y: 20, r: 12, d: 1.8, g: ["#...#", ".#.#.", "..#..", ".#.#.", "#...#"] },
+      { c: "#2AA876", x: 470, y: 60, r: 8, d: 1.3, g: ["..#..", ".###.", "#.#.#", ".###.", "..#.."] },
+      { c: "#D9439E", x: 535, y: 200, r: -6, d: 1.6, g: ["#...#", ".###.", ".###.", ".###.", "#...#"] },
+    ];
+    const c = h("div", "ix ix-es");
+    const glyph = (g) => { const svg = document.createElementNS(NS, "svg"); svg.setAttribute("viewBox", "0 0 40 40"); svg.setAttribute("shape-rendering", "crispEdges"); svg.setAttribute("aria-hidden", "true");
+      g.g.forEach((row, y) => [...row].forEach((ch, x) => { if (ch === "#") { const r = document.createElementNS(NS, "rect"); r.setAttribute("x", x * 8); r.setAttribute("y", y * 8); r.setAttribute("width", 7); r.setAttribute("height", 7); svg.appendChild(r); } })); return svg; };
+    c.innerHTML = `
+      <div class="es__card">
+        <div class="es__stage">
+          <button class="es__stack" type="button" aria-label="Shuffle the windows">
+            ${[0, 1, 2].map((i) => `<span class="es__win" data-role="${i}"><i></i><i></i><i></i></span>`).join("")}
+          </button>
+        </div>
+        <p class="es__msg">You currently have 0 Sessions.</p>
+        <p class="es__sub">Think this is an error? Reach out on <a href="https://discord.com" target="_blank" rel="noopener">Discord.</a></p>
+        <div class="es__foot"><span>adria.studio</span><span>steel.dev</span></div>
+      </div>`;
+    const stageEl = c.querySelector(".es__stage");
+    GLYPHS.forEach((g, i) => { const b = h("span", "es__g"); b.style.cssText = `left:${g.x}px;top:${g.y}px;--c:${g.c};--r:${g.r}deg;--d:${g.d};--i:${i}`; b.appendChild(glyph(g)); b.addEventListener("pointerenter", () => { b.classList.remove("is-hop"); void b.offsetWidth; b.classList.add("is-hop"); }); stageEl.appendChild(b); });
+    stage.appendChild(c);
+    const f = fit(stage, c, 640, 640, 0.94);
+    const wins = [...c.querySelectorAll(".es__win")], stack = c.querySelector(".es__stack");
+    const roles = [0, 1, 2];
+    const place = () => wins.forEach((w, i) => { w.dataset.role = roles[i]; });
+    const shuffle = () => { for (let i = 0; i < roles.length; i++) roles[i] = (roles[i] + 1) % 3; place(); };
+    stack.addEventListener("click", shuffle);
+    const card = c.querySelector(".es__card");
+    const move = (e) => { const r = card.getBoundingClientRect(); c.style.setProperty("--px", (((e.clientX - r.left) / r.width - 0.5) * 2).toFixed(3)); c.style.setProperty("--py", (((e.clientY - r.top) / r.height - 0.5) * 2).toFixed(3)); };
+    const leave = () => { c.style.setProperty("--px", 0); c.style.setProperty("--py", 0); };
+    if (!reduce) { card.addEventListener("pointermove", (e) => { if (e.pointerType !== "touch") move(e); }); card.addEventListener("pointerleave", leave); }
+    place();
+    let stopLoop = null;
+    if (auto && !reduce) stopLoop = whileVisible(c, () => {
+      let on = true;
+      (async () => { let k = 0; while (on) { await wait(2400); if (!on) return; shuffle(); const g = c.querySelectorAll(".es__g")[k++ % 5]; g.classList.remove("is-hop"); void g.offsetWidth; g.classList.add("is-hop"); } })();
+      return () => { on = false; };
+    });
+    return () => { f.stop(); stopLoop && stopLoop(); };
+  }
+
+  const DEMOS = { boundingBox, segmentedNav, clouds, marketSelect, onboardingTour, apiKey, timelineScrub, glassSliders, podcastPlayer, composeBars, emptySessions };
 
   // ── Overlay: opens over the board from a tile; arrows step through the board, Esc closes ──
   function openOverlay(items, start, opener) {
@@ -594,6 +1055,7 @@
       cleanup && cleanup(); cleanup = null; stage.replaceChildren();
       stage.style.background = it.bg || "";
       if (it.demo) cleanup = DEMOS[it.demo](stage, { auto: false });
+      else if (it.image) { const img = h("img", "pgx__img"); img.src = it.image; img.alt = it.alt || it.title; stage.appendChild(img); }
       else if (it.thumb) {
         const fig = h("a", "pgx__shot"); fig.href = it.href;
         const img = h("img"); img.src = it.thumb; img.alt = `Preview of the ${it.title} page`;
