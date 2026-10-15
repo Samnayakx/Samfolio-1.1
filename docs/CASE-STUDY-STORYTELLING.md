@@ -111,6 +111,7 @@ Named clients (Gap, Salesforce, Steele) only carry numbers that are already in t
 - **Concept / take-home.** Swap `Validation` for `Measurement` (plan, not results) and add `Risks` in the reflection. Say "simulated data" once, plainly.
 - **Confidential.** Brief + one decision + headline outcome + `cta` "Book a call". Three sections at most.
 - **Early-stage AI.** Separate *what the live product proved* from *where the agent is going*. Pilot numbers are labelled "early pilot".
+- **Startup, then acquired (Gap 3D Fit).** Keep the original storyline (Problem, Decisions, Solution, Impact, Reflection) and add a short Overview that states the hypothesis with the startup and acquisition context, using public sources. For each decision: the real screen first, then the four trade-off rows, then "What testing showed / What I did next" taken from the real research. Lead Impact with the method ("A/B test") before the number. Use real screens and published numbers only; do not redraw UI that already exists.
 - **Compressed six-beat.** Overview · Insight · What we killed · What we shipped · Build & test · Impact & learning. Merge evidence, findings and reframe into one Insight section; put sub-beats (findings, killed ideas, features) in `trades` so they get subheads without adding rail items. Trailhead Solve uses this.
 
 ---

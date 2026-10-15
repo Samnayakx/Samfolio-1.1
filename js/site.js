@@ -475,40 +475,49 @@ const PROJECTS = [
     },
   },
   {
-    name: "Gap 3D Fit", org: "Gap", area: "E-commerce · 3D sizing UX", tags: ["E-comm", "UX Design"],
+    name: "Gap 3D Fit", org: "Gap", area: "E-commerce · 3D fit · Web and iOS", tags: ["E-comm", "UX Design"],
     title: "Turning sizing uncertainty into a 61% add-to-bag decision.",
-    desc: "Technical product designer and team lead on Gap's 3D Fit viewer: fit logic, UX flow, UI and testing across web and iOS.",
-    metric: { value: "61%", label: "Add-to-bag lift" }, href: "/case-study?case=5", tint: ["#A4A6A3", "#E7E8E5", "#D6D7D4"], photo: { src: "/assets/images/case-bg-bloom.jpg", pos: "50% 84%" },
+    desc: "Technical product designer on Drapr, a Y Combinator 3D-fit startup that Gap Inc. acquired. I led the redesign of the 3D Fit flow so shoppers could trust a size. An A/B test showed a 61% lift in add-to-bag.",
+    metric: { value: "+61%", label: "Add-to-bag lift, A/B tested" }, thumb: { video: "/assets/images/gap/video-gap-cover.mp4", poster: "/assets/images/gap/video-gap-cover-poster.jpg", alt: "Gap 3D Fit cover: the real QuickFit Finder, with Waist, Hips and Calf fit descriptors, and the key numbers", navPoster: "/assets/images/gap/video-gap-cover-poster.jpg", bleed: true }, href: "/case-study?case=5", tint: ["#9096CA", "#FEFBF2", "#F45220"],
     cs: {
       meta: [["Role", "Technical Product Designer"], ["Timeline", "6 months"], ["Skills", "UX flow, fit logic, UI, testing, 3D optimization · Web, iOS"], ["Team", "2 PMs, 1 designer, 1 UXR"]],
       sections: [
-        { title: "Overview", statement: "Overview: shoppers didn't need more 3D. They needed a reason to trust a size.",
-          text: ["Gap's 3D Fit viewer had to earn its place in the purchase flow. As technical product designer and team lead, I owned fit logic, UX flow, UI and testing across web and iOS, working with two PMs and a UX researcher over six months.",
-            "The brief was about the viewer. The answer was about confidence: the moment a shopper decides whether to trust a size and add to bag."],
-          cards: [["Problem: Precise, but not convincing.", "The old flow showed fit, yet shoppers still felt the risk of a return."], ["Solution: Ask less, explain more.", "A baseline-first flow, with explainable per-zone fit when trust is at stake."], ["Outcome: +61% add-to-bag", "Lift after the redesign."]] },
-        { title: "Problem", ph: "01", media: [{ src: "/assets/images/gap/problem-size-chart.png", alt: "Gap size guide table for women's jeans.", cap: "Charts were precise; comfort was not." }, { src: "/assets/images/gap/problem-denim-fit.png", alt: "Jeans fit diagram with body-zone measurement markers.", cap: "Fit was multi-zone: waist, hip, thigh, calf and inseam." }], statement: "Problem: the old flow showed fit, but shoppers still felt risk.",
-          text: ["Denim made sizing harder: one size had to explain multiple body zones without turning checkout into a long form.", "Every unconvincing recommendation became a guess, and every wrong guess became a return."] },
-        { title: "Research", ph: "02", media: [{ src: "/assets/images/gap/problem-recommendations.png", alt: "Product recommendation carousel for Gap apparel.", cap: "A size recommendation without evidence felt risky." }], statement: "Research: confidence, not measurements, was the missing piece.",
-          text: ["Sizing breakdowns kept coming back to trust: what shoppers saw was precise, but not convincing."],
+        { title: "Overview", statement: "Overview: fit is the biggest friction in online denim. Showing it wasn't enough.",
+          text: ["Drapr built a 3D avatar that lets shoppers try on clothes. Gap Inc. acquired it in August 2021 to improve fit across its brands, and called fit “the number one point of friction for customers” (Gap Inc. press release, 26 August 2021).",
+            "My hypothesis: a 3D avatar shows fit, but shoppers buy on trust. So I designed the flow around what a shopper needs to believe a size, then tested it against the old one."],
+          cards: [["Drapr: 3D avatar try-on", "A Y Combinator startup. Gap acquired it in August 2021."], ["Hypothesis: ask less, prove more", "Little upfront. Explain the size when trust is at stake."], ["Result: +61% add-to-bag", "An A/B test of the new flow against the old one."]] },
+        { title: "Problem", statement: "Problem: the old flow showed fit. Shoppers still felt risk.",
+          text: ["Denim made sizing harder: one size had to explain multiple body zones without turning checkout into a long form."],
+          media: [{ src: "/assets/images/gap/problem-size-chart.webp", alt: "Gap size guide table for women's jeans.", cap: "Charts were precise; comfort was not." }, { src: "/assets/images/gap/problem-denim-fit.webp", alt: "Jeans fit diagram with body-zone measurement markers.", cap: "Fit was multi-zone: waist, hip, thigh, calf, and inseam all mattered." }, { src: "/assets/images/gap/problem-recommendations.webp", alt: "Product recommendation carousel for Gap apparel.", cap: "A size recommendation without evidence felt risky." }],
           cards: [["Measurements were not enough", "Charts were precise; comfort was not."], ["Fit was multi-zone", "Waist, hip, thigh, calf, and inseam all mattered."], ["The answer needed a reason", "A size recommendation without evidence felt risky."], ["Every extra input had a cost", "More personalization could also mean more drop-off."]] },
-        { title: "Reframe", statement: "Reframe: from showing fit to earning trust.",
-          text: ["Research changed the question from \u201chow realistic can the 3D get?\u201d to \u201cwhat does a shopper need to believe before adding to bag?\u201d",
-            "That reframe gave product, engineering, research and merchandising one shared goal, and made every later trade-off easier to referee."],
-          cards: [["Goal", "Help shoppers trust a size and move forward, instead of guessing and returning."], ["Success metric", "Add-to-bag from the fit experience."], ["Guardrail", "No added friction. Every extra input had to earn its place against drop-off."]] },
-        { title: "Solution", ph: "03", media: [{ diagram: { kind: "flow", title: "The final 3D Fit flow", hi: 3, nodes: ["Baseline input", "Fit calibration", "Optional tuning", "Explainable fit"], note: "Each step either improved the model or helped shoppers verify the recommendation." } }, { src: "/assets/images/gap/solution-step-1.png", alt: "Choose height step in the 3D fit flow.", cap: "Step 1: choose your height" }],
-          ui: { kind: "rows", rows: [{ tag: "Baseline first", t: "Ask less upfront.", d: "A baseline input gets shoppers a size fast. Calibration and tuning stay optional, so complexity comes later.", cards: [["Height", "5'7\"", "Baseline"], ["Usual size", "30", "Calibration"], ["Thigh", "Relaxed", "Optional tuning"]] }, { tag: "Explainable fit", t: "Fast answer, optional reason.", d: "The recommendation arrives first. The evidence per body zone is one tap away when trust is at stake.", cards: [["Waist", "Snug", "Zone 1"], ["Hip", "True to fit", "Zone 2"], ["Calf", "Relaxed", "Zone 3"]] }] }, statement: "Solution: ask less upfront, show more evidence when trust is at stake.",
-          text: ["The final flow made fit easier to trust without adding friction. Each step either improved the model or helped shoppers verify the recommendation."],
-          steps: [["Baseline input"], ["Fit calibration"], ["Optional tuning"], ["Explainable fit"]],
+        { title: "Decisions", statement: "Decisions: I asked less upfront and showed more evidence when trust was at stake.",
+          text: ["The key move was sequencing: what to ask, what to defer, and when to explain. I tested each call with participants before it shipped."],
           trades: [
-            { n: "Decision 1", t: "Accuracy vs completion rate", rows: [["User need", "Credible sizing."], ["Business need", "Purchase momentum."], ["Constraint", "Too many inputs caused drop-off."], ["Compromise", "Baseline first, tuning optional."]], note: "Complexity moved later, after the value was clear.", media: [{ src: "/assets/images/gap/tradeoff-1.svg", alt: "Measurement visibility trade-off concept screens.", cap: "Concepts: how much measurement to show" }] },
-            { n: "Decision 2", t: "Explainability vs purchase velocity", rows: [["User need", "Evidence behind the size."], ["Business need", "Fast purchase flow."], ["Constraint", "Too much rationale slowed action."], ["Compromise", "Fast answer, optional reason."]], note: "The recommendation became inspectable without becoming heavy.", media: [{ src: "/assets/images/gap/tradeoff-2.svg", alt: "Recommendation transparency trade-off concept screen.", cap: "Concept: how transparent the recommendation is" }] },
-            { n: "Decision 3", t: "Fit fidelity vs mobile performance", rows: [["User need", "Realistic body-zone fit."], ["Business need", "Reach mobile shoppers."], ["Constraint", "Fidelity slowed performance."], ["Compromise", "Use copy to support visuals."]], note: "Fit copy became interface logic: short, local, decision-tied.", media: [{ src: "/assets/images/gap/tradeoff-3.svg", alt: "Fit language clarity trade-off concept screen.", cap: "Concept: how clear the fit language is" }] },
+            { n: "Decision 1", t: "Accuracy vs completion rate", mediaLayout: "stack", media: [{ wide: true, src: "/assets/images/gap/decision-1.webp", alt: "Two versions of the Further customize your avatar screen, one showing size numbers beside each body measurement and one without.", cap: "The avatar customization screen, with and without size numbers" }],
+              rows: [["User need", "Credible sizing."], ["Business need", "Purchase momentum."], ["Constraint", "Too many inputs caused drop-off."], ["Compromise", "Baseline first, tuning optional."]],
+              find: [["What testing showed", "Participants said they felt more confident seeing the numbers when they entered their measurements, especially those who knew a few of them, than relying on a visual approximation."], ["What I did next", "Keep the dimensions visible by default. It is less ambiguous than showing no numbers at all."]],
+              note: "Complexity moved later, after the value was clear." },
+            { n: "Decision 2", t: "Explainability vs purchase velocity", mediaLayout: "stack", media: [{ wide: true, src: "/assets/images/gap/decision-2.webp", alt: "The QuickFit Finder with an open Why this recommendation panel that explains what to do if a size feels too small or too large.", cap: "A toggle-able Why this recommendation panel" }],
+              rows: [["User need", "Evidence behind the size."], ["Business need", "Fast purchase flow."], ["Constraint", "Too much rationale slowed action."], ["Compromise", "Fast answer, optional reason."]],
+              find: [["What testing showed", "Almost everyone opened it out of curiosity, even when the size matched what they usually wear."], ["What I did next", "Add a brief explanation of the recommendation, especially when it falls outside their usual range, to build trust in the tool."]],
+              note: "The recommendation became inspectable without becoming heavy." },
+            { n: "Decision 3", t: "Fit fidelity vs mobile performance", mediaLayout: "stack", media: [{ wide: true, src: "/assets/images/gap/decision-3.webp", alt: "The QuickFit Finder with Waist, Hips and Calf fit descriptors that explain what tight, fitted and loose feel like.", cap: "Toggle-based fit descriptors for waist, hips and calves" }],
+              rows: [["User need", "Realistic body-zone fit."], ["Business need", "Reach mobile shoppers."], ["Constraint", "Fidelity slowed performance."], ["Compromise", "Use copy to support visuals."]],
+              find: [["What testing showed", "Participants knew to click the question mark for more information and valued the clarity of what fitted, loose and relaxed mean."], ["What I did next", "Add definitions for the fit descriptors, so shoppers know what each one feels like."]],
+              note: "Fit copy became interface logic: short, local, decision-tied." },
           ] },
-        { title: "Impact", dash: [{ type: "kpi", w: 4, label: "Add-to-bag", value: "+61%", chip: "Lift", note: "Lift after the redesign" }, { type: "trend", w: 8, label: "Add-to-bag, indexed", value: "100 → 161", chip: "Before → after", points: [["Before", 100], ["3D Fit", 161]], note: "Indexed to the old flow = 100. The same 61% lift, shown as a change, not a share." }], statement: "Impact: a 61% add-to-bag lift.",
+        { title: "Solution", statement: "Solution: the final flow made fit easier to trust without adding friction.",
+          text: ["Each step either improved the model or helped shoppers verify the recommendation."],
+          mediaLayout: "stack",
+          media: [{ wide: true, src: "/assets/images/gap/solution-flow.webp", alt: "The final flow in the QuickFit Finder: how tall are you, optional avatar customization, and a size shown on the avatar with Waist, Hips and Calf fit descriptors.", cap: "The final flow in the QuickFit Finder" }],
+          steps: [["Baseline input", "How tall are you?"], ["Fit calibration"], ["Optional tuning", "Further customize your avatar"], ["Explainable fit", "Why this recommendation, and what tight, fitted and loose feel like"]] },
+        { title: "Impact", statement: "Impact: an A/B test showed a 61% lift in add-to-bag.",
+          dash: [{ type: "kpi", w: 4, label: "Add-to-bag", value: "+61%", chip: "A/B test", note: "New flow against the old flow" }, { type: "trend", w: 8, label: "Add-to-bag, indexed", value: "100 → 161", chip: "Old → new flow", points: [["Old flow", 100], ["New flow", 161]], note: "Indexed to the old flow = 100. The same 61% lift, shown as a change, not a share." }],
           text: ["The strongest signal was not more 3D realism. It was reducing sizing ambiguity at the moment shoppers decided whether to trust a size and add to bag.", "Leading the team meant keeping four disciplines on one definition of success:"],
           cards: [["Product", "Connected confidence to commerce signals"], ["Engineering", "Balanced 3D assets with mobile performance"], ["Research", "Mapped trust breakdowns"], ["Fit language", "Aligned product, research, and merchandising terms"]] },
-        { title: "Learning", statement: "Learning: the visual was not the product. Confidence was.",
-          text: ["What shoppers believed, understood and felt ready to do next mattered more than how realistic the 3D looked.", "I would cut more today: every control should earn its place at the moment of doubt. And I would track returns alongside add-to-bag, so the lift is tied to sizes that actually fit."] },
+        { title: "Reflection", statement: "Reflection: I changed my mind about the job of 3D.",
+          text: ["The visual was not the product. Confidence was what shoppers believed, understood, and felt ready to do next.", "I would cut more today: every control should earn its place at the moment of doubt."],
+          cta: { label: "Book a call", href: BOOK_A_CALL } },
       ],
     },
   },
@@ -2142,8 +2151,16 @@ function openLightbox(src, alt, opener) {
       if (sec.steps) { s.appendChild(el("h3", "study__sub", sec.stepsTitle || "How it works")); s.appendChild(trio(sec.steps, true)); }
       (sec.trades || []).forEach((t) => {
         s.appendChild(el("h3", "study__sub", `${t.n}: ${t.t}`));
-        s.appendChild(trio(t.rows));
-        if (t.media) { const g = el("div", studyMediaGrid(t.media, t.mediaLayout)); t.media.forEach((m, mk) => g.appendChild(mediaEl(m, t.n, mk))); s.appendChild(g); }
+        const rich = !!(t.media || t.find);   // decisions with a real screen read top to bottom: screen, trade-off, evidence
+        const gridOf = () => { if (!t.media) return; const g = el("div", studyMediaGrid(t.media, t.mediaLayout)); t.media.forEach((m, mk) => g.appendChild(mediaEl(m, t.n, mk))); s.appendChild(g); };
+        if (rich) gridOf();
+        const rows = trio(t.rows); if (rich) rows.classList.add("study__trio--facts"); s.appendChild(rows);
+        if (!rich) gridOf();
+        if (t.find) {
+          const f = el("div", "study__find");
+          t.find.forEach(([k, v]) => { const d = el("div"); d.append(el("span", "study__findk", k), el("p", "", v)); f.appendChild(d); });
+          s.appendChild(f);
+        }
         if (t.note) s.appendChild(el("p", "study__p study__note", t.note));
       });
       if (sec.cards) s.appendChild(trio(sec.cards));
