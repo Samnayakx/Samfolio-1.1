@@ -1450,3 +1450,6 @@ a.inline:hover { opacity: .7; }
 @media (max-width: 1023px) { .case--locked { grid-template-columns: 1fr; } }
 @media (max-width: 640px) { .lockgrid { grid-template-columns: minmax(0, 1fr); } .lockgrid > li:nth-child(3) .lockcard__tile { aspect-ratio: 16 / 10; } }
 @media (prefers-reduced-motion: reduce) { .lockcard__tile, .lockcard__shackle { transition: none; } .lockcard:is(:hover, :focus-visible) .lockcard__tile { transform: none; } }
+
+.lockcard__tile--contain { background: var(--t3); }
+.lockcard__tile--contain .lockcard__img { object-fit: contain; object-position: center; padding: var(--space-3); background: none; }
