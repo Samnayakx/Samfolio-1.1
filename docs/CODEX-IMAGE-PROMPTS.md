@@ -18,7 +18,7 @@ one prompt per ID. Paste the **setup prompt** first, then the prompt for the ima
   Cases 2, 3 and 5 have none yet. To fill one, add
   `thumb: { video: "/assets/images/<folder>/<id>.mp4", poster: "/assets/images/<folder>/<id>-poster.jpg", alt: "…" }`
   to the project, the same shape as the Trailhead, Arcade and CotonAI Agent entries.
-- Folders: `trailhead`, `cotonai` (Modes and Agent), `aistudio`, `arcade`, `gap`.
+- Folders: `trailhead`, `cotonai` (Modes, Design System and Agent), `arcade`, `gap`.
 
 ## Two kinds of image
 
@@ -46,7 +46,7 @@ To fill one:
 1. Produce the image at the placeholder's ratio, 1600px wide (1200px for
    1:1 and 4:5), as WebP, quality 82, under 300 KB.
 2. Save it as assets/images/<folder>/<id-in-lowercase>.webp. Folders:
-   trailhead, cotonai, aistudio, arcade, gap.
+   trailhead, cotonai, arcade, gap.
 3. In js/site.js, replace that placeholder with
    { src: "/assets/images/<folder>/<id>.webp", alt: "<what it shows>", cap: "<short caption>" }.
    Keep the caption close to the placeholder's text. Do not touch other entries.
@@ -135,14 +135,11 @@ of the Figure submode. Lay them out as a numbered strip (01, 02, 03) with a mono
 note "8 CLICKS → 3 CLICKS" (from the case). Caption: "Figure submode: a try-on in 3 clicks".
 ```
 
-### Case 3 · AI Studio (`aistudio`, password protected)
+### Case 3 · CotonAI Design System (`cotonai`)
 
-**C3-01-1 · 16:10 · Real** (Problem) and **C3-02-1 · 16:10 · Real** (Impact)
-```
-Fill C3-01-1 from assets/inbox/C3-01-1.png (product hero or workflow) and
-C3-02-1 from assets/inbox/C3-02-1.png (workflow comparison). Crop each to its
-key area. This case is behind a passcode, so blur anything client-identifying.
-```
+The case already uses real artifacts: `assets/images/cotonai-modes/tokens-workflow.webp`
+(the three-step workflow and the control sheet) and `flow-1.webp` / `flow-2.webp`
+(Editorial specified as states). Do not generate stand-in frames for this case.
 
 ### Case 5 · Gap 3D Fit (`gap`)
 
@@ -208,7 +205,7 @@ Caption: "Canvas as context: what the agent reads before it acts".
 
 ### Hero videos for cases 2, 3 and 5
 
-**C2-V-1 · CotonAI Modes**, **C3-V-1 · AI Studio**, **C5-V-1 · Gap 3D Fit** (16:9, real)
+**C2-V-1 · CotonAI Modes**, **C5-V-1 · Gap 3D Fit** (16:9, real)
 ```
 Fill C<N>-V-1 from assets/inbox/C<N>-V-1.mov (or .mp4): a screen recording of the
 product's main flow. Codex must not generate product footage; if the file is

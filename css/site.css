@@ -1429,3 +1429,24 @@ a.inline:hover { opacity: .7; }
 /* Photo thumbnails: white type with a soft shadow so it holds on the bright crops */
 .case__tile--photo .metric { color: #fff; text-shadow: 0 1px 28px rgba(0, 0, 0, .28); }
 .case__tile--photo .metric span { color: rgba(255, 255, 255, .88); }
+
+/* ── Work: CotonAI's three passcode-protected studies: two across, one below ── */
+.lockgrid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6) var(--space-4); }
+.lockgrid > li:nth-child(3) { grid-column: 1 / -1; }
+.lockcard { display: flex; flex-direction: column; gap: var(--space-1); text-decoration: none; color: inherit; }
+.lockcard__tile { aspect-ratio: 16 / 10; padding: 0; margin-bottom: var(--space-3); transition: transform .5s var(--ease-expressive); }
+.lockgrid > li:nth-child(3) .lockcard__tile { aspect-ratio: 16 / 8; }
+.lockcard__img, .lockcard__vid { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; background: #000; }
+.lockcard__vid { object-position: center; }
+.lockcard__badge { position: absolute; top: var(--space-3); right: var(--space-3); display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; color: #fff; background: rgb(20 20 15 / .62); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.lockcard__icon { width: 18px; height: auto; overflow: visible; --lock-dot: #14140f; }
+.lockcard__shackle { transform-box: fill-box; transform-origin: 85% 100%; transition: transform .35s var(--ease-standard); }
+.lockcard:is(:hover, :focus-visible) .lockcard__shackle, .lockcard.is-open .lockcard__shackle { transform: translateY(-1.5px) rotate(-14deg); }
+.lockcard:is(:hover, :focus-visible) .lockcard__tile { transform: translateY(-3px); }
+.lockcard:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; border-radius: var(--radius-lg); }
+.lockcard__title { margin: 0; font: 400 clamp(20px, 2vw, 26px)/1.1 var(--font-ntype); letter-spacing: -.01em; }
+.lockcard__area { margin: 0; font: 400 13px/1.4 var(--font-body); color: var(--sec-muted); }
+.lockcard:is(:hover, :focus-visible) .case__cta svg { transform: translateX(3px); }
+@media (max-width: 1023px) { .case--locked { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .lockgrid { grid-template-columns: minmax(0, 1fr); } .lockgrid > li:nth-child(3) .lockcard__tile { aspect-ratio: 16 / 10; } }
+@media (prefers-reduced-motion: reduce) { .lockcard__tile, .lockcard__shackle { transition: none; } .lockcard:is(:hover, :focus-visible) .lockcard__tile { transform: none; } }

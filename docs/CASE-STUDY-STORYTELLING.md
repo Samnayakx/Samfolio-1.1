@@ -70,7 +70,7 @@ Ten beats. Most case studies use six to nine of them; the order never changes.
 
 The same arc reads differently depending on where the work happened. Pick the lens from the team, not the title.
 
-| | **Startup / founding designer** (CotonAI, AI Studio, Arcade take-home) | **Enterprise / large team** (Gap, Trailhead with Salesforce) |
+| | **Startup / founding designer** (CotonAI Modes, CotonAI Design System, Arcade take-home) | **Enterprise / large team** (Gap, Trailhead with Salesforce) |
 |---|---|---|
 | **The brief** | No brief. "I defined the problem." Ambiguity is the starting point. | A brief from product leadership. "I was asked to ___; I reframed it as ___." |
 | **Stakes** | Survival metrics: paid pilots, conversion to revenue, time to value, cost saved. | Scale metrics: add-to-bag, retention, drop-off, across millions of users. |

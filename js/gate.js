@@ -1,7 +1,7 @@
 // Passcode gate for protected case studies. Runs in <head> so the page never flashes before it is covered.
 // Note: this is a courtesy gate. It is client-side only and keeps casual visitors out, not determined ones.
 (() => {
-  const LOCKED = { 2: "CotonAI Modes", 3: "AI Studio" };
+  const LOCKED = { 2: "CotonAI Modes", 3: "CotonAI Design System", 6: "CotonAI Agent" };
   const PASSCODE = "hello";
   const KEY = "samfolio-unlocked";
   const id = parseInt(new URLSearchParams(location.search).get("case") || "1", 10);
