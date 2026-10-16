@@ -292,6 +292,9 @@ html { scroll-behavior: smooth; }
 :root[data-theme="dark"] .work { --panel: rgb(var(--greyscale-dm-light)); --card: rgb(var(--greyscale-black)); }
 .work__inner { max-width: 1152px; margin: 0 auto; }
 .work__head { display: grid; grid-template-columns: 1fr 3fr; gap: var(--gutter); margin-bottom: var(--head-gap); }
+#work .work__headline { display: flex; flex-direction: column; align-items: flex-end; text-align: right; }
+#work .work__headline .work__title { width: 100%; text-align: right; }
+#work .work__headline .dotfield { margin-left: auto; }
 .work__label { display: flex; flex-direction: column; gap: var(--space-3); }
 .work__eyebrow { margin: 0; font: 800 20px/1 var(--font-ndot); text-transform: uppercase; letter-spacing: .02em; }
 .work__title { margin: 0 0 var(--space-5); font: 400 48px/1 var(--font-ntype); letter-spacing: -.01em; }
@@ -1432,10 +1435,10 @@ a.inline:hover { opacity: .7; }
 
 /* ── Work: CotonAI's three passcode-protected studies: two across, one below ── */
 .lockgrid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6) var(--space-4); }
-.lockgrid > li:nth-child(3) { grid-column: 1 / -1; }
+.lockgrid > li.is-wide { grid-column: 1 / -1; }
 .lockcard { display: flex; flex-direction: column; gap: var(--space-1); text-decoration: none; color: inherit; }
 .lockcard__tile { aspect-ratio: 16 / 10; padding: 0; margin-bottom: var(--space-3); transition: transform .5s var(--ease-expressive); }
-.lockgrid > li:nth-child(3) .lockcard__tile { aspect-ratio: 16 / 8; }
+.lockgrid > li.is-wide .lockcard__tile { aspect-ratio: 16 / 8; }
 .lockcard__img, .lockcard__vid { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; background: #000; }
 .lockcard__vid { object-position: center; }
 .lockcard__badge { position: absolute; top: var(--space-3); right: var(--space-3); display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; color: #fff; background: rgb(20 20 15 / .62); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
@@ -1448,8 +1451,52 @@ a.inline:hover { opacity: .7; }
 .lockcard__area { margin: 0; font: 400 13px/1.4 var(--font-body); color: var(--sec-muted); }
 .lockcard:is(:hover, :focus-visible) .case__cta svg { transform: translateX(3px); }
 @media (max-width: 1023px) { .case--locked { grid-template-columns: 1fr; } }
-@media (max-width: 640px) { .lockgrid { grid-template-columns: minmax(0, 1fr); } .lockgrid > li:nth-child(3) .lockcard__tile { aspect-ratio: 16 / 10; } }
+@media (max-width: 640px) { .lockgrid { grid-template-columns: minmax(0, 1fr); } .lockgrid > li.is-wide .lockcard__tile { aspect-ratio: 16 / 10; } }
 @media (prefers-reduced-motion: reduce) { .lockcard__tile, .lockcard__shackle { transition: none; } .lockcard:is(:hover, :focus-visible) .lockcard__tile { transform: none; } }
 
 .lockcard__tile--contain { background: var(--t3); }
 .lockcard__tile--contain .lockcard__img { object-fit: contain; object-position: center; padding: var(--space-3); background: none; }
+
+/* ── Work filter: Recent, Featured, then the sectors ── */
+.work__tabs { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0 0 var(--space-6); padding: 0; }
+#work .work__tabs { width: 100%; justify-content: space-between; flex-wrap: nowrap; gap: var(--space-1); }
+.work__tab { display: inline-flex; align-items: center; gap: 8px; border: 0; cursor: pointer; padding: 8px 12px; border-radius: var(--radius); background: transparent; color: var(--sec-muted);
+  box-shadow: inset 0 0 0 1px var(--sec-line); font: 400 12px/1 var(--font-mono); text-transform: uppercase; letter-spacing: .04em; white-space: nowrap;
+  transition: background-color .2s var(--ease-standard), color .2s var(--ease-standard); }
+.work__tab sup { font-size: 10px; line-height: 1; opacity: .6; }
+.work__tab:hover { color: var(--sec-fg); }
+.work__tab[aria-selected="true"] { background: var(--sec-fg); color: var(--sec-bg); box-shadow: none; }
+.work__tab:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.work__tabs + .cards > .case:first-child { border-top: 0; }
+@media (max-width: 767px) {
+  .work__tabs { flex-wrap: nowrap; overflow-x: auto; margin-inline: calc(var(--gutter, 16px) * -1); padding-inline: var(--gutter, 16px); scrollbar-width: none; }
+  .work__tabs::-webkit-scrollbar { display: none; }
+  #work .work__tabs { justify-content: flex-start; width: auto; }
+}
+@media (max-width: 1023px) {
+  #work .work__headline { align-items: flex-start; text-align: left; }
+  #work .work__headline .work__title { text-align: left; }
+  #work .work__headline .dotfield { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .work__tab { transition: none; } }
+.cards > li[hidden], .lockgrid > li[hidden] { display: none !important; }
+
+/* ── Work: a minimal rim glow behind the top edge of the panel; it follows the pointer and brightens on hover ── */
+.work { position: relative; --gx: 50%; --gi: .45; --glow-o: .9; }
+:root[data-theme="light"] .work { --glow-o: .5; }
+.work::before {
+  content: ""; position: absolute; z-index: -1; left: 6%; right: 6%; top: -118px; height: 190px; pointer-events: none; opacity: var(--glow-o);
+  background:
+    radial-gradient(20% 64% at var(--gx), rgb(214 200 255 / calc(.62 * var(--gi))), transparent 76%),
+    radial-gradient(40% 100% at calc(var(--gx) - 12%) 100%, rgb(124 98 255 / calc(.5 * var(--gi))), transparent 72%),
+    radial-gradient(38% 100% at calc(var(--gx) + 16%) 100%, rgb(52 92 255 / calc(.42 * var(--gi))), transparent 72%),
+    radial-gradient(22% 80% at calc(var(--gx) + 38%) 100%, rgb(255 108 56 / calc(.3 * var(--gi))), transparent 72%);
+  background-position: 0 100%; background-repeat: no-repeat; filter: blur(30px); will-change: transform, opacity; animation: work-glow 10s ease-in-out infinite alternate;
+}
+.work::after {
+  content: ""; position: absolute; left: 6%; right: 6%; top: 0; height: 1px; pointer-events: none; opacity: calc(.18 + .6 * var(--gi));
+  background: linear-gradient(90deg, rgb(150 130 255 / .9), rgb(120 150 255 / .9) 55%, rgb(255 140 90 / .9));
+  -webkit-mask-image: radial-gradient(32% 600% at var(--gx) 50%, #000, transparent); mask-image: radial-gradient(32% 600% at var(--gx) 50%, #000, transparent);
+}
+@keyframes work-glow { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+@media (prefers-reduced-motion: reduce) { .work::before { animation: none; } }

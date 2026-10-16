@@ -343,7 +343,7 @@ const PROJECTS = [
     name: "CotonAI Design System", org: "CotonAI", area: "Design systems · AI product", tags: ["Design Systems", "AI UX"],
     title: "One repo, so every new CotonAI screen is built from the same library.",
     desc: "Founding product designer at CotonAI: Figma tokens, a spec on shadcn, and a markdown library in GitHub. New custom UI is pulled from that repo.",
-    metric: { value: "1", label: "Repo every new custom UI is built from" }, thumbnail: { src: "/assets/images/cotonai-modes/tokens-workflow.webp", fit: "contain", alt: "The CotonAI design-system workflow: tokens in Figma, a shadcn specification, then a markdown library in GitHub, beside the canvas controls." }, href: "/case-study?case=3", tint: ["#8AA3AE", "#E3ECEE", "#C5D5DA"],
+    metric: { value: "1", label: "Repo every new custom UI is built from" }, href: "/case-study?case=3", tint: ["#8AA3AE", "#E3ECEE", "#C5D5DA"],
     cs: {
       meta: [["Role", "Founding Product Designer"], ["Timeline", "Aug 2025 – Present"], ["Skills", "Design tokens, component specs, shadcn, AI-assisted UI"], ["Team", "Founder, PM, engineering"]],
       sections: [
@@ -645,6 +645,17 @@ const list = document.querySelector(".cards");
 // CotonAI's studies sit together as one row of three locked cards; their case ids stay tied to PROJECTS order
 const LOCK_SVG = '<svg class="lockcard__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><g class="lockcard__shackle"><path d="M8 10V7.5a4 4 0 0 1 8 0V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></g><rect x="5" y="10" width="14" height="10" rx="2.5" fill="currentColor"/><circle cx="12" cy="15" r="1.3" fill="var(--lock-dot, #fff)"/></svg>';
 let lockGroup = null;
+// What each project is filed under. date = when the work last moved (drives "Recent").
+const WORK_META = {
+  "Trailhead Solve": { sectors: ["Enterprise", "AI agents"], featured: true, date: "2026-04" },
+  "CotonAI Modes": { sectors: ["Fashion & retail", "AI agents"], featured: true, date: "2026-10" },
+  "CotonAI Design System": { sectors: ["Fashion & retail"], featured: false, date: "2026-10" },
+  "Arcade Control Plane": { sectors: ["Dev tools", "AI agents"], featured: false, date: "2026-05" },
+  "Gap 3D Fit": { sectors: ["Fashion & retail"], featured: true, date: "2025-07" },
+  "CotonAI Agent": { sectors: ["Fashion & retail", "AI agents"], featured: true, date: "2026-10" },
+  "Payman AI": { sectors: ["Fintech", "AI agents"], featured: false, date: "2026-10" },
+};
+const units = [];
 if (list) PROJECTS.forEach((p, i) => {
   if (p.org === "CotonAI") {
     if (!lockGroup) {
@@ -653,6 +664,7 @@ if (list) PROJECTS.forEach((p, i) => {
       const ids = PROJECTS.map((q, k) => (q.org === "CotonAI" ? pad(k + 1) : null)).filter(Boolean).join(" · ");
       lockGroup.innerHTML = `<div class="case__label"><span class="card__index">Case studies ( ${ids} )</span><span class="case__client">CotonAI</span><span class="case__year">Passcode protected</span></div><ul class="lockgrid" role="list"></ul>`;
       list.appendChild(lockGroup);
+      units.push({ li: lockGroup, group: true, members: [], ids });
     }
     let open = false; try { open = sessionStorage.getItem("samfolio-unlocked") === "1"; } catch {}
     const item = document.createElement("li");
@@ -670,13 +682,14 @@ if (list) PROJECTS.forEach((p, i) => {
         document.addEventListener("visibilitychange", play);
       }
     } else {
-      const th = p.thumbnail ? p.thumbnail.src : p.thumb && p.thumb.poster; if (th) { img.src = th; if (p.thumbnail && p.thumbnail.fit === "contain") tile.classList.add("lockcard__tile--contain"); } else img.remove();
+      const th = p.thumbnail ? p.thumbnail.src : p.thumb && p.thumb.poster; if (th) { img.src = th; if (p.thumbnail && p.thumbnail.fit === "contain") tile.classList.add("lockcard__tile--contain"); } else { img.remove(); if (p.photo) tile.style.background = `url("${p.photo.src}") ${p.photo.pos} / cover`; }
     }
     a.href = p.href; p.tint.forEach((c, k) => tile.style.setProperty(`--t${k + 1}`, c));
     a.setAttribute("aria-label", `${p.name}, passcode protected case study`);
     item.querySelector(".lockcard__title").textContent = p.name;
     item.querySelector(".lockcard__area").textContent = p.area;
     lockGroup.querySelector(".lockgrid").appendChild(item);
+    units.find((u) => u.group).members.push({ p, i, item });
     return;
   }
   const li = document.createElement("li");
@@ -704,7 +717,73 @@ if (list) PROJECTS.forEach((p, i) => {
   li.querySelector(".case__year").textContent = p.area;
   p.tags.forEach((t) => { const tag = document.createElement("li"); tag.textContent = t; li.querySelector(".case__tags").appendChild(tag); });
   list.appendChild(li);
+  units.push({ li, members: [{ p, i }] });
 });
+
+// ── Work filter: Recent, Featured, then the sectors ──
+if (list && units.length) {
+  const meta = (p) => WORK_META[p.name] || { sectors: [], featured: false, date: "0000-00" };
+  const sectors = [...new Set(PROJECTS.flatMap((p) => meta(p).sectors))].sort((a, b) => PROJECTS.filter((p) => meta(p).sectors.includes(b)).length - PROJECTS.filter((p) => meta(p).sectors.includes(a)).length);
+  const filters = [{ key: "recent", label: "Recent" }, { key: "featured", label: "Featured" }, ...sectors.map((x) => ({ key: x, label: x }))];
+  const fits = (p, key) => key === "recent" || (key === "featured" ? meta(p).featured : meta(p).sectors.includes(key));
+  const tabs = document.getElementById("work-tabs"), unitDate = (u) => u.members.reduce((m, x) => (meta(x.p).date > m ? meta(x.p).date : m), "");
+  const countEls = document.querySelectorAll("[data-work-count]");
+  let active = "recent";
+  const render = (key) => {
+    active = key;
+    tabs.querySelectorAll(".work__tab").forEach((b) => { const on = b.dataset.key === key; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; });
+    list.setAttribute("aria-labelledby", `work-tab-${filters.findIndex((f) => f.key === key) === 0 ? "recent" : key.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`);
+    let shown = 0;
+    const ordered = units.map((u, idx) => ({ u, idx })).sort((a, b) => (key === "recent" ? (unitDate(b.u) > unitDate(a.u) ? 1 : unitDate(b.u) < unitDate(a.u) ? -1 : 0) : 0) || a.idx - b.idx);
+    ordered.forEach(({ u }) => {
+      const vis = u.members.filter((m) => fits(m.p, key));
+      u.li.hidden = vis.length === 0;
+      shown += vis.length;
+      if (u.group) {
+        u.members.forEach((m) => { m.item.hidden = !fits(m.p, key); m.item.classList.remove("is-wide"); });
+        const v = u.members.filter((m) => !m.item.hidden);
+        if (v.length === 1) v[0].item.classList.add("is-wide"); else if (v.length === 3) v[2].item.classList.add("is-wide");
+        const lab = u.li.querySelector(".case__label .card__index"); if (lab) lab.textContent = `Case ${v.length === 1 ? "study" : "studies"} ( ${v.map((m) => pad(m.i + 1)).join(" · ")} )`;
+      }
+      list.appendChild(u.li);
+    });
+    countEls.forEach((el) => (el.textContent = pad(shown)));
+  };
+  filters.forEach((f) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "work__tab"; b.dataset.key = f.key; b.setAttribute("role", "tab"); b.id = `work-tab-${f.key === "recent" ? "recent" : f.key.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+    const n = PROJECTS.filter((p) => fits(p, f.key)).length;
+    b.append(f.label); const sup = document.createElement("sup"); sup.textContent = pad(n); b.appendChild(sup);
+    b.addEventListener("click", () => render(f.key));
+    tabs.appendChild(b);
+  });
+  tabs.addEventListener("keydown", (e) => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    const bs = [...tabs.querySelectorAll(".work__tab")], at = bs.findIndex((b) => b.dataset.key === active), next = bs[(at + (e.key === "ArrowRight" ? 1 : bs.length - 1)) % bs.length];
+    next.focus(); render(next.dataset.key); e.preventDefault();
+  });
+  render("recent");
+}
+
+// ── Work: the rim glow under the hero follows the pointer and brightens on hover ──
+(() => {
+  const work = document.querySelector(".work");
+  if (!work || !matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches, IDLE = 0.45;
+  let gx = 50, gi = IDLE, tx = 50, ti = IDLE, raf = 0;
+  const paint = () => { work.style.setProperty("--gx", gx.toFixed(2) + "%"); work.style.setProperty("--gi", gi.toFixed(3)); };
+  const tick = () => {
+    gx += (tx - gx) * 0.14; gi += (ti - gi) * 0.1; paint();
+    raf = Math.abs(tx - gx) > 0.05 || Math.abs(ti - gi) > 0.005 ? requestAnimationFrame(tick) : 0;
+  };
+  const go = () => { if (reduced) { gx = tx; gi = ti; paint(); } else if (!raf) raf = requestAnimationFrame(tick); };
+  addEventListener("pointermove", (e) => {
+    const r = work.getBoundingClientRect(), near = e.clientY > r.top - 240 && e.clientY < r.bottom;
+    if (near) { tx = Math.min(94, Math.max(6, ((e.clientX - r.left) / r.width) * 100)); ti = 1; } else ti = IDLE;
+    go();
+  }, { passive: true });
+  document.addEventListener("pointerleave", () => { ti = IDLE; go(); });
+})();
 
 // ── Work: dot field with a few dots lighting up at random ──
 const field = document.querySelector(".dotfield");
