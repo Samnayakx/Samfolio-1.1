@@ -2,5 +2,102 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/case-study",
+      "has": [
+        {
+          "type": "query",
+          "key": "case",
+          "value": "1"
+        }
+      ],
+      "destination": "/work/trailhead-solve",
+      "permanent": true
+    },
+    {
+      "source": "/case-study",
+      "has": [
+        {
+          "type": "query",
+          "key": "case",
+          "value": "2"
+        }
+      ],
+      "destination": "/work/cotonai-modes",
+      "permanent": true
+    },
+    {
+      "source": "/case-study",
+      "has": [
+        {
+          "type": "query",
+          "key": "case",
+          "value": "3"
+        }
+      ],
+      "destination": "/work/cotonai-design-system",
+      "permanent": true
+    },
+    {
+      "source": "/case-study",
+      "has": [
+        {
+          "type": "query",
+          "key": "case",
+          "value": "4"
+        }
+      ],
+      "destination": "/work/arcade-control-plane",
+      "permanent": true
+    },
+    {
+      "source": "/case-study",
+      "has": [
+        {
+          "type": "query",
+          "key": "case",
+          "value": "5"
+        }
+      ],
+      "destination": "/work/gap-3d-fit",
+      "permanent": true
+    },
+    {
+      "source": "/case-study",
+      "has": [
+        {
+          "type": "query",
+          "key": "case",
+          "value": "6"
+        }
+      ],
+      "destination": "/work/cotonai-agent",
+      "permanent": true
+    },
+    {
+      "source": "/case-study",
+      "has": [
+        {
+          "type": "query",
+          "key": "case",
+          "value": "7"
+        }
+      ],
+      "destination": "/work/payman-ai",
+      "permanent": true
+    },
+    {
+      "source": "/case-study",
+      "destination": "/work/trailhead-solve",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/work/:slug",
+      "destination": "/case-study.html"
+    }
+  ]
 }

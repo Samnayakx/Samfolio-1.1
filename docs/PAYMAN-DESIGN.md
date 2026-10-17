@@ -296,7 +296,7 @@ Narrative arc: **Risk → Control → Process → Proof → Fit → Reassurance 
 
 ## 14. Case study listing
 
-Payman is **UX case study 07** (`/case-study?case=7`), moved out of the Playground. The tile on the Work list is a teal metric tile
+Payman is **UX case study 07** (`/work/payman-ai`), moved out of the Playground. The tile on the Work list is a teal metric tile
 (`4`, "Steps from question to payment, each one logged"; tint `["#3C9A98", "#C6E6DF", "#86C6C0"]`). The case study follows the
 Contra branding arc (see `CASE-STUDY-STORYTELLING.md`, section 5) and links to the prototype at `/payman`. The screenshot used in it is
 `assets/images/playground/payman-thumb.jpg`; re-capture it whenever the hero changes.
