@@ -93,11 +93,5 @@
       "destination": "/work/trailhead-solve",
       "permanent": true
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/work/:slug",
-      "destination": "/case-study"
-    }
   ]
 }

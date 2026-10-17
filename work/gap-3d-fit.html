@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gap 3D Fit: case study — Sambit Nayak</title>
+  <meta name="description" content="Technical product designer on Drapr, a Y Combinator 3D-fit startup that Gap Inc. acquired. I led the redesign of the 3D Fit flow so shoppers could trust a size. An A/B test showed a 61% lift in add-to-bag.">
+  <link rel="canonical" href="https://www.sambitnayak.com/work/gap-3d-fit">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Sambit Nayak">
+  <meta property="og:title" content="Gap 3D Fit: case study — Sambit Nayak">
+  <meta property="og:description" content="Technical product designer on Drapr, a Y Combinator 3D-fit startup that Gap Inc. acquired. I led the redesign of the 3D Fit flow so shoppers could trust a size. An A/B test showed a 61% lift in add-to-bag.">
+  <meta property="og:url" content="https://www.sambitnayak.com/work/gap-3d-fit">
+  <meta property="og:image" content="https://www.sambitnayak.com/assets/images/gap/video-gap-cover-poster.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@sambit_nayak_">
+  <meta name="twitter:title" content="Gap 3D Fit: case study — Sambit Nayak">
+  <meta name="twitter:description" content="Technical product designer on Drapr, a Y Combinator 3D-fit startup that Gap Inc. acquired. I led the redesign of the 3D Fit flow so shoppers could trust a size. An A/B test showed a 61% lift in add-to-bag.">
+  <meta name="twitter:image" content="https://www.sambitnayak.com/assets/images/gap/video-gap-cover-poster.jpg">
+  <script type="application/ld+json" data-cs-ld="">{"@context":"https://schema.org","@type":"Article","headline":"Turning sizing uncertainty into a 61% add-to-bag decision.","name":"Gap 3D Fit: case study","description":"Technical product designer on Drapr, a Y Combinator 3D-fit startup that Gap Inc. acquired. I led the redesign of the 3D Fit flow so shoppers could trust a size. An A/B test showed a 61% lift in add-to-bag.","url":"https://www.sambitnayak.com/work/gap-3d-fit","mainEntityOfPage":"https://www.sambitnayak.com/work/gap-3d-fit","image":"https://www.sambitnayak.com/assets/images/gap/video-gap-cover-poster.jpg","author":{"@type":"Person","name":"Sambit Nayak","url":"https://www.sambitnayak.com/"}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+  <link rel="stylesheet" href="/css/site.css" />
+  <link rel="stylesheet" href="/css/case-studies.css" />
+  <link rel="stylesheet" href="/css/gate.css" />
+  <script src="/js/gate.js"></script>
+</head>
+<body data-page="case">
+  <div class="loader" id="loader" aria-hidden="true"><div class="loader__bg"></div><svg></svg></div>
+  <noscript><style>.loader{display:none}</style></noscript>
+  <script src="/js/loader.js"></script>
+  <header class="header">
+    <div class="navgroup" data-nav="work">
+      <nav class="seg" aria-label="Primary">
+        <a class="seg__item seg__brand" href="/" aria-label="Sambit Nayak, home"><svg class="logo" aria-hidden="true"></svg></a>
+        <button class="seg__item only-desktop" type="button" id="work-tab" aria-current="true" aria-expanded="false" aria-controls="work-panel">Work <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <a class="seg__item only-desktop" href="/about">About</a>
+        <a class="seg__item only-desktop" href="/writing">Writing</a>
+        <a class="seg__item only-desktop" href="/playground">Playground</a>
+        <button class="seg__item only-mobile" type="button" id="menu-tab" aria-expanded="false" aria-controls="work-panel" aria-label="Menu">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <rect x="2" y="2" width="2" height="2"/><rect x="7" y="2" width="2" height="2"/><rect x="12" y="2" width="2" height="2"/>
+            <rect x="2" y="7" width="2" height="2"/><rect x="7" y="7" width="2" height="2"/><rect x="12" y="7" width="2" height="2"/>
+            <rect x="2" y="12" width="2" height="2"/><rect x="7" y="12" width="2" height="2"/><rect x="12" y="12" width="2" height="2"/>
+          </svg>
+        </button>
+      </nav>
+      <div class="panel" id="work-panel">
+        <div class="pcard only-mobile pcard--plain">
+          <div class="pcard__main">
+            <p class="pcard__label">Navigate</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/#work">Work</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/writing">Writing</a></li>
+              <li><a href="/playground">Playground</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pcard is-active">
+          <div class="pcard__main">
+            <p class="pcard__label">Case studies ( <span data-work-count>04</span> )</p>
+            <ul class="pcard__list" role="list" id="nav-projects"></ul>
+          </div>
+          <div class="pcard__thumb" id="nav-thumb" aria-hidden="true"></div>
+        </div>
+        <div class="pcard pcard--plain pcard--more">
+          <div class="pcard__main">
+            <p class="pcard__label">More</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/playground">Playground</a></li>
+              <li><a href="/writing">Writing</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="navgroup" data-nav="contact">
+      <div class="seg">
+        <span class="seg__item seg__time" title="Local time in San Francisco, California">San Francisco <time id="nav-clock" data-clock>--:--</time></span>
+        <button class="seg__item" type="button" id="contact-tab" aria-expanded="false" aria-controls="contact-panel">Contact <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <button class="icon-btn" type="button" id="theme" aria-label="Switch to dark mode">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+      <div class="panel panel--right" id="contact-panel"></div>
+    </div>
+  </header>
+
+  <main id="top" class="cs" data-case>
+    <section class="sheet sheet--first" aria-labelledby="cs-title">
+      <div class="study" data-cs-root style="--ph-bg: radial-gradient(70% 90% at 18% 12%, #9096CA, transparent 70%), radial-gradient(80% 80% at 88% 92%, #FEFBF2, transparent 72%), #F45220;"><nav class="study__toc" aria-label="Contents"><ol role="list"><li><a href="#overview" aria-current="true">Overview</a></li><li><a href="#problem">Problem</a></li><li><a href="#decisions">Decisions</a></li><li><a href="#solution">Solution</a></li><li><a href="#impact">Impact</a></li><li><a href="#reflection">Reflection</a></li></ol><a class="study__book" href="https://cal.com/sambit-nayak/30min?overlayCalendar=true" target="_blank" rel="noopener">Book a call<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5"></path></svg></a></nav><div class="study__main"><p class="study__crumb is-wide"><a href="/#work"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m4-4L3 8l4 4" stroke="currentColor" stroke-width="1.5"></path></svg>Work</a><span class="study__sep">/</span><span>Gap 3D Fit</span></p><div class="study__hero is-wide"><video loop="" playsinline="" preload="metadata" poster="/assets/images/gap/video-gap-cover-poster.jpg" aria-label="Gap 3D Fit cover: the real QuickFit Finder, with Waist, Hips and Calf fit descriptors, and the key numbers"><source src="/assets/images/gap/video-gap-cover.mp4" type="video/mp4"></video></div><header class="study__head"><p class="study__eyebrow">Case study ( 05 ) · Gap</p><h1 id="cs-title">Turning sizing uncertainty into a 61% add-to-bag decision.</h1><p class="study__lead">Technical product designer on Drapr, a Y Combinator 3D-fit startup that Gap Inc. acquired. I led the redesign of the 3D Fit flow so shoppers could trust a size. An A/B test showed a 61% lift in add-to-bag.</p><dl class="study__meta"><div><dt>Role</dt><dd>Technical Product Designer</dd></div><div><dt>Timeline</dt><dd>6 months</dd></div><div><dt>Skills</dt><dd>UX flow, fit logic, UI, testing, 3D optimization · Web, iOS</dd></div><div><dt>Team</dt><dd>2 PMs, 1 designer, 1 UXR</dd></div></dl></header><hr class="study__hr"><section class="study__sec" id="overview" aria-labelledby="overview-t"><p class="study__k">Overview</p><h2 class="study__t" id="overview-t">Fit is the biggest friction in online denim. Showing it wasn't enough.</h2><p class="study__p">Drapr built a 3D avatar that lets shoppers try on clothes. Gap Inc. acquired it in August 2021 to improve fit across its brands, and called fit “the number one point of friction for customers” (Gap Inc. press release, 26 August 2021).</p><p class="study__p">My hypothesis: a 3D avatar shows fit, but shoppers buy on trust. So I designed the flow around what a shopper needs to believe a size, then tested it against the old one.</p><ul class="study__trio" role="list"><li><h4>Drapr: 3D avatar try-on</h4><p>A Y Combinator startup. Gap acquired it in August 2021.</p></li><li><h4>Hypothesis: ask less, prove more</h4><p>Little upfront. Explain the size when trust is at stake.</p></li><li><h4>Result: +61% add-to-bag</h4><p>An A/B test of the new flow against the old one.</p></li></ul></section><hr class="study__hr"><section class="study__sec" id="problem" aria-labelledby="problem-t"><p class="study__k">Problem</p><h2 class="study__t" id="problem-t">The old flow showed fit. Shoppers still felt risk.</h2><p class="study__p">Denim made sizing harder: one size had to explain multiple body zones without turning checkout into a long form.</p><div class="study__media is-wide study__media--hero-trio"><figure class="shot"><button class="shot__tile" type="button" aria-label="Enlarge: Charts were precise; comfort was not."><img alt="Gap size guide for women's jeans, with women's regular, petite and tall tabs and a table of waist and hip measurements in inches for each size from XXXS to S." loading="lazy" decoding="async" src="/assets/images/gap/problem-size-chart.webp" class="is-loaded"></button><figcaption>Charts were precise; comfort was not.</figcaption></figure><figure class="shot"><button class="shot__tile" type="button" aria-label="Enlarge: Fit was multi-zone: waist, hip, thigh, calf, and inseam all mattered."><img alt="Jeans fit diagram with body-zone measurement markers." loading="lazy" decoding="async" src="/assets/images/gap/problem-denim-fit.webp" class="is-loaded"></button><figcaption>Fit was multi-zone: waist, hip, thigh, calf, and inseam all mattered.</figcaption></figure><figure class="shot"><button class="shot__tile" type="button" aria-label="Enlarge: A size recommendation without evidence felt risky."><img alt="Product recommendation carousel for Gap apparel." loading="lazy" decoding="async" src="/assets/images/gap/problem-recommendations.webp" class="is-loaded"></button><figcaption>A size recommendation without evidence felt risky.</figcaption></figure></div><ul class="study__trio study__trio--2" role="list"><li><h4>Measurements were not enough</h4><p>Charts were precise; comfort was not.</p></li><li><h4>Fit was multi-zone</h4><p>Waist, hip, thigh, calf, and inseam all mattered.</p></li><li><h4>The answer needed a reason</h4><p>A size recommendation without evidence felt risky.</p></li><li><h4>Every extra input had a cost</h4><p>More personalization could also mean more drop-off.</p></li></ul></section><hr class="study__hr"><section class="study__sec" id="decisions" aria-labelledby="decisions-t"><p class="study__k">Decisions</p><h2 class="study__t" id="decisions-t">I asked less upfront and showed more evidence when trust was at stake.</h2><p class="study__p">The key move was sequencing: what to ask, what to defer, and when to explain. I tested each call with participants before it shipped.</p><h3 class="study__sub">Decision 1: Accuracy vs completion rate</h3><div class="study__media is-wide study__media--stack"><figure class="shot shot--wide"><button class="shot__tile" type="button" aria-label="Enlarge: The avatar customization screen, with and without size numbers"><img alt="Two versions of the Further customize your avatar screen, one showing size numbers beside each body measurement and one without." loading="lazy" decoding="async" src="/assets/images/gap/decision-1.webp" class="is-loaded"></button><figcaption>The avatar customization screen, with and without size numbers</figcaption></figure></div><ul class="study__trio study__trio--2 study__trio--facts" role="list"><li><h4>User need</h4><p>Credible sizing.</p></li><li><h4>Business need</h4><p>Purchase momentum.</p></li><li><h4>Constraint</h4><p>Too many inputs caused drop-off.</p></li><li><h4>Compromise</h4><p>Baseline first, tuning optional.</p></li></ul><div class="study__find"><div><span class="study__findk">What testing showed</span><p>Participants said they felt more confident seeing the numbers when they entered their measurements, especially those who knew a few of them, than relying on a visual approximation.</p></div><div><span class="study__findk">What I did next</span><p>Keep the dimensions visible by default. It is less ambiguous than showing no numbers at all.</p></div></div><p class="study__p study__note">Complexity moved later, after the value was clear.</p><h3 class="study__sub">Decision 2: Explainability vs purchase velocity</h3><div class="study__media is-wide study__media--stack"><figure class="shot shot--wide"><button class="shot__tile" type="button" aria-label="Enlarge: A toggle-able Why this recommendation panel"><img alt="The QuickFit Finder with an open Why this recommendation panel that explains what to do if a size feels too small or too large." loading="lazy" decoding="async" src="/assets/images/gap/decision-2.webp"></button><figcaption>A toggle-able Why this recommendation panel</figcaption></figure></div><ul class="study__trio study__trio--2 study__trio--facts" role="list"><li><h4>User need</h4><p>Evidence behind the size.</p></li><li><h4>Business need</h4><p>Fast purchase flow.</p></li><li><h4>Constraint</h4><p>Too much rationale slowed action.</p></li><li><h4>Compromise</h4><p>Fast answer, optional reason.</p></li></ul><div class="study__find"><div><span class="study__findk">What testing showed</span><p>Almost everyone opened it out of curiosity, even when the size matched what they usually wear.</p></div><div><span class="study__findk">What I did next</span><p>Add a brief explanation of the recommendation, especially when it falls outside their usual range, to build trust in the tool.</p></div></div><p class="study__p study__note">The recommendation became inspectable without becoming heavy.</p><h3 class="study__sub">Decision 3: Fit fidelity vs mobile performance</h3><div class="study__media is-wide study__media--stack"><figure class="shot shot--wide"><button class="shot__tile" type="button" aria-label="Enlarge: Toggle-based fit descriptors for waist, hips and calves"><img alt="The QuickFit Finder with Waist, Hips and Calf fit descriptors that explain what tight, fitted and loose feel like." loading="lazy" decoding="async" src="/assets/images/gap/decision-3.webp"></button><figcaption>Toggle-based fit descriptors for waist, hips and calves</figcaption></figure></div><ul class="study__trio study__trio--2 study__trio--facts" role="list"><li><h4>User need</h4><p>Realistic body-zone fit.</p></li><li><h4>Business need</h4><p>Reach mobile shoppers.</p></li><li><h4>Constraint</h4><p>Fidelity slowed performance.</p></li><li><h4>Compromise</h4><p>Use copy to support visuals.</p></li></ul><div class="study__find"><div><span class="study__findk">What testing showed</span><p>Participants knew to click the question mark for more information and valued the clarity of what fitted, loose and relaxed mean.</p></div><div><span class="study__findk">What I did next</span><p>Add definitions for the fit descriptors, so shoppers know what each one feels like.</p></div></div><p class="study__p study__note">Fit copy became interface logic: short, local, decision-tied.</p></section><hr class="study__hr"><section class="study__sec" id="solution" aria-labelledby="solution-t"><p class="study__k">Solution</p><h2 class="study__t" id="solution-t">The final flow made fit easier to trust without adding friction.</h2><p class="study__p">Each step either improved the model or helped shoppers verify the recommendation.</p><div class="study__media is-wide study__media--stack"><figure class="shot shot--wide"><button class="shot__tile" type="button" aria-label="Enlarge: The final flow in the QuickFit Finder"><img alt="The final flow in the QuickFit Finder: how tall are you, optional avatar customization, and a size shown on the avatar with Waist, Hips and Calf fit descriptors." loading="lazy" decoding="async" src="/assets/images/gap/solution-flow.webp"></button><figcaption>The final flow in the QuickFit Finder</figcaption></figure></div><h3 class="study__sub">How it works</h3><ul class="study__trio study__trio--2" role="list"><li><span class="study__n">01</span><h4>Baseline input</h4><p>How tall are you?</p></li><li><span class="study__n">02</span><h4>Fit calibration</h4></li><li><span class="study__n">03</span><h4>Optional tuning</h4><p>Further customize your avatar</p></li><li><span class="study__n">04</span><h4>Explainable fit</h4><p>Why this recommendation, and what tight, fitted and loose feel like</p></li></ul></section><hr class="study__hr"><section class="study__sec" id="impact" aria-labelledby="impact-t"><p class="study__k">Impact</p><h2 class="study__t" id="impact-t">An A/B test showed a 61% lift in add-to-bag.</h2><p class="study__p">The strongest signal was not more 3D realism. It was reducing sizing ambiguity at the moment shoppers decided whether to trust a size and add to bag.</p><p class="study__p">Leading the team meant keeping four disciplines on one definition of success:</p><ul class="study__trio study__trio--2" role="list"><li><h4>Add-to-bag: +61% (A/B test)</h4><p>New flow against the old flow</p></li><li><h4>Add-to-bag, indexed: 100 → 161 (Old → new flow)</h4><p>Indexed to the old flow = 100. The same 61% lift, shown as a change, not a share.</p></li></ul><ul class="study__trio study__trio--2" role="list"><li><h4>Product</h4><p>Connected confidence to commerce signals</p></li><li><h4>Engineering</h4><p>Balanced 3D assets with mobile performance</p></li><li><h4>Research</h4><p>Mapped trust breakdowns</p></li><li><h4>Fit language</h4><p>Aligned product, research, and merchandising terms</p></li></ul></section><hr class="study__hr"><section class="study__sec" id="reflection" aria-labelledby="reflection-t"><p class="study__k">Reflection</p><h2 class="study__t" id="reflection-t">I changed my mind about the job of 3D.</h2><p class="study__p">The visual was not the product. Confidence was what shoppers believed, understood, and felt ready to do next.</p><p class="study__p">I would cut more today: every control should earn its place at the moment of doubt.</p><a class="study__btn" href="https://cal.com/sambit-nayak/30min?overlayCalendar=true" target="_blank" rel="noopener">Book a call<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5"></path></svg></a></section><hr class="study__hr"><nav class="study__pn" aria-label="More case studies"><a href="/work/arcade-control-plane"><span class="study__k">Previous case study</span><b>Arcade Control Plane</b><span>1 North star: first authorized tool call</span></a><a href="/work/cotonai-agent"><span class="study__k">Next case study</span><b>CotonAI Agent</b><span>71% First-pass acceptance in the Steele pilot</span></a></nav></div></div>
+    </section>
+  </main>
+
+  <footer data-footer></footer>
+
+  <script src="/js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CotonAI Agent: case study — Sambit Nayak</title>
+  <meta name="description" content="Co-founder and founding product designer at CotonAI: moving from an image generator to an agent that carries creative intent across the whole workflow.">
+  <link rel="canonical" href="https://www.sambitnayak.com/work/cotonai-agent">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Sambit Nayak">
+  <meta property="og:title" content="CotonAI Agent: case study — Sambit Nayak">
+  <meta property="og:description" content="Co-founder and founding product designer at CotonAI: moving from an image generator to an agent that carries creative intent across the whole workflow.">
+  <meta property="og:url" content="https://www.sambitnayak.com/work/cotonai-agent">
+  <meta property="og:image" content="https://www.sambitnayak.com/assets/images/cotonai/video-cotonai-agent-poster.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@sambit_nayak_">
+  <meta name="twitter:title" content="CotonAI Agent: case study — Sambit Nayak">
+  <meta name="twitter:description" content="Co-founder and founding product designer at CotonAI: moving from an image generator to an agent that carries creative intent across the whole workflow.">
+  <meta name="twitter:image" content="https://www.sambitnayak.com/assets/images/cotonai/video-cotonai-agent-poster.jpg">
+  <script type="application/ld+json" data-cs-ld="">{"@context":"https://schema.org","@type":"Article","headline":"Designing an AI agent that understands how creative teams work.","name":"CotonAI Agent: case study","description":"Co-founder and founding product designer at CotonAI: moving from an image generator to an agent that carries creative intent across the whole workflow.","url":"https://www.sambitnayak.com/work/cotonai-agent","mainEntityOfPage":"https://www.sambitnayak.com/work/cotonai-agent","image":"https://www.sambitnayak.com/assets/images/cotonai/video-cotonai-agent-poster.jpg","author":{"@type":"Person","name":"Sambit Nayak","url":"https://www.sambitnayak.com/"}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+  <link rel="stylesheet" href="/css/site.css" />
+  <link rel="stylesheet" href="/css/case-studies.css" />
+  <link rel="stylesheet" href="/css/gate.css" />
+  <script src="/js/gate.js"></script>
+</head>
+<body data-page="case">
+  <div class="loader" id="loader" aria-hidden="true"><div class="loader__bg"></div><svg></svg></div>
+  <noscript><style>.loader{display:none}</style></noscript>
+  <script src="/js/loader.js"></script>
+  <header class="header">
+    <div class="navgroup" data-nav="work">
+      <nav class="seg" aria-label="Primary">
+        <a class="seg__item seg__brand" href="/" aria-label="Sambit Nayak, home"><svg class="logo" aria-hidden="true"></svg></a>
+        <button class="seg__item only-desktop" type="button" id="work-tab" aria-current="true" aria-expanded="false" aria-controls="work-panel">Work <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <a class="seg__item only-desktop" href="/about">About</a>
+        <a class="seg__item only-desktop" href="/writing">Writing</a>
+        <a class="seg__item only-desktop" href="/playground">Playground</a>
+        <button class="seg__item only-mobile" type="button" id="menu-tab" aria-expanded="false" aria-controls="work-panel" aria-label="Menu">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <rect x="2" y="2" width="2" height="2"/><rect x="7" y="2" width="2" height="2"/><rect x="12" y="2" width="2" height="2"/>
+            <rect x="2" y="7" width="2" height="2"/><rect x="7" y="7" width="2" height="2"/><rect x="12" y="7" width="2" height="2"/>
+            <rect x="2" y="12" width="2" height="2"/><rect x="7" y="12" width="2" height="2"/><rect x="12" y="12" width="2" height="2"/>
+          </svg>
+        </button>
+      </nav>
+      <div class="panel" id="work-panel">
+        <div class="pcard only-mobile pcard--plain">
+          <div class="pcard__main">
+            <p class="pcard__label">Navigate</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/#work">Work</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/writing">Writing</a></li>
+              <li><a href="/playground">Playground</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pcard is-active">
+          <div class="pcard__main">
+            <p class="pcard__label">Case studies ( <span data-work-count>04</span> )</p>
+            <ul class="pcard__list" role="list" id="nav-projects"></ul>
+          </div>
+          <div class="pcard__thumb" id="nav-thumb" aria-hidden="true"></div>
+        </div>
+        <div class="pcard pcard--plain pcard--more">
+          <div class="pcard__main">
+            <p class="pcard__label">More</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/playground">Playground</a></li>
+              <li><a href="/writing">Writing</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="navgroup" data-nav="contact">
+      <div class="seg">
+        <span class="seg__item seg__time" title="Local time in San Francisco, California">San Francisco <time id="nav-clock" data-clock>--:--</time></span>
+        <button class="seg__item" type="button" id="contact-tab" aria-expanded="false" aria-controls="contact-panel">Contact <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <button class="icon-btn" type="button" id="theme" aria-label="Switch to dark mode">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+      <div class="panel panel--right" id="contact-panel"></div>
+    </div>
+  </header>
+
+  <main id="top" class="cs" data-case>
+    <section class="sheet sheet--first" aria-labelledby="cs-title">
+      <div class="study" data-cs-root style="--ph-bg: radial-gradient(70% 90% at 18% 12%, #9CB09E, transparent 70%), radial-gradient(80% 80% at 88% 92%, #E3EAE0, transparent 72%), #C9D5C8;"><nav class="study__toc" aria-label="Contents"><ol role="list"><li><a href="#overview" aria-current="true">Overview</a></li><li><a href="#problem">Problem</a></li><li><a href="#direction">Direction</a></li><li><a href="#solution">Solution</a></li><li><a href="#impact">Impact</a></li><li><a href="#learning">Learning</a></li></ol><a class="study__book" href="https://cal.com/sambit-nayak/30min?overlayCalendar=true" target="_blank" rel="noopener">Book a call<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5"></path></svg></a></nav><div class="study__main"><p class="study__crumb is-wide"><a href="/#work"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m4-4L3 8l4 4" stroke="currentColor" stroke-width="1.5"></path></svg>Work</a><span class="study__sep">/</span><span>CotonAI Agent</span></p><div class="study__hero is-wide"><video loop="" playsinline="" preload="metadata" poster="/assets/images/cotonai/video-cotonai-agent-poster.jpg" aria-label="CotonAI Agent walkthrough: asking the agent about a board, selection and brand memory"><source src="/assets/images/cotonai/video-cotonai-agent.mp4" type="video/mp4"></video></div><header class="study__head"><p class="study__eyebrow">Case study ( 06 ) · CotonAI</p><h1 id="cs-title">Designing an AI agent that understands how creative teams work.</h1><p class="study__lead">Co-founder and founding product designer at CotonAI: moving from an image generator to an agent that carries creative intent across the whole workflow.</p><dl class="study__meta"><div><dt>Role</dt><dd>Co-founder &amp; Founding Product Designer</dd></div><div><dt>Timeline</dt><dd>2025 – Present</dd></div><div><dt>Scope</dt><dd>Product strategy, user research, interaction design, agent UX, design systems</dd></div><div><dt>Focus</dt><dd>0→1 product design, human–AI interaction, creative tools</dd></div></dl></header><hr class="study__hr"><section class="study__sec" id="overview" aria-labelledby="overview-t"><p class="study__k">Overview</p><h2 class="study__t" id="overview-t">From an image generator to an agent that remembers the brief.</h2><p class="study__p">As co-founder and founding product designer at CotonAI, I owned product strategy as well as design. The question I kept bringing back to the team wasn't “how do we generate better images?” but “why does every prompt start from zero?”</p><p class="study__p">This is how that question moved CotonAI from a visual workspace toward an agent that carries creative intent across a whole collection.</p><ul class="study__trio" role="list"><li><h4>Problem: Every prompt started over.</h4><p>The AI forgot why a colour was rejected or which silhouette was approved.</p></li><li><h4>Solution: The canvas is the context.</h4><p>An agent that plans, executes and returns work to the canvas, with designers approving each step.</p></li><li><h4>Outcome: 71% first-pass</h4><p>Designs accepted without a revision in the Steele pilot.</p></li></ul></section><hr class="study__hr"><section class="study__sec" id="problem" aria-labelledby="problem-t"><p class="study__k">Problem</p><h2 class="study__t" id="problem-t">We didn't need another AI image generator.</h2><p class="study__p">Fashion teams already had plenty of tools to generate images. Yet designers were still spending hours moving between moodboards, spreadsheets, image generators, review threads and production files.</p><p class="study__p">The real problem wasn't creating an image. It was everything that happened before and after it. A designer could generate 20 variations in minutes, but the AI wouldn't remember why a color was rejected, which silhouette was approved, or how the collection needed to evolve. Every new prompt felt like starting over.</p><div class="study__media"><figure class="sdia sdia--merge"><p class="study__cap">Before CotonAI</p><div class="sdia__merge"><ul class="sdia__in" role="list"><li class="sdia__node">Moodboards</li><li class="sdia__node">Spreadsheets</li><li class="sdia__node">Image generators</li><li class="sdia__node">Review threads</li></ul><span class="sdia__arrow">→</span><ul class="sdia__out" role="list"><li class="sdia__node is-hi">One collection</li></ul></div><p class="sdia__note">Designers spent hours moving between them.</p></figure></div><ul class="study__trio study__trio--2" role="list"><li><h4>No memory of decisions</h4><p>Rejected colors and approved silhouettes were lost between prompts.</p></li><li><h4>Context scattered across tools</h4><p>References, material constraints, brand identity and feedback lived in different places.</p></li></ul></section><hr class="study__hr"><section class="study__sec" id="direction" aria-labelledby="direction-t"><p class="study__k">Direction</p><h2 class="study__t" id="direction-t">What if AI understood the whole creative process, not just the next prompt?</h2><p class="study__p">Working with fashion brands and production teams, we saw how much creative work depended on invisible context: reference images, material constraints, brand identity, previous decisions and feedback.</p><p class="study__p">We started CotonAI as a collaborative visual workspace where designers could sketch, generate, edit, explore colorways and review work together on a shared canvas. The bigger opportunity emerged from those workflows: the canvas shouldn't just hold the work. It should become the context through which an agent understands the work.</p><div class="study__media is-wide study__media--duo"><figure class="sdia sdia--flow"><p class="study__cap">One shared canvas</p><ol class="sdia__flow" role="list"><li class="sdia__node" data-i="01">Sketch</li><li class="sdia__node" data-i="02">Generate</li><li class="sdia__node" data-i="03">Edit</li><li class="sdia__node" data-i="04">Colourway</li><li class="sdia__node" data-i="05">Review</li></ol></figure><figure class="sdia sdia--merge"><p class="study__cap">Canvas as context</p><div class="sdia__merge"><ul class="sdia__in" role="list"><li class="sdia__node">Selected region</li><li class="sdia__node">Annotation</li><li class="sdia__node">Reference</li></ul><span class="sdia__arrow">→</span><ul class="sdia__out" role="list"><li class="sdia__node is-hi">Agent</li></ul></div><p class="sdia__note">An image, sketch, annotation or selected region communicates intent.</p></figure></div></section><hr class="study__hr"><section class="study__sec" id="solution" aria-labelledby="solution-t"><p class="study__k">Solution</p><h2 class="study__t" id="solution-t">Three product decisions for the agent experience.</h2><p class="study__p">The proposed workflow became a loop the agent runs with the designer. The design challenge was making complex execution feel understandable, without exposing unnecessary technical complexity.</p><div class="study__media"><figure class="shot shot--video"><div class="shot__tile"><video loop="" playsinline="" preload="none" poster="/assets/images/cotonai/video-cotonai-agent-poster.jpg" aria-label="CotonAI Agent walkthrough: asking the agent about a board, selection and brand memory"><source src="/assets/images/cotonai/video-cotonai-agent.mp4" type="video/mp4"></video></div><figcaption>The agent panel beside the canvas, using board, selection, brand and memory context.</figcaption></figure></div><h3 class="study__sub">How it works</h3><ul class="study__trio" role="list"><li><span class="study__n">01</span><h4>Understand context</h4></li><li><span class="study__n">02</span><h4>Plan</h4></li><li><span class="study__n">03</span><h4>Execute</h4></li><li><span class="study__n">04</span><h4>Review</h4></li><li><span class="study__n">05</span><h4>Refine</h4></li><li><span class="study__n">06</span><h4>Remember</h4></li></ul><h3 class="study__sub">Decision 1: Context before conversation</h3><ul class="study__trio" role="list"><li><h4>Before</h4><p>Designers had to explain everything through prompts.</p></li><li><h4>Change</h4><p>An image, sketch, annotation, garment reference or selected canvas region can communicate intent.</p></li><li><h4>Result</h4><p>From “describe exactly what you want” to “show the agent what you're working on.”</p></li></ul><h3 class="study__sub">Decision 2: Execution, not just generation</h3><ul class="study__trio" role="list"><li><h4>Before</h4><p>A creative task rarely ends with one image, but the tool did.</p></li><li><h4>Change</h4><p>A harness for managing context, planning steps, selecting tools, generating alternatives and returning outputs to the canvas.</p></li><li><h4>Result</h4><p>Multi-step work that stays understandable.</p></li></ul><h3 class="study__sub">Decision 3: Humans remain creative directors</h3><ul class="study__trio" role="list"><li><h4>Risk</h4><p>Autonomy is useful until an agent makes the wrong creative decision.</p></li><li><h4>Change</h4><p>Visible progress, contextual feedback, version comparison and approval checkpoints.</p></li><li><h4>Result</h4><p>The agent handles repetitive execution. The designer keeps creative judgment.</p></li></ul></section><hr class="study__hr"><section class="study__sec" id="impact" aria-labelledby="impact-t"><p class="study__k">Impact</p><h2 class="study__t" id="impact-t">Early pilot outcomes validated the collaborative workflow.</h2><p class="study__p">These are early workspace and pilot outcomes, not evidence that the proposed autonomous agent architecture has already achieved the same results.</p><ul class="study__trio study__trio--r2" role="list"><li><h4>AI-assisted designs: 140+</h4><p>Steele pilot</p></li><li><h4>Review comments: 188</h4><p>Left by teams on the shared canvas</p></li><li><h4>First-pass acceptance: 71%</h4><p>Designs accepted without a revision, Steele pilot</p></li><li><h4>Revisions per design: 3–5 → 1–2 (Typical)</h4><p>Before 3–5 vs With CotonAI 1–2. Typical revisions in the Steele pilot. Bars sit at the midpoint of each range.</p></li><li><h4>Visual assets per month: ~5,000</h4><p>Workflows supported through CreateNet</p></li></ul></section><hr class="study__hr"><section class="study__sec" id="learning" aria-labelledby="learning-t"><p class="study__k">Learning</p><h2 class="study__t" id="learning-t">Make intelligence understandable, controllable and useful inside real work.</h2><p class="study__p">The hardest part of designing AI products isn't making intelligence more powerful. It's making it understandable, controllable and useful inside real work.</p><p class="study__p">The live workspace established the foundation. Persistent creative memory, multi-step orchestration and richer agent controls are the next product direction: moving from AI that generates creative outputs toward AI that helps teams carry creative intent across an entire workflow.</p><blockquote class="study__quote"><p>“That's the design problem I'm most interested in solving.”</p><footer>Sambit Nayak</footer></blockquote></section><hr class="study__hr"><nav class="study__pn" aria-label="More case studies"><a href="/work/gap-3d-fit"><span class="study__k">Previous case study</span><b>Gap 3D Fit</b><span>+61% Add-to-bag lift, A/B tested</span></a><a href="/work/payman-ai"><span class="study__k">Next case study</span><b>Payman AI</b><span>4 Steps from question to payment, each one logged</span></a></nav></div></div>
+    </section>
+  </main>
+
+  <footer data-footer></footer>
+
+  <script src="/js/site.js"></script>
+</body>
+</html>
