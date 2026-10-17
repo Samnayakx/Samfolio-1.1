@@ -2056,7 +2056,7 @@ function openLightbox(src, alt, opener) {
     const p = PROJECTS[id - 1];
     const mount = document.querySelector("[data-cs-root]");
     document.body.dataset.caseId = id;
-    document.title = `${p.name}: case study — Sambit Nayak`;
+    document.title = (`${p.name} case study | Sambit Nayak, Product Designer`.length <= 60 ? `${p.name} case study | Sambit Nayak, Product Designer` : `${p.name} case study | Sambit Nayak`);
     // Per-case SEO: canonical, description, social tags and Article structured data (set at load; Google renders JS)
     {
       const origin = "https://www.sambitnayak.com", url = `${origin}/work/${p.slug}`, title = document.title;
@@ -2070,6 +2070,9 @@ function openLightbox(src, alt, opener) {
       const ld = document.createElement("script"); ld.type = "application/ld+json"; ld.dataset.csLd = "";
       ld.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "Article", headline: p.title, name: `${p.name}: case study`, description: p.desc, url, mainEntityOfPage: url, image: img, author: { "@type": "Person", name: "Sambit Nayak", url: origin + "/" } });
       document.head.appendChild(ld);
+      const bc = document.createElement("script"); bc.type = "application/ld+json"; bc.dataset.csLd = "";
+      bc.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [["Home", "/"], ["Work", "/#work"], [p.name, `/work/${p.slug}`]].map(([name, u], i) => ({ "@type": "ListItem", position: i + 1, name, item: origin + u })) });
+      document.head.appendChild(bc);
     }
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const smooth = reduced ? "auto" : "smooth";
