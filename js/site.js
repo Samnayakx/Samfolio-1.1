@@ -358,7 +358,7 @@ const PROJECTS = [
     title: "The canvas stays quiet: a token system that names every gray and keeps one blue.",
     desc: "CotonAI is a fashion board. The system under it names every gray by its lightness, keeps one blue in light and dark, and measures the chrome so it never competes with the work.",
     seo: "CotonAI design system case study: a token system for an AI fashion canvas that names every gray by lightness and keeps one blue in light and dark.",
-    metric: { value: "57", label: "Primitives and 48 semantic aliases, in 2 modes" }, slug: "cotonai-design-system", href: "/work/cotonai-design-system", tint: ["#8AA3AE", "#E3ECEE", "#C5D5DA"], photo: { src: "/assets/images/case-bg-ember.jpg", pos: "50% 70%" },
+    metric: { value: "57", label: "Primitives and 48 semantic aliases, in 2 modes" }, thumb: { video: "/assets/images/cotonai-ds/video-cotonai-ds-cover.mp4", poster: "/assets/images/cotonai-ds/video-cotonai-ds-cover-poster.jpg", alt: "CotonAI Design System cover: the CotonAI mark over soft, out-of-focus yellow and orange flowers, then the title typed out", navPoster: "/assets/images/cotonai-ds/video-cotonai-ds-cover-poster.jpg", bleed: true }, slug: "cotonai-design-system", href: "/work/cotonai-design-system", tint: ["#8AA3AE", "#E3ECEE", "#C5D5DA"],
     cs: {
       meta: [["Role", "Founding Product Designer"], ["Timeline", "Aug 2025 – Present"], ["Skills", "Design tokens, Figma variables, shadcn, AI-assisted UI"], ["Team", "Founder, PM, engineering"]],
       sections: [
