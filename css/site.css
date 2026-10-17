@@ -238,6 +238,9 @@ html.is-loading .seg__brand .logo { opacity: 0; }
   margin: 0 0 40px; font: 400 12px/1.25 var(--font-mono); text-transform: uppercase;
   letter-spacing: .04em; color: var(--text-secondary);
 }
+.intro__about {
+  margin: -16px 0 32px; max-width: 56ch; font: 400 14px/1.5 var(--font-ntype); color: var(--text-secondary);
+}
 .headline {
   margin: 0 0 40px; font-family: var(--font-ntype); font-weight: 400;
   font-size: 48px; line-height: 1; letter-spacing: -.01em; text-wrap: balance;
