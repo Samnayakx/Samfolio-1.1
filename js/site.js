@@ -238,6 +238,7 @@ const PROJECTS = [
     name: "Trailhead Solve", org: "Trailhead", area: "Enterprise · Agentic AI", tags: ["Ed-tech", "UX Research"],
     title: "An AI-powered re-engagement strategy Trailhead power users preferred over ChatGPT.",
     desc: "Improving power-user retention with an agentic AI RAG bot: Trailhead Solve, a dashboard redesign and a RAG assistant.",
+    seo: "Salesforce Trailhead Solve case study: an agentic AI RAG assistant and dashboard redesign built to win back power users who turn to ChatGPT.",
     metric: { value: "22.7%", label: "Retention lift" }, thumb: { video: "/assets/images/trailhead/video-trailhead-promo-web.mp4", poster: "/assets/images/trailhead/video-trailhead-promo-web-poster.webp", alt: "Trailhead Solve product video: a power user asks a Salesforce question and gets a plain-language answer drawn from Trailhead's own knowledge", navPoster: "/assets/images/trailhead/video-trailhead-chatbot-poster.webp" }, slug: "trailhead-solve", href: "/work/trailhead-solve", tint: ["#BDCFDE", "#EBDAD3", "#E4EAEE"], accent: "#2F7DC4",
     cs: {
       meta: [["Role", "Product Designer (Apprentice)"], ["Timeline", "Aug 2025 – Apr 2026"], ["Skills", "Conversational UX, RAG workflows, power-user research, dashboard design"], ["Team", "Team of five with the Salesforce Trailhead product team"]],
@@ -298,6 +299,7 @@ const PROJECTS = [
     name: "CotonAI Modes", org: "CotonAI", area: "Agentic AI · Fashion", tags: ["AI Agents", "UX Design"],
     title: "Designing structured, mode-based UX in an AI platform for fashion teams.",
     desc: "End-to-end design of Modes at CotonAI: replacing prompt-heavy AI with structured entry points mapped to real fashion workflows.",
+    seo: "CotonAI Modes case study: end-to-end product design of structured, mode-based entry points that replace prompt-heavy AI in a fashion platform.",
     metric: { value: "125%", label: "Feature adoption lift" }, thumbnail: { src: "/assets/images/cotonai-modes/canvas-hero.webp", alt: "The CotonAI canvas: a board of generated fashion looks with the Modes bar open beneath.", bleed: true }, slug: "cotonai-modes", href: "/work/cotonai-modes", tint: ["#9CB09E", "#E3EAE0", "#C9D5C8"], photo: { src: "/assets/images/case-bg-bloom.jpg", pos: "50% 38%" },
     cs: {
       meta: [["Role", "Founding Product Designer"], ["Timeline", "Aug 2025 – Present"], ["Skills", "Interaction architecture, AI UX, design systems, prototyping, analytics"], ["Team", "Founder, PM, engineering"]],
@@ -343,6 +345,7 @@ const PROJECTS = [
     name: "CotonAI Design System", org: "CotonAI", area: "Design systems · AI product", tags: ["Design Systems", "AI UX"],
     title: "The canvas stays quiet: a token system that names every gray and keeps one blue.",
     desc: "CotonAI is a fashion board. The system under it names every gray by its lightness, keeps one blue in light and dark, and measures the chrome so it never competes with the work.",
+    seo: "CotonAI design system case study: a token system for an AI fashion canvas that names every gray by lightness and keeps one blue in light and dark.",
     metric: { value: "57", label: "Primitives and 48 semantic aliases, in 2 modes" }, slug: "cotonai-design-system", href: "/work/cotonai-design-system", tint: ["#8AA3AE", "#E3ECEE", "#C5D5DA"], photo: { src: "/assets/images/case-bg-ember.jpg", pos: "50% 70%" },
     cs: {
       meta: [["Role", "Founding Product Designer"], ["Timeline", "Aug 2025 – Present"], ["Skills", "Design tokens, Figma variables, shadcn, AI-assisted UI"], ["Team", "Founder, PM, engineering"]],
@@ -401,6 +404,7 @@ const PROJECTS = [
     name: "Arcade Control Plane", org: "Arcade.dev", area: "Take-home · Agent infrastructure", tags: ["Dev tools", "AI Agents"],
     title: "Turning Arcade from an infrastructure inventory into an agent deployment control plane.",
     desc: "A take-home redesign of Arcade.dev. I chose the problem, set the north star, scoped the build and shipped a working prototype of the path to a first authorized tool call.",
+    seo: "Arcade.dev case study: I redesigned an agent infrastructure inventory into a deployment control plane and prototyped the path to a first authorized tool call.",
     metric: { value: "1", label: "North star: first authorized tool call" }, thumb: { video: "/assets/images/arcade/video-arcade-cover.mp4", poster: "/assets/images/arcade/video-arcade-cover-poster.jpg", alt: "Arcade cover: the Authorize and run action, goal, tool, gateway and agent cards, an execution trace authorizing Linear mid-run, and the key numbers", navPoster: "/assets/images/arcade/video-arcade-cover-poster.jpg", bleed: true }, slug: "arcade-control-plane", href: "/work/arcade-control-plane", tint: ["#F6A6CF", "#FFDDEE", "#FFF7FB"], accent: "#F0299B",
     cs: {
       meta: [["Role", "Product Designer, end to end"], ["Format", "Take-home challenge, solo"], ["Skills", "Product strategy, IA, onboarding, AI UX, prototyping"], ["Tools", "Figma, shadcn/ui, Cursor + Figma MCP, ChatGPT"]],
@@ -485,6 +489,7 @@ const PROJECTS = [
     name: "Gap 3D Fit", org: "Gap", area: "E-commerce · 3D fit · Web and iOS", tags: ["E-comm", "UX Design"],
     title: "Turning sizing uncertainty into a 61% add-to-bag decision.",
     desc: "Technical product designer on Drapr, a Y Combinator 3D-fit startup that Gap Inc. acquired. I led the redesign of the 3D Fit flow so shoppers could trust a size. An A/B test showed a 61% lift in add-to-bag.",
+    seo: "Gap 3D Fit case study: as technical product designer at Drapr, acquired by Gap Inc., I redesigned 3D fit for web and iOS. An A/B test showed +61% add-to-bag.",
     metric: { value: "+61%", label: "Add-to-bag lift, A/B tested" }, thumb: { video: "/assets/images/gap/video-gap-cover.mp4", poster: "/assets/images/gap/video-gap-cover-poster.jpg", alt: "Gap 3D Fit cover: the real QuickFit Finder, with Waist, Hips and Calf fit descriptors, and the key numbers", navPoster: "/assets/images/gap/video-gap-cover-poster.jpg", bleed: true }, slug: "gap-3d-fit", href: "/work/gap-3d-fit", tint: ["#9096CA", "#FEFBF2", "#F45220"],
     cs: {
       meta: [["Role", "Technical Product Designer"], ["Timeline", "6 months"], ["Skills", "UX flow, fit logic, UI, testing, 3D optimization · Web, iOS"], ["Team", "2 PMs, 1 designer, 1 UXR"]],
@@ -532,6 +537,7 @@ const PROJECTS = [
     name: "CotonAI Agent", org: "CotonAI", area: "Agent UX · Creative tools", tags: ["AI Agents", "0→1 Product"],
     title: "Designing an AI agent that understands how creative teams work.",
     desc: "Co-founder and founding product designer at CotonAI: moving from an image generator to an agent that carries creative intent across the whole workflow.",
+    seo: "CotonAI Agent case study: as founding product designer, I moved an image generator to an AI agent that carries creative intent across the fashion workflow.",
     metric: { value: "71%", label: "First-pass acceptance in the Steele pilot" }, thumb: { video: "/assets/images/cotonai/video-cotonai-agent.mp4", poster: "/assets/images/cotonai/video-cotonai-agent-poster.jpg", alt: "CotonAI Agent walkthrough: asking the agent about a board, selection and brand memory", navPoster: "/assets/images/cotonai/video-cotonai-agent-poster.jpg", bleed: true }, slug: "cotonai-agent", href: "/work/cotonai-agent", tint: ["#9CB09E", "#E3EAE0", "#C9D5C8"],
     cs: {
       meta: [["Role", "Co-founder & Founding Product Designer"], ["Timeline", "2025 – Present"], ["Scope", "Product strategy, user research, interaction design, agent UX, design systems"], ["Focus", "0→1 product design, human–AI interaction, creative tools"]],
@@ -568,6 +574,7 @@ const PROJECTS = [
     name: "Payman AI", org: "Payman", area: "Fintech · Agentic banking", tags: ["Fintech", "Branding"],
     title: "Payman AI: rebranding an agentic banking site for institutional trust.",
     desc: "Payman had agents that move real money and a first screen that read as a friendly startup. Audited the site as a bank buyer, rebuilt the brand around control, and fixed the usability that got in the way.",
+    seo: "Payman AI case study: I audited an agentic banking site as a bank buyer, rebuilt the brand around control and trust, and fixed the usability issues in the way.",
     metric: { value: "4", label: "Steps from question to payment, each one logged" }, thumb: { video: "/assets/images/payman-case/video-payman-cover.mp4", poster: "/assets/images/payman-case/video-payman-cover-poster.jpg", alt: "Payman AI cover: the Meet your agent action, the four control steps, a bank chat paying five vendors after approval, and the key numbers", navPoster: "/assets/images/payman-case/video-payman-cover-poster.jpg", bleed: true }, slug: "payman-ai", href: "/work/payman-ai", tint: ["#3C9A98", "#C6E6DF", "#86C6C0"],
     cs: {
       meta: [["Role", "Brand and Web Designer, end to end"], ["Timeline", "2026"], ["Format", "Portfolio redesign of paymanai.com, solo"], ["Skills", "Brand audit, positioning, visual identity, web design, front-end build"]],
@@ -2063,12 +2070,12 @@ function openLightbox(src, alt, opener) {
       const img = origin + ((p.thumb && (p.thumb.poster || p.thumb.navPoster)) || (p.thumbnail && p.thumbnail.src) || (p.photo && p.photo.src) || "/assets/og-image.jpg");
       const put = (sel, make, val) => { let t = document.head.querySelector(sel); if (!t) { t = document.createElement(make[0]); make[1].forEach(([k, v]) => t.setAttribute(k, v)); document.head.appendChild(t); } t.setAttribute(make[2], val); };
       put('link[rel="canonical"]', ["link", [["rel", "canonical"]], "href"], url);
-      put('meta[name="description"]', ["meta", [["name", "description"]], "content"], p.desc);
-      [["og:type", "article"], ["og:site_name", "Sambit Nayak"], ["og:title", title], ["og:description", p.desc], ["og:url", url], ["og:image", img]].forEach(([k, v]) => put(`meta[property="${k}"]`, ["meta", [["property", k]], "content"], v));
-      [["twitter:card", "summary_large_image"], ["twitter:title", title], ["twitter:description", p.desc], ["twitter:image", img]].forEach(([k, v]) => put(`meta[name="${k}"]`, ["meta", [["name", k]], "content"], v));
+      put('meta[name="description"]', ["meta", [["name", "description"]], "content"], p.seo || p.desc);
+      [["og:type", "article"], ["og:site_name", "Sambit Nayak"], ["og:title", title], ["og:description", p.seo || p.desc], ["og:url", url], ["og:image", img]].forEach(([k, v]) => put(`meta[property="${k}"]`, ["meta", [["property", k]], "content"], v));
+      [["twitter:card", "summary_large_image"], ["twitter:title", title], ["twitter:description", p.seo || p.desc], ["twitter:image", img]].forEach(([k, v]) => put(`meta[name="${k}"]`, ["meta", [["name", k]], "content"], v));
       document.head.querySelectorAll("script[data-cs-ld]").forEach((x) => x.remove());
       const ld = document.createElement("script"); ld.type = "application/ld+json"; ld.dataset.csLd = "";
-      ld.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "Article", headline: p.title, name: `${p.name}: case study`, description: p.desc, url, mainEntityOfPage: url, image: img, author: { "@type": "Person", name: "Sambit Nayak", url: origin + "/" } });
+      ld.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "Article", headline: p.title, name: `${p.name}: case study`, description: p.seo || p.desc, url, mainEntityOfPage: url, image: img, author: { "@type": "Person", name: "Sambit Nayak", url: origin + "/" } });
       document.head.appendChild(ld);
       const bc = document.createElement("script"); bc.type = "application/ld+json"; bc.dataset.csLd = "";
       bc.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [["Home", "/"], ["Work", "/#work"], [p.name, `/work/${p.slug}`]].map(([name, u], i) => ({ "@type": "ListItem", position: i + 1, name, item: origin + u })) });
