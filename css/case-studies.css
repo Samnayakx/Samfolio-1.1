@@ -53,8 +53,8 @@ body[data-page="case"] {
 .cs .ap__progress li.active i { color: #fff; }
 @media (prefers-reduced-motion: reduce) {
   .cs .dt__chart *, .cs .dt__chart *::after { transition: none !important; }
-  .cs .dt__track i { width: var(--w); }
-  .cs .dt--meter .dt__chart i::after { width: var(--f); }
+  .cs .dt__track i { transform: none; }
+  .cs .dt--meter .dt__chart i::after { transform: none; }
   .cs .dt--donut .arc { stroke-dashoffset: var(--to); }
   .cs .dt--trend .line { stroke-dashoffset: 0; }
   .cs .dt--trend .area, .cs .dt--trend .pt { opacity: 1; }

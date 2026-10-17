@@ -1437,14 +1437,22 @@ document.querySelectorAll(".logo").forEach((svg) => {
     setTimeout(() => { text.textContent = COPY[btn.dataset.mode]; text.classList.remove("swap"); }, 220);
   }));
 
-  // Pointer parallax
-  tiles.querySelectorAll(".tile").forEach((t) => {
-    t.addEventListener("pointermove", (e) => {
-      const r = t.getBoundingClientRect();
-      t.style.setProperty("--mx", ((e.clientX - r.left) / r.width - 0.5).toFixed(3));
-      t.style.setProperty("--my", ((e.clientY - r.top) / r.height - 0.5).toFixed(3));
+  // Pointer parallax: only the System tile reads --mx/--my, and the write is batched to one per frame
+  const sys = tiles.querySelector(".tile--sys");
+  if (sys && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    let raf = 0, px = 0, py = 0;
+    sys.addEventListener("pointermove", (e) => {
+      if (e.pointerType === "touch") return;
+      px = e.clientX; py = e.clientY;
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const r = sys.getBoundingClientRect();
+        sys.style.setProperty("--mx", ((px - r.left) / r.width - 0.5).toFixed(3));
+        sys.style.setProperty("--my", ((py - r.top) / r.height - 0.5).toFixed(3));
+      });
     });
-  });
+  }
 
   // Reveal on scroll
   new IntersectionObserver(([e], io) => { if (e.isIntersecting) { tiles.classList.add("in"); io.disconnect(); } }, { threshold: 0.12 }).observe(tiles);

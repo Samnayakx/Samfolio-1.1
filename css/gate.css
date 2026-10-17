@@ -35,7 +35,7 @@ body[data-page="case"] .gate .gate__bg { filter: none; }
 .gate__btn {
   height: 44px; padding: 0 18px; border: 0; border-radius: 8px; cursor: pointer;
   background: #161616; color: #fff; font: 500 14px/1 var(--font-ntype, sans-serif);
-  transition: transform .2s var(--ease-expressive, ease), background-color .2s;
+  transition: transform .2s var(--ease-out, ease), background-color .2s;
 }
 .gate__btn:hover { background: #333; }
 .gate__btn:active { transform: scale(.97); }
