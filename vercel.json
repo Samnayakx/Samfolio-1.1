@@ -5,6 +5,17 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "sambitnayak.com"
+        }
+      ],
+      "destination": "https://www.sambitnayak.com/$1",
+      "permanent": true
+    },
+    {
       "source": "/case-study",
       "has": [
         {
