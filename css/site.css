@@ -222,6 +222,8 @@ html.is-loading .seg__brand .logo { opacity: 0; }
 
 /* ───────── Hero section ───────── */
 .hero {
+  --text-primary: #fff; --text-secondary: rgb(255 255 255 / .74); color: var(--text-primary);
+  background: #000 url("/assets/images/hero-bg.jpg") center bottom / cover no-repeat;
   position: relative;
   min-height: 100svh;
   padding: var(--space-11) var(--gutter) var(--gutter);
@@ -242,6 +244,7 @@ html.is-loading .seg__brand .logo { opacity: 0; }
 }
 .intro__about {
   margin: -16px 0 32px; max-width: 56ch; font: 400 14px/1.5 var(--font-ntype); color: var(--text-secondary);
+  text-shadow: 0 1px 14px rgb(0 0 0 / .85);
 }
 .headline {
   margin: 0 0 40px; font-family: var(--font-ntype); font-weight: 400;
@@ -274,9 +277,11 @@ a.pcard:active { transform: scale(.985); }
 
 /* ───────── Live status line ───────── */
 .status {
+  --text-primary: #191918; --text-secondary: rgb(25 25 24 / .88);
   grid-column: 1 / -1; justify-self: center; text-align: center; padding-top: 32px;
   font: 400 12px/1.5 var(--font-mono); text-transform: uppercase; letter-spacing: .04em;
   color: var(--text-secondary);
+  text-shadow: 0 0 12px rgb(255 214 140 / .95), 0 1px 0 rgb(255 236 196);
 }
 .status p { margin: 0; }
 .live {
