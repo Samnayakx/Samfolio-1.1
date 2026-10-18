@@ -854,7 +854,7 @@ const CONTACT = {
   linkedinLabel: "/in/sambitnayakux",
   x: "https://x.com/sambit_nayak_",
   substack: "https://sambitnayak2.substack.com/",
-  resume: "https://drive.google.com/file/d/1jfC3rljbphQxvY5BD0zZ4kYsjuRtTjkr/view?usp=sharing",
+  resume: "/assets/Sambit-Nayak-Resume.pdf",
   book: "https://cal.com/sambit-nayak/30min?overlayCalendar=true",
 };
 
@@ -883,7 +883,7 @@ const contactPanel = document.getElementById("contact-panel");
 const CONTACT_CARDS = [
   { label: "Email", title: "Say hello", value: CONTACT.email, href: `mailto:${CONTACT.email}`, glyph: "contact" },
   { label: "LinkedIn", title: "Professional updates", value: CONTACT.linkedinLabel, href: CONTACT.linkedin, glyph: "about", external: true },
-  { label: "Résumé", title: "View my résumé", value: "Google Drive", href: CONTACT.resume, glyph: "writing", external: true },
+  { label: "Résumé", title: "View my résumé", value: "PDF", href: CONTACT.resume, glyph: "writing", external: true },
 ];
 CONTACT_CARDS.forEach((c, i) => {
   const a = document.createElement("a");
@@ -1176,7 +1176,38 @@ if (weatherEl) fetch("https://api.open-meteo.com/v1/forecast?latitude=37.3382&lo
       ".#####.",
       "#.....#",
     ],
+    batUp: ["#.......#", "##.###.##", "#########", ".#######.", "..#...#.."],
+    batDown: ["..#...#..", ".#######.", "#########", "##.###.##", "#.......#"],
   };
+  // Obstacle kinds. Sizes and hitboxes are in sprite units (u); fy is the float height above the ground.
+  const OBS = {
+    bug: { w: 7, hx0: 1, hx1: 6, y0: 0, y1: 5, fy: 0 },
+    tall: { w: 7, hx0: 1, hx1: 6, y0: 0, y1: 11, fy: 0 },
+    bat: { w: 9, hx0: 1, hx1: 8, y0: 1, y1: 4, fy: 14 }, // flies at head height: jumping into it hurts, so stay low
+  };
+  // Patterns are [kind, seconds of travel since the previous obstacle ended]. Gaps scale with speed, so they stay fair.
+  const PATTERNS = {
+    single: [["bug", 0]],
+    pair: [["bug", 0], ["bug", 0.16]],
+    triple: [["bug", 0], ["bug", 0.16], ["bug", 0.16]],
+    tall: [["tall", 0]],
+    tallpair: [["tall", 0], ["tall", 0.2]],
+    bat: [["bat", 0]],
+    hopwait: [["bug", 0], ["bat", 0.9]],
+    waithop: [["bat", 0], ["bug", 0.7]],
+    stair: [["bug", 0], ["bug", 0.8], ["tall", 0.8]],
+    gauntlet: [["bug", 0], ["bug", 0.75], ["bat", 0.9], ["bug", 0.7], ["tall", 0.75]],
+  };
+  const LEVELS = [
+    { name: "Warm-up", pool: ["single", "single", "pair"] },
+    { name: "Rush hour", pool: ["single", "pair", "tall", "tall"] },
+    { name: "Peak load", pool: ["pair", "triple", "tall", "bat", "waithop", "hopwait"] },
+    { name: "Overclocked", pool: ["triple", "tallpair", "bat", "waithop", "hopwait", "stair"] },
+    { name: "Meltdown", pool: ["tallpair", "triple", "stair", "gauntlet", "hopwait", "waithop", "bat"] },
+  ];
+  const LEVEL_LEN = 280; // score points per level
+  const levelAt = (score) => 1 + Math.floor(score / LEVEL_LEN);
+  const levelDef = (lv) => LEVELS[Math.min(lv, LEVELS.length) - 1];
   const CLAUDE = "#D97757", EYE = "#141413";
   const HEAT = ["#F8F07C", "#F1AD57", "#E26B3A", "#C92E1D"]; // bottom → top
   const canvas = document.createElement("canvas");
@@ -1196,7 +1227,7 @@ if (weatherEl) fetch("https://api.open-meteo.com/v1/forecast?latitude=37.3382&lo
 
   const game = {
     state: "idle", // idle | run | over
-    cam: 0, t: 0, y: 0, vy: 0, onGround: true, obs: [], nextSpawn: 0, score: 0, overAt: 0, lastHour: -1,
+    cam: 0, t: 0, y: 0, vy: 0, onGround: true, obs: [], nextSpawn: 0, score: 0, overAt: 0, lastHour: -1, level: 1, speed: 0, banner: 0, lastPat: "",
     W: 0, H: 0, HEAD: 0, u: 3, pitch: 1, bw: 1, mx: 0, vis: false, last: 0, blink: 0,
   };
   const jit = (d) => (d === 0 ? 0 : (((Math.sin(d * 91.7) * 43758.5453) % 1 + 1) % 1 - 0.5) * 0.16);
@@ -1204,6 +1235,7 @@ if (weatherEl) fetch("https://api.open-meteo.com/v1/forecast?latitude=37.3382&lo
   const barH = (col) => Math.min(0.9, colData(col).total * (1 + jit(Math.floor(col / BARS)))) * game.H;
   const groundAt = (wx) => barH(Math.floor(wx / game.pitch));
   const fmtScore = (n) => String(n).padStart(5, "0");
+  const targetSpeed = (g) => Math.min(112, 46 + 9 * (g.level - 1) + 5 * ((g.score % LEVEL_LEN) / LEVEL_LEN)) * g.u;
 
   function sizeCanvas() {
     const g = game;
@@ -1226,7 +1258,8 @@ if (weatherEl) fetch("https://api.open-meteo.com/v1/forecast?latitude=37.3382&lo
 
   function reset() {
     const g = game;
-    Object.assign(g, { cam: 0, t: 0, vy: 0, onGround: true, obs: [], score: 0, lastHour: -1 });
+    Object.assign(g, { cam: 0, t: 0, vy: 0, onGround: true, obs: [], score: 0, lastHour: -1, level: 1, banner: 0, lastPat: "" });
+    g.speed = targetSpeed(g);
     g.nextSpawn = g.W * 0.9;
     g.y = Math.max(groundAt(g.mx + 2 * g.u), groundAt(g.mx + 10 * g.u));
   }
@@ -1275,7 +1308,8 @@ if (weatherEl) fetch("https://api.open-meteo.com/v1/forecast?latitude=37.3382&lo
   function update(dt) {
     const g = game, u = g.u;
     g.t += dt;
-    const speed = Math.min(140 * u, 55 * u + g.t * 4 * u);
+    g.speed += (targetSpeed(g) - g.speed) * Math.min(1, dt * 1.5);
+    const speed = g.speed;
     g.cam += speed * dt;
     const feet = () => Math.max(groundAt(g.cam + g.mx + 2 * u), groundAt(g.cam + g.mx + 10 * u));
     const ground = feet();
@@ -1289,16 +1323,26 @@ if (weatherEl) fetch("https://api.open-meteo.com/v1/forecast?latitude=37.3382&lo
     }
     // obstacles
     while (g.nextSpawn < g.cam + g.W + 80) {
-      g.obs.push(g.nextSpawn);
-      g.nextSpawn += speed * (0.95 + Math.random() * 1.0) + 16 * u;
+      const pool = levelDef(g.level).pool.filter((n) => n !== g.lastPat);
+      g.lastPat = pool[Math.floor(Math.random() * pool.length)];
+      let x = g.nextSpawn;
+      for (const [kind, gap] of PATTERNS[g.lastPat]) {
+        x += speed * gap;
+        g.obs.push({ x, kind });
+        x += OBS[kind].w * u;
+      }
+      g.nextSpawn = x + speed * (Math.max(0.95, 1.5 - g.level * 0.1) + Math.random() * 0.6) + 16 * u;
     }
-    g.obs = g.obs.filter((wx) => wx - g.cam > -10 * u);
-    for (const wx of g.obs) {
-      const sx = wx - g.cam;
-      const og = groundAt(wx + 3.5 * u);
-      if (sx + 6 * u > g.mx + 2 * u && sx + 1 * u < g.mx + 10 * u && g.y + 0.5 * u < og + 5 * u) return gameOver();
+    g.obs = g.obs.filter((o) => o.x - g.cam > -10 * u);
+    for (const o of g.obs) {
+      const d = OBS[o.kind], sx = o.x - g.cam;
+      const gb = groundAt(o.x + (d.w / 2) * u);
+      if (sx + d.hx1 * u > g.mx + 2 * u && sx + d.hx0 * u < g.mx + 10 * u
+        && g.y + 0.5 * u < gb + (d.fy + d.y1) * u && g.y + 8 * u > gb + (d.fy + d.y0) * u) return gameOver();
     }
     g.score = Math.floor(g.cam / (5 * u));
+    const lv = levelAt(g.score);
+    if (lv !== g.level) { g.level = lv; g.banner = g.t; }
     const hr = Math.floor((g.cam + g.mx) / g.pitch / PER_HOUR) % 24;
     if (hr !== g.lastHour) { g.lastHour = hr; labels.forEach((l, j) => l.classList.toggle("is-hot", j === hr)); }
   }
@@ -1307,7 +1351,7 @@ if (weatherEl) fetch("https://api.open-meteo.com/v1/forecast?latitude=37.3382&lo
     g.overAt = performance.now();
     if (g.score > hi) { hi = g.score; try { localStorage.setItem("sf-hi", String(hi)); } catch (e) {} }
     const day = Math.floor((g.cam + g.mx) / g.pitch / BARS) + 1;
-    msg.innerHTML = `<strong>Game over</strong><span>Day ${day} · score ${fmtScore(g.score)}</span><span>Space / tap to retry · Esc to exit</span>`;
+    msg.innerHTML = `<strong>Game over</strong><span>Level ${g.level} · Day ${day} · score ${fmtScore(g.score)}</span><span>Space / tap to retry · Esc to exit</span>`;
     setState("over");
   }
 
@@ -1330,9 +1374,25 @@ if (weatherEl) fetch("https://api.open-meteo.com/v1/forecast?latitude=37.3382&lo
         });
       }
       ctx.fillStyle = themeFg;
-      for (const wx of g.obs) {
-        const sx = Math.round(wx - g.cam);
-        sprite(U_SPRITE.bug, sx, toY(groundAt(wx + 3.5 * u) + 6 * u), u, themeFg);
+      for (const o of g.obs) {
+        const d = OBS[o.kind], sx = Math.round(o.x - g.cam);
+        if (sx > g.W || sx < -10 * u) continue;
+        const gb = groundAt(o.x + (d.w / 2) * u);
+        if (o.kind === "bat") sprite(Math.floor(now / 160) % 2 ? U_SPRITE.batUp : U_SPRITE.batDown, sx, toY(gb + (d.fy + 5) * u), u, themeFg);
+        else {
+          sprite(U_SPRITE.bug, sx, toY(gb + 6 * u), u, themeFg);
+          if (o.kind === "tall") sprite(U_SPRITE.bug, sx, toY(gb + 12 * u), u, themeFg);
+        }
+      }
+      // level banner
+      const age = g.t - g.banner;
+      if (g.state === "run" && g.level > 1 && age < 2) {
+        ctx.save();
+        ctx.globalAlpha = age < 1.4 ? 1 : (2 - age) / 0.6;
+        ctx.fillStyle = themeFg; ctx.textAlign = "center";
+        ctx.font = "600 14px ui-monospace, Menlo, monospace";
+        ctx.fillText(`LEVEL ${g.level} · ${levelDef(g.level).name.toUpperCase()}`, g.W / 2, 44);
+        ctx.restore();
       }
     }
     // mascot
@@ -1342,7 +1402,7 @@ if (weatherEl) fetch("https://api.open-meteo.com/v1/forecast?latitude=37.3382&lo
     const blink = g.state === "idle" && now % 3200 < 140;
     const dead = g.state === "over";
     sprite(rows, Math.round(g.mx), toY(g.y + 8 * u), u, dead ? "#9a8a82" : CLAUDE, { eyesOff: blink });
-    hud.textContent = g.state === "idle" ? "Space / tap the graph to play" : `HI ${fmtScore(hi)}  ${fmtScore(g.score)}`;
+    hud.textContent = g.state === "idle" ? "Space / tap the graph to play" : `LV ${g.level}  HI ${fmtScore(hi)}  ${fmtScore(g.score)}`;
   }
 
   new IntersectionObserver(([e]) => { game.vis = e.isIntersecting; }, { threshold: 0.05 }).observe(chart);
