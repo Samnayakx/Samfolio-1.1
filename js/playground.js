@@ -909,75 +909,104 @@
   // ── 13 · Compose bar in three themes: type, refine, dictate, send (the message lands in the feed) ──
   function composeBars(stage, { auto }) {
     const DICT = ["Remember", "to", "book", "a", "table", "for", "Friday", "and", "ask", "if", "they", "have", "a", "quiet", "corner."];
+    const THEMES = [["dark", "Dark"], ["light", "Light"], ["sun", "Dusk"]];
     const TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h14M10 7V5h4v2M7 7l.8 12h8.4L17 7M10.200 11v5M13.800 11v5"/></svg>';
     const RING = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.500" stroke-dasharray="1.400 3.100"/><circle cx="12" cy="12" r="4.800"/></svg>';
     const MIC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><rect x="9" y="4" width="6" height="10" rx="3"/><path d="M6.500 11.500a5.500 5.500 0 0 0 11 0M12 17v3"/></svg>';
+    const SIGNAL = '<svg viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx=".8"/><rect x="5" y="5.500" width="3" height="6.500" rx=".8"/><rect x="10" y="3" width="3" height="9" rx=".8"/><rect x="15" y="0" width="3" height="12" rx=".8"/></svg>';
+    const WIFI = '<svg viewBox="0 0 17 12" fill="none" stroke="currentColor" stroke-width="1.700" stroke-linecap="round" aria-hidden="true"><path d="M1.200 4.200a10 10 0 0 1 14.600 0M3.700 6.900a6.300 6.300 0 0 1 9.600 0M6.200 9.600a2.800 2.800 0 0 1 4.600 0"/></svg>';
+    const BATT = '<svg viewBox="0 0 27 13" aria-hidden="true"><rect x=".5" y=".5" width="22" height="12" rx="3.500" fill="none" stroke="currentColor" opacity=".45"/><rect x="2" y="2" width="19" height="9" rx="2.200" fill="currentColor"/><path d="M24.500 4.500v4c.8-.3 1.500-1.100 1.500-2s-.7-1.700-1.500-2Z" fill="currentColor" opacity=".5"/></svg>';
+
+    /* One iPhone-sized screen (393 × 852 pt, the 15's), and a switch under it for the three looks. Nothing here is a miniature:
+       the targets are the real ones, 44pt for the icons and the send button, 17pt for the text, so it reads the way it would in hand. */
     const c = h("div", "ix ix-cb");
-    c.innerHTML = ["dark", "light", "sun"].map((th) => `
-      <div class="cb cb--${th}">
+    c.innerHTML = `
+      <div class="cb" data-th="dark">
+        <i class="cb__bg cb__bg--dark"></i><i class="cb__bg cb__bg--light"></i><i class="cb__bg cb__bg--sun"></i>
+        <div class="cb__status" aria-hidden="true"><b>9:41</b><i class="cb__island"></i><span>${SIGNAL}${WIFI}${BATT}</span></div>
+        <div class="cb__head" aria-hidden="true"><span>Notes</span><small>Today</small></div>
         <div class="cb__feed" aria-live="polite"></div>
         <div class="cb__bar">
-          <textarea class="cb__in" rows="1" placeholder="Write your thoughts..." aria-label="Write your thoughts (${th} theme)"></textarea>
+          <textarea class="cb__in" rows="1" placeholder="Write your thoughts..." aria-label="Write your thoughts"></textarea>
           <div class="cb__row">
             <button class="cb__ic cb__trash" type="button" aria-label="Clear">${TRASH}</button>
             <button class="cb__ic cb__magic" type="button" aria-label="Refine the text">${RING}</button>
-            <button class="cb__ic cb__mic" type="button" aria-label="Dictate"><span class="cb__i1">${MIC}</span><span class="cb__i2"><i></i><i></i><i></i><i></i></span></button>
+            <button class="cb__ic cb__mic" type="button" aria-label="Dictate" aria-pressed="false"><span class="cb__i1">${MIC}</span><span class="cb__i2"><i></i><i></i><i></i><i></i></span></button>
             <button class="cb__send" type="button" aria-label="Send">${ICON.up}</button>
           </div>
         </div>
-      </div>`).join("");
+        <i class="cb__home" aria-hidden="true"></i>
+      </div>
+      <div class="cb__switch" role="radiogroup" aria-label="Theme"><i class="cb__thumb" aria-hidden="true"></i>${THEMES.map(([id, label], i) => `<button type="button" role="radio" data-th="${id}" aria-checked="${i === 0}" tabindex="${i ? -1 : 0}">${label}</button>`).join("")}</div>`;
     stage.appendChild(c);
-    const f = fit(stage, c, 1100, 380, 0.94);
-    const bars = [...c.querySelectorAll(".cb")].map((el) => {
-      const q = (s) => el.querySelector(s), inp = q(".cb__in"), feed = q(".cb__feed"), send = q(".cb__send"), trash = q(".cb__trash"), magic = q(".cb__magic"), mic = q(".cb__mic");
-      let dict = 0, listening = null;
-      const sync = () => {
-        inp.style.height = "auto"; inp.style.height = `${Math.min(110, inp.scrollHeight)}px`;
-        const has = inp.value.trim().length > 0; send.disabled = !has; trash.disabled = !inp.value.length; magic.disabled = !has;
-      };
-      const post = () => {
-        const v = inp.value.trim(); if (!v) return;
-        const b = h("p", "cb__msg"); b.textContent = v; feed.appendChild(b);
-        while (feed.children.length > 3) feed.firstChild.remove();
-        inp.value = ""; sync(); stopMic();
-      };
-      const stopMic = () => { clearInterval(listening); listening = null; mic.classList.remove("is-on"); mic.setAttribute("aria-pressed", "false"); };
-      const refine = (s) => { s = s.replace(/\s+/g, " ").trim(); s = s.charAt(0).toUpperCase() + s.slice(1); return /[.!?]$/.test(s) ? s : s + "."; };
-      inp.addEventListener("input", sync);
-      inp.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); post(); } });
-      send.addEventListener("click", post);
-      trash.addEventListener("click", () => { inp.value = ""; sync(); stopMic(); inp.focus(); });
-      magic.addEventListener("click", () => {
-        if (magic.classList.contains("is-busy")) return;
-        magic.classList.add("is-busy"); inp.classList.add("is-busy");
-        setTimeout(() => { inp.value = refine(inp.value); sync(); magic.classList.remove("is-busy"); inp.classList.remove("is-busy"); }, reduce ? 0 : 700);
+    const f = fit(stage, c, 440, 960, 0.94);
+
+    const el = c.querySelector(".cb"), q = (sel) => el.querySelector(sel), inp = q(".cb__in"), feed = q(".cb__feed"), send = q(".cb__send"), trash = q(".cb__trash"), magic = q(".cb__magic"), mic = q(".cb__mic");
+    const sw = c.querySelector(".cb__switch"), opts = [...sw.querySelectorAll("button")];
+    let dict = 0, listening = null, theme = 0;
+
+    const setTheme = (i) => {
+      theme = (i + THEMES.length) % THEMES.length;
+      el.dataset.th = THEMES[theme][0];
+      sw.style.setProperty("--i", theme);
+      opts.forEach((o, k) => { o.setAttribute("aria-checked", String(k === theme)); o.tabIndex = k === theme ? 0 : -1; });
+    };
+    opts.forEach((o, i) => {
+      o.addEventListener("click", () => setTheme(i));
+      o.addEventListener("keydown", (e) => {
+        const d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key]; if (!d) return;
+        e.preventDefault(); e.stopPropagation(); setTheme(theme + d); opts[theme].focus();
       });
-      mic.addEventListener("click", () => {
-        if (listening) return stopMic();
-        mic.classList.add("is-on"); mic.setAttribute("aria-pressed", "true");
-        listening = setInterval(() => { inp.value += (inp.value && !/\s$/.test(inp.value) ? " " : "") + DICT[dict++ % DICT.length]; sync(); if (dict % DICT.length === 0) stopMic(); }, 380);
-      });
-      sync();
-      return { inp, post, sync, feed, stopMic };
     });
+
+    const sync = () => {
+      inp.style.height = "auto"; inp.style.height = `${Math.min(132, inp.scrollHeight)}px`;
+      const has = inp.value.trim().length > 0; send.disabled = !has; trash.disabled = !inp.value.length; magic.disabled = !has;
+    };
+    const post = () => {
+      const v = inp.value.trim(); if (!v) return;
+      const b = h("p", "cb__msg"); b.textContent = v; feed.appendChild(b);
+      while (feed.children.length > 4) feed.firstChild.remove();
+      inp.value = ""; sync(); stopMic();
+    };
+    const stopMic = () => { clearInterval(listening); listening = null; mic.classList.remove("is-on"); mic.setAttribute("aria-pressed", "false"); };
+    const refine = (s) => { s = s.replace(/\s+/g, " ").trim(); s = s.charAt(0).toUpperCase() + s.slice(1); return /[.!?]$/.test(s) ? s : s + "."; };
+    inp.addEventListener("input", sync);
+    inp.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); post(); } });
+    send.addEventListener("click", post);
+    trash.addEventListener("click", () => { inp.value = ""; sync(); stopMic(); inp.focus(); });
+    magic.addEventListener("click", () => {
+      if (magic.classList.contains("is-busy")) return;
+      magic.classList.add("is-busy"); inp.classList.add("is-busy");
+      setTimeout(() => { inp.value = refine(inp.value); sync(); magic.classList.remove("is-busy"); inp.classList.remove("is-busy"); }, reduce ? 0 : 700);
+    });
+    mic.addEventListener("click", () => {
+      if (listening) return stopMic();
+      mic.classList.add("is-on"); mic.setAttribute("aria-pressed", "true");
+      listening = setInterval(() => { inp.value += (inp.value && !/\s$/.test(inp.value) ? " " : "") + DICT[dict++ % DICT.length]; sync(); if (dict % DICT.length === 0) stopMic(); }, 380);
+    });
+    sync(); setTheme(0);
+
+    // In the board tile: write a line, send it, change the look, and go round again
     let stopLoop = null;
     if (auto && !reduce) stopLoop = whileVisible(c, () => {
       let on = true;
       const lines = ["Call mum on Sunday", "Draft the launch note", "Walk before sunset"];
       (async () => {
         while (on) {
-          bars.forEach((b) => { b.feed.replaceChildren(); b.inp.value = ""; b.sync(); });
+          feed.replaceChildren(); inp.value = ""; sync(); setTheme(0);
           await wait(900);
           for (let i = 0; i < 3 && on; i++) {
-            for (const ch of lines[i]) { if (!on) return; bars[i].inp.value += ch; bars[i].sync(); await wait(55); }
-            await wait(450); if (!on) return; bars[i].post(); await wait(500);
+            for (const ch of lines[i]) { if (!on) return; inp.value += ch; sync(); await wait(55); }
+            await wait(450); if (!on) return; post(); await wait(700);
+            if (!on) return; setTheme(i + 1); await wait(1100);
           }
-          await wait(2200);
+          await wait(1200);
         }
       })();
       return () => { on = false; };
     });
-    return () => { bars.forEach((b) => b.stopMic()); f.stop(); stopLoop && stopLoop(); };
+    return () => { stopMic(); f.stop(); stopLoop && stopLoop(); };
   }
 
   // ── 15 · Empty state: a stack of windows you can shuffle, with pixel glyphs that drift against the pointer ──
@@ -1026,7 +1055,7 @@
     return () => { f.stop(); stopLoop && stopLoop(); };
   }
 
-  const DEMOS = { boundingBox, segmentedNav, clouds, marketSelect, onboardingTour, apiKey, timelineScrub, glassSliders, podcastPlayer, composeBars, emptySessions, tradeTicket };
+  const DEMOS = { boundingBox, segmentedNav, clouds, marketSelect, onboardingTour, apiKey, timelineScrub, glassSliders, podcastPlayer, composeBars, emptySessions, tradeTicket, motionLab };
 
   // ── 16 · Trade ticket: a three-step stock order (entry, risk, review) where only the open step is expanded ──
   function tradeTicket(stage, { auto }) {
@@ -1308,6 +1337,1057 @@
       return () => { on = false; placeBtn.classList.remove("is-hold"); };
     });
     return () => { cancelAnimationFrame(raf); f.stop(); offs.forEach((o) => o()); clearTimeout(holdT); stopFeed(); ioFeed.disconnect(); stopLoop && stopLoop(); };
+  }
+
+  // ── 17 · Motion lab: a bench for tuning a brand's motion system before storyboarding a launch film ──
+  // Every system runs on one shared clock. Tempo, offset, wave, shaping and stagger are global; each system adds its own controls.
+  // The drawing code below is self-contained on purpose: Export serialises it into a runnable file.
+  function motionLab(stage, { auto, full, bleed }) {
+    const W = 1360, KEY = "pg-motion-lab", UID = Math.random().toString(36).slice(2, 7);
+    /* on the page, when the window is too narrow for the real layout, the design is scaled to fit: give it the window's own
+       proportions so it fills the screen instead of leaving bands above and below */
+    const H = bleed && !full ? clamp(Math.round((W * stage.clientHeight) / Math.max(1, stage.clientWidth)), 600, 1200) : 760;
+    const TAU = Math.PI * 2;
+    const DEFAULT_PAL = ["#3D9FE0", "#E86E9C", "#E9A23B", "#E5633A", "#D8283C", "#7C7C7A"], PAL = DEFAULT_PAL.slice();
+    const PAL_NAMES = ["Blue", "Pink", "Amber", "Orange", "Red", "Grey"];
+    /* the two grounds are the system's own: #F4F4F4 off-white and #040404 black (DESIGN.md §2.1) */
+    const PAPERS = { paper: { bg: "#F4F4F4", fg: "#040404" }, ink: { bg: "#040404", fg: "#FFFFFF" } };
+    const WAVES = {
+      sine: (p) => Math.sin(p * TAU),
+      triangle: (p) => 1 - 4 * Math.abs((((p + 0.25) % 1) + 1) % 1 - 0.5),
+      snappy: (p) => { const s = Math.sin(p * TAU); return Math.sign(s) * Math.abs(s) ** 0.3; },
+      stepped: (p) => Math.round(Math.sin(p * TAU) * 2) / 2,
+      saw: (p) => ((((p % 1) + 1) % 1) * 2 - 1),
+    };
+    const SHAPING = {
+      linear: (v) => v,
+      smooth: (v) => { const s = (v + 1) / 2; return s * s * (3 - 2 * s) * 2 - 1; },
+      sharp: (v) => Math.sign(v) * Math.abs(v) ** 2.2,
+      bounce: (v) => (v >= 0 ? v : v * -0.35),
+    };
+    const STAGGER = {
+      linear: (i) => i,
+      reverse: (i, n) => n - 1 - i,
+      center: (i, n) => Math.abs(i - (n - 1) / 2),
+      random: (i) => ((((Math.sin(i * 127.1 + 3.7) * 43758.5453) % 1) + 1) % 1) * 6,
+    };
+    const NAMES = {
+      wave: { sine: "Sine", triangle: "Triangle", snappy: "Snappy", stepped: "Stepped", saw: "Saw" },
+      shaping: { linear: "Linear", smooth: "Smooth", sharp: "Sharp", bounce: "Bounce" },
+      stagger: { linear: "In order", reverse: "Reverse", center: "From centre", random: "Scattered" },
+      colorMode: { solid: "Solid", cycle: "Cycle palette" },
+      bgMode: { plain: "Plain", grid: "Dot grid" },
+    };
+    const PRESETS = {
+      Calm: { tempo: 0.8, offset: 1.6, wave: "sine", shaping: "smooth", stagger: "linear" },
+      Snappy: { tempo: 2.2, offset: 0.8, wave: "snappy", shaping: "sharp", stagger: "center" },
+      Stepped: { tempo: 1.4, offset: 1, wave: "stepped", shaping: "linear", stagger: "linear" },
+      Glitch: { tempo: 2.8, offset: 2.6, wave: "stepped", shaping: "sharp", stagger: "random" },
+      Breathe: { tempo: 0.6, offset: 0.3, wave: "sine", shaping: "smooth", stagger: "center" },
+      Bounce: { tempo: 1.6, offset: 1.2, wave: "triangle", shaping: "bounce", stagger: "reverse" },
+    };
+    // One part's position on the shared wave: clock × speed, its place in the stagger order, and the copy's place on screen
+    const waveFor = (S, P, copy, c, n) => {
+      const f = (i, mul = 1, off = 0) => {
+        const j = STAGGER[S.stagger](i, n);
+        return SHAPING[S.shaping](WAVES[S.wave](c * (P.speed ?? 1) * 0.32 * mul + j * 0.12 * S.offset + copy * 0.21 * S.offset + off)) * (P.travel ?? 1);
+      };
+      f.t = c * (P.speed ?? 1) * 0.32;
+      return f;
+    };
+    const rgb = (c) => (c[0] === "#" ? ((n) => [n >> 16, (n >> 8) & 255, n & 255])(parseInt(c.slice(1), 16)) : c.match(/\d+(\.\d+)?/g).slice(0, 3).map(Number));
+    const mix = (a, b, t) => { const x = rgb(a), y = rgb(b); return `rgb(${x.map((v, i) => Math.round(v + (y[i] - v) * t)).join(" ")})`; };
+    const colourAt = (S, c) => {
+      const pal = S.palette, i = S.colorIndex;
+      if (S.colorMode !== "cycle") return pal[i];
+      const p = ((((c * 0.08) % 1) + 1) % 1) * pal.length, a = Math.floor(p);
+      return mix(pal[(i + a) % pal.length], pal[(i + a + 1) % pal.length], p - a);
+    };
+    const dot = (ctx, x, y, r, fill) => { ctx.beginPath(); ctx.arc(x, y, Math.max(0.2, r), 0, TAU); ctx.fillStyle = fill; ctx.fill(); };
+    const seg = (ctx, x1, y1, x2, y2, w, col) => { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.lineWidth = w; ctx.strokeStyle = col; ctx.lineCap = "round"; ctx.stroke(); };
+    const LAYOUTS = [[4, 2], [3, 3], [5, 2]];
+    const WFONT = '900 100px "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif';
+    const mctx = document.createElement("canvas").getContext("2d"), glyphs = {};
+    const glyph = (ch) => {
+      if (!glyphs[ch]) { mctx.font = WFONT; const m = mctx.measureText(ch); glyphs[ch] = { l: m.actualBoundingBoxLeft, w: m.actualBoundingBoxLeft + m.actualBoundingBoxRight, a: m.actualBoundingBoxAscent, h: m.actualBoundingBoxAscent + m.actualBoundingBoxDescent }; }
+      return glyphs[ch];
+    };
+
+    // ── The systems. Each draws into an s × s box centred on (x, y); sizes are authored for s = 100. ──
+    function drawNode(ctx, x, y, s, P, col, f) {
+      const k = s / 100, n = Math.round(P.nodes), light = mix(col, BG(), 0.55), rot = f.t * P.spin * TAU * 0.25, pts = [];
+      for (let i = 0; i < n; i++) {
+        const a = -Math.PI / 2 + (i * TAU) / n + rot, r = 30 * k * P.spread * (1 + 0.15 * P.drift * f(i));
+        pts.push([x + Math.cos(a) * r, y + Math.sin(a) * r]);
+      }
+      if (P.ring) pts.forEach(([px, py], i) => { const [qx, qy] = pts[(i + 1) % n]; seg(ctx, px, py, qx, qy, P.line * k * 0.6, light); });
+      pts.forEach(([px, py]) => seg(ctx, x, y, px, py, P.line * k, light));
+      pts.forEach(([px, py], i) => dot(ctx, px, py, 6 * k * P.dot * (1 + 0.3 * P.pulse * f(i, 1, 0.25)), i % 3 === 2 ? light : col));
+      dot(ctx, x, y, 7.5 * k * P.dot, col);
+    }
+    function drawCells(ctx, x, y, s, P, col, f) {
+      const k = s / 100, [cols, rows] = LAYOUTS[Math.round(P.layout)], c = Math.min(92 / cols, 92 / rows) * k, gap = c * P.gap, cs = c - gap;
+      const x0 = x - (cols * c) / 2 + gap / 2, y0 = y - (rows * c) / 2 + gap / 2, pat = Math.round(P.pattern);
+      for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+        const idx = j * cols + i, circle = pat === 3 ? (i + j) % 2 === 0 : (i + j * 2 + pat) % 3 === 0, v = f(idx);
+        const a = Math.min(1, Math.max(0, P.faint + (1 - P.faint) * (0.5 + 0.5 * v))), sc = 1 + P.scale * 0.12 * v, w = cs * sc;
+        ctx.beginPath(); ctx.roundRect(x0 + i * c + (cs - w) / 2, y0 + j * c + (cs - w) / 2, w, w, circle ? (w / 2) * P.round : w * 0.08);
+        ctx.globalAlpha = a; ctx.fillStyle = col; ctx.fill(); ctx.globalAlpha = 1;
+        if (P.outline > 0) { ctx.lineWidth = P.outline * k * 0.6; ctx.strokeStyle = mix(col, BG(), 0.3); ctx.stroke(); }
+      }
+    }
+    function drawBurst(ctx, x, y, s, P, col, f) {
+      const k = s / 100, n = Math.round(P.rays), rot = f.t * P.spin * TAU * 0.25;
+      for (let i = 0; i < n; i++) {
+        const a = -Math.PI / 2 + (i * TAU) / n + rot, L = P.len * k * (1 + 0.12 * P.stretch * f(i)) * (i % 2 && P.alt ? 0.7 : 1), r0 = P.inner * k;
+        seg(ctx, x + Math.cos(a) * r0, y + Math.sin(a) * r0, x + Math.cos(a) * L, y + Math.sin(a) * L, P.line * k * 0.7, mix(col, BG(), 0.25));
+        dot(ctx, x + Math.cos(a) * L, y + Math.sin(a) * L, P.dot * k * 0.55 * (1 + 0.4 * P.pulse * f(i, 1, 0.3)), col);
+      }
+      dot(ctx, x, y, 3 * k, col);
+    }
+    function drawAsterisk(ctx, x, y, s, P, col, f) {
+      const k = s / 100, n = Math.round(P.arms), arm = mix(col, BG(), 1 - P.tint), rot = f.t * P.spin * TAU * 0.25, tips = [];
+      for (let i = 0; i < n; i++) {
+        const a = -Math.PI / 2 + (i * TAU) / n + rot, L = P.len * k * (1 + 0.08 * P.stretch * f(i));
+        tips.push([x + Math.cos(a) * L, y + Math.sin(a) * L, i]);
+      }
+      tips.forEach(([tx, ty]) => seg(ctx, x, y, tx, ty, P.width * k, arm));
+      tips.forEach(([tx, ty, i]) => dot(ctx, tx, ty, P.dot * k * (1 + 0.3 * P.pulse * f(i, 1, 0.25)), col));
+      if (P.hub > 0) dot(ctx, x, y, P.hub * k, col);
+    }
+    function drawGraph(ctx, x, y, s, P, col, f) {
+      const k = s / 100, gw = 80 * k, gh = 60 * k, L = x - gw / 2, B = y + gh / 2, nb = Math.round(P.bars), np = Math.round(P.points), light = mix(col, BG(), 0.6);
+      for (let i = 0; i < nb; i++) {
+        const bx = L + ((i + 0.5) * gw) / nb, bh = gh * (0.45 + 0.25 * f(i, 0.7, 0.5));
+        seg(ctx, bx, B, bx, B - Math.max(2 * k, bh), 2.4 * k, light);
+      }
+      const pts = [];
+      for (let i = 0; i < np; i++) pts.push([L + (i * gw) / (np - 1), y - (i % 2 ? -1 : 1) * 14 * k * P.amp - 12 * k * P.amp * f(i)]);
+      if (P.fill) {
+        ctx.beginPath(); ctx.moveTo(pts[0][0], B); pts.forEach(([px, py]) => ctx.lineTo(px, py)); ctx.lineTo(pts[np - 1][0], B); ctx.closePath();
+        ctx.globalAlpha = 0.18; ctx.fillStyle = col; ctx.fill(); ctx.globalAlpha = 1;
+      }
+      ctx.beginPath(); pts.forEach(([px, py], i) => (i ? ctx.lineTo(px, py) : ctx.moveTo(px, py)));
+      ctx.lineWidth = P.line * k; ctx.strokeStyle = col; ctx.lineJoin = "round"; ctx.stroke();
+      pts.forEach(([px, py]) => dot(ctx, px, py, 3.2 * k, col));
+    }
+    function drawTrack(ctx, x, y, s, P, col, f) {
+      const k = s / 100, L = P.len * k, x0 = x - L / 2, m = Math.round(P.stops), light = mix(col, BG(), 0.6), riders = Math.round(P.riders);
+      seg(ctx, x0, y, x0 + L, y, 1.5 * k, light);
+      for (let i = 0; i < m; i++) dot(ctx, x0 + (i * L) / (m - 1), y, 2.4 * k, mix(col, BG(), 0.35));
+      for (let r = 0; r < riders; r++) {
+        const u = 0.5 + 0.5 * Math.min(1, Math.max(-1, f(r, 1, r * 0.17))), g = 0.5 + 0.5 * Math.min(1, Math.max(-1, f(r, 1, r * 0.17 - 0.06)));
+        dot(ctx, x0 + g * L, y, P.dot * k * 0.7, light);
+        dot(ctx, x0 + u * L, y, P.dot * k, col);
+      }
+    }
+    function drawOrbit(ctx, x, y, s, P, col, f) {
+      const k = s / 100, rings = Math.round(P.rings), per = Math.round(P.dots), light = mix(col, BG(), 0.7);
+      for (let r = 0; r < rings; r++) {
+        const R = (14 + ((r + 1) * 32) / rings) * k * P.radius, dir = r % 2 ? -1 : 1;
+        ctx.beginPath(); ctx.arc(x, y, R, 0, TAU); ctx.lineWidth = Math.max(0.5, k); ctx.strokeStyle = light; ctx.stroke();
+        for (let d = 0; d < per; d++) {
+          const idx = r * per + d, a = r * 0.7 + (d * TAU) / per + dir * f.t * P.spin * TAU * 0.5 + P.wobble * 0.3 * f(idx);
+          dot(ctx, x + Math.cos(a) * R, y + Math.sin(a) * R, P.dot * k * (1 + 0.3 * f(idx, 1, 0.2)), r === rings - 1 ? col : mix(col, BG(), 0.3));
+        }
+      }
+      dot(ctx, x, y, P.dot * k * 1.3, col);
+    }
+    function drawMatrix(ctx, x, y, s, P, col, f) {
+      const k = s / 100, cols = Math.round(P.cols), rows = Math.round(P.rows), c = Math.min(92 / cols, 92 / rows) * k, dir = Math.round(P.dir);
+      const x0 = x - ((cols - 1) * c) / 2, y0 = y - ((rows - 1) * c) / 2;
+      for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+        const idx = dir === 0 ? i + j : dir === 1 ? i : dir === 2 ? j : Math.round(Math.hypot(i - (cols - 1) / 2, j - (rows - 1) / 2));
+        const u = 0.5 + 0.5 * Math.min(1, Math.max(-1, f(idx)));
+        ctx.globalAlpha = 0.3 + 0.7 * u;
+        dot(ctx, x0 + i * c, y0 + j * c, Math.min(c * 0.48, P.dot * k * (P.min + (1 - P.min) * u)), col);
+        ctx.globalAlpha = 1;
+      }
+    }
+    function drawRibbon(ctx, x, y, s, P, col, f) {
+      const k = s / 100, n = Math.round(P.bars), gw = 84 * k, step = gw / n, light = mix(col, BG(), 0.45);
+      for (let i = 0; i < n; i++) {
+        const u = 0.5 + 0.5 * Math.min(1, Math.max(-1, f(i))), hh = 70 * k * P.height * (P.min + (1 - P.min) * u), bx = x - gw / 2 + (i + 0.5) * step;
+        seg(ctx, bx, y - hh / 2, bx, y + hh / 2, Math.min(step * 0.8, P.width * k), i % 2 && P.tint ? light : col);
+      }
+    }
+    function drawWord(ctx, x, y, s, P, col, f, ex = {}) {
+      const chars = [...(P.word || " ")], n = chars.length, bw = ex.bw || s * 0.92, bh = ex.bh || s * 0.34, L = x - bw / 2, T = y - bh / 2, bg = BG();
+      ctx.fillStyle = mix(col, bg, 0.62); ctx.fillRect(L, T, bw, bh);
+      const ptr = ex.ptr && ex.ptr.on ? ex.ptr : null;
+      const ks = chars.map((ch, i) => {
+        let w = ch === " " ? 0.45 : 1 + P.wave * f(i) + P.second * f(i, 2.3, 0.37);
+        if (ptr) { const d = (ptr.x - (L + (bw * (i + 0.5)) / n)) / (bw / n); w += P.push * Math.exp(-d * d); }
+        return Math.max(0.25, w);
+      });
+      const sum = ks.reduce((a, b) => a + b, 0);
+      let cx = L;
+      chars.forEach((ch, i) => {
+        const cw = (bw * ks[i]) / sum, g = ch === " " ? null : glyph(ch);
+        if (g && g.w > 0 && g.h > 0) {
+          const lift = P.bob * bh * 0.08 * f(i, 1, 0.5);
+          ctx.save(); ctx.translate(cx + cw * 0.03, T + bh * 0.06 + lift); ctx.scale((cw * 0.94) / g.w, (bh * 0.88) / g.h);
+          ctx.font = WFONT; ctx.fillStyle = mix(col, bg, Math.min(0.8, Math.max(0, 0.5 - (i % 2 ? P.even : P.odd)))); ctx.fillText(ch, g.l, g.a); ctx.restore();
+        }
+        cx += cw;
+      });
+    }
+    function shape(ctx, kind, x, y, r, col) {
+      const bg = BG();
+      if (kind === "dot") dot(ctx, x, y, r, col);
+      else if (kind === "square") { ctx.fillStyle = col; ctx.fillRect(x - r, y - r, 2 * r, 2 * r); }
+      else if (kind === "ring") { ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.lineWidth = r * 0.45; ctx.strokeStyle = col; ctx.stroke(); }
+      else if (kind === "rect") { ctx.fillStyle = col; ctx.fillRect(x - 1.6 * r, y - 0.7 * r, 3.2 * r, 1.4 * r); }
+      else if (kind === "cell") { ctx.beginPath(); ctx.roundRect(x - r, y - r, 2 * r, 2 * r, r * 0.3); ctx.fillStyle = mix(col, bg, 0.5); ctx.fill(); ctx.lineWidth = 1; ctx.strokeStyle = col; ctx.stroke(); }
+      else if (kind === "node") { seg(ctx, x - 1.6 * r, y, x + 1.6 * r, y, Math.max(0.6, r * 0.25), mix(col, bg, 0.5)); dot(ctx, x - 1.6 * r, y, r * 0.5, col); dot(ctx, x + 1.6 * r, y, r * 0.5, col); dot(ctx, x, y, r * 0.7, col); }
+      else { ctx.beginPath(); ctx.arc(x, y, r * 1.5, 0, TAU); ctx.lineWidth = 1; ctx.strokeStyle = col; ctx.stroke(); }
+    }
+    function drawProcMini(ctx, x, y, s, P, col, f) {
+      const k = s / 100, pts = [[-38, 16], [-12, -6], [12, 8], [38, -18]].map(([px, py], i) => [x + px * k, y + py * k + 4 * k * f(i)]);
+      ctx.beginPath(); pts.forEach(([px, py], i) => (i ? ctx.lineTo(px, py) : ctx.moveTo(px, py)));
+      ctx.lineWidth = 1.6 * k; ctx.strokeStyle = col; ctx.stroke();
+      pts.forEach(([px, py], i) => (i === 2 ? (ctx.beginPath(), ctx.arc(px, py, 7 * k, 0, TAU), ctx.fillStyle = BG(), ctx.fill(), ctx.lineWidth = 2.4 * k, ctx.strokeStyle = col, ctx.stroke()) : dot(ctx, px, py, 3.4 * k, col)));
+    }
+    function drawPatMini(ctx, x, y, s, P, col, f) {
+      const k = s / 100;
+      ctx.beginPath(); ctx.arc(x - 16 * k, y, 13 * k, 0, TAU); ctx.lineWidth = 3 * k; ctx.strokeStyle = col; ctx.stroke();
+      dot(ctx, x - 16 * k, y, 4.5 * k * (1 + 0.25 * f(0)), col);
+      for (let j = 0; j < 2; j++) for (let i = 0; i < 2; i++) {
+        ctx.globalAlpha = 0.45 + 0.55 * (0.5 + 0.5 * f(1 + i + j * 2)); ctx.fillStyle = col;
+        ctx.beginPath(); ctx.roundRect(x + 6 * k + i * 13 * k, y - 12 * k + j * 13 * k, 11 * k, 11 * k, 2 * k); ctx.fill(); ctx.globalAlpha = 1;
+      }
+    }
+    const backOut = (t, o) => { const c = 1.70158 * o, u = t - 1; return 1 + (c + 1) * u ** 3 + c * u ** 2; };
+
+    // ── System definitions: params are [key, label, min, max, step, default, group]; toggles are on/off params ──
+    const sp = (k, label, min, max, step, def, group) => ({ k, label, min, max, step, def, group });
+    const tg = (k, label, def, group = "Shape") => ({ k, label, toggle: true, def, group });
+    const MOTION = (speed = 1) => [sp("speed", "Speed", 0.2, 3, 0.01, speed, "Motion"), sp("travel", "Travel", 0, 2, 0.01, 1, "Motion")];
+    const SPIN = sp("spin", "Spin", -2, 2, 0.01, 0, "Motion");
+    const SYS = {
+      node: { name: "Node", group: "Patterns", desc: "A hub with satellites on hairlines. The satellites drift in and out on the shared wave and their dots pulse.",
+        params: [sp("nodes", "Nodes", 3, 8, 1, 4, "Shape"), sp("spread", "Spread", 0.5, 1.4, 0.01, 1, "Shape"), sp("dot", "Dot size", 0.5, 2, 0.01, 1, "Shape"), sp("line", "Line width", 0.5, 4, 0.1, 1.5, "Shape"), tg("ring", "Join the satellites", false), sp("drift", "Drift", 0, 2, 0.01, 1, "Motion"), sp("pulse", "Dot pulse", 0, 1, 0.01, 0.5, "Motion"), SPIN, ...MOTION()],
+        variant: ["nodes", [3, 4, 5]], parts: (P) => Math.round(P.nodes), draw: drawNode },
+      cells: { name: "Cells", group: "Patterns", desc: "A grid of squares and circles. Each cell fades between faint and solid, one after another.",
+        params: [sp("layout", "Layout", 0, 2, 1, 0, "Shape"), sp("pattern", "Circle pattern", 0, 3, 1, 0, "Shape"), sp("round", "Circle roundness", 0, 1, 0.01, 1, "Shape"), sp("gap", "Gap", 0, 0.4, 0.01, 0.12, "Shape"), sp("outline", "Outline", 0, 3, 0.1, 1.4, "Shape"), sp("faint", "Faintest", 0, 1, 0.01, 0.25, "Motion"), sp("scale", "Scale pulse", 0, 2, 0.01, 0, "Motion"), ...MOTION(2.3)],
+        variant: ["layout", [0, 1, 2], (v) => `Layout ${v}`], parts: (P) => LAYOUTS[Math.round(P.layout)][0] * LAYOUTS[Math.round(P.layout)][1], draw: drawCells },
+      burst: { name: "Burst", group: "Patterns", desc: "Thin rays with a dot on each end. The rays breathe in and out as the wave goes round.",
+        params: [sp("rays", "Rays", 6, 24, 1, 12, "Shape"), sp("len", "Ray length", 10, 44, 0.1, 30, "Shape"), sp("inner", "Inner gap", 0, 20, 0.1, 6, "Shape"), sp("dot", "Dot size", 1, 8, 0.1, 3.5, "Shape"), sp("line", "Line width", 0.5, 3, 0.1, 1.5, "Shape"), tg("alt", "Alternate long and short", false), sp("stretch", "Stretch amount", 0, 3, 0.01, 2, "Motion"), sp("pulse", "Dot pulse", 0, 1, 0.01, 0.7, "Motion"), SPIN, ...MOTION()],
+        variant: ["rays", [10, 12, 14]], parts: (P) => Math.round(P.rays), draw: drawBurst },
+      asterisk: { name: "Asterisk", group: "Patterns", desc: "Thick tinted arms with a solid dot at each tip. Same wave as the burst, chunkier shape.",
+        params: [sp("arms", "Arms", 3, 8, 1, 5, "Shape"), sp("len", "Arm length", 15, 45, 0.1, 35.8, "Shape"), sp("width", "Arm width", 2, 18, 0.1, 10, "Shape"), sp("tint", "Arm tint", 0, 1, 0.01, 0.35, "Shape"), sp("dot", "Dot size", 2, 12, 0.1, 7.5, "Shape"), sp("hub", "Hub size", 0, 12, 0.1, 0, "Shape"), sp("stretch", "Stretch amount", 0, 3, 0.01, 2, "Motion"), sp("pulse", "Dot pulse", 0, 1, 0.01, 0.7, "Motion"), SPIN, ...MOTION()],
+        variant: ["arms", [4, 5, 6]], parts: (P) => Math.round(P.arms), draw: drawAsterisk },
+      graph: { name: "Graph", group: "Patterns", desc: "A line chart over a field of bars. The points rise and fall in turn, the bars breathe underneath.",
+        params: [sp("points", "Points", 3, 8, 1, 5, "Shape"), sp("bars", "Bars", 4, 20, 1, 10, "Shape"), sp("line", "Line width", 1, 4, 0.1, 2, "Shape"), tg("fill", "Fill under the line", false), sp("amp", "Amplitude", 0, 1, 0.01, 0.6, "Motion"), ...MOTION()],
+        variant: ["points", [4, 5, 6]], parts: (P) => Math.round(P.points), draw: drawGraph },
+      track: { name: "Track", group: "Patterns", desc: "A rail with fixed stops and dots travelling between them, easing at each end of the wave.",
+        params: [sp("stops", "Stops", 2, 6, 1, 3, "Shape"), sp("len", "Length", 40, 95, 0.1, 80, "Shape"), sp("dot", "Dot size", 2, 8, 0.1, 4, "Shape"), sp("riders", "Riders", 1, 4, 1, 1, "Shape"), ...MOTION()],
+        variant: ["stops", [2, 3, 4]], parts: (P) => Math.round(P.riders), draw: drawTrack },
+      orbit: { name: "Orbit", group: "Patterns", desc: "Dots riding concentric rings. Neighbouring rings turn in opposite directions; the wave nudges each dot along its path.",
+        params: [sp("rings", "Rings", 1, 4, 1, 2, "Shape"), sp("dots", "Dots per ring", 1, 8, 1, 3, "Shape"), sp("radius", "Radius", 0.5, 1.3, 0.01, 1, "Shape"), sp("dot", "Dot size", 1, 6, 0.1, 3.2, "Shape"), SPIN, sp("wobble", "Wobble", 0, 2, 0.01, 1, "Motion"), ...MOTION()],
+        extra: { spin: 0.5 }, variant: ["rings", [1, 2, 3]], parts: (P) => Math.round(P.rings) * Math.round(P.dots), draw: drawOrbit },
+      matrix: { name: "Dot matrix", group: "Patterns", desc: "A grid of dots that swell and fade as the wave sweeps across them: diagonally, by row, by column or out from the centre.",
+        params: [sp("cols", "Columns", 3, 12, 1, 7, "Shape"), sp("rows", "Rows", 3, 12, 1, 5, "Shape"), sp("dot", "Dot size", 1, 8, 0.1, 4.5, "Shape"), sp("dir", "Sweep (diagonal, rows, columns, radial)", 0, 3, 1, 0, "Motion"), sp("min", "Smallest dot", 0, 1, 0.01, 0.2, "Motion"), ...MOTION()],
+        variant: ["cols", [5, 7, 9]], parts: (P) => Math.round(P.cols) + Math.round(P.rows), draw: drawMatrix },
+      ribbon: { name: "Ribbon", group: "Patterns", desc: "A row of rounded bars that rise and fall like a level meter. Every other bar can take the lighter tint.",
+        params: [sp("bars", "Bars", 6, 32, 1, 16, "Shape"), sp("width", "Bar width", 1, 8, 0.1, 3.4, "Shape"), sp("height", "Height", 0.3, 1, 0.01, 0.8, "Shape"), tg("tint", "Tint every other bar", true), sp("min", "Lowest bar", 0, 1, 0.01, 0.15, "Motion"), ...MOTION()],
+        variant: ["bars", [10, 16, 24]], parts: (P) => Math.round(P.bars), draw: drawRibbon },
+      word: { name: "Kinetic word", group: "Type", desc: "Blocky letters that stretch to fill their box. Letter widths swell in a wave; the cursor pushes nearby letters wider.",
+        params: [sp("odd", "Tint, odd letters", 0, 1, 0.01, 0.5, "Shape"), sp("even", "Tint, even letters", 0, 1, 0.01, 0.36, "Shape"), sp("wave", "Wave amount", 0, 1, 0.01, 0.45, "Motion"), sp("second", "Second wave", 0, 1, 0.01, 0.2, "Motion"), sp("bob", "Bob", 0, 1, 0.01, 0, "Motion"), sp("speed", "Speed", 0.2, 3, 0.01, 1.6, "Motion"), sp("push", "Cursor push", 0, 3, 0.01, 1.2, "Motion"), sp("travel", "Travel", 0, 2, 0.01, 1, "Motion")],
+        extra: { word: "smoke" }, variant: ["word", ["smoke", "read", "sip", "flower"]], parts: (P) => Math.max(1, [...(P.word || "smoke")].length), draw: drawWord },
+      proc: { name: "Procedural trail", group: "Cursor trails", desc: "The cursor lays down a chain of small shapes joined by a hairline. Shape, size, colour and tone step along the chain.",
+        params: [sp("size", "Size", 0.5, 3, 0.01, 1.4, "Shape"), sp("hairW", "Hairline width", 0.5, 3, 0.1, 1.2, "Shape"), sp("every", "Colour changes every", 1, 12, 1, 5, "Shape"), sp("spacing", "Spacing", 6, 40, 1, 15, "Motion"), sp("life", "Life (ms)", 200, 2000, 10, 950, "Motion"), sp("maxLen", "Max length (px)", 80, 600, 1, 260, "Motion"), sp("breathe", "Breathing", 0, 0.5, 0.01, 0.12, "Motion")],
+        extra: { shapes: ["dot", "square", "ring", "rect", "cell", "node", "outline"], hair: true }, draw: drawProcMini, trail: true },
+      ptrail: { name: "Pattern trail", group: "Cursor trails", desc: "The patterns themselves pop out along the cursor path, cycling colours, then shrink away.",
+        params: [sp("size", "Size", 20, 120, 1, 51, "Shape"), sp("max", "Max on screen", 3, 30, 1, 11, "Shape"), sp("spacing", "Spacing", 30, 200, 1, 79, "Motion"), sp("life", "Life (ms)", 300, 3000, 10, 950, "Motion"), sp("over", "Pop overshoot", 0, 3, 0.01, 1, "Motion"), sp("tumble", "Tumble", 0, 2, 0.01, 0, "Motion")],
+        draw: drawPatMini, trail: true },
+    };
+    const KEYS = Object.keys(SYS);
+    const PATTERNS = KEYS.filter((k) => SYS[k].group === "Patterns");
+    const EXPORTABLE = KEYS.filter((k) => !SYS[k].trail);
+    const SHAPES = SYS.proc.extra.shapes.slice();
+    const SHAPE_NAMES = { dot: "Dot", square: "Square", ring: "Ring", rect: "Rect", cell: "Cell", node: "Node", outline: "Outline ring" };
+
+    // ── State: shared knobs plus one params object per system ──
+    const clone = (o) => JSON.parse(JSON.stringify(o));
+    const GLOBALS = { tempo: 1.7, offset: 1.15, wave: "sine", shaping: "linear", stagger: "linear", colorMode: "solid", bgMode: "plain", color: 0, paper: "ink" };
+    const defaults = () => {
+      const sys = {};
+      for (const k of KEYS) { sys[k] = {}; SYS[k].params.forEach((p) => (sys[k][p.k] = p.def)); Object.assign(sys[k], clone(SYS[k].extra || {})); }
+      return { ...GLOBALS, palette: DEFAULT_PAL.slice(), sys };
+    };
+    // Accepts anything (localStorage, a shared link) and keeps only valid values
+    const load = (o, base = defaults()) => {
+      if (!o || typeof o !== "object") return base;
+      const num = (v, a, b, d) => (Number.isFinite(v) ? clamp(v, a, b) : d);
+      base.tempo = num(o.tempo, 0.2, 3, base.tempo); base.offset = num(o.offset, 0, 3, base.offset);
+      for (const [key, set] of [["wave", WAVES], ["shaping", SHAPING], ["stagger", STAGGER], ["colorMode", NAMES.colorMode], ["bgMode", NAMES.bgMode], ["paper", PAPERS]]) if (set[o[key]]) base[key] = o[key];
+      if (PAL[o.color]) base.color = o.color;
+      if (Array.isArray(o.palette)) o.palette.slice(0, PAL.length).forEach((c, i) => { if (/^#[0-9a-f]{6}$/i.test(c)) base.palette[i] = c.toUpperCase(); });
+      for (const k of KEYS) {
+        const src = o.sys && o.sys[k]; if (!src) continue;
+        SYS[k].params.forEach((p) => {
+          const v = src[p.k];
+          if (p.toggle) { if (typeof v === "boolean") base.sys[k][p.k] = v; }
+          else if (Number.isFinite(v)) base.sys[k][p.k] = clamp(v, p.min, p.max);
+        });
+        if (typeof src.word === "string") base.sys[k].word = src.word.slice(0, 10);
+        if (Array.isArray(src.shapes)) base.sys[k].shapes = src.shapes.filter((s) => SHAPES.includes(s));
+        if (typeof src.hair === "boolean") base.sys[k].hair = src.hair;
+      }
+      return base;
+    };
+    const encode = (o) => btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/=+$/, "");
+    const decode = (s) => JSON.parse(decodeURIComponent(escape(atob(s))));
+    const SHORT = { Defaults: "", Saved: "Saved", "Unsaved changes": "Edited", "From a shared link": "Shared" };
+    let S = defaults(), status = "Defaults";
+    const fromHash = full && /^#s=/.test(location.hash);
+    try {
+      if (fromHash) { S = load(decode(location.hash.slice(3))); status = "From a shared link"; }
+      else { const o = JSON.parse(localStorage.getItem(KEY) || "null"); if (o) { S = load(o); status = "Saved"; } }
+    } catch {}
+
+    /* ── the lab takes the page's theme. In the tile it is always dark, to sit on the tile's black. ── */
+    const siteMode = () => (auto ? "dark" : document.documentElement.dataset.theme === "light" ? "light" : "dark");
+    const syncPaper = () => { S.paper = siteMode() === "light" ? "paper" : "ink"; };
+    const syncPal = () => { S.palette.forEach((c, i) => (PAL[i] = c)); };
+    syncPaper(); syncPal();
+    let clk = 0.35, playing = !reduce, CUR = PAL[S.color];
+    const BG = () => PAPERS[S.paper].bg, FG = () => PAPERS[S.paper].fg;
+    const partsOf = (k, P) => (SYS[k].parts ? SYS[k].parts(P) : 8);
+    const paint = (ctx, k, x, y, s, col, copy = 0, P = S.sys[k], ex) => SYS[k].draw(ctx, x, y, s, P, col, waveFor(S, P, copy, clk, partsOf(k, P)), ex);
+
+    // ── Canvases: every drawing surface registers here and is repainted each frame while it is on the page ──
+    let R = Math.min(3, devicePixelRatio || 1);
+    const cans = [];
+    const resize = (e) => { e.el.width = Math.round(e.w * R); e.el.height = Math.round(e.h * R); };
+    function can(w, hh, fn, cls) {
+      const el = h("canvas", cls || "");
+      el.style.width = `${w}px`; el.style.height = `${hh}px`; el.setAttribute("aria-hidden", "true");
+      const e = { el, w, h: hh, fn, ctx: el.getContext("2d") };
+      resize(e); cans.push(e);
+      return el;
+    }
+
+    // ── Shell ──
+    const ICON = {
+      play: '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.8v8.4L10 6z" fill="currentColor"/></svg>',
+      pause: '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 1.5h2.5v9H2.5zM7 1.5h2.5v9H7z" fill="currentColor"/></svg>',
+      undo: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 3 2.5 6l3 3"/><path d="M2.5 6h7a4 4 0 0 1 0 8H7"/></svg>',
+      redo: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.5 3l3 3-3 3"/><path d="M13.5 6h-7a4 4 0 0 0 0 8H9"/></svg>',
+      open: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h4v4M13 3 7.5 8.5M11 9.5V13H3V5h3.5"/></svg>',
+      theme: '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/></svg>',
+      chev: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5"/></svg>',
+      shuffle: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4.5h2.5c3 0 4 7 7 7H14M2 11.5h2.5c1 0 1.800-.8 2.500-1.800M9.500 6.300c.7-1 1.500-1.800 2-1.800H14M12 2.500l2 2-2 2M12 9.500l2 2-2 2"/></svg>',
+    };
+    const opts = (map) => Object.entries(map).map(([v, l]) => `<option value="${v}">${l}</option>`).join("");
+    const cv = h("div", `ix ix-ml${full ? " is-full" : ""}`);
+    cv.dataset.mode = siteMode();
+    cv.innerHTML = `
+      <header class="ml__top">
+        <div class="ml__brand">
+          ${full ? '<a class="ml__icon ml__back" href="/playground" aria-label="Back to the playground"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5"/></svg></a>' : ""}
+          <span class="ml__eyebrow">Motion lab ( ${KEYS.length} )</span><span class="ml__state" data-state aria-live="polite"></span>
+        </div>
+        <div class="ml__ctl">
+          <button class="ml__icon" type="button" data-play></button>
+          <div class="ml__knobs" data-knobs></div>
+          <button class="ml__btn ml__btn--ghost" type="button" data-tap title="Tap in time to set the tempo">Tap</button>
+          <label class="ml__sel"><span class="ml__sr">Wave</span><select data-wave title="Wave">${opts(NAMES.wave)}</select></label>
+        </div>
+        <div class="ml__end">
+          <div class="ml__sw" role="radiogroup" aria-label="Colour">${PAL.map((c, i) => `<button type="button" role="radio" style="--c:${c}" aria-label="${PAL_NAMES[i]}" data-c="${i}"></button>`).join("")}</div>
+          <div class="ml__pair"><button class="ml__icon" type="button" data-undo aria-label="Undo">${ICON.undo}</button><button class="ml__icon" type="button" data-redo aria-label="Redo">${ICON.redo}</button></div>
+          <button class="ml__icon" type="button" data-theme aria-label="Switch theme">${ICON.theme}</button>
+          <button class="ml__btn ml__btn--ghost" type="button" data-export aria-haspopup="dialog">Export ${ICON.chev}</button>
+          <button class="ml__btn" type="button" data-save>Save ${ICON.chev}</button>
+          ${full ? "" : `<a class="ml__icon" href="/motion-lab" data-open aria-label="Open Motion lab in a full page" title="Open in a full page">${ICON.open}</a>`}
+        </div>
+      </header>
+      <div class="ml__body">
+        <nav class="ml__side" aria-label="Systems" data-side></nav>
+        <div class="ml__main" data-main></div>
+        <aside class="ml__panel" data-panel></aside>
+      </div>
+      <div class="ml__sheet" data-sheet role="dialog" aria-modal="true" aria-labelledby="ml-x-${UID}" hidden>
+        <div class="ml__sheetin">
+          <header class="ml__sheethead">
+            <h3 id="ml-x-${UID}">Export</h3>
+            <label class="ml__sel"><span>System</span><select data-xsys>${EXPORTABLE.map((k) => `<option value="${k}">${SYS[k].name}</option>`).join("")}</select></label>
+            <button class="ml__icon ml__close" type="button" data-xclose aria-label="Close export"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+          </header>
+          <div class="ml__tabs" role="tablist" aria-label="Format">${["js", "react", "css", "json"].map((t, i) => `<button type="button" role="tab" data-tab="${t}" aria-selected="${i === 0}" tabindex="${i ? -1 : 0}">${{ js: "JavaScript", react: "React", css: "CSS", json: "JSON" }[t]}</button>`).join("")}</div>
+          <p class="ml__desc ml__xnote" data-xnote></p>
+          <pre class="ml__code" tabindex="0" aria-label="Exported code"><code data-code></code></pre>
+          <footer class="ml__sheetfoot">
+            <div><button class="ml__btn" type="button" data-xcopy>Copy code</button><button class="ml__btn ml__btn--ghost" type="button" data-xfile>Download file</button></div>
+            <div class="ml__media">
+              <label class="ml__check"><input type="checkbox" data-xalpha><span>Transparent PNG</span></label>
+              <button class="ml__btn ml__btn--ghost" type="button" data-xpng>PNG</button>
+              <button class="ml__btn ml__btn--ghost" type="button" data-xboard title="Six frames across one loop, as a contact sheet">Storyboard</button>
+              <button class="ml__btn ml__btn--ghost" type="button" data-xvid>Record loop</button>
+              <button class="ml__btn ml__btn--ghost" type="button" data-xlink>Share link</button>
+            </div>
+          </footer>
+        </div>
+      </div>`;
+    stage.appendChild(cv);
+    const f = full ? { scale: () => 1, stop: () => {} } : fit(stage, cv, W, H, bleed ? 1 : 0.94);
+    const q = (s) => cv.querySelector(s);
+    const main = q("[data-main]"), panel = q("[data-panel]"), side = q("[data-side]"), stateEl = q("[data-state]");
+    const playBtn = q("[data-play]"), waveSel = q("[data-wave]"), themeBtn = q("[data-theme]"), tapBtn = q("[data-tap]"), swatches = [...cv.querySelectorAll("[data-c]")];
+    const undoBtn = q("[data-undo]"), redoBtn = q("[data-redo]");
+    const mw = () => Math.max(320, main.clientWidth - 40);
+
+    const fmt = (v, step) => (step >= 1 ? String(Math.round(v)) : v.toFixed(2));
+    function slider(obj, p, onChange) {
+      const row = h("label", "ml__row");
+      row.innerHTML = `<span>${p.label}</span><input type="range" min="${p.min}" max="${p.max}" step="${p.step}"><output></output>`;
+      const inp = row.querySelector("input"), out = row.querySelector("output");
+      const sync = () => { const v = obj[p.k]; inp.value = v; out.textContent = fmt(v, p.step); inp.style.setProperty("--p", `${((v - p.min) / (p.max - p.min)) * 100}%`); };
+      inp.addEventListener("input", () => { obj[p.k] = +inp.value; sync(); touched(); onChange && onChange(); });
+      inp.addEventListener("dblclick", () => { obj[p.k] = p.def ?? obj[p.k]; sync(); touched(); onChange && onChange(); });
+      row.sync = sync; sync();
+      return row;
+    }
+    function toggle(obj, key, label, onChange) {
+      const l = h("label", "ml__check ml__check--wide"), c = h("input"); c.type = "checkbox"; c.checked = !!obj[key];
+      c.addEventListener("change", () => { obj[key] = c.checked; touched(); onChange && onChange(); });
+      l.append(c, h("span", "", label)); return l;
+    }
+    function select(obj, key, label, map, onChange) {
+      const l = h("label", "ml__row ml__row--sel"), s = h("select");
+      s.innerHTML = opts(map); s.value = obj[key];
+      s.addEventListener("change", () => { obj[key] = s.value; touched(); onChange && onChange(); });
+      l.append(h("span", "", label), s); return l;
+    }
+    let knobs = [];
+    const buildKnobs = () => {
+      knobs = [slider(S, sp("tempo", "Tempo", 0.2, 3, 0.01, 1.7), refreshTop), slider(S, sp("offset", "Offset", 0, 3, 0.01, 1.15))];
+      q("[data-knobs]").replaceChildren(...knobs);
+    };
+    buildKnobs();
+
+    // ── History: every settled change is a step; undo and redo walk it ──
+    const hist = [JSON.stringify(S)];
+    let hi = 0, commitT = 0, linkT = 0;
+    const commit = () => {
+      const snap = JSON.stringify(S);
+      if (snap === hist[hi]) return;
+      hist.splice(hi + 1); hist.push(snap); if (hist.length > 80) hist.shift(); hi = hist.length - 1; refreshTop();
+    };
+    function apply(snap) {
+      S = load(JSON.parse(snap)); syncPaper(); syncPal(); buildKnobs(); status = "Unsaved changes"; refreshTop(); renderMain(); renderPanel();
+    }
+    const undo = () => { clearTimeout(commitT); commit(); if (hi > 0) apply(hist[--hi]); };
+    const redo = () => { if (hi < hist.length - 1) apply(hist[++hi]); };
+    undoBtn.addEventListener("click", undo); redoBtn.addEventListener("click", redo);
+
+    function touched() {
+      if (auto) return;
+      status = "Unsaved changes"; stateEl.textContent = (status in SHORT ? SHORT[status] : status);
+      clearTimeout(commitT); commitT = setTimeout(commit, 320);
+      if (full) { clearTimeout(linkT); linkT = setTimeout(() => { try { history.replaceState(null, "", `#s=${encode(S)}`); } catch {} }, 400); }
+    }
+    function refreshTop() {
+      knobs.forEach((k) => k.sync());
+      waveSel.value = S.wave; cv.dataset.mode = siteMode(); cv.dataset.bg = S.bgMode;
+      themeBtn.setAttribute("aria-label", siteMode() === "dark" ? "Switch to light mode" : "Switch to dark mode");
+      swatches.forEach((b, i) => b.style.setProperty("--c", PAL[i]));
+      swatches.forEach((b, i) => { b.setAttribute("aria-checked", String(i === S.color)); b.tabIndex = i === S.color ? 0 : -1; });
+      playBtn.innerHTML = playing ? ICON.pause : ICON.play; playBtn.setAttribute("aria-label", playing ? "Pause" : "Play");
+      undoBtn.disabled = hi === 0; redoBtn.disabled = hi >= hist.length - 1;
+      stateEl.textContent = (status in SHORT ? SHORT[status] : status);
+      const wl = q("[data-wlab]"); if (wl) wl.textContent = `${NAMES.wave[S.wave]} · ${NAMES.shaping[S.shaping]} · ${NAMES.stagger[S.stagger]} · tempo ${S.tempo.toFixed(1)}`;
+    }
+    playBtn.addEventListener("click", () => { playing = !playing; refreshTop(); });
+    waveSel.addEventListener("change", () => { S.wave = waveSel.value; touched(); refreshTop(); });
+    themeBtn.addEventListener("click", () => {
+      if (auto) return;
+      const t = siteMode() === "dark" ? "light" : "dark";
+      document.documentElement.dataset.theme = t;
+      try { localStorage.setItem("theme", t); } catch {}
+    });
+    /* the site's own toggle (or this one) flips <html data-theme>; the lab follows it */
+    const themeWatch = auto ? null : new MutationObserver(() => { syncPaper(); refreshTop(); });
+    themeWatch && themeWatch.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    /* ── tap tempo: one tap is one wave. The mean of the last few gaps sets the tempo. ── */
+    let taps = [];
+    tapBtn.addEventListener("click", () => {
+      const now = performance.now();
+      if (taps.length && now - taps[taps.length - 1] > 2500) taps = [];
+      taps.push(now); taps = taps.slice(-6);
+      if (taps.length < 2) { flash(tapBtn, "Again…"); return; }
+      const gap = (taps[taps.length - 1] - taps[0]) / (taps.length - 1) / 1000;
+      S.tempo = clamp(+(3.125 / gap).toFixed(2), 0.2, 3); touched(); refreshTop();
+      flash(tapBtn, `${S.tempo.toFixed(2)}×`);
+    });
+    swatches.forEach((b, i) => {
+      b.addEventListener("click", () => { S.color = i; touched(); refreshTop(); markVariants(); });
+      b.addEventListener("keydown", (e) => {
+        const d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key]; if (!d) return;
+        e.preventDefault(); e.stopPropagation(); S.color = (S.color + d + PAL.length) % PAL.length; touched(); refreshTop(); markVariants(); swatches[S.color].focus();
+      });
+    });
+    const flash = (btn, text) => { const t = btn.dataset.label || (btn.dataset.label = btn.textContent); btn.textContent = text; clearTimeout(btn._t); btn._t = setTimeout(() => (btn.textContent = t), 1400); };
+    q("[data-save]").addEventListener("click", (e) => {
+      if (auto) return;
+      try { localStorage.setItem(KEY, JSON.stringify(S)); status = "Saved"; refreshTop(); flash(e.currentTarget, "Saved ✓"); }
+      catch { flash(e.currentTarget, "Not saved"); }
+    });
+
+    // ── Sidebar ──
+    let view = "all";
+    const navs = {};
+    const navBtn = (k, label, sub) => {
+      const b = h("button", "ml__nav"); b.type = "button";
+      const ico = k === "all" ? h("span", "ml__allico", "<i></i>") : can(22, 22, (c, w, hh) => paint(c, k, w / 2, hh / 2, k === "word" ? 24 : 22, CUR, 0));
+      const txt = h("span", "ml__navt", label); if (sub) txt.append(h("small", "", sub));
+      b.append(ico, txt);
+      b.addEventListener("click", () => show(k));
+      navs[k] = b; return b;
+    };
+    side.append(navBtn("all", "All systems", "Side by side, in sync"));
+    let lastGroup = "";
+    for (const k of KEYS) {
+      if (SYS[k].group !== lastGroup) { lastGroup = SYS[k].group; side.append(h("p", "ml__group", lastGroup)); }
+      side.append(navBtn(k, SYS[k].name));
+    }
+
+    function show(k) {
+      view = k;
+      Object.entries(navs).forEach(([key, b]) => b.setAttribute("aria-pressed", String(key === k)));
+      renderMain(); renderPanel(); main.scrollTop = 0;
+    }
+
+    // ── Main column ──
+    const head = (left, right) => { const e = h("header", "ml__sechead"); e.append(h("span", "", left), h("span", "", right || "")); return e; };
+    let variantCells = [], onTick = null;
+    function markVariants() {
+      variantCells.forEach(({ el, key, v, ci }) => el.classList.toggle("is-on", S.sys[view] && S.sys[view][key] === v && S.color === ci));
+    }
+    function renderMain() {
+      main.replaceChildren(); variantCells = []; onTick = null;
+      main.classList.toggle("is-trail", !!(SYS[view] && SYS[view].trail));
+      if (view === "all") return renderAll();
+      if (SYS[view].trail) return renderTrail(view);
+      const k = view, d = SYS[k], isWord = k === "word", w = mw();
+
+      const hero = h("div", "ml__hero");
+      const ptr = { x: 0, y: 0, on: false }, HH = full ? 300 : 250;
+      const big = can(w, HH, (c, cw, ch) => (isWord ? paint(c, k, cw / 2, ch / 2, 0, CUR, 0, undefined, { bw: Math.min(cw * 0.7, 560), bh: ch * 0.62, ptr }) : paint(c, k, cw / 2, ch / 2, ch * 0.84, CUR)));
+      big.setAttribute("role", "img"); big.removeAttribute("aria-hidden"); big.setAttribute("aria-label", `${d.name}, animated`);
+      if (isWord) {
+        const at = (e) => { const r = big.getBoundingClientRect(); ptr.x = ((e.clientX - r.left) / r.width) * w; ptr.y = ((e.clientY - r.top) / r.height) * HH; ptr.on = true; };
+        big.addEventListener("pointermove", at); big.addEventListener("pointerdown", at);
+        big.addEventListener("pointerleave", () => (ptr.on = false));
+      }
+      const sizes = h("div", "ml__sizes");
+      for (const px of [28, 48, 96]) {
+        const fig = h("figure");
+        fig.append(can(px, isWord ? Math.round(px * 0.45) : px, (c, cw, ch) => paint(c, k, cw / 2, ch / 2, px, CUR, 1)), h("figcaption", "", `${px}px`));
+        sizes.append(fig);
+      }
+      hero.append(big, sizes);
+
+      const plot = h("section", "ml__sec");
+      plot.append(head("Motion: each part over time", ""));
+      plot.querySelector(".ml__sechead span:last-child").dataset.wlab = "";
+      plot.append(can(w, 120, (c, cw, ch) => {
+        const P = S.sys[k], n = Math.min(10, partsOf(k, P)), span = 3, amp = Math.max(1, P.travel ?? 1);
+        seg(c, 0, ch / 2, cw, ch / 2, 1, mix(FG(), BG(), 0.9));
+        for (let i = n - 1; i >= 0; i--) {
+          c.beginPath();
+          for (let x = 0; x <= cw; x += 3) {
+            const v = waveFor(S, P, 0, clk - span + (span * x) / cw, partsOf(k, P))(i);
+            const yy = ch / 2 - (v / amp) * ch * 0.42;
+            x ? c.lineTo(x, yy) : c.moveTo(x, yy);
+          }
+          c.lineWidth = i ? 1 : 2; c.strokeStyle = i ? mix(CUR, BG(), 0.72) : CUR; c.lineJoin = "round"; c.stroke();
+        }
+        dot(c, cw - 3, ch / 2 - (waveFor(S, P, 0, clk, partsOf(k, P))(0) / amp) * ch * 0.42, 3.5, CUR);
+      }));
+      plot.append(h("p", "ml__foot", "part 1 = bold line · now →"));
+      /* a scrubber over a 20-unit loop of the shared clock: drag to park on a frame, and it follows the clock while it plays */
+      const LOOP = 20, tr = h("label", "ml__row ml__scrub");
+      tr.innerHTML = `<span>Time</span><input type="range" min="0" max="${LOOP}" step="0.01" aria-label="Scrub the clock"><output></output>`;
+      const si = tr.querySelector("input"), so = tr.querySelector("output");
+      let scrubbing = false;
+      const paintScrub = () => { const v = ((clk % LOOP) + LOOP) % LOOP; si.value = v; so.textContent = `${v.toFixed(1)}`; si.style.setProperty("--p", `${(v / LOOP) * 100}%`); };
+      si.addEventListener("pointerdown", () => { scrubbing = true; });
+      ["pointerup", "pointercancel", "blur"].forEach((ev) => si.addEventListener(ev, () => { scrubbing = false; }));
+      si.addEventListener("input", () => { playing = false; clk = +si.value; refreshTop(); paintScrub(); });
+      onTick = () => { if (!scrubbing) paintScrub(); };
+      plot.append(tr);
+
+      const vars = h("section", "ml__sec");
+      vars.append(head(isWord ? "Words in use × colours" : "Variants × colours", isWord ? "Click a word to use it" : "Click one to use it"));
+      const grid = h("div", "ml__swatchgrid");
+      const [key, vals, label] = d.variant;
+      vals.forEach((v) => PAL.forEach((col, ci) => {
+        const b = h("button", "ml__cell"); b.type = "button";
+        b.setAttribute("aria-label", `${label ? label(v) : v}, ${PAL_NAMES[ci]}`);
+        b.append(can(isWord ? 100 : 92, isWord ? 40 : 58, (c, cw, ch) => paint(c, k, cw / 2, ch / 2, isWord ? 100 : 54, PAL[ci], ci, { ...S.sys[k], [key]: v })));
+        if (!isWord) b.append(h("span", "", label ? label(v) : String(v)));
+        b.addEventListener("click", () => { S.sys[k][key] = v; S.color = ci; touched(); refreshTop(); renderPanel(); markVariants(); });
+        grid.append(b); variantCells.push({ el: b, key, v, ci });
+      }));
+      vars.append(grid);
+      main.append(hero, plot, vars);
+      refreshTop(); markVariants();
+    }
+
+    function renderAll() {
+      const grid = h("div", "ml__cards");
+      KEYS.forEach((k, i) => {
+        const b = h("button", "ml__card"); b.type = "button"; b.setAttribute("aria-label", `Open ${SYS[k].name}`);
+        b.append(h("span", "ml__cardlab", SYS[k].name), can(150, 86, (c, w, hh) => paint(c, k, w / 2, hh / 2, k === "word" ? 120 : 78, CUR, i)));
+        b.addEventListener("click", () => show(k));
+        grid.append(b);
+      });
+      const sec = h("section", "ml__sec");
+      sec.append(head("Every pattern in every colour", "Click one to use it"));
+      const sg = h("div", "ml__swatchgrid");
+      PATTERNS.forEach((k, r) => PAL.forEach((col, ci) => {
+        const b = h("button", "ml__cell"); b.type = "button"; b.setAttribute("aria-label", `${SYS[k].name}, ${PAL_NAMES[ci]}`);
+        b.append(can(80, 52, (c, w, hh) => paint(c, k, w / 2, hh / 2, 50, PAL[ci], r + ci)));
+        b.addEventListener("click", () => { S.color = ci; touched(); show(k); refreshTop(); });
+        sg.append(b);
+      }));
+      sec.append(sg);
+      main.append(grid, sec);
+    }
+
+    // Trails: the canvas is the playground. Before the first pointer move (and always in the tile) a ghost cursor draws on it.
+    function renderTrail(k) {
+      const wrap = h("div", "ml__trail");
+      const hint = h("p", "ml__hint", "Move your pointer around in here");
+      const tr = { items: [], last: null, id: 0, real: false };
+      const P = () => S.sys[k], BW = mw(), BH = Math.max(300, main.clientHeight - 40);
+      const add = (x, y, now) => {
+        const id = tr.id++;
+        tr.items.push(k === "proc" ? { x, y, born: now, id } : { x, y, born: now, id, sys: PATTERNS[id % PATTERNS.length], ci: (S.color + id) % PAL.length, rot: (id % 2 ? -1 : 1) });
+        if (k === "ptrail" && tr.items.length > P().max) tr.items.splice(0, tr.items.length - Math.round(P().max));
+      };
+      const feed = (x, y, now) => {
+        if (!tr.last) { tr.last = [x, y]; add(x, y, now); return; }
+        let [lx, ly] = tr.last, d = Math.hypot(x - lx, y - ly);
+        const gap = P().spacing;
+        while (d >= gap) { lx += ((x - lx) * gap) / d; ly += ((y - ly) * gap) / d; add(lx, ly, now); d = Math.hypot(x - lx, y - ly); }
+        tr.last = [lx, ly];
+      };
+      const board = can(BW, BH, (c, w, hh) => {
+        const now = performance.now(), p = P();
+        if (auto || !tr.real) {
+          const t = now / 1000;
+          feed(w / 2 + Math.cos(t * 1.1) * w * 0.32 + Math.sin(t * 2.7) * w * 0.05, hh / 2 + Math.sin(t * 1.7) * hh * 0.28, now);
+        }
+        tr.items = tr.items.filter((it) => now - it.born < p.life);
+        wrap.classList.toggle("has-ink", tr.items.length > 0);
+        if (k === "proc") {
+          let len = 0;
+          for (let i = tr.items.length - 1; i > 0; i--) {
+            len += Math.hypot(tr.items[i].x - tr.items[i - 1].x, tr.items[i].y - tr.items[i - 1].y);
+            if (len > p.maxLen) { tr.items.splice(0, i); break; }
+          }
+          if (p.hair && tr.items.length > 1) {
+            c.beginPath(); tr.items.forEach((it, i) => (i ? c.lineTo(it.x, it.y) : c.moveTo(it.x, it.y)));
+            c.lineWidth = p.hairW * 0.6; c.strokeStyle = mix(FG(), BG(), 0.55); c.lineJoin = "round"; c.stroke();
+          }
+          const on = SHAPES.filter((s) => p.shapes.includes(s)); if (!on.length) on.push("dot");
+          tr.items.forEach((it) => {
+            const a = (now - it.born) / p.life, r = p.size * 3.4 * (1 - a) ** 0.7 * (1 + p.breathe * Math.sin(now / 240 + it.id));
+            shape(c, on[it.id % on.length], it.x, it.y, r, PAL[(S.color + Math.floor(it.id / p.every)) % PAL.length]);
+          });
+        } else {
+          tr.items.forEach((it) => {
+            const a = (now - it.born) / p.life, grow = backOut(Math.min(1, a / 0.22), p.over), shrink = a < 0.6 ? 1 : 1 - (a - 0.6) / 0.4;
+            const s = p.size * grow * shrink;
+            if (s <= 0.5) return;
+            c.save(); c.translate(it.x, it.y); c.rotate(it.rot * p.tumble * a * Math.PI);
+            paint(c, it.sys, 0, 0, s, PAL[it.ci], it.id); c.restore();
+          });
+        }
+      });
+      const at = (e) => { const r = board.getBoundingClientRect(); if (!tr.real) { tr.real = true; tr.last = null; } feed(((e.clientX - r.left) / r.width) * BW, ((e.clientY - r.top) / r.height) * BH, performance.now()); };
+      board.addEventListener("pointermove", at); board.addEventListener("pointerdown", at);
+      board.addEventListener("pointerleave", () => (tr.last = null));
+      wrap.append(board, hint);
+      main.append(wrap);
+    }
+
+    // ── Right panel ──
+    /* Your own presets live in this browser. A preset is the whole state, so it brings its palette with it. */
+    const PKEY = "pg-motion-lab-presets";
+    let mine = [];
+    try { const o = JSON.parse(localStorage.getItem(PKEY) || "[]"); if (Array.isArray(o)) mine = o.filter((x) => x && typeof x.name === "string" && x.state).slice(0, 12); } catch {}
+    const keepMine = () => { try { localStorage.setItem(PKEY, JSON.stringify(mine)); } catch {} };
+    const pick = (a) => a[Math.floor(Math.random() * a.length)];
+    const rnd = (lo, hi) => lo + Math.random() * (hi - lo);
+    const snap = (v, p) => clamp(+(Math.round((v - p.min) / p.step) * p.step + p.min).toFixed(3), p.min, p.max);
+    // Random values from the middle 70% of each range, so a roll is never at an extreme that breaks the effect
+    function randomise(k) {
+      const P = S.sys[k];
+      SYS[k].params.forEach((p) => {
+        if (p.toggle) P[p.k] = Math.random() < 0.5;
+        else if (p.step >= 1 && p.max - p.min <= 3) P[p.k] = Math.round(rnd(p.min, p.max));
+        else P[p.k] = snap(rnd(p.min + (p.max - p.min) * 0.15, p.max - (p.max - p.min) * 0.15), p);
+      });
+    }
+    const surprise = () => {
+      Object.assign(S, { wave: pick(Object.keys(WAVES)), shaping: pick(Object.keys(SHAPING)), stagger: pick(Object.keys(STAGGER)), tempo: +rnd(0.8, 2.6).toFixed(2), offset: +rnd(0.2, 2.4).toFixed(2) });
+      buildKnobs(); touched(); refreshTop(); renderPanel();
+    };
+    function chipRow(entries, onPick, onDelete) {
+      const row = h("div", "ml__chips");
+      entries.forEach(([name, val], i) => {
+        const wrap = h("span", "ml__chipwrap");
+        const b = h("button", "ml__chip", name); b.type = "button"; b.addEventListener("click", () => onPick(val, i));
+        wrap.append(b);
+        if (onDelete) { const x = h("button", "ml__chipx", "×"); x.type = "button"; x.setAttribute("aria-label", `Delete preset ${name}`); x.addEventListener("click", () => onDelete(i)); wrap.append(x); }
+        row.append(wrap);
+      });
+      return row;
+    }
+    const ghost = (label, onClick, icon) => { const b = h("button", "ml__btn ml__btn--ghost ml__btn--full", `${label}${icon || ""}`); b.type = "button"; b.addEventListener("click", onClick); return b; };
+
+    function renderPanel() {
+      panel.replaceChildren();
+      if (view === "all") {
+        panel.append(h("h3", "", "All systems"), h("p", "ml__desc", "Everything running together on one shared clock. Pick a system on the left to tune it; the settings here and in the top bar apply to all of them."));
+        panel.append(h("p", "ml__lab", "Presets"));
+        panel.append(chipRow(Object.entries(PRESETS), (p) => { Object.assign(S, p); buildKnobs(); touched(); refreshTop(); renderPanel(); }));
+        panel.append(ghost("Surprise me", surprise, ICON.shuffle));
+        panel.append(h("p", "ml__lab", "Yours"));
+        if (mine.length) panel.append(chipRow(mine.map((m) => [m.name, m.state]), (st) => { S = load(st); syncPaper(); syncPal(); buildKnobs(); touched(); refreshTop(); renderMain(); renderPanel(); }, (i) => { mine.splice(i, 1); keepMine(); renderPanel(); }));
+        const nameRow = h("form", "ml__save");
+        nameRow.innerHTML = '<input class="ml__text" type="text" maxlength="18" placeholder="Name this setup" aria-label="Preset name" autocomplete="off" spellcheck="false"><button class="ml__btn ml__btn--ghost" type="submit">Save</button>';
+        nameRow.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const name = nameRow.querySelector("input").value.trim().slice(0, 18);
+          if (!name) { nameRow.querySelector("input").focus(); return; }
+          mine = [{ name, state: clone(S) }, ...mine.filter((m) => m.name !== name)].slice(0, 12); keepMine(); renderPanel();
+        });
+        panel.append(nameRow);
+
+        panel.append(h("p", "ml__lab", "Shared"));
+        panel.append(
+          select(S, "shaping", "Shaping", NAMES.shaping, refreshTop),
+          select(S, "stagger", "Stagger", NAMES.stagger, refreshTop),
+          select(S, "colorMode", "Colour", NAMES.colorMode),
+          select(S, "bgMode", "Background", NAMES.bgMode, refreshTop),
+        );
+
+        /* the palette is the brand's: six colours, each editable, and every system, swatch and export follows */
+        panel.append(h("p", "ml__lab", "Palette"));
+        const pal = h("div", "ml__pal");
+        PAL.forEach((c, i) => {
+          const l = h("label", "ml__well"); l.title = `${PAL_NAMES[i]} · ${c}`;
+          const inp = h("input"); inp.type = "color"; inp.value = c; inp.setAttribute("aria-label", `${PAL_NAMES[i]} colour`);
+          l.style.setProperty("--c", c);
+          inp.addEventListener("input", () => { S.palette[i] = inp.value.toUpperCase(); syncPal(); l.style.setProperty("--c", PAL[i]); l.title = `${PAL_NAMES[i]} · ${PAL[i]}`; refreshTop(); touched(); });
+          l.append(inp); pal.append(l);
+        });
+        panel.append(pal, h("p", "ml__desc", "<b>Tempo</b> is how fast every wave runs. <b>Offset</b> shifts each part and each copy so neighbours don't move in lockstep. <b>Wave</b> sets the curve, <b>Shaping</b> bends it, and <b>Stagger</b> decides who moves first."));
+        if (full) {
+          panel.append(h("p", "ml__lab", "Keys"));
+          panel.append(h("dl", "ml__keys", [["Space", "Play or pause"], ["0–9", "Switch system"], ["← →", "Step the clock while paused"], ["[ ]", "Tempo down or up"], ["T", "Tap tempo"], ["R", "Randomise this system"], ["⌘Z", "Undo (⇧ to redo)"], ["E", "Export"]].map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join("")));
+        }
+        const r = ghost("Reset everything", () => { S = defaults(); syncPaper(); syncPal(); buildKnobs(); touched(); refreshTop(); renderMain(); renderPanel(); });
+        panel.append(r);
+        return;
+      }
+      const d = SYS[view], P = S.sys[view];
+      panel.append(h("h3", "", d.name), h("p", "ml__desc", d.desc));
+      if (view === "word") {
+        panel.append(h("p", "ml__lab", "Text"));
+        const lab = h("label", "ml__row ml__row--text"), inp = h("input", "ml__text");
+        inp.type = "text"; inp.maxLength = 10; inp.value = P.word; inp.spellcheck = false; inp.autocomplete = "off";
+        inp.addEventListener("input", () => { P.word = inp.value.replace(/[^\p{L}\p{N} ]/gu, "").slice(0, 10); touched(); });
+        lab.append(h("span", "", "Word"), inp); panel.append(lab);
+      }
+      for (const g of ["Shape", "Motion"]) {
+        const ps = d.params.filter((p) => p.group === g);
+        if (!ps.length) continue;
+        panel.append(h("p", "ml__lab", g));
+        if (view === "proc" && g === "Shape") {
+          const box = h("div", "ml__checks"); box.setAttribute("role", "group"); box.setAttribute("aria-label", "Shapes");
+          SHAPES.forEach((s) => {
+            const l = h("label", "ml__check"), c = h("input"); c.type = "checkbox"; c.checked = P.shapes.includes(s);
+            c.addEventListener("change", () => { P.shapes = SHAPES.filter((x) => (x === s ? c.checked : P.shapes.includes(x))); touched(); });
+            l.append(c, h("span", "", SHAPE_NAMES[s])); box.append(l);
+          });
+          panel.append(box, toggle(P, "hair", "Hairline between shapes"));
+        }
+        ps.forEach((p) => panel.append(p.toggle ? toggle(P, p.k, p.label) : slider(P, p, () => p.k === d.variant?.[0] && markVariants())));
+      }
+      const roll = () => { randomise(view); touched(); renderPanel(); if (!d.trail) renderMain(); };
+      rollThis = roll;
+      panel.append(ghost("Randomise", roll, ICON.shuffle));
+      panel.append(ghost(`Reset ${d.name.toLowerCase()}`, () => { S.sys[view] = defaults().sys[view]; touched(); renderPanel(); if (!d.trail) renderMain(); }));
+      panel.append(h("p", "ml__foot ml__tip", "Double-click a slider to reset it."));
+    }
+    let rollThis = null;
+
+    // ── Export: runnable code built from the same drawing functions the lab uses ──
+    const sheet = q("[data-sheet]"), xsys = q("[data-xsys]"), codeEl = q("[data-code]"), xnote = q("[data-xnote]"), tabs = [...cv.querySelectorAll("[data-tab]")];
+    let tab = "js";
+    const dedent = (src) => {
+      const lines = String(src).split("\n");
+      const ind = Math.min(...lines.slice(1).filter((l) => l.trim()).map((l) => l.match(/^ */)[0].length), 99);
+      return [lines[0], ...lines.slice(1).map((l) => l.slice(Math.min(ind, l.match(/^ */)[0].length)))].join("\n");
+    };
+    const settingsFor = (k) => ({
+      system: k, tempo: +S.tempo.toFixed(2), offset: +S.offset.toFixed(2), wave: S.wave, shaping: S.shaping, stagger: S.stagger,
+      colorMode: S.colorMode, palette: PAL, colorIndex: S.color, paper: PAPERS[S.paper].bg, params: S.sys[k],
+    });
+    function core(k) {
+      const d = SYS[k], uses = (name) => d.draw.toString().includes(name) || (name === "LAYOUTS" && d.parts.toString().includes(name));
+      const parts = [
+        `const SETTINGS = ${JSON.stringify(settingsFor(k), null, 2)};`,
+        "",
+        "const TAU = Math.PI * 2;",
+        `const clamp = ${clamp};`,
+        `const WAVES = { ${S.wave}: ${WAVES[S.wave]} };`,
+        `const SHAPING = { ${S.shaping}: ${SHAPING[S.shaping]} };`,
+        `const STAGGER = { ${S.stagger}: ${STAGGER[S.stagger]} };`,
+        `const waveFor = ${dedent(waveFor)};`,
+        `const rgb = ${rgb};`,
+        `const mix = ${mix};`,
+        `const colourAt = ${dedent(colourAt)};`,
+        `const BG = () => SETTINGS.paper;`,
+        `const dot = ${dot};`,
+        `const seg = ${seg};`,
+      ];
+      if (uses("LAYOUTS")) parts.push(`const LAYOUTS = ${JSON.stringify(LAYOUTS)};`);
+      if (uses("glyph")) parts.push(`const WFONT = ${JSON.stringify(WFONT)};`, `const mctx = document.createElement("canvas").getContext("2d"), glyphs = {};`, `const glyph = ${dedent(glyph)};`);
+      parts.push(`const parts = ${d.parts};`, "", dedent(d.draw), "");
+      const word = k === "word";
+      parts.push(`function mountMotion(canvas) {
+  const ctx = canvas.getContext("2d");
+  let clk = 0, last = 0, raf = 0, dpr = 1;
+  const size = () => {
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    const r = canvas.getBoundingClientRect();
+    canvas.width = Math.round(r.width * dpr); canvas.height = Math.round(r.height * dpr);
+  };
+  const ro = new ResizeObserver(size); ro.observe(canvas); size();
+  const frame = (now) => {
+    clk += (Math.min(50, now - (last || now)) / 1000) * SETTINGS.tempo; last = now;
+    const w = canvas.width / dpr, h = canvas.height / dpr, P = SETTINGS.params;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
+    ${d.draw.name}(ctx, w / 2, h / 2, ${word ? "0" : "Math.min(w, h) * 0.86"}, P, colourAt(SETTINGS, clk), waveFor(SETTINGS, P, 0, clk, parts(P))${word ? ", { bw: w * 0.92, bh: h * 0.8 }" : ""});
+    raf = requestAnimationFrame(frame);
+  };
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) frame(0), cancelAnimationFrame(raf);
+  else raf = requestAnimationFrame(frame);
+  return () => { cancelAnimationFrame(raf); ro.disconnect(); };
+}`);
+      return parts.join("\n");
+    }
+    const pascal = (k) => SYS[k].name.replace(/(^|\s)(\w)/g, (_, __, c) => c.toUpperCase()).replace(/\s/g, "");
+    function cssFor(k) {
+      const P = S.sys[k], period = 1 / ((P.speed ?? 1) * 0.32 * S.tempo), stag = 0.12 * S.offset * period;
+      const stops = Array.from({ length: 21 }, (_, i) => {
+        const v = SHAPING[S.shaping](WAVES[S.wave](i / 20)) * (P.travel ?? 1);
+        return `  ${i * 5}% { transform: translateY(calc(var(--ml-amp) * ${(-v).toFixed(3)})); opacity: ${(0.6 + 0.4 * (0.5 + 0.5 * clamp(v, -1, 1))).toFixed(3)}; }`;
+      }).join("\n");
+      return `/* Motion lab · CSS tokens for ${SYS[k].name}
+   ${NAMES.wave[S.wave]} wave, ${NAMES.shaping[S.shaping].toLowerCase()} shaping, tempo ${S.tempo.toFixed(2)}, offset ${S.offset.toFixed(2)}.
+   The keyframes are the shared wave sampled at 21 points, so any element can move in time with the lab. */
+:root {
+${PAL.map((c, i) => `  --ml-${PAL_NAMES[i].toLowerCase()}: ${c};`).join("\n")}
+  --ml-color: var(--ml-${PAL_NAMES[S.color].toLowerCase()});
+  --ml-paper: ${PAPERS[S.paper].bg};
+  --ml-period: ${period.toFixed(3)}s;   /* one full wave */
+  --ml-stagger: ${stag.toFixed(3)}s;  /* delay between neighbouring parts */
+  --ml-amp: 8px;              /* how far a part travels */
+}
+
+@keyframes ml-wave {
+${stops}
+}
+
+/* Give each part its place in line: style="--i: 0", "--i: 1", ... */
+.ml-part {
+  animation: ml-wave var(--ml-period) linear infinite;
+  animation-delay: calc(var(--i, 0) * var(--ml-stagger) * -1);
+  background: var(--ml-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ml-part { animation: none; }
+}
+`;
+    }
+    function build() {
+      const k = xsys.value, name = SYS[k].name;
+      if (tab === "js") {
+        xnote.textContent = `A standalone script for ${name}. Add a sized <canvas>, include the file, then call mountMotion(canvas). It returns a function that stops it.`;
+        return `// Motion lab · ${name} · exported ${new Date().toISOString().slice(0, 10)}\n// <canvas id="motion" style="width: 320px; height: 320px"></canvas>\n// <script src="motion-${k}.js"></script>\n// <script>mountMotion(document.getElementById("motion"));</script>\n(() => {\n${core(k)}\n\nwindow.mountMotion = mountMotion;\n})();\n`;
+      }
+      if (tab === "react") {
+        xnote.textContent = `A React component for ${name}. Drop the file in and render <${pascal(k)}Motion />; it cleans up when it unmounts.`;
+        return `// Motion lab · ${name} · exported ${new Date().toISOString().slice(0, 10)}\nimport { useEffect, useRef } from "react";\n\n${core(k)}\n\nexport default function ${pascal(k)}Motion({ width = ${k === "word" ? 480 : 320}, height = ${k === "word" ? 180 : 320}, ...props }) {\n  const ref = useRef(null);\n  useEffect(() => mountMotion(ref.current), []);\n  return <canvas ref={ref} style={{ width, height }} aria-hidden="true" {...props} />;\n}\n`;
+      }
+      if (tab === "css") { xnote.textContent = "Tokens and a keyframe track that share the lab's clock, for moving plain HTML in time with it."; return cssFor(k); }
+      xnote.textContent = "Every setting in the lab. Paste it back into a shared link, or keep it next to your storyboard.";
+      return JSON.stringify(S, null, 2) + "\n";
+    }
+    const refreshCode = () => { codeEl.textContent = build(); if (typeof labelVid === "function") labelVid(); };
+    const openSheet = () => {
+      if (auto) return;
+      xsys.value = EXPORTABLE.includes(view) ? view : xsys.value;
+      refreshCode(); sheet.hidden = false;
+      requestAnimationFrame(() => cv.querySelector(`[data-tab="${tab}"]`).focus());
+    };
+    const closeSheet = () => { sheet.hidden = true; q("[data-export]").focus(); };
+    q("[data-export]").addEventListener("click", openSheet);
+    q("[data-xclose]").addEventListener("click", closeSheet);
+    xsys.addEventListener("change", refreshCode);
+    tabs.forEach((t, i) => {
+      t.addEventListener("click", () => { tab = t.dataset.tab; tabs.forEach((x) => { x.setAttribute("aria-selected", String(x === t)); x.tabIndex = x === t ? 0 : -1; }); refreshCode(); });
+      t.addEventListener("keydown", (e) => {
+        const d = { ArrowRight: 1, ArrowLeft: -1 }[e.key]; if (!d) return;
+        e.preventDefault(); e.stopPropagation(); const n = tabs[(i + d + tabs.length) % tabs.length]; n.click(); n.focus();
+      });
+    });
+    sheet.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); closeSheet(); }
+      else if (e.key === "Tab") {
+        const els = [...sheet.querySelectorAll("button, select, [tabindex='0']")].filter((n) => !n.disabled && n.tabIndex >= 0);
+        if (e.shiftKey && document.activeElement === els[0]) { e.preventDefault(); els[els.length - 1].focus(); }
+        else if (!e.shiftKey && document.activeElement === els[els.length - 1]) { e.preventDefault(); els[0].focus(); }
+      }
+    });
+    const download = (blob, name) => {
+      const a = h("a"); a.href = URL.createObjectURL(blob); a.download = name;
+      document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+    };
+    q("[data-xcopy]").addEventListener("click", (e) => {
+      const btn = e.currentTarget;
+      (navigator.clipboard ? navigator.clipboard.writeText(codeEl.textContent) : Promise.reject()).then(() => flash(btn, "Copied ✓"), () => flash(btn, "Copy failed"));
+    });
+    q("[data-xfile]").addEventListener("click", () => {
+      const k = xsys.value, ext = { js: "js", react: "jsx", css: "css", json: "json" }[tab];
+      download(new Blob([codeEl.textContent], { type: "text/plain" }), tab === "react" ? `${pascal(k)}Motion.jsx` : `motion-${tab === "json" ? "settings" : k}.${ext}`);
+    });
+    q("[data-xlink]").addEventListener("click", (e) => {
+      const btn = e.currentTarget, url = `${location.origin}/motion-lab#s=${encode(S)}`;
+      (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(() => flash(btn, "Link copied ✓"), () => flash(btn, "Copy failed"));
+    });
+    // A clean frame of the chosen system on paper, at any size, on any clock. `at` places it inside a larger sheet.
+    function renderFrame(ctx, k, w, hh, c, at = {}) {
+      const P = S.sys[k], word = k === "word", x0 = at.x || 0, y0 = at.y || 0;
+      ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.beginPath(); ctx.rect(x0, y0, w, hh); ctx.clip();
+      if (!at.transparent) { ctx.fillStyle = BG(); ctx.fillRect(x0, y0, w, hh); }
+      SYS[k].draw(ctx, x0 + w / 2, y0 + hh / 2, Math.min(w, hh) * 0.62, P, colourAt({ palette: PAL, colorIndex: S.color, colorMode: S.colorMode }, c), waveFor(S, P, 0, c, partsOf(k, P)), word ? { bw: w * 0.8, bh: hh * 0.5 } : undefined);
+      ctx.restore();
+    }
+    const alpha = q("[data-xalpha]");
+    q("[data-xpng]").addEventListener("click", () => {
+      const k = xsys.value, c = document.createElement("canvas"); c.width = k === "word" ? 2400 : 1600; c.height = k === "word" ? 1000 : 1600;
+      renderFrame(c.getContext("2d"), k, c.width, c.height, clk, { transparent: alpha.checked });
+      c.toBlob((b) => b && download(b, `motion-${k}.png`), "image/png");
+    });
+    // ── storyboard: six frames evenly across one loop, on a contact sheet, ready to drop into a deck ──
+    const loopClk = (k) => 1 / ((S.sys[k].speed ?? 1) * 0.32);
+    q("[data-xboard]").addEventListener("click", () => {
+      const k = xsys.value, word = k === "word", fw = word ? 800 : 640, fh = word ? 360 : 640, gap = 16, pad = 48, cols = 3, rows = 2, foot = 96;
+      const c = document.createElement("canvas"); c.width = pad * 2 + cols * fw + (cols - 1) * gap; c.height = pad * 2 + rows * fh + (rows - 1) * gap + foot;
+      const g = c.getContext("2d"), fg = FG(), mute = mix(FG(), BG(), 0.45);
+      g.fillStyle = BG(); g.fillRect(0, 0, c.width, c.height);
+      const t0 = clk;
+      for (let n = 0; n < cols * rows; n++) {
+        const x = pad + (n % cols) * (fw + gap), y = pad + Math.floor(n / cols) * (fh + gap);
+        g.fillStyle = mix(FG(), BG(), 0.94); g.fillRect(x, y, fw, fh);
+        renderFrame(g, k, fw, fh, t0 + (n / (cols * rows)) * loopClk(k), { x, y, transparent: true });
+        g.fillStyle = mute; g.font = '500 20px "Geist Mono", ui-monospace, monospace'; g.textBaseline = "top";
+        g.fillText(String(n + 1).padStart(2, "0"), x + 16, y + 14);
+      }
+      g.fillStyle = fg; g.font = '500 22px "Geist Mono", ui-monospace, monospace';
+      g.fillText(`MOTION LAB ( ${SYS[k].name.toUpperCase()} )`, pad, c.height - foot + 22);
+      g.fillStyle = mute; g.font = '400 18px "Geist Mono", ui-monospace, monospace';
+      g.fillText(`${NAMES.wave[S.wave]} · ${NAMES.shaping[S.shaping]} · ${NAMES.stagger[S.stagger]} · tempo ${S.tempo.toFixed(2)} · six frames across one loop`.toUpperCase(), pad, c.height - foot + 54);
+      c.toBlob((b) => b && download(b, `motion-${k}-storyboard.png`), "image/png");
+    });
+    // ── record one loop: exactly one wave, repeated to reach two seconds if it is shorter, so it joins up when it plays again ──
+    const loopSeconds = (k) => { const one = loopClk(k) / S.tempo, n = Math.max(1, Math.ceil(2 / one)); return Math.min(12, one * n); };
+    const vidBtn = q("[data-xvid]");
+    const labelVid = () => { if (!recording) { vidBtn.textContent = `Record loop · ${loopSeconds(xsys.value).toFixed(1)}s`; vidBtn.dataset.label = vidBtn.textContent; } };
+    let recording = false;
+    vidBtn.addEventListener("click", (e) => {
+      const btn = e.currentTarget, k = xsys.value;
+      const type = window.MediaRecorder && ["video/webm;codecs=vp9", "video/webm", "video/mp4"].find((t) => MediaRecorder.isTypeSupported(t));
+      const c = document.createElement("canvas");
+      if (recording || !type || !c.captureStream) { if (!recording) flash(btn, "Not supported here"); return; }
+      c.width = k === "word" ? 1920 : 1080; c.height = 1080;
+      const ctx = c.getContext("2d"), rec = new MediaRecorder(c.captureStream(60), { mimeType: type, videoBitsPerSecond: 8e6 }), chunks = [];
+      rec.ondataavailable = (ev) => ev.data.size && chunks.push(ev.data);
+      rec.onstop = () => { recording = false; btn.disabled = false; labelVid(); download(new Blob(chunks, { type: type.split(";")[0] }), `motion-${k}-loop.${type.includes("mp4") ? "mp4" : "webm"}`); };
+      const c0 = clk, t0 = performance.now(), DUR = loopSeconds(k) * 1000;
+      btn.disabled = true; recording = true;
+      const draw = (now) => {
+        const el = now - t0;
+        renderFrame(ctx, k, c.width, c.height, c0 + (el / 1000) * S.tempo);
+        btn.textContent = `Recording… ${Math.max(1, Math.ceil((DUR - el) / 1000))}s`;
+        if (el < DUR) requestAnimationFrame(draw); else rec.stop();
+      };
+      rec.start(); requestAnimationFrame(draw);
+    });
+
+    // ── Keys (full page only; in the overlay the arrows and Esc belong to the board) ──
+    const onKey = (e) => {
+      if (!sheet.hidden || e.defaultPrevented) return;
+      const tag = e.target.tagName, typing = ["INPUT", "SELECT", "TEXTAREA"].includes(tag) && !(tag === "INPUT" && e.target.type === "range" && e.key === " ");
+      const mod = e.metaKey || e.ctrlKey;
+      if (mod && e.key.toLowerCase() === "z") { if (tag === "INPUT" && e.target.type === "text") return; e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
+      if (typing || mod || e.altKey) return;
+      if (e.key === " " && !["BUTTON", "A"].includes(tag)) { e.preventDefault(); playing = !playing; refreshTop(); }
+      else if (/^[0-9]$/.test(e.key)) { const k = ["all", ...KEYS][+e.key]; if (k) show(k); }
+      else if (e.key === "[" || e.key === "]") { S.tempo = clamp(+(S.tempo + (e.key === "]" ? 0.1 : -0.1)).toFixed(2), 0.2, 3); touched(); refreshTop(); }
+      else if (!playing && (e.key === "ArrowLeft" || e.key === "ArrowRight") && tag !== "INPUT") { e.preventDefault(); clk += (e.key === "ArrowRight" ? 1 : -1) * (S.tempo / 30); }
+      else if (e.key === "e" || e.key === "E") openSheet();
+      else if (e.key === "t" || e.key === "T") tapBtn.click();
+      else if ((e.key === "r" || e.key === "R") && view !== "all" && rollThis) rollThis();
+    };
+    if (full) document.addEventListener("keydown", onKey);
+
+    show("all"); refreshTop();
+
+    // On the full page the drawing surfaces follow the window
+    let lastW = main.clientWidth, rT = 0;
+    const ro = full ? new ResizeObserver(() => { if (Math.abs(main.clientWidth - lastW) < 24) return; lastW = main.clientWidth; clearTimeout(rT); rT = setTimeout(renderMain, 120); }) : null;
+    ro && ro.observe(main);
+
+    // ── Clock ──
+    let raf = 0, last = 0;
+    const frame = (now) => {
+      raf = requestAnimationFrame(frame);
+      const dt = Math.min(0.05, (now - (last || now)) / 1000); last = now;
+      if (playing) clk += dt * S.tempo;
+      CUR = colourAt({ palette: PAL, colorIndex: S.color, colorMode: S.colorMode }, clk);
+      onTick && onTick();
+      const r = Math.min(3, (devicePixelRatio || 1) * Math.max(1, f.scale()));
+      if (Math.abs(r - R) > 0.2) { R = r; cans.forEach(resize); }
+      for (let i = cans.length - 1; i >= 0; i--) {
+        const e = cans[i];
+        if (!e.el.isConnected) { cans.splice(i, 1); continue; }
+        e.ctx.setTransform(R, 0, 0, R, 0, 0); e.ctx.clearRect(0, 0, e.w, e.h); e.fn(e.ctx, e.w, e.h);
+      }
+    };
+    const start = () => { last = 0; raf = requestAnimationFrame(frame); return () => cancelAnimationFrame(raf); };
+    const stopRun = auto ? whileVisible(cv, start) : start();
+
+    // In the tile: tour the systems and recolour every other stop
+    let tour = 0;
+    if (auto && !reduce) {
+      const seq = ["all", "asterisk", "orbit", "cells", "word", "matrix", "burst", "ptrail", "ribbon", "proc"];
+      let n = 0;
+      tour = setInterval(() => { n++; if (n % 2 === 0) S.color = (S.color + 1) % PAL.length; show(seq[n % seq.length]); refreshTop(); }, 2800);
+    }
+    return () => { stopRun(); f.stop(); clearInterval(tour); clearTimeout(commitT); clearTimeout(linkT); ro && ro.disconnect(); themeWatch && themeWatch.disconnect(); if (full) document.removeEventListener("keydown", onKey); };
   }
 
   // ── Overlay: opens over the board from a tile; arrows step through the board, Esc closes ──

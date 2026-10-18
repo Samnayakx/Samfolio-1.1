@@ -2074,19 +2074,17 @@ function openLightbox(src, alt, opener) {
       { code: "INT-12", title: "Podcast Player", status: "Interaction · Media", area: "Audio · Mobile", tag: "interaction", demo: "podcastPlayer", bg: "#000000", dark: true, ptr: "none",
         scope: "A player whose transcript follows the audio. Segments show who is speaking, the playhead scrubs, and the button changes shape between play and pause.",
         hint: "Play, drag the timeline, tap a line to jump, change speed, or pin a moment from the options button.", tags: ["Media", "Transcript", "Scrub"] },
-      { code: "INT-13", title: "Compose Bar", status: "Interaction · Input", area: "Mobile · Writing", tag: "interaction", demo: "composeBars", bg: "#1E1E1E", dark: true, ptr: "none", wide: true,
-        scope: "One compose bar in three themes. Type, refine the text, dictate, then send, and the message slides into the feed above.",
-        hint: "Type in any phone and press Enter or the arrow. The ring tidies your text, the mic dictates sample words, the bin clears.", tags: ["Input", "Themes", "Dictation"] },
-      { code: "INT-15", title: "Empty Sessions", status: "Interaction · Empty state", area: "Dev tools", tag: "interaction", demo: "emptySessions", bg: "#0C0C0C", dark: true, ptr: "none",
+      { code: "INT-13", title: "Compose Bar", status: "Interaction · Input", area: "Mobile · Writing", tag: "interaction", demo: "composeBars", bg: "#1E1E1E", dark: true, ptr: "none", tall: true,
+        scope: "A compose bar on a real iPhone-sized screen, with 44pt targets and 17pt text. Type, refine the text, dictate, then send, and the message slides into the feed above. A switch under the phone changes the look between dark, light and dusk.",
+        hint: "Type and press Enter or the arrow. The ring tidies your text, the mic dictates sample words, the bin clears. Use the switch under the phone to change the look.", tags: ["Input", "Themes", "Dictation"] },
+      { code: "INT-15", title: "Empty Sessions", status: "Interaction · Empty state", area: "Dev tools", tag: "interaction", demo: "emptySessions", bg: "#0C0C0C", dark: true, ptr: "none", tall: true,
         scope: "An empty state with some life in it: the windows fan out on hover, the pixel glyphs drift against the pointer, and clicking the stack shuffles it.",
         hint: "Move the pointer over the card, hover a glyph, and click the stack of windows.", tags: ["Empty state", "Parallax", "Pixel art"] },
-      { code: "INT-16", title: "Trade Ticket", status: "Interaction · Flow", area: "Fintech · Trading", tag: "interaction", demo: "tradeTicket", bg: "#000000", dark: true, ptr: "none", wide: true, tall: true,
-        scope: "Placing a stock order in three steps. Set the entry zone against the day's volume, tune the stop and the target on one pad, then review and hold to send. Each finished step folds into a line you can reopen.",
-        hint: "Pick an order type and drag the zone handles, step the share count, confirm, then drag the puck for stop and target. Hold the last button to place the order.", tags: ["Flow", "Controls", "Hold to confirm"] },
-      { code: "BRAND-01", title: "Veyra: Hero", status: "Branding · Hero", area: "AI infrastructure", tag: "branding", image: "/assets/images/playground/veyra-hero.jpg", alt: "Veyra launch hero: a dark panel with the headline For ideas beyond the obvious, a pixel-dot butterfly and a Start creating button, set on a collage of mountain photos, code and torn lilac paper.", bg: "#E4DFD2", wide: true,
-        scope: "A launch hero for Veyra, AI infrastructure for agents. A dark panel sits on a collage of mountains, code and torn paper, with a pixel-dot butterfly as the mark.", tags: ["Branding", "Hero", "Collage"] },
-      { code: "BRAND-02", title: "Veyra: Poster", status: "Branding · Poster", area: "AI infrastructure", tag: "branding", image: "/assets/images/playground/veyra-poster.jpg", alt: "Veyra poster: a torn dark panel with the headline The engine behind your next idea and a lilac line-drawn butterfly, beside a strip of code symbols on mint paper.", bg: "#C9DDD3",
-        scope: "A poster for Veyra. The same butterfly redrawn in lilac scanlines on a torn navy sheet, with a strip of code symbols down the edge.", tags: ["Branding", "Poster", "Print"] },
+      { code: "INT-17", title: "Motion Lab", status: "Interaction · Tool", area: "Brand · Motion system", tag: "interaction", demo: "motionLab", bg: "#040404", dark: true, ptr: "none", wide: true, tall: true, href: "/motion-lab", page: true,
+        scope: "A bench for tuning a brand's motion language before storyboarding a launch film. Nine patterns, a kinetic word and two cursor trails run on one shared clock: set tempo, offset, wave, shaping and stagger once and every system follows. Edit the palette, save your own presets, tap in a tempo, scrub the clock, then export code, a storyboard or a seamless loop.",
+        hint: "Opens as its own page. Pick a system on the left and drag its sliders; Tempo, Offset and Wave in the top bar change everything at once. Tap sets the tempo from your clicks, the sun icon switches theme, and Export gives you code, PNG, a storyboard or a loop.",
+        tags: ["Motion system", "Canvas", "Tuning", "Brand"],
+        credit: { name: "Ayush Soni", handle: "ayushsoni_io", url: "https://x.com/ayushsoni_io/status/2111715001094598723" } },
     ];
     setCount(LAB.length);
     const list = document.querySelector("[data-lab]");
@@ -2132,6 +2130,8 @@ function openLightbox(src, alt, opener) {
       li.appendChild(open);
       li.addEventListener("click", (e) => {
         if (e.target.closest("a, input")) return;
+        // A whole project rather than a study: it gets its own page, through the same fade as every other link
+        if (it.page) { const go = el("a"); go.href = it.href; go.hidden = true; document.body.appendChild(go); go.click(); go.remove(); return; }
         const shown = LAB.filter((_, k) => !tiles[k].hidden);
         window.Playground && window.Playground.openOverlay(shown, shown.indexOf(it), open);
       });

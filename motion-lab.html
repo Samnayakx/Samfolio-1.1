@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Motion Lab | Sambit Nayak, Product Designer</title>
+  <meta name="description" content="A bench for tuning a brand's motion system: twelve animated systems on one shared clock, with your own palette and presets, and export to JavaScript, React, CSS, PNG, a storyboard and a seamless loop." />
+  <link rel="canonical" href="https://www.sambitnayak.com/motion-lab" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Sambit Nayak" />
+  <meta property="og:title" content="Motion Lab | Sambit Nayak, Product Designer" />
+  <meta property="og:description" content="A bench for tuning a brand's motion system: twelve animated systems on one shared clock, with export to JavaScript, React, CSS, PNG, a storyboard and a seamless loop." />
+  <meta property="og:url" content="https://www.sambitnayak.com/motion-lab" />
+  <meta property="og:image" content="https://www.sambitnayak.com/assets/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@sambit_nayak_" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+  <script>
+    // The site's theme, applied before first paint so the page never flashes the wrong ground
+    try { document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark"; } catch (e) { document.documentElement.dataset.theme = "dark"; }
+  </script>
+  <link rel="stylesheet" href="/css/site.css" />
+  <link rel="stylesheet" href="/css/playground.css" />
+  <style>
+    html, body { height: 100%; margin: 0; overflow: hidden; }
+    .lab-page { position: fixed; inset: 0; }
+    .lab-page__title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    .lab-page__fallback { margin: 0; padding: 32px; font: 400 16px/1.5 var(--font-body, system-ui, sans-serif); }
+  </style>
+</head>
+<body data-page="motion-lab">
+  <main class="lab-page" id="lab">
+    <h1 class="lab-page__title">Motion Lab</h1>
+    <noscript><p class="lab-page__fallback">Motion Lab runs in the browser and needs JavaScript. <a href="/playground">Back to the playground</a>.</p></noscript>
+  </main>
+  <script src="/js/playground.js"></script>
+  <script>
+    // Laid out for real on a wide screen; below that the same lab is scaled to fill the window
+    window.Playground.DEMOS.motionLab(document.getElementById("lab"), { auto: false, full: innerWidth >= 1360, bleed: true });
+  </script>
+</body>
+</html>
