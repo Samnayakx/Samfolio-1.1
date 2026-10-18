@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>CotonAI design system cover</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=block" rel="stylesheet" />
+<style>
+  /* Three beats after the reference: big mark, jump-cut small mark, the typed title. One soft bloom photo behind all of it. */
+  :root { --white: #FFFFFF; --sans: "Geist", system-ui, sans-serif; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #F3E3D6; }
+  body { font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #F3E3D6; }
+  /* The photo is portrait; it is scaled to the stage width and panned to pick a band */
+  #bg { position: absolute; left: -60px; top: 0; width: 2040px; height: auto; transform-origin: 50% 0; filter: blur(14px) saturate(1.08); will-change: transform; }
+  #grain { position: absolute; inset: 0; width: 1920px; height: 1080px; opacity: .05; mix-blend-mode: overlay; pointer-events: none; }
+  #mark { position: absolute; left: 50%; top: 50%; width: 600px; height: 600px; margin: -300px 0 0 -300px; overflow: visible; }
+  #type { position: absolute; left: 0; right: 0; top: 50%; display: flex; justify-content: center; align-items: center; height: 0; color: var(--white); font: 500 112px/1 var(--sans); letter-spacing: -.022em; white-space: pre; }
+  #type i { display: block; flex: none; width: .56em; height: .56em; border-radius: 50%; background: var(--white); margin-left: .14em; transform: translateY(.02em); }
+  #type i.solo { margin-left: 0; }
+  .soft { filter: drop-shadow(0 0 60px rgba(196, 96, 24, .22)); }
+  .off { visibility: hidden; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <img id="bg" src="src/bloom.jpg" alt="" />
+  <svg id="mark" class="soft" viewBox="-25 -25 50 50"></svg>
+  <div id="type" class="soft off"><span id="txt"></span><i id="dot"></i></div>
+  <canvas id="grain" width="960" height="540"></canvas>
+</div>
+<script>
+// ── The CotonAI mark, fitted to the original: five tilted elliptical loops, each tucked under the next ──
+const M = { d: 10.328, a: 9.656, b: 8.609, tilt: -23.812, sw: 3.825, rot: 4.156 };
+const rad = (x) => (x * Math.PI) / 180;
+const petals = [0, 1, 2, 3, 4].map((i) => {
+  const ang = M.rot + i * 72;
+  return { x: M.d * Math.sin(rad(ang)), y: -M.d * Math.cos(rad(ang)), rotDeg: ang + M.tilt };
+});
+{
+  let h = "<defs>";
+  petals.forEach((_, i) => {
+    const n = petals[(i + 1) % 5];
+    h += `<mask id="m${i}" maskUnits="userSpaceOnUse" x="-30" y="-30" width="60" height="60"><rect x="-30" y="-30" width="60" height="60" fill="#fff"/><ellipse cx="${n.x}" cy="${n.y}" rx="${M.b - M.sw / 2}" ry="${M.a - M.sw / 2}" transform="rotate(${n.rotDeg} ${n.x} ${n.y})" fill="#000"/></mask>`;
+  });
+  h += "</defs>";
+  // The mask sits on a group so it is not rotated with its own petal
+  petals.forEach((p, i) => { h += `<g mask="url(#m${i})"><ellipse cx="${p.x}" cy="${p.y}" rx="${M.b}" ry="${M.a}" transform="rotate(${p.rotDeg} ${p.x} ${p.y})" fill="none" stroke="#fff" stroke-width="${M.sw}"/></g>`; });
+  document.getElementById("mark").innerHTML = h;
+}
+
+// ── Deterministic helpers ──
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, k) => a + (b - a) * k;
+const easeOut = (k) => 1 - Math.pow(1 - clamp(k), 3);
+const hash = (n) => { const s = Math.sin(n * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); };
+
+// Grain keeps the soft photo from banding once it is encoded
+const grain = document.getElementById("grain"), gg = grain.getContext("2d");
+const GRAIN = [0, 1, 2, 3].map((k) => {
+  const im = gg.createImageData(960, 540);
+  for (let i = 0; i < im.data.length; i += 4) { const v = hash(i * .37 + k * 1013.3) * 255; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; }
+  return im;
+});
+
+// ── Timeline (seconds) ──
+const T = { small: .8, title: 2.5, type: 3.0, del: 6.5, end: 8 };
+const TITLE = "CotonAI x Design System";
+// Uneven, human cadence: a beat after the name and after the x
+const typedAt = []; { let s = T.type; for (let i = 0; i < TITLE.length; i++) { typedAt.push(s); s += .05 + hash(i + 3) * .045 + (TITLE[i] === " " ? .08 : 0); } }
+const delStep = .036;
+
+const bg = document.getElementById("bg"), mark = document.getElementById("mark"), type = document.getElementById("type"), txt = document.getElementById("txt"), dot = document.getElementById("dot");
+const show = (el, on) => el.classList.toggle("off", !on);
+// Photo is 2040px wide on stage, so ~3625px tall. A band is picked by its top edge (px) and drifts slowly.
+const SHOTS = {
+  mark: { y0: -880, y1: -1010, s0: 1.04, s1: 1.0, x0: -10, x1: 20 },   // the yellow bloom, upper right
+  title: { y0: -2330, y1: -2200, s0: 1.0, s1: 1.05, x0: 30, x1: -20 }, // the orange and yellow blooms lower down
+};
+
+window.render = (t) => {
+  t = ((t % T.end) + T.end) % T.end;
+  const inTitle = t >= T.title;
+
+  // Background: one shot for the mark, a hard cut to another band for the title
+  const sh = inTitle ? SHOTS.title : SHOTS.mark, k = inTitle ? (t - T.title) / (T.end - T.title) : t / T.title;
+  bg.style.transform = `translate(${lerp(sh.x0, sh.x1, k)}px, ${lerp(sh.y0, sh.y1, k)}px) scale(${lerp(sh.s0, sh.s1, k)})`;
+  gg.putImageData(GRAIN[Math.floor(t * 30) % 4], 0, 0);
+
+  // Mark: big, then a jump cut to small that keeps settling
+  show(mark, !inTitle);
+  if (t < T.small) mark.style.transform = `scale(${lerp(1, .985, t / T.small)})`;
+  else if (!inTitle) mark.style.transform = `scale(${lerp(.5, .38, easeOut((t - T.small) / (T.title - T.small)))})`;
+
+  // Title: the dot waits, types, holds, deletes back to the dot
+  show(type, inTitle);
+  if (inTitle) {
+    let n = 0;
+    if (t < T.del) n = typedAt.filter((s) => t >= s).length;
+    else n = Math.max(0, TITLE.length - Math.floor((t - T.del) / delStep) - 1);
+    txt.textContent = TITLE.slice(0, n);
+    dot.classList.toggle("solo", n === 0);
+  }
+};
+
+(async () => {
+  await document.fonts.ready;
+  await bg.decode();
+  // Paint the full title once so its glyphs are cached before the first typed frame is captured
+  const frame = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  window.render(T.del - .5); await frame(); await frame();
+  window.render(0);
+  window.__ready = true;
+})();
+</script>
+</body>
+</html>

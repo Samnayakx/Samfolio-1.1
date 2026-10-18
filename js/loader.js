@@ -4,7 +4,18 @@
   // Apply the saved theme before first paint so the loader (and page) start in the right mode
   try {
     const saved = localStorage.getItem("theme");
-    document.documentElement.dataset.theme = saved || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.dataset.theme = saved || "dark";
+  } catch (e) {}
+  // Page transition: arriving from another page of the site, start under a black cover; site.js lifts it and plays the entrance
+  try {
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const h = document.documentElement, c = document.createElement("div");
+      c.className = "pt-cover"; document.body.appendChild(c);
+      if (sessionStorage.getItem("pt")) h.classList.add("pt-in");
+      h.classList.add("pt-pending");
+      setTimeout(() => h.classList.remove("pt-pending", "pt-in"), 4000);   // never leave content hidden
+    }
+    sessionStorage.removeItem("pt");
   } catch (e) {}
   const NS = "http://www.w3.org/2000/svg";
   const RX = 228, RY = 118, R = 50, N = 12, STEP = 360 / N;

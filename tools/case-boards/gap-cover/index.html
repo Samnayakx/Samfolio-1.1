@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Gap 3D Fit cover</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=block" rel="stylesheet" />
+<style>
+  :root { --paper:#F3F2EE; --ink:#1B1B1A; --grey:#6C6D6A; --grey-2:#9C9D99; --line:rgba(27,27,26,.09); --denim:#003664; --cream:#FEFBF2; --snug:#C2841A; --true:#3F8F6B; --relax:#2F6FB0;
+    --serif:"Outfit",system-ui,sans-serif; --sans:"Outfit",system-ui,sans-serif; --mono:"Geist Mono",ui-monospace,monospace;
+    --shadow:0 0 0 1px rgba(27,27,26,.07), 0 30px 60px -20px rgba(40,50,70,.4), 0 8px 18px -10px rgba(40,50,70,.22); }
+  * { box-sizing:border-box; }
+  html, body { margin:0; width:1920px; height:1080px; overflow:hidden; }
+  body { font:400 16px/1.4 var(--sans); color:var(--ink); -webkit-font-smoothing:antialiased; }
+  #stage { position:relative; width:1920px; height:1080px; overflow:hidden; background:#C9CAC6; }
+  .bg { position:absolute; inset:-20%; }
+  .bg--base { background:linear-gradient(180deg,#9096CA 0%,#C788A8 48%,#F2815F 80%,#F45220 100%); }
+  .bg--glow { background:radial-gradient(38% 45% at 50% 50%, rgba(255,255,255,.35), transparent 70%); mix-blend-mode:soft-light; }
+  .bg--glow2 { background:radial-gradient(35% 40% at 50% 50%, rgba(255,255,255,.55), transparent 70%); }
+  .layer { position:absolute; left:0; top:0; will-change:transform,opacity; }
+  .mono { font-family:var(--mono); text-transform:uppercase; letter-spacing:.06em; }
+
+  .cta { display:inline-flex; align-items:center; gap:22px; height:132px; padding:0 64px; background:var(--denim); color:#fff; border-radius:10px; font:600 58px/1 var(--serif); letter-spacing:-.01em; box-shadow:0 30px 60px -18px rgba(20,25,35,.5), 0 10px 20px -10px rgba(20,25,35,.3); white-space:nowrap; }
+  .cta svg { width:46px; height:46px; }
+  .tag { display:inline-flex; align-items:center; gap:12px; padding:10px 18px; border-radius:6px; background:rgba(254,251,242,.92); box-shadow:0 0 0 1px var(--line); font-size:18px; color:var(--denim); }
+  .tag i { width:9px; height:9px; border-radius:50%; background:var(--denim); box-shadow:0 0 0 4px rgba(47,75,122,.2); }
+
+  .real { display:block; border-radius:14px; background:#fff; box-shadow:0 0 0 1px rgba(0,54,100,.08), 0 30px 50px -20px rgba(60,20,40,.5); }
+  .card { width:430px; padding:26px 30px; background:#fff; border-radius:10px; box-shadow:var(--shadow); }
+  .card .k { display:block; font:500 14px/1 var(--mono); color:var(--grey); text-transform:uppercase; letter-spacing:.08em; margin-bottom:14px; }
+  .card strong { display:block; font:400 54px/1 var(--serif); letter-spacing:-.02em; color:var(--denim); }
+  .card small { display:block; margin-top:10px; font:400 19px/1.3 var(--sans); color:var(--grey); }
+  .pill { display:inline-flex; align-items:center; height:30px; padding:0 12px; border-radius:4px; font:500 14px var(--mono); text-transform:uppercase; letter-spacing:.05em; margin-right:8px; }
+  .pill.snug { background:#F7EBD2; color:#8A5A07; } .pill.true { background:#DDEFE6; color:#27704E; } .pill.relax { background:#DCE8F5; color:#1F5A94; } .pill.opt { background:#EEEEEA; color:var(--grey); }
+
+  /* phone */
+  .phone { position:relative; width:360px; height:740px; border-radius:50px; background:#fff; box-shadow:0 0 0 10px #1B1B1A, 0 0 0 12px #3a3a38, 0 40px 70px -18px rgba(30,40,60,.5); overflow:hidden; }
+  .phone::before { content:""; position:absolute; top:13px; left:50%; width:104px; height:28px; margin-left:-52px; border-radius:16px; background:#1B1B1A; z-index:5; }
+  .scr { position:absolute; inset:0; padding:56px 26px 26px; display:flex; flex-direction:column; }
+  .scr .k { display:block; font:500 12px/1 var(--mono); color:var(--grey); text-transform:uppercase; letter-spacing:.09em; }
+  .scr h4 { margin:10px 0 6px; font:400 31px/1.12 var(--serif); } .scr p { margin:0 0 22px; font:400 15px/1.4 var(--sans); color:var(--grey); }
+  .btn { display:inline-flex; align-items:center; justify-content:center; height:52px; border-radius:4px; background:var(--ink); color:#fff; font:500 17px var(--sans); margin-top:auto; }
+  .picker { position:relative; height:240px; background:var(--paper); border-radius:8px; display:flex; flex-direction:column; align-items:center; justify-content:center; font:400 21px/2.1 var(--sans); color:var(--grey-2); overflow:hidden; }
+  .picker b { font:400 50px/1.2 var(--serif); color:var(--ink); } .picker::after { content:""; position:absolute; left:26px; right:26px; top:92px; height:56px; border-top:1px solid #C9CAC6; border-bottom:1px solid #C9CAC6; }
+  .chips { display:flex; flex-wrap:wrap; gap:10px; } .chipx { display:grid; place-items:center; min-width:54px; height:48px; padding:0 14px; border-radius:4px; box-shadow:inset 0 0 0 1px #C9CAC6; font:500 18px var(--sans); }
+  .chipx.on { background:var(--ink); color:#fff; box-shadow:none; }
+  .hint { margin-top:22px; padding:16px 18px; border-radius:6px; background:#DCE4F1; font:500 15px/1.4 var(--sans); color:var(--denim); }
+  .res { display:flex; align-items:center; gap:20px; margin:12px 0 10px; } .res strong { font:400 78px/1 var(--serif); color:var(--denim); letter-spacing:-.02em; } .res span { display:block; font:500 15px var(--sans); color:var(--grey); }
+  .zr { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-top:1px solid var(--line); font:500 17px var(--sans); } .zr:first-of-type { border-top:0; }
+  .dots { display:flex; gap:6px; justify-content:center; margin-top:14px; } .dots i { width:7px; height:7px; border-radius:50%; background:#D3D4D0; } .dots i.on { background:var(--ink); width:20px; border-radius:4px; }
+
+  .stat { display:flex; align-items:center; gap:28px; width:540px; height:184px; padding:0 36px; background:#fff; border-radius:12px; box-shadow:var(--shadow); }
+  .stat strong { display:block; font:600 72px/1 var(--serif); letter-spacing:-.02em; color:var(--denim); } .stat > div > span { display:block; margin-top:10px; font:400 22px/1.25 var(--sans); color:var(--grey); }
+  .stat__icon { flex:0 0 auto; display:grid; place-items:center; width:96px; height:96px; border-radius:50%; background:var(--denim); color:#fff; } .stat__icon svg { width:44px; height:44px; display:block; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="bg bg--base"></div><div class="bg bg--glow" id="glow"></div><div class="bg bg--glow2" id="glow2"></div>
+
+  <div class="layer" id="tag"><span class="tag mono"><i></i>3D Fit · from Drapr to Gap Inc.</span></div>
+  <div class="layer" id="cta"><span class="cta">Find my size <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h13m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.8"/></svg></span></div>
+
+  <div class="layer" id="s1"><img class="real" src="src/step1-height.jpg" style="width:520px" /></div>
+  <div class="layer" id="s2"><img class="real" src="src/toggle-waist.jpg" style="width:300px" /></div>
+  <div class="layer" id="s3"><img class="real" src="src/customize-phone.jpg" style="width:330px" /></div>
+  <div class="layer" id="s4"><img class="real" src="src/why-popup.jpg" style="width:520px" /></div>
+
+  <div class="layer" id="phone"><img class="real" id="finder" src="src/quickfit-finder.jpg" style="width:1080px" /></div>
+  <div class="layer" id="tg"><img class="real" src="src/fit-toggles.jpg" style="height:560px" /></div>
+
+  <div class="layer" id="d1"><div class="stat"><span class="stat__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 17 10 11l4 4 6-8M15 7h5v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><strong>+61%</strong><span>add-to-bag, A/B tested</span></div></div></div>
+  <div class="layer" id="d2"><div class="stat"><span class="stat__icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.5v4.8l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span><div><strong>120M+</strong><span>fit and AI uses at Gap</span></div></div></div>
+  <div class="layer" id="d3"><div class="stat"><span class="stat__icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="6" width="10" height="13" rx="2" stroke="currentColor" stroke-width="1.7"/><rect x="15.5" y="4" width="5" height="15" rx="2.5" stroke="currentColor" stroke-width="1.7"/></svg></span><div><strong>Web + iOS</strong><span>shipped on both</span></div></div></div>
+</div>
+
+<script>
+  const DUR = 8;
+  const $ = (id) => document.getElementById(id);
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const seg = (t, a, b) => clamp((t - a) / (b - a));
+  const outCubic = (p) => 1 - Math.pow(1 - p, 3);
+  const inOut = (p) => (p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
+  const outBack = (p) => { const c = 1.4; return 1 + (c + 1) * Math.pow(p - 1, 3) + c * Math.pow(p - 1, 2); };
+  const lerp = (a, b, p) => a + (b - a) * p;
+  const sizes = {};
+  const place = (id, cx, cy, { s = 1, o = 1, r = 0, blur = 0 } = {}) => {
+    const el = $(id), sz = sizes[id] || (sizes[id] = [el.offsetWidth, el.offsetHeight]);
+    el.style.transform = `translate(${cx - sz[0] / 2}px, ${cy - sz[1] / 2}px) scale(${s}) rotate(${r}deg)`;
+    el.style.transformOrigin = "50% 50%"; el.style.opacity = o;
+    el.style.filter = blur > 0.05 ? `blur(${blur}px)` : "none"; el.style.visibility = o <= 0.001 ? "hidden" : "visible";
+  };
+  const life = (t, a, b, fi = .5, fo = .35) => Math.min(outCubic(seg(t, a, a + fi)), 1 - seg(t, b - fo, b));
+
+  window.render = (t) => {
+    const w = (2 * Math.PI * t) / DUR;
+    $("glow").style.transform = `translate(${Math.sin(w) * 90 + 200}px, ${Math.cos(w) * 50}px)`;
+    $("glow2").style.transform = `translate(${-Math.cos(w) * 120 - 260}px, ${Math.sin(w) * 60 - 260}px)`;
+
+    // A: the action, pressed, then shrunk (0 – 2.2s)
+    const aIn = outCubic(seg(t, .05, 1.0)), press = Math.sin(Math.PI * seg(t, 1.25, 1.55)) * .045, toB = inOut(seg(t, 1.75, 2.35)), ctaOut = 1 - seg(t, 3.85, 4.15);
+    place("cta", 960, 540, { s: lerp(1.32 - .32 * aIn, .5, toB) - press, o: Math.min(aIn, ctaOut), blur: (1 - aIn) * 10 });
+    place("tag", 960, 380 - (1 - aIn) * 18, { o: Math.min(outCubic(seg(t, .35, 1.0)), 1 - seg(t, 1.75, 2.1)) });
+
+    // B: the four steps drift past (1.9 – 4.2s)
+    [["s1", 470, 320, 120, -2.0, 1.95], ["s2", 1470, 290, 70, 1.6, 2.05], ["s3", 540, 790, 150, 1.4, 2.15], ["s4", 1440, 770, 95, -1.3, 2.25]].forEach(([id, x, y, drift, rot, a]) => {
+      const p = seg(t, a, 4.3), o = life(t, a, 4.2, .55, .4), e = outCubic(seg(t, a, a + .7));
+      place(id, x, y + 70 * (1 - e) - drift * p, { s: lerp(1.0, 1.08, e), o, r: rot * (1 - p * .6), blur: (1 - e) * 6 });
+    });
+
+    // C: the real QuickFit finder, then the fit descriptors slide in (4.0 – 6.45s)
+    const cIn = outCubic(seg(t, 4.0, 4.65)), cOut = seg(t, 6.15, 6.5), tgIn = outCubic(seg(t, 5.0, 5.6));
+    place("phone", lerp(960, 640, tgIn), 560 + 40 * (1 - cIn) - 14 * seg(t, 4.0, 6.5), { s: lerp(1.08, 1, cIn) * lerp(1, .8, tgIn) - .03 * cOut, o: Math.min(cIn, 1 - cOut), blur: (1 - cIn) * 8 + cOut * 6 });
+    place("tg", 1470 + 60 * (1 - tgIn), 560 - 14 * seg(t, 5.0, 6.5), { s: 1, o: Math.min(tgIn, 1 - cOut), blur: cOut * 6 });
+
+    // D: numbers rise, then the frame clears for the loop (6.3 – 8.0s)
+    [["d1", 380], ["d2", 960], ["d3", 1540]].forEach(([id, x], i) => {
+      const a = 6.35 + i * .1, e = outCubic(seg(t, a, a + .6)), o = Math.min(e, 1 - seg(t, 7.55, 7.9));
+      place(id, x, 560 + 90 * (1 - e) - 20 * seg(t, a, 8), { o, s: lerp(.95, 1, e), blur: (1 - e) * 6 });
+    });
+  };
+  document.fonts.ready.then(() => { window.render(0); window.__ready = true; });
+</script>
+</body>
+</html>

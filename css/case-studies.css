@@ -147,8 +147,8 @@ body[data-page="case"] { --greyscale-200: 216 216 216; --greyscale-700: 133 133 
    wide track for the hero, prototypes and wide figures; hairlines between sections.
    ════════════════════════════════════════════════════════════════════ */
 .study {
-  --st-ac: #B7471D; --st-ink: var(--sec-fg); --st-muted: var(--sec-muted); --st-line: rgb(var(--greyscale-black) / .06);
-  --st-panel: rgb(var(--greyscale-100)); --st-tile: rgb(var(--greyscale-white));
+  --st-ac: #B7471D; --st-ink: var(--sec-fg); --st-muted: var(--sec-muted); --st-line: rgb(var(--ink-warm) / .08);
+  --st-panel: rgb(var(--cream-2)); --st-tile: rgb(var(--cream));
   --st-ease: cubic-bezier(.23, 1, .32, 1);
   display: grid; grid-template-columns: minmax(180px, 1fr) minmax(0, 922px) minmax(0, 1fr); column-gap: var(--space-6);
 }

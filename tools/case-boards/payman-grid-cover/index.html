@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Payman grid cover</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=block" rel="stylesheet" />
+<style>
+  /* Six tiles, two rows, thick black gutters. Each tile keeps its own loop. */
+  :root {
+    --paper: #F3F3F0; --paper-2: #E9E9E5; --ink: #171717; --black: #0B0B0B; --grey: #6F6F6C; --grey-2: #9A9A96;
+    --teal: #0E3D42; --teal-2: #17595E; --teal-3: #2F8A8C; --cyan: #66D6CC; --mauve: #D4B3CA; --yellow: #F4FF45;
+    --line: rgba(23, 23, 23, .1);
+    --serif: "Newsreader", "Times New Roman", serif; --sans: "Geist", system-ui, sans-serif; --mono: "Geist Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+  body { font: 400 20px/1.3 var(--sans); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  #stage { display: grid; grid-template-columns: repeat(3, 624px); grid-template-rows: repeat(2, 522px); gap: 12px; padding: 12px; width: 1920px; height: 1080px; background: #000; }
+  .tile { position: relative; overflow: hidden; border-radius: 4px; background: var(--paper); }
+  .abs { position: absolute; }
+  .mono { font-family: var(--mono); text-transform: uppercase; letter-spacing: .06em; }
+  .tag { position: absolute; left: 28px; top: 24px; font: 500 15px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--grey); }
+
+  /* 1 · Request */
+  .t1 .b { position: absolute; padding: 18px 24px; border-radius: 8px; font: 400 30px/1.25 var(--sans); }
+  #t1u { right: 36px; top: 128px; background: var(--teal); color: #fff; }
+  #t1u .g { visibility: hidden; }
+  #t1bd, #t1bt { left: 36px; top: 258px; background: var(--paper-2); color: var(--ink); }
+  #t1bd { display: flex; gap: 8px; padding: 26px 28px; } #t1bd i { width: 10px; height: 10px; border-radius: 50%; background: var(--grey-2); }
+  #t1c { position: absolute; left: 36px; top: 368px; padding: 12px 18px; border-radius: 6px; background: #fff; box-shadow: inset 0 0 0 1px var(--line); font: 500 22px/1 var(--mono); color: var(--teal-2); }
+
+  /* 3 · Action */
+  #t3b { position: absolute; left: 92px; top: 186px; width: 440px; height: 112px; display: flex; align-items: center; justify-content: center; gap: 16px; border-radius: 6px; color: #fff; font: 400 42px/1 var(--serif); letter-spacing: -.01em; white-space: nowrap; }
+  #t3b svg { width: 32px; height: 32px; }
+  #t3d { position: absolute; left: 0; right: 0; top: 348px; display: flex; justify-content: center; gap: 18px; } #t3d i { width: 14px; height: 14px; border-radius: 50%; background: #d4d4cf; }
+  #t3c { position: absolute; left: 0; top: 0; width: 34px; height: 34px; filter: drop-shadow(0 4px 6px rgba(0,0,0,.25)); }
+  .t3 .tag { left: auto; right: 28px; }
+
+  /* 4 · Payments table */
+  .t4 { background: var(--mauve); }
+  .card4 { position: absolute; inset: 20px; border-radius: 6px; background: #fff; padding: 16px 24px 0; }
+  .card4 .hd { display: grid; grid-template-columns: 1fr 130px 156px; height: 48px; align-items: center; font: 500 15px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--grey); }
+  .card4 .hd span:nth-child(2) { text-align: right; }
+  .row4 { display: grid; grid-template-columns: 1fr 130px 156px; align-items: center; height: 70px; border-top: 1px solid var(--line); font: 400 22px/1 var(--sans); }
+  .row4 b { text-align: right; font: 500 20px/1 var(--mono); font-variant-numeric: tabular-nums; }
+  .chip4 { justify-self: end; min-width: 132px; padding: 8px 0; text-align: center; border-radius: 4px; font: 500 14px/1 var(--mono); letter-spacing: .05em; text-transform: uppercase; }
+  .tot4 { position: absolute; left: 24px; right: 24px; bottom: 0; display: flex; justify-content: space-between; align-items: center; height: 60px; border-top: 1px solid var(--ink); font: 600 22px/1 var(--sans); } .tot4 b { font: 500 22px/1 var(--mono); }
+
+  /* 6 · Approval */
+  .t6 { background: var(--teal-2); }
+  .card6 { position: absolute; left: 48px; top: 78px; width: 528px; height: 366px; padding: 40px 36px; border-radius: 6px; background: #fff; box-shadow: 0 18px 40px -14px rgba(0,0,0,.4); }
+  .card6 .mono { font: 500 16px/1 var(--mono); letter-spacing: .08em; color: var(--grey); }
+  .card6 p { margin: 18px 0 32px; font: 400 30px/1.25 var(--sans); }
+  #t6c { display: flex; gap: 12px; } #t6c b { display: grid; place-items: center; width: 64px; height: 80px; border-radius: 4px; background: var(--paper); font: 500 38px/1 var(--mono); box-shadow: inset 0 0 0 1px var(--line); }
+  #t6ok { position: absolute; right: 28px; top: 28px; display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px; border-radius: 6px; background: #E3F2EF; color: var(--teal-2); font: 500 22px/1 var(--sans); } #t6ok svg { width: 22px; height: 22px; }
+
+  /* 8 · Systems */
+  .t8 { background: #141414; color: #fff; }
+  .t8 h3 { position: absolute; left: 32px; top: 28px; margin: 0; font: 400 44px/1.08 var(--serif); letter-spacing: -.015em; }
+  .t8 svg { position: absolute; left: 0; top: 0; width: 624px; height: 522px; }
+  .node8 { position: absolute; display: flex; align-items: center; justify-content: center; height: 46px; border-radius: 5px; background: #1f1f1f; box-shadow: inset 0 0 0 1.5px #3a3a3a; font: 500 15px/1 var(--mono); letter-spacing: .04em; text-transform: uppercase; color: #cfcfcb; white-space: nowrap; }
+
+  /* 9 · Audit log */
+  .card9 { position: absolute; left: 28px; right: 28px; top: 24px; bottom: 24px; border-radius: 6px; background: #fff; box-shadow: inset 0 0 0 1px var(--line); overflow: hidden; }
+  .bar9 { position: relative; height: 14px; background: #EEF0B0; } .bar9 i { position: absolute; inset: 0; background: var(--yellow); transform-origin: 0 50%; }
+  .card9 .hd { display: flex; justify-content: space-between; padding: 22px 28px 10px; font: 500 16px/1 var(--mono); letter-spacing: .07em; text-transform: uppercase; color: var(--grey); }
+  .li9 { display: flex; align-items: center; gap: 18px; height: 82px; padding: 0 28px; border-top: 1px solid var(--line); font: 400 26px/1 var(--sans); }
+  .cb9 { position: relative; flex: none; width: 28px; height: 28px; border-radius: 4px; box-shadow: inset 0 0 0 2px #c9c9c4; } .cb9 i { position: absolute; inset: 0; border-radius: 4px; background: var(--teal-2); } .cb9 svg { position: absolute; inset: 4px; width: 20px; height: 20px; }
+  .ft9 { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; height: 52px; align-items: center; padding: 0 28px; background: var(--paper); font: 500 18px/1 var(--mono); color: var(--teal-2); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <section class="tile t1"><span class="tag">01 · Request</span>
+    <div class="b" id="t1u"><span id="t1uv"></span><span class="g" id="t1ug"></span></div>
+    <div class="b" id="t1bd"><i></i><i></i><i></i></div>
+    <div class="b" id="t1bt">I found 5 payments due.</div>
+    <div id="t1c">5 payments · $12,480.00</div>
+  </section>
+
+  <section class="tile t4"><div class="card4">
+    <div class="hd"><span>Payee</span><span>Amount</span><span style="text-align:right">Status</span></div>
+    <div class="row4"><span>Granite Property Mgmt</span><b>$3,850.00</b><i class="chip4"></i></div>
+    <div class="row4"><span>Atlas Freight Co.</span><b>$2,918.75</b><i class="chip4"></i></div>
+    <div class="row4"><span>Beacon Insurance</span><b>$2,787.25</b><i class="chip4"></i></div>
+    <div class="row4"><span>Beacon Utilities</span><b>$1,684.00</b><i class="chip4"></i></div>
+    <div class="row4"><span>Acme Office Supply</span><b>$1,240.00</b><i class="chip4"></i></div>
+    <div class="tot4"><span>Total</span><b>$12,480.00</b></div>
+  </div></section>
+
+  <section class="tile t6"><div class="card6">
+    <span class="mono">03 · Approval required</span>
+    <p>Enter the code we sent to your phone.</p>
+    <div id="t6c"><b></b><b></b><b></b><b></b><b></b><b></b></div>
+    <div id="t6ok"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Approved</div>
+  </div></section>
+
+  <section class="tile t3"><span class="tag">02 · Policy</span>
+    <div id="t3b">Meet your agent <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h13m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.8"/></svg></div>
+    <div id="t3d"><i></i><i></i><i></i><i></i></div>
+    <svg id="t3c" viewBox="0 0 24 24"><path d="M5 3.5 19.5 10l-6.2 1.7L10.6 18 5 3.5Z" fill="#171717" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
+  </section>
+
+  <section class="tile t8"><h3>Inside your<br>own systems.</h3>
+    <svg id="t8s" viewBox="0 0 624 522"></svg>
+  </section>
+
+  <section class="tile t9"><div class="card9">
+    <div class="bar9"><i id="t9b"></i></div>
+    <div class="hd"><span>04 · Audit log</span><span id="t9n">0 / 4</span></div>
+    <div class="li9"><span class="cb9"><i></i><svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.5 4.5L19 7.5" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Requested</div>
+    <div class="li9"><span class="cb9"><i></i><svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.5 4.5L19 7.5" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Policy checked</div>
+    <div class="li9"><span class="cb9"><i></i><svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.5 4.5L19 7.5" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Approved</div>
+    <div class="li9"><span class="cb9"><i></i><svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.5 4.5L19 7.5" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Logged</div>
+    <div class="ft9"><span>5 payments</span><span>$12,480.00</span></div>
+  </div></section>
+</div>
+
+<script>
+  // Every frame is a pure function of t (seconds). Each tile has its own loop and every loop divides 8s, so the cover repeats cleanly.
+  const $ = (id) => document.getElementById(id);
+  const q = (s, r = document) => [...r.querySelectorAll(s)];
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const seg = (t, a, b) => clamp((t - a) / (b - a));
+  const out = (p) => 1 - Math.pow(1 - p, 3);
+  const inOut = (p) => (p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
+  const lerp = (a, b, p) => a + (b - a) * p;
+  const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+  const mix = (a, b, p) => { const x = hex(a), y = hex(b); return `rgb(${x.map((v, i) => Math.round(lerp(v, y[i], p))).join(",")})`; };
+
+  // ── 1 · Request: a message types itself, the agent answers ──
+  const MSG = "Pay all my vendors for the month.";
+  const t1 = (t) => {
+    const n = Math.floor(seg(t, .35, 2.5) * MSG.length), k = 1 - seg(t, 7.35, 7.85);
+    $("t1uv").textContent = MSG.slice(0, n); $("t1ug").textContent = MSG.slice(n);
+    const u = $("t1u"); u.style.opacity = Math.min(out(seg(t, .2, .45)), k);
+    const dots = $("t1bd"), txt = $("t1bt");
+    const dIn = out(seg(t, 2.75, 3.0)), dOut = seg(t, 3.5, 3.7);
+    dots.style.opacity = Math.min(dIn, 1 - dOut) * k;
+    q("i", dots).forEach((d, i) => (d.style.transform = `translateY(${-5 * Math.max(0, Math.sin((t - 2.8) * 9 - i * .9))}px)`));
+    const e = out(seg(t, 3.55, 3.95));
+    txt.style.opacity = e * k; txt.style.transform = `translateY(${(1 - e) * 10}px)`;
+    const c = out(seg(t, 4.4, 4.8)); $("t1c").style.opacity = c * k; $("t1c").style.transform = `translateY(${(1 - c) * 10}px)`;
+  };
+
+  // ── 3 · Action: a cursor presses, the button changes colour, the step dot moves on ──
+  const CT = [["#171717", "#fff"], ["#17595E", "#fff"], ["#D4B3CA", "#171717"], ["#2F8A8C", "#fff"]];
+  const t3 = (t) => {
+    const ph = Math.floor(t / 2) % 4, u = (t % 2) / 2, prev = (ph + 3) % 4;
+    const sw = out(seg(u, .38, .52));
+    const bg = mix(CT[prev][0], CT[ph][0], sw);
+    const fg = mix(CT[prev][1], CT[ph][1], sw);
+    const b = $("t3b"), press = Math.sin(Math.PI * seg(u, .33, .5)) * .045;
+    b.style.background = bg; b.style.color = fg; b.style.transform = `scale(${1 - press})`;
+    const cIn = out(seg(u, .0, .3)), cOut = seg(u, .66, .86);
+    const cx = lerp(560, 430, cIn) + lerp(0, 40, cOut), cy = lerp(460, 250, cIn) + lerp(0, 30, cOut);
+    const c = $("t3c"); c.style.transform = `translate(${cx}px, ${cy}px) scale(${1 - press * 1.4})`; c.style.opacity = Math.min(seg(u, 0, .08), 1 - cOut);
+    q("i", $("t3d")).forEach((d, i) => { const on = i === ph, was = i === prev; const e = on ? sw : was ? 1 - sw : 0; d.style.background = mix("#d4d4cf", "#17595E", e); d.style.transform = `scale(${1 + .45 * e})`; });
+  };
+
+  // ── 4 · Payments: each row walks Requested, Checked, Approved, Logged ──
+  const ST = [["Requested", "#EEEDE9", "#6F6F6C"], ["Checked", "#E8D5E2", "#6E3F61"], ["Approved", "#DDEFEC", "#17595E"], ["Logged", "#171717", "#FFFFFF"]];
+  const rows4 = q(".row4"), chips4 = q(".chip4");
+  const t4 = (t) => {
+    const reset = inOut(seg(t, 7.3, 7.9));
+    rows4.forEach((r, i) => {
+      const s = clamp(Math.floor((t - .6 - i * .42) / .55), 0, 3), idx = reset > .5 ? 0 : s;
+      const c = chips4[i], d = ST[idx], since = (t - .6 - i * .42) - s * .55, pop = idx === s && s > 0 && reset < .5 ? Math.sin(Math.PI * clamp(since / .3)) * .1 : 0;
+      c.textContent = d[0]; c.style.background = d[1]; c.style.color = d[2]; c.style.transform = `scale(${1 + pop})`;
+      r.style.background = idx > 0 && idx < 3 && reset < .5 ? "rgba(212,179,202,.16)" : "transparent";
+    });
+  };
+
+  // ── 6 · Approval: the code arrives digit by digit, then the check ──
+  const CODE = "742903", boxes6 = q("#t6c b");
+  const t6 = (t) => {
+    const k = 1 - seg(t, 7.35, 7.85);
+    boxes6.forEach((b, i) => { const on = t > 1.4 + i * .17 && k > .02; b.textContent = on ? CODE[i] : ""; b.style.opacity = k < 1 ? Math.max(k, 0) : 1; b.style.transform = on ? `scale(${1 + .12 * Math.sin(Math.PI * clamp((t - 1.4 - i * .17) / .2))})` : "none"; });
+    const e = out(seg(t, 3.0, 3.35));
+    const ok = $("t6ok"); ok.style.opacity = e * k; ok.style.transform = `scale(${lerp(.85, 1, e)})`;
+  };
+
+  // ── 8 · Systems: money moves between the agent and the bank's own systems ──
+  const NODES = [["Core banking", 36, 220, "l"], ["Digital banking", 36, 390, "l"], ["Voice", 412, 220, "r"], ["Text", 412, 390, "r"]];
+  const C8 = { x: 312, y: 328, w: 148, h: 52 };
+  const svg8 = $("t8s"), NS = "http://www.w3.org/2000/svg";
+  const lines8 = [], dots8 = [], nodes8 = [];
+  {
+    NODES.forEach(([name, x, y, side], i) => {
+      const nw = 176, ax = side === "l" ? x + nw : x, ay = y + 23, bx = side === "l" ? C8.x - C8.w / 2 : C8.x + C8.w / 2, by = C8.y;
+      const mid = (ax + bx) / 2, p = document.createElementNS(NS, "path");
+      p.setAttribute("d", `M${ax} ${ay} C${mid} ${ay} ${mid} ${by} ${bx} ${by}`); p.setAttribute("fill", "none"); p.setAttribute("stroke", "#3a3a3a"); p.setAttribute("stroke-width", "2"); svg8.appendChild(p); lines8.push(p);
+      const d = document.createElementNS(NS, "circle"); d.setAttribute("r", "6"); d.setAttribute("fill", "#66D6CC"); svg8.appendChild(d); dots8.push(d);
+      const n = document.createElement("div"); n.className = "node8"; n.textContent = name; n.style.cssText += `left:${x}px;top:${y}px;width:${nw}px`; $("t8s").parentElement.appendChild(n); nodes8.push(n);
+    });
+    const c = document.createElement("div"); c.className = "node8"; c.textContent = "Payman"; c.style.cssText += `left:${C8.x - C8.w / 2}px;top:${C8.y - C8.h / 2}px;width:${C8.w}px;height:${C8.h}px;background:#fff;color:#0E3D42;font-weight:600;box-shadow:none`; $("t8s").parentElement.appendChild(c);
+  }
+  const t8 = (t) => lines8.forEach((p, i) => {
+    const len = p.getTotalLength(), u = (t / 2 + i * .25) % 1, e = inOut(seg(u, .05, .7)), sends = i < 2;
+    const pt = p.getPointAtLength(len * (sends ? e : 1 - e));
+    dots8[i].setAttribute("cx", pt.x); dots8[i].setAttribute("cy", pt.y);
+    dots8[i].style.opacity = Math.min(seg(u, .05, .12), 1 - seg(u, .68, .75));
+    const g = sends ? 1 - seg(u, .05, .3) : seg(u, .62, .72) * (1 - seg(u, .8, .98));
+    nodes8[i].style.boxShadow = `inset 0 0 0 1.5px ${mix("#3a3a3a", "#66D6CC", g)}`; nodes8[i].style.color = mix("#cfcfcb", "#66D6CC", g);
+  });
+
+  // ── 9 · Audit log: four boxes tick, a yellow bar fills ──
+  const li9 = q(".li9");
+  const t9 = (t) => {
+    const un = inOut(seg(t, 7.2, 7.8)); let n = 0;
+    li9.forEach((li, i) => {
+      const e = out(seg(t, .6 + i * .75, .6 + i * .75 + .3)) * (1 - un); n += e;
+      li.querySelector(".cb9 i").style.opacity = e; li.querySelector("svg").style.opacity = e; li.querySelector(".cb9 i").style.transform = `scale(${lerp(.6, 1, e)})`;
+    });
+    $("t9b").style.transform = `scaleX(${n / 4})`; $("t9n").textContent = `${Math.round(n)} / 4`;
+  };
+
+  window.render = (t) => { t = ((t % 8) + 8) % 8; t1(t); t3(t); t4(t); t6(t); t8(t); t9(t); };
+  document.fonts.ready.then(() => { window.render(0); window.__ready = true; });
+</script>
+</body>
+</html>

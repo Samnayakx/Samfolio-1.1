@@ -587,7 +587,7 @@ const PROJECTS = [
     title: "Payman AI: rebranding an agentic banking site for institutional trust.",
     desc: "Payman had agents that move real money and a first screen that read as a friendly startup. Audited the site as a bank buyer, rebuilt the brand around control, and fixed the usability that got in the way.",
     seo: "Payman AI case study: I audited an agentic banking site as a bank buyer, rebuilt the brand around control and trust, and fixed the usability issues in the way.",
-    metric: { value: "4", label: "Steps from question to payment, each one logged" }, thumb: { video: "/assets/images/payman-case/video-payman-cover.mp4", poster: "/assets/images/payman-case/video-payman-cover-poster.jpg", alt: "Payman AI cover: the Meet your agent action, the four control steps, a bank chat paying five vendors after approval, and the key numbers", navPoster: "/assets/images/payman-case/video-payman-cover-poster.jpg", bleed: true }, slug: "payman-ai", href: "/work/payman-ai", tint: ["#3C9A98", "#C6E6DF", "#86C6C0"],
+    metric: { value: "4", label: "Steps from question to payment, each one logged" }, thumb: { video: "/assets/images/payman-case/video-payman-cover.mp4", poster: "/assets/images/payman-case/video-payman-cover-poster.jpg", alt: "Payman AI cover: a six-tile grid of loops: a request typed to the agent, a payments table moving through Requested, Checked, Approved and Logged, an approval code, the Meet your agent action, the agent connected to a bank's systems, and the audit log", navPoster: "/assets/images/payman-case/video-payman-cover-poster.jpg", bleed: true }, slug: "payman-ai", href: "/work/payman-ai", tint: ["#3C9A98", "#C6E6DF", "#86C6C0"],
     cs: {
       meta: [["Role", "Brand and Web Designer, end to end"], ["Timeline", "2026"], ["Format", "Portfolio redesign of paymanai.com, solo"], ["Skills", "Brand audit, positioning, visual identity, web design, front-end build"]],
       sections: [
@@ -844,7 +844,7 @@ const setTheme = (t) => {
 };
 let saved = null;
 try { saved = localStorage.getItem("theme"); } catch (e) {}
-setTheme(saved || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+setTheme(saved || "dark");
 themeBtn.addEventListener("click", () => setTheme(root.dataset.theme === "dark" ? "light" : "dark"));
 
 // ── Contact details (replace the placeholders with your own) ──
@@ -949,11 +949,18 @@ MENUS.forEach((m) => {
   });
   const group = m.tab.closest(".navgroup");
   let t;
-  group.addEventListener("mouseenter", () => {
+  // Hover opens a menu only from its own tab, so passing over the theme icon or a plain link does not pop a panel
+  group.addEventListener("mouseenter", () => clearTimeout(t));
+  m.tab.addEventListener("mouseenter", () => {
     if (!finePointer.matches || getComputedStyle(m.tab).display === "none") return;
     clearTimeout(t);
     if (openMenu?.tab !== m.tab) { setOpen(m, true); openedByHover = true; }
   });
+  // Plain links and icons in the group (About, Writing, Playground, the clock, the theme icon) close a menu that hover opened
+  group.querySelectorAll(".seg__item:not([aria-controls]):not(.seg__brand), .seg .icon-btn").forEach((n) => n.addEventListener("mouseenter", () => {
+    if (!finePointer.matches || !openMenu || !openedByHover || openMenu.tab.closest(".navgroup") !== group) return;
+    clearTimeout(t); setOpen(openMenu, false); openedByHover = false;
+  }));
   group.addEventListener("mouseleave", () => {
     if (!finePointer.matches || openMenu?.tab !== m.tab) return;
     t = setTimeout(() => { if (openMenu?.tab === m.tab) setOpen(m, false); }, 180);
@@ -2013,6 +2020,9 @@ function openLightbox(src, alt, opener) {
       { code: "INT-15", title: "Empty Sessions", status: "Interaction · Empty state", area: "Dev tools", tag: "interaction", demo: "emptySessions", bg: "#0C0C0C", dark: true, ptr: "none",
         scope: "An empty state with some life in it: the windows fan out on hover, the pixel glyphs drift against the pointer, and clicking the stack shuffles it.",
         hint: "Move the pointer over the card, hover a glyph, and click the stack of windows.", tags: ["Empty state", "Parallax", "Pixel art"] },
+      { code: "INT-16", title: "Trade Ticket", status: "Interaction · Flow", area: "Fintech · Trading", tag: "interaction", demo: "tradeTicket", bg: "#000000", dark: true, ptr: "none", wide: true, tall: true,
+        scope: "Placing a stock order in three steps. Set the entry zone against the day's volume, tune the stop and the target on one pad, then review and hold to send. Each finished step folds into a line you can reopen.",
+        hint: "Pick an order type and drag the zone handles, step the share count, confirm, then drag the puck for stop and target. Hold the last button to place the order.", tags: ["Flow", "Controls", "Hold to confirm"] },
       { code: "BRAND-01", title: "Veyra: Hero", status: "Branding · Hero", area: "AI infrastructure", tag: "branding", image: "/assets/images/playground/veyra-hero.jpg", alt: "Veyra launch hero: a dark panel with the headline For ideas beyond the obvious, a pixel-dot butterfly and a Start creating button, set on a collage of mountain photos, code and torn lilac paper.", bg: "#E4DFD2", wide: true,
         scope: "A launch hero for Veyra, AI infrastructure for agents. A dark panel sits on a collage of mountains, code and torn paper, with a pixel-dot butterfly as the mark.", tags: ["Branding", "Hero", "Collage"] },
       { code: "BRAND-02", title: "Veyra: Poster", status: "Branding · Poster", area: "AI infrastructure", tag: "branding", image: "/assets/images/playground/veyra-poster.jpg", alt: "Veyra poster: a torn dark panel with the headline The engine behind your next idea and a lilac line-drawn butterfly, beside a strip of code symbols on mint paper.", bg: "#C9DDD3",
@@ -2056,6 +2066,7 @@ function openLightbox(src, alt, opener) {
         });
       }
       if (it.wide) li.classList.add("lab__tile--wide");
+      if (it.tall) li.classList.add("lab__tile--tall");
       li.append(bottom);
       const open = el("button", "lab__cover"); open.type = "button"; open.setAttribute("aria-label", `Open ${it.title}`);
       li.appendChild(open);
@@ -2336,4 +2347,119 @@ function openLightbox(src, alt, opener) {
     mount.replaceChildren(toc, main); // replaces the prerendered copy (tools/prerender-case-studies.cjs) on hydrate
     if (location.hash) { const t = document.getElementById(location.hash.slice(1)); if (t) requestAnimationFrame(() => t.scrollIntoView({ block: "start" })); }
   }
+})();
+
+// ── Motion, after bymonolog.com: fade-to-black page transitions, headlines rising line by line out of masks,
+//    supporting copy and media arriving in order, and section headings and case tiles revealing on scroll ──
+(() => {
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const html = document.documentElement;
+  const cover = document.querySelector(".pt-cover") || document.body.appendChild(Object.assign(document.createElement("div"), { className: "pt-cover" }));
+  const done = (el, cls, ms) => setTimeout(() => el.classList.remove(...cls), ms);   // hand elements back to their own styles once revealed
+  if (reduced) { html.classList.remove("pt-pending", "pt-in"); return; }
+
+  // Wrap each word in a mask, leaving links and other inline markup where they are
+  const split = (el) => {
+    if (!el.dataset.split) {
+      const walk = (node) => [...node.childNodes].forEach((n) => {
+        if (n.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach((p) => {
+            if (!p) return;
+            if (/^\s+$/.test(p)) { frag.append(p); return; }
+            const w = document.createElement("span"), i = document.createElement("span");
+            w.className = "w"; i.textContent = p; w.append(i); frag.append(w);
+          });
+          n.replaceWith(frag);
+        } else if (n.nodeType === 1 && !n.matches("svg, img, br, .w")) walk(n);
+      });
+      walk(el); el.dataset.split = "1";
+    }
+    // Words on the same line move together; each line follows the one above
+    const words = [...el.querySelectorAll(".w")], tops = [];
+    words.forEach((w) => { const t = w.offsetTop; let li = tops.findIndex((x) => Math.abs(x - t) < 6); if (li < 0) { tops.push(t); li = tops.length - 1; } w.firstChild.style.setProperty("--d", `${li * 80}ms`); });
+    return el;
+  };
+  const showHeading = (el, delay = 0) => {
+    split(el).classList.add("rvh");
+    requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(() => el.classList.add("in"), delay)));
+  };
+  const inView = (el) => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight && r.width > 0; };
+
+  // ── Entrance: headline first, then the copy around it in page order, media, and the nav last ──
+  const LEAD = ".eyebrow, .welcome, .intro__about, .intro .btn, .status, .about-intro__lede, .facts, .portrait, .work__eyebrow, .work__sub, .chips, .study__crumb, .study__eyebrow, .study__lead, .study__meta";
+  const enter = (fromNav) => {
+    const h1 = document.querySelector("main h1, .study__head h1");
+    if (h1 && inView(h1)) showHeading(h1);
+    let k = 0;
+    document.querySelectorAll(LEAD).forEach((el) => {
+      if (!inView(el)) return;
+      el.classList.add("rvf"); el.style.setProperty("--d", `${140 + k++ * 70}ms`);
+      requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add("in")));
+      done(el, ["rvf", "in"], 1800 + k * 70);
+    });
+    document.querySelectorAll(".study__hero").forEach((el) => { if (inView(el)) media([el], 260); });
+    if (fromNav) {
+      const nav = document.querySelectorAll(".header .seg");
+      nav.forEach((el, i) => { el.classList.add("rvf", "rvf--down"); el.style.setProperty("--d", `${380 + i * 60}ms`); requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add("in"))); done(el, ["rvf", "rvf--down", "in"], 1700); });
+    }
+  };
+
+  // ── Media rise out of a mask, a little zoomed, and settle ──
+  const media = (els, base = 0) => els.forEach((el, i) => {
+    el.classList.add("rvm"); el.style.setProperty("--d", `${base + i * 100}ms`);
+    requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add("in")));
+    done(el, ["rvm", "in"], 1700 + base + i * 100);
+  });
+
+  // ── Scroll: section headings and case tiles reveal as they arrive ──
+  const scrollReveal = () => {
+    const heads = [...document.querySelectorAll(".work__title, .study__t, .cs__label h2, .post__title")].filter((h) => !h.closest("main h1") && h.tagName !== "H1");
+    const tiles = [...document.querySelectorAll(".case__tile, .lockcard__tile")];
+    // A tile clipped to nothing never counts as visible, so each tile is watched through its unclipped parent
+    const holder = new Map();
+    const io = new IntersectionObserver((entries) => {
+      const batch = [];
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        if (holder.has(e.target)) batch.push(holder.get(e.target)); else e.target.classList.add("in");
+      });
+      if (batch.length) media(batch);
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+    heads.forEach((h) => { if (inView(h)) showHeading(h, 320); else { split(h).classList.add("rvh"); io.observe(h); } });
+    tiles.forEach((t) => { if (inView(t)) return; t.classList.add("rvm"); holder.set(t.parentElement, t); io.observe(t.parentElement); });
+  };
+
+  // ── Page transitions: same-site links fade the page to black, then navigate ──
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest("a[href]");
+    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (a.target && a.target !== "_self" || a.hasAttribute("download")) return;
+    const url = new URL(a.href, location.href);
+    if (url.origin !== location.origin || !/^https?:$/.test(url.protocol)) return;
+    if (url.pathname === location.pathname && url.search === location.search) return;   // in-page anchors scroll as before
+    e.preventDefault();
+    cover.classList.add("is-on");
+    try { sessionStorage.setItem("pt", "1"); } catch (err) {}
+    setTimeout(() => (location.href = url.href), 330);
+  });
+  // Coming back through the back button restores the page as it was left; lift the cover
+  addEventListener("pageshow", (e) => { if (e.persisted) { cover.classList.remove("is-on"); html.classList.remove("pt-in", "pt-pending"); } });
+
+  const start = () => {
+    const fromNav = html.classList.contains("pt-in");
+    enter(fromNav);
+    scrollReveal();
+    html.classList.remove("pt-pending");   // everything that animates is in its start state now
+    if (fromNav) {
+      // Arriving from another page: the cover is already black; lift it as the headline starts to rise
+      cover.classList.add("is-lift"); html.classList.remove("pt-in");
+      setTimeout(() => cover.classList.remove("is-lift"), 600);
+    }
+  };
+  // Wait briefly for web fonts so lines split where they will settle, but never hold the black cover for long
+  const ready = Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise((r) => setTimeout(r, 350))]);
+  if (document.getElementById("loader")) addEventListener("loader:done", () => ready.then(start), { once: true });
+  else ready.then(start);
 })();

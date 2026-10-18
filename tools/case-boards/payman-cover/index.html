@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Payman cover</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=block" rel="stylesheet" />
+<style>
+  :root {
+    --paper: #F3F3F0; --paper-2: #E9E9E5; --ink: #171717; --black: #0B0B0B; --grey: #6F6F6C; --grey-2: #9A9A96;
+    --teal: #0E3D42; --teal-2: #17595E; --teal-3: #2F8A8C; --cyan: #66D6CC; --mauve: #D4B3CA; --yellow: #F4FF45;
+    --line: rgba(23, 23, 23, .09);
+    --serif: "Newsreader", "Times New Roman", serif; --sans: "Geist", system-ui, sans-serif; --mono: "Geist Mono", ui-monospace, monospace;
+    --shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 0 0 1px var(--line), 0 24px 48px -12px rgba(14, 61, 66, .22), 0 6px 14px -6px rgba(14, 61, 66, .12);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; }
+  body { font: 400 16px/1.4 var(--sans); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #A9D6CF; }
+  .bg { position: absolute; inset: -20%; }
+  .bg--base { background: linear-gradient(180deg, #6FB9B2 0%, #9CD0C9 38%, #CFE7E2 72%, #EEF5F2 100%); }
+  .bg--glow { background: radial-gradient(40% 45% at 50% 50%, rgba(212, 179, 202, .55), transparent 70%); mix-blend-mode: soft-light; }
+  .bg--glow2 { background: radial-gradient(35% 40% at 50% 50%, rgba(255, 255, 255, .55), transparent 70%); }
+  .layer { position: absolute; left: 0; top: 0; will-change: transform, opacity; }
+  .mono { font-family: var(--mono); text-transform: uppercase; letter-spacing: .06em; }
+
+  /* Scene A: the primary action */
+  .cta { display: inline-flex; align-items: center; gap: 22px; height: 132px; padding: 0 64px; background: var(--black); color: #fff; border-radius: 6px; font: 400 64px/1 var(--serif); letter-spacing: -.015em; box-shadow: 0 30px 60px -18px rgba(11, 11, 11, .45), 0 10px 20px -10px rgba(11, 11, 11, .3); white-space: nowrap; }
+  .cta svg { width: 44px; height: 44px; }
+  .tag { display: inline-flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 4px; background: rgba(243, 243, 240, .72); box-shadow: 0 0 0 1px var(--line); font-size: 18px; color: var(--teal); }
+  .tag i { width: 9px; height: 9px; border-radius: 50%; background: var(--teal-3); box-shadow: 0 0 0 4px rgba(47, 138, 140, .2); }
+
+  /* Scene B: the four process sheets */
+  .sheet { width: 400px; padding: 0 26px 24px; background: #fff; border-radius: 6px; box-shadow: var(--shadow); overflow: hidden; }
+  .sheet .bar { display: block; height: 12px; margin: 0 -26px 20px; }
+  .bar--teal { background: var(--teal-2); } .bar--mauve { background: var(--mauve); } .bar--yellow { background: var(--yellow); } .bar--ink { background: var(--black); }
+  .sheet b { display: block; font: 500 14px/1 var(--mono); color: var(--grey); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 12px; }
+  .sheet span { display: block; font: 400 25px/1.25 var(--serif); color: var(--ink); margin-bottom: 14px; }
+  .sheet u { display: block; height: 8px; margin-top: 10px; background: var(--paper-2); } .sheet u.short { width: 58%; }
+  .sheet em { display: inline-flex; align-items: center; gap: 8px; font: 500 16px var(--mono); font-style: normal; color: var(--teal-2); }
+  .sheet .code { display: flex; gap: 8px; }
+  .sheet .code s { display: grid; place-items: center; width: 40px; height: 48px; text-decoration: none; background: var(--paper); font: 500 21px var(--mono); }
+
+  /* Scene C: the chat in the bank's own app */
+  .browser { width: 820px; background: #fff; border-radius: 10px; box-shadow: var(--shadow); overflow: hidden; }
+  .browser__bar { display: flex; align-items: center; gap: 8px; height: 52px; padding: 0 20px; background: var(--paper); border-bottom: 1px solid var(--line); }
+  .browser__bar i { width: 12px; height: 12px; border-radius: 50%; background: #D9D9D4; }
+  .browser__bar span { margin: 0 auto; padding: 6px 18px; border-radius: 4px; background: #fff; box-shadow: 0 0 0 1px var(--line); font: 400 15px var(--sans); color: var(--grey); transform: translateX(-24px); }
+  .chat { display: flex; flex-direction: column; gap: 18px; padding: 28px 30px 30px; }
+  .bubble { max-width: 86%; padding: 16px 20px; border-radius: 6px; font: 400 19px/1.35 var(--sans); }
+  .bubble--user { align-self: flex-end; background: var(--teal); color: #fff; }
+  .bubble--bot { align-self: flex-start; width: 74%; background: var(--paper); color: var(--ink); }
+  .bubble--bot p { margin: 0 0 12px; }
+  .rows { position: relative; }
+  .row { position: relative; display: flex; justify-content: space-between; padding: 9px 12px; font: 400 17px var(--sans); border-top: 1px solid var(--line); }
+  .row b { font: 500 16px var(--mono); letter-spacing: 0; }
+  .row--total { font-weight: 600; }
+  .row--total b { font-weight: 600; }
+  .hl { position: absolute; left: 0; right: 0; height: 42px; border-radius: 4px; background: rgba(47, 138, 140, .12); box-shadow: inset 0 0 0 1.5px var(--teal-3); }
+  .hl em { position: absolute; right: -36px; top: 50%; transform: translate(100%, -50%); padding: 6px 10px; border-radius: 4px; background: var(--teal-3); color: #fff; font: 500 14px var(--mono); font-style: normal; text-transform: uppercase; letter-spacing: .06em; white-space: nowrap; }
+  .approve { padding: 18px 20px; border-radius: 6px; box-shadow: inset 0 0 0 1px var(--line); }
+  .approve .mono { font-size: 13px; color: var(--grey); }
+  .approve p { margin: 6px 0 12px; font: 400 17px var(--sans); }
+  .approve .code { display: flex; gap: 10px; }
+  .approve .code b { display: grid; place-items: center; width: 46px; height: 54px; background: var(--paper); border-radius: 3px; font: 500 24px var(--mono); }
+  .done { align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 6px; background: #E3F2EF; color: var(--teal-2); font: 500 18px var(--sans); }
+
+  /* Scene D: the numbers */
+  .stat { display: flex; align-items: center; gap: 28px; width: 540px; height: 184px; padding: 0 36px; background: #fff; border-radius: 8px; box-shadow: var(--shadow); }
+  .stat__icon { flex: 0 0 auto; display: grid; place-items: center; width: 96px; height: 96px; border-radius: 50%; background: #DDEFEC; color: var(--teal-2); }
+  .stat__icon svg { display: block; width: 46px; height: 46px; }
+  .stat strong { display: block; font: 400 68px/1 var(--serif); letter-spacing: -.02em; color: var(--teal); }
+  .stat > div > span { display: block; margin-top: 10px; font: 400 22px/1.25 var(--sans); color: var(--grey); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="bg bg--base"></div>
+  <div class="bg bg--glow" id="glow"></div>
+  <div class="bg bg--glow2" id="glow2"></div>
+
+  <!-- A -->
+  <div class="layer" id="tag"><span class="tag mono"><i></i>Payman AI · Agentic banking</span></div>
+  <div class="layer" id="cta"><span class="cta">Meet your agent <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h13m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.6"/></svg></span></div>
+
+  <!-- B -->
+  <div class="layer" id="s1"><div class="sheet"><i class="bar bar--teal"></i><b>01 · Request</b><span>“Pay all my vendors for the month.”</span><u></u><u class="short"></u></div></div>
+  <div class="layer" id="s2"><div class="sheet"><i class="bar bar--mauve"></i><b>02 · Policy check</b><span>Limits · payee · amount</span><em>✓ Within policy</em></div></div>
+  <div class="layer" id="s3"><div class="sheet"><i class="bar bar--yellow"></i><b>03 · Approval required</b><span>Enter the code we sent to your phone.</span><div class="code"><s>7</s><s>4</s><s>2</s><s>9</s><s>0</s><s>3</s></div></div></div>
+  <div class="layer" id="s4"><div class="sheet"><i class="bar bar--ink"></i><b>04 · Audit log</b><span>5 payments · $12,480.00</span><u></u><u class="short"></u></div></div>
+
+  <!-- C -->
+  <div class="layer" id="browser"><div class="browser">
+    <div class="browser__bar"><i></i><i></i><i></i><span>🔒 yourbank.com</span></div>
+    <div class="chat">
+      <div class="bubble bubble--user" id="c-user">Pay all my vendors for the month.</div>
+      <div class="bubble bubble--bot" id="c-bot"><p>I found 5 payments due this month.</p>
+        <div class="rows" id="rows">
+          <div class="hl" id="hl"><em id="hl-tag">Within policy</em></div>
+          <div class="row"><span>Granite Property Mgmt</span><b>$3,850.00</b></div>
+          <div class="row"><span>Atlas Freight Co.</span><b>$2,918.75</b></div>
+          <div class="row"><span>Beacon Insurance</span><b>$2,787.25</b></div>
+          <div class="row"><span>Beacon Utilities</span><b>$1,684.00</b></div>
+          <div class="row"><span>Acme Office Supply</span><b>$1,240.00</b></div>
+          <div class="row row--total"><span>Total</span><b>$12,480.00</b></div>
+        </div>
+      </div>
+      <div class="approve" id="c-approve"><span class="mono">Approval required</span><p>Enter the code we sent to your phone.</p><div class="code" id="code"><b></b><b></b><b></b><b></b><b></b><b></b></div></div>
+      <div class="done" id="c-done">✓ Done. 5 payments sent.</div>
+    </div>
+  </div></div>
+
+  <!-- D -->
+  <div class="layer" id="d1"><div class="stat"><span class="stat__icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.6" stroke="currentColor" stroke-width="1.6"/><path d="M4.5 20c.9-3.6 3.9-5.6 7.5-5.6s6.6 2 7.5 5.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span><div><strong>55%</strong><span>take money questions to AI</span></div></div></div>
+  <div class="layer" id="d2"><div class="stat"><span class="stat__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v7a2.5 2.5 0 0 1-2.5 2.5H11l-4.5 4v-4A2.5 2.5 0 0 1 4 13.5v-7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span><div><strong>200M+</strong><span>ask ChatGPT about money</span></div></div></div>
+  <div class="layer" id="d3"><div class="stat"><span class="stat__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5 5 6.3v5.2c0 4.3 2.9 7.7 7 9 4.1-1.3 7-4.7 7-9V6.3l-7-2.8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m8.8 12 2.2 2.2 4.2-4.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><strong>4 steps</strong><span>every action logged</span></div></div></div>
+</div>
+
+<script>
+  // Every frame is a pure function of t (seconds), so the render is deterministic and loops cleanly.
+  const DUR = 8;
+  const $ = (id) => document.getElementById(id);
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const seg = (t, a, b) => clamp((t - a) / (b - a));
+  const outCubic = (p) => 1 - Math.pow(1 - p, 3);
+  const inOut = (p) => (p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
+  const outBack = (p) => { const c = 1.4; return 1 + (c + 1) * Math.pow(p - 1, 3) + c * Math.pow(p - 1, 2); };
+  const lerp = (a, b, p) => a + (b - a) * p;
+  const sizes = {};
+  const place = (id, cx, cy, { s = 1, o = 1, r = 0, blur = 0 } = {}) => {
+    const el = $(id), sz = sizes[id] || (sizes[id] = [el.offsetWidth, el.offsetHeight]);
+    el.style.transform = `translate(${cx - sz[0] / 2}px, ${cy - sz[1] / 2}px) scale(${s}) rotate(${r}deg)`;
+    el.style.transformOrigin = "50% 50%";
+    el.style.opacity = o;
+    el.style.filter = blur > 0.05 ? `blur(${blur}px)` : "none";
+    el.style.visibility = o <= 0.001 ? "hidden" : "visible";
+  };
+  // fade in over [a, a+fi], hold, fade out over [b-fo, b]
+  const life = (t, a, b, fi = .5, fo = .35) => Math.min(outCubic(seg(t, a, a + fi)), 1 - seg(t, b - fo, b));
+
+  window.render = (t) => {
+    // Background breathes on a full sine period, so frame 0 and frame N match
+    const w = (2 * Math.PI * t) / DUR;
+    $("glow").style.transform = `translate(${Math.sin(w) * 90}px, ${Math.cos(w) * 50}px)`;
+    $("glow2").style.transform = `translate(${-Math.cos(w) * 120 - 260}px, ${Math.sin(w) * 60 - 260}px)`;
+
+    // ── A: the primary action, large, then pressed (0 – 2.2s)
+    const aIn = outCubic(seg(t, .05, 1.0));
+    const press = Math.sin(Math.PI * seg(t, 1.25, 1.55)) * .045;
+    const toB = inOut(seg(t, 1.75, 2.35));            // shrinks into scene B's centre
+    const ctaOut = 1 - seg(t, 3.85, 4.15);
+    place("cta", 960, lerp(540, 540, toB), { s: lerp(1.32 - .32 * aIn, .52, toB) - press, o: Math.min(aIn, ctaOut), blur: (1 - aIn) * 10 });
+    place("tag", 960, lerp(400, 360, toB) - (1 - aIn) * 18, { o: Math.min(outCubic(seg(t, .35, 1.0)), 1 - seg(t, 1.75, 2.1)) });
+
+    // ── B: the four sheets drift past the action, at different speeds (1.9 – 4.2s)
+    const sheets = [["s1", 470, 330, 120, -2.2, 1.95], ["s2", 1460, 285, 70, 1.6, 2.05], ["s3", 560, 790, 150, 1.4, 2.15], ["s4", 1430, 760, 95, -1.2, 2.25]];
+    sheets.forEach(([id, x, y, drift, rot, a]) => {
+      const p = seg(t, a, 4.3), o = life(t, a, 4.2, .55, .4), e = outCubic(seg(t, a, a + .7));
+      place(id, x, y + 70 * (1 - e) - drift * p, { s: lerp(1.18, 1.26, e), o, r: rot * (1 - p * .6), blur: (1 - e) * 6 });
+    });
+
+    // ── C: the bank's own app does the work (4.0 – 6.45s)
+    const cIn = outCubic(seg(t, 4.0, 4.65)), cOut = seg(t, 6.15, 6.5);
+    place("browser", 960, 590 + 40 * (1 - cIn) - 30 * seg(t, 4.0, 6.5), { s: lerp(1.3, 1.22, cIn) - .03 * cOut, o: Math.min(cIn, 1 - cOut), blur: (1 - cIn) * 8 + cOut * 6 });
+    $("c-user").style.opacity = outCubic(seg(t, 4.2, 4.45));
+    $("c-bot").style.opacity = outCubic(seg(t, 4.4, 4.7));
+    // the policy check walks the rows, then settles on the total
+    const rs = [...document.querySelectorAll("#rows .row")];
+    const k = clamp((t - 4.75) / .17, 0, 5);
+    const hlIdx = Math.min(4, Math.floor(k)), hlFrac = k >= 5 ? 1 : inOut(k - Math.floor(k));
+    const pos = k >= 5 ? 5 : Math.floor(k) + hlFrac;
+    $("hl").style.top = `${lerp(rs[hlIdx].offsetTop, rs[hlIdx + 1].offsetTop, hlFrac)}px`;
+    $("hl").style.height = `${rs[0].offsetHeight}px`;
+    $("hl").style.opacity = Math.min(outCubic(seg(t, 4.7, 4.85)), 1);
+    $("hl-tag").textContent = pos >= 5 ? "Approve" : "Within policy";
+    $("hl-tag").style.opacity = outCubic(seg(t, 4.8, 4.95));
+    $("c-approve").style.opacity = outCubic(seg(t, 5.55, 5.75));
+    const digits = "742903";
+    [...$("code").children].forEach((b, i) => { b.textContent = t > 5.7 + i * .06 ? digits[i] : ""; });
+    const dn = outBack(seg(t, 6.05, 6.3));
+    $("c-done").style.opacity = seg(t, 6.05, 6.15);
+    $("c-done").style.transform = `scale(${lerp(.85, 1, dn)})`;
+
+    // ── D: the numbers rise in a row, then the frame clears for the loop (6.3 – 8.0s)
+    [["d1", 380], ["d2", 960], ["d3", 1540]].forEach(([id, x], i) => {
+      const a = 6.35 + i * .1, e = outCubic(seg(t, a, a + .6));
+      const o = Math.min(e, 1 - seg(t, 7.55, 7.9));
+      place(id, x, 560 + 90 * (1 - e) - 20 * seg(t, a, 8), { o, s: lerp(.95, 1, e), blur: (1 - e) * 6 });
+    });
+  };
+  document.fonts.ready.then(() => { window.render(0); window.__ready = true; });
+</script>
+</body>
+</html>

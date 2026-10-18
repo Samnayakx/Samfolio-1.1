@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8" />
+<title>Gap 3D Fit boards (real UI)</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=block" rel="stylesheet" />
+<style>
+:root { --navy:#003664; --cream:#FEFBF2; --ink:#12233a; --muted:#5b6b7f; }
+* { box-sizing:border-box; } body { margin:0; background:#fff; font:400 15px/1.4 "Outfit",system-ui,sans-serif; color:var(--ink); }
+/* Mat and card follow the original concept screens: purple to orange gradient, cream card, navy outlines. */
+.board { position:relative; width:1200px; padding:56px; background:linear-gradient(180deg,#9096CA 0%,#C27F9A 45%,#F45220 100%); }
+.card { background:var(--cream); border-radius:22px; padding:44px 48px 40px; }
+.eyebrow { font:600 13px/1 "Outfit"; letter-spacing:.14em; text-transform:uppercase; color:#4F7FB0; }
+.card h2 { margin:10px 0 28px; font:700 38px/1.1 "Outfit"; letter-spacing:-.01em; color:var(--navy); }
+.shot { display:block; border-radius:16px; box-shadow:0 0 0 1px rgba(0,54,100,.08), 0 14px 30px -14px rgba(0,54,100,.35); background:#fff; }
+.lab { margin-top:14px; font:600 19px/1.2 "Outfit"; color:var(--navy); } .lab small { display:block; margin-top:4px; font:400 14px/1.4 "Outfit"; color:var(--muted); }
+.n { display:inline-grid; place-items:center; width:26px; height:26px; margin-right:10px; border-radius:50%; background:var(--navy); color:#fff; font:600 13px "Outfit"; vertical-align:2px; }
+.row1 { display:flex; gap:44px; align-items:flex-end; } .row2 { display:flex; gap:28px; align-items:flex-end; margin-top:40px; }
+</style></head><body>
+<div class="board" id="b-flow"><div class="card">
+ <div class="eyebrow">The final flow</div><h2>Three short steps, then a size you can check.</h2>
+ <div class="row1">
+  <div><img class="shot" src="src/step1-height.jpg" style="width:600px" /><div class="lab"><span class="n">1</span>Baseline input<small>(1 of 3) How tall are you?</small></div></div>
+  <div><img class="shot" src="src/customize-phone.jpg" style="height:330px" /><div class="lab"><span class="n">2</span>Optional tuning<small>(3 of 3) Further customize your avatar</small></div></div>
+ </div>
+ <div class="row2">
+  <div><img class="shot" src="src/quickfit-finder.jpg" style="width:700px" /><div class="lab"><span class="n">3</span>Explainable fit<small>A size on the avatar, with fit by zone</small></div></div>
+  <div><img class="shot" src="src/fit-toggles.jpg" style="height:376px" /></div>
+ </div>
+</div></div>
+</body></html>

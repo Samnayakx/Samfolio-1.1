@@ -1026,7 +1026,289 @@
     return () => { f.stop(); stopLoop && stopLoop(); };
   }
 
-  const DEMOS = { boundingBox, segmentedNav, clouds, marketSelect, onboardingTour, apiKey, timelineScrub, glassSliders, podcastPlayer, composeBars, emptySessions };
+  const DEMOS = { boundingBox, segmentedNav, clouds, marketSelect, onboardingTour, apiKey, timelineScrub, glassSliders, podcastPlayer, composeBars, emptySessions, tradeTicket };
+
+  // ── 16 · Trade ticket: a three-step stock order (entry, risk, review) where only the open step is expanded ──
+  function tradeTicket(stage, { auto }) {
+    const EASE = "cubic-bezier(.23,1,.32,1)";
+    const CW = 496, PH = 200, NB = 56;
+    const SYM = "AAPL", BP = 24860, DL = 184.8, DH = 191.6;
+    const TYPES = ["Market", "Limit", "Stop limit"];
+    const TICK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="tt__ck" pathLength="1" d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
+    const MINUS = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 12h12"/></svg>';
+    const PLUS = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 12h12M12 6v12"/></svg>';
+    const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+    const comma = (s) => s.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const usd = (v, d = 2) => `${v < 0 ? "−" : ""}$${comma(Math.abs(v).toFixed(d))}`;
+    const sgn = (v, d = 1) => `${v < 0 ? "−" : "+"}${Math.abs(v).toFixed(d)}%`;
+    const zp = (z) => DL + z * (DH - DL);
+
+    const root = h("div", "tt");
+    const cv = h("div", "ix ix-tt");
+    cv.innerHTML = `
+      <header class="tt__top">
+        <span class="tt__ico"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l6-7 5 4 9-11"/><path d="M18 6h6v6"/></svg></span>
+        <div class="tt__who"><h4>${SYM} <i>Apple Inc.</i></h4><p>NASDAQ · market open · buying power ${usd(BP, 0)}</p></div>
+        <div class="tt__px"><b data-px>189.42</b><span data-chg>+1.82 (0.97%)</span></div>
+      </header>
+      <section class="tt__card" data-i="0" aria-label="Step 1, entry">
+        <header class="tt__head"><span class="tt__n"><em>1</em>${TICK}</span><div><h5>Entry</h5><p>How and where to buy</p></div><span class="tt__sum" data-sum></span><button class="tt__edit" type="button">Edit</button></header>
+        <div class="tt__fold"><div class="tt__fi"><div class="tt__body">
+          <div class="tt__cols">
+            <div class="tt__col">
+              <div class="tt__lab"><span>Order type</span></div>
+              <div class="tt__seg" role="radiogroup" aria-label="Order type"><i class="tt__thumb"></i>${TYPES.map((t, i) => `<button type="button" role="radio" data-t="${i}">${t}</button>`).join("")}</div>
+              <div class="tt__lab"><span>Quantity</span><em>shares</em></div>
+              <div class="tt__step"><button type="button" aria-label="Fewer shares" data-d="-1">${MINUS}</button><output><b data-q>25</b><u>sh</u></output><button type="button" aria-label="More shares" data-d="1">${PLUS}</button></div>
+              <div class="tt__cost"><div><b data-cost>$4,735.50</b><span>est. cost</span></div><div class="tt__meter"><i data-meter></i></div><p data-bp>19% of buying power</p></div>
+            </div>
+            <div class="tt__col tt__col--z" data-zone>
+              <div class="tt__lab"><span>Entry zone</span><strong data-win>$187.25 – $188.88</strong></div>
+              <div class="tt__hist" data-hist aria-hidden="true"><i class="tt__now" data-now></i></div>
+              <div class="tt__rng" data-rng>
+                <span class="tt__tk"></span><i class="tt__rf"></i>
+                <b class="tt__hd" data-h="lo" role="slider" tabindex="0" aria-label="Entry zone low" aria-valuemin="0" aria-valuemax="1"></b>
+                <b class="tt__hd" data-h="hi" role="slider" tabindex="0" aria-label="Entry zone high" aria-valuemin="0" aria-valuemax="1"></b>
+              </div>
+              <div class="tt__ax"><span>${DL.toFixed(2)}</span><span>volume at price, today</span><span>${DH.toFixed(2)}</span></div>
+              <p class="tt__mk">Market orders fill at the best price available, so there is no zone to set.</p>
+            </div>
+          </div>
+          <footer class="tt__foot"><p>Limit orders fill only at your price or better.</p><button class="tt__btn tt__btn--p" type="button" data-go="0">Confirm entry ${ARROW}</button></footer>
+        </div></div></div>
+      </section>
+      <section class="tt__card" data-i="1" aria-label="Step 2, risk">
+        <header class="tt__head"><span class="tt__n"><em>2</em>${TICK}</span><div><h5>Risk</h5><p>Stop loss and take profit</p></div><span class="tt__sum" data-sum></span><button class="tt__edit" type="button">Edit</button></header>
+        <div class="tt__fold"><div class="tt__fi"><div class="tt__body">
+          <div class="tt__cols">
+            <div class="tt__col">
+              <p class="tt__read"><b data-rr>1 : 2.5</b><span>risk / reward</span></p>
+              <div class="tt__pad" tabindex="0" role="group" aria-label="Stop loss and take profit. Left and right set the stop distance, up and down set the target. Use the arrow keys." data-pad>
+                <i class="tt__hy"></i><i class="tt__vx"></i><i class="tt__rk"></i><i class="tt__rw"></i>
+                <span class="tt__c tt__c--tl">bigger target</span><span class="tt__c tt__c--bl">tight stop</span><span class="tt__c tt__c--br">wide stop</span>
+                <span class="tt__puck"><i class="tt__halo"></i><i class="tt__dot"></i></span>
+              </div>
+            </div>
+            <div class="tt__col">
+              <div class="tt__stats">
+                <div><span>Stop loss</span><b class="is-dn" data-stop>$184.28</b><em data-stopp>−2.0%</em></div>
+                <div><span>Take profit</span><b class="is-up" data-tgt>$197.50</b><em data-tgtp>+5.0%</em></div>
+              </div>
+              <button class="tt__row" type="button" role="switch" aria-checked="true" data-sw="trail"><span><b>Trailing stop</b><em>follows the price up</em></span><i class="tt__sw"><i></i></i></button>
+              <button class="tt__row" type="button" role="switch" aria-checked="false" data-sw="gtc"><span><b>Good till cancelled</b><em>otherwise it ends today</em></span><i class="tt__sw"><i></i></i></button>
+            </div>
+          </div>
+          <footer class="tt__foot"><p data-risk>Max loss −$99.40 · potential gain +$248.00</p><button class="tt__btn tt__btn--p" type="button" data-go="1">Confirm risk ${ARROW}</button></footer>
+        </div></div></div>
+      </section>
+      <section class="tt__card" data-i="2" aria-label="Step 3, review and place">
+        <header class="tt__head"><span class="tt__n"><em>3</em>${TICK}</span><div><h5>Review and place</h5><p>Check it, then hold to send</p></div><span class="tt__sum" data-sum></span></header>
+        <div class="tt__fold"><div class="tt__fi"><div class="tt__body">
+          <div class="tt__rev">
+            <div class="tt__cols">
+              <dl class="tt__list" data-list></dl>
+              <div class="tt__col tt__col--t">
+                <p class="tt__lab2">Order total</p>
+                <p class="tt__total" data-total>$4,735.50</p>
+                <div class="tt__stats tt__stats--s">
+                  <div><span>Buying power after</span><b data-after>$20,124.50</b></div>
+                  <div><span>Risk / reward</span><b data-rr2>1 : 2.5</b></div>
+                </div>
+              </div>
+            </div>
+            <footer class="tt__foot"><p>Press and hold to place. Let go early to cancel.</p><button class="tt__btn tt__btn--p tt__btn--hold" type="button" data-place><i class="tt__fill"></i><span>Hold to place order</span></button></footer>
+          </div>
+          <div class="tt__ok" aria-live="polite">
+            <span class="tt__okc">${TICK}</span>
+            <h5>Order filled</h5>
+            <p class="tt__okm" data-fill></p>
+            <p class="tt__okn" data-oknote></p>
+            <button class="tt__btn" type="button" data-new>New order</button>
+          </div>
+        </div></div></div>
+      </section>`;
+    root.appendChild(cv); stage.appendChild(root);
+    const f = fit(stage, cv, 1120, 856, 0.94);
+    const $ = (s) => cv.querySelector(s);
+    const cards = [...cv.querySelectorAll(".tt__card")];
+
+    // ── State: S is where things should be, shown is where they are right now ──
+    const DEF = { sx: .333, sy: .636, zlo: .36, zhi: .6, qty: 25 };
+    const S = { ...DEF, type: 1, trail: true, gtc: false };
+    const shown = { ...DEF };
+    const KEYS = ["sx", "sy", "zlo", "zhi", "qty"], EPS = { sx: .0005, sy: .0005, zlo: .0005, zhi: .0005, qty: .05 };
+    const RATE = { sx: 13, sy: 13, zlo: 15, zhi: 15, qty: 18 };
+    let held = null, raf = 0, last = 0, price = 189.42, open = 189.42 - 1.82, seed = 7;
+    const rnd = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296);
+
+    const entryAt = (v, p = price) => (S.type === 0 ? p : S.type === 1 ? zp((v.zlo + v.zhi) / 2) : zp(v.zhi));
+    const stopPct = (v) => .5 + v.sx * 4.5, tgtPct = (v) => 1 + (1 - v.sy) * 11;
+    const calc = (v) => { const e = entryAt(v), q = Math.round(v.qty), sp = stopPct(v), tp = tgtPct(v); return { e, q, sp, tp, cost: e * q, stop: e * (1 - sp / 100), tgt: e * (1 + tp / 100), loss: e * q * sp / 100, gain: e * q * tp / 100, rr: tp / sp }; };
+
+    const bars = [], inWin = [];
+    const hist = $("[data-hist]"), nowEl = $("[data-now]");
+    const gauss = (u) => Math.exp(-(u * u) / 2);
+    for (let i = 0; i < NB; i++) {
+      const c = (i + .5) / NB, n = Math.sin(i * 12.9898 + 4.1) * 43758.5453, noise = n - Math.floor(n);
+      const b = h("i"); b.style.height = `${Math.round(8 + 108 * (gauss((c - .5) / .2) * .8 + gauss((c - .72) / .07) * .38) * (.8 + .32 * noise))}px`;
+      hist.insertBefore(b, nowEl); bars.push(b); inWin.push(false);
+    }
+    const pad = $("[data-pad]"), rng = $("[data-rng]"), zone = $("[data-zone]");
+    const puck = $(".tt__puck"), vx = $(".tt__vx"), hy = $(".tt__hy"), rk = $(".tt__rk"), rw = $(".tt__rw"), rf = $(".tt__rf");
+    const hLo = $('[data-h="lo"]'), hHi = $('[data-h="hi"]'), thumb = $(".tt__thumb"), segB = [...cv.querySelectorAll(".tt__seg button")];
+    const T = (sel, v) => { const e = $(sel); if (e.textContent !== v) e.textContent = v; };
+
+    const paint = () => {
+      const c = calc(shown);
+      const px = shown.sx * CW, py = shown.sy * PH;
+      puck.style.transform = `translate3d(${px}px, ${py}px, 0)`;
+      vx.style.transform = `translate3d(${px}px, 0, 0)`; hy.style.transform = `translate3d(0, ${py}px, 0)`;
+      rk.style.transform = `scaleX(${shown.sx})`; rw.style.transform = `scaleY(${1 - shown.sy})`;
+      hLo.style.transform = `translate3d(${shown.zlo * CW}px, 0, 0)`; hHi.style.transform = `translate3d(${shown.zhi * CW}px, 0, 0)`;
+      rf.style.transform = `translate3d(${shown.zlo * CW}px, 0, 0) scaleX(${Math.max(0, shown.zhi - shown.zlo)})`;
+      nowEl.style.transform = `translate3d(${clamp((price - DL) / (DH - DL), 0, 1) * CW}px, 0, 0)`;
+      for (let i = 0; i < NB; i++) { const on = (i + .5) / NB >= shown.zlo && (i + .5) / NB <= shown.zhi; if (on !== inWin[i]) { inWin[i] = on; bars[i].classList.toggle("is-in", on); } }
+      T("[data-win]", `${usd(zp(shown.zlo))} – ${usd(zp(shown.zhi))}`);
+      T("[data-q]", String(c.q)); T("[data-cost]", usd(c.cost));
+      $("[data-meter]").style.transform = `scaleX(${clamp(c.cost / BP, 0, 1)})`;
+      T("[data-bp]", c.cost > BP ? "Over your buying power" : `${Math.round(c.cost / BP * 100)}% of buying power`);
+      cards[0].classList.toggle("is-over", c.cost > BP);
+      T("[data-rr]", `1 : ${c.rr.toFixed(1)}`); T("[data-rr2]", `1 : ${c.rr.toFixed(1)}`);
+      T("[data-stop]", usd(c.stop)); T("[data-stopp]", sgn(-c.sp)); T("[data-tgt]", usd(c.tgt)); T("[data-tgtp]", sgn(c.tp));
+      T("[data-risk]", `Max loss ${usd(-c.loss)} · potential gain +${usd(c.gain)}`);
+      T("[data-total]", usd(c.cost)); T("[data-after]", usd(BP - c.cost));
+    };
+    const priceTxt = () => {
+      T("[data-px]", price.toFixed(2)); const d = price - open;
+      T("[data-chg]", `${d >= 0 ? "+" : "−"}${Math.abs(d).toFixed(2)} (${(Math.abs(d) / open * 100).toFixed(2)}%)`);
+      $(".tt__px").classList.toggle("is-dn", d < 0);
+    };
+    const aria = () => { hLo.setAttribute("aria-valuenow", S.zlo); hHi.setAttribute("aria-valuenow", S.zhi); pad.setAttribute("aria-valuetext", `Stop ${stopPct(S).toFixed(1)} percent, target ${tgtPct(S).toFixed(1)} percent`); };
+    const tick = (now) => {
+      const dt = Math.min(.05, (now - (last || now)) / 1000); last = now;
+      let busy = false;
+      for (const k of KEYS) {
+        const d = S[k] - shown[k], fast = held === k || (held === "pad" && (k === "sx" || k === "sy"));
+        if (reduce || Math.abs(d) <= EPS[k]) shown[k] = S[k]; else { shown[k] += d * (1 - Math.exp(-dt * RATE[k] * (fast ? 2 : 1))); busy = true; }
+      }
+      paint();
+      if (busy) raf = requestAnimationFrame(tick); else { raf = 0; last = 0; }
+    };
+    const kick = () => { aria(); if (!raf) raf = requestAnimationFrame(tick); };
+    const r3 = (v) => Math.round(v * 1000) / 1000;
+
+    // ── Step 1: entry ──
+    const setType = (i) => { S.type = i; segB.forEach((b, k) => b.setAttribute("aria-checked", k === i)); thumb.style.transform = `translateX(${i * 100}%)`; zone.classList.toggle("is-off", i === 0); hLo.tabIndex = hHi.tabIndex = i === 0 ? -1 : 0; kick(); };
+    segB.forEach((b, i) => b.addEventListener("click", () => setType(i)));
+    const setZone = (lo, hi) => { S.zlo = r3(clamp(lo, 0, .94)); S.zhi = r3(clamp(hi, S.zlo + .06, 1)); kick(); };
+    const offs = [];
+    let which = "lo";
+    offs.push(drag(rng, (e) => {
+      if (S.type === 0) return;
+      const b = rng.getBoundingClientRect(), v = (e.clientX - b.left) / b.width;
+      if (which === "lo") setZone(Math.min(v, S.zhi - .06), S.zhi); else setZone(S.zlo, Math.max(v, S.zlo + .06));
+    }, { onStart: (e) => { if (S.type === 0) return; const b = rng.getBoundingClientRect(), v = (e.clientX - b.left) / b.width; which = Math.abs(v - S.zlo) <= Math.abs(v - S.zhi) ? "lo" : "hi"; held = which === "lo" ? "zlo" : "zhi"; rng.classList.add("is-drag"); rng.dataset.on = which; },
+         onEnd: () => { held = null; rng.classList.remove("is-drag"); delete rng.dataset.on; kick(); } }));
+    [hLo, hHi].forEach((el) => el.addEventListener("keydown", (e) => {
+      const d = e.key === "ArrowRight" || e.key === "ArrowUp" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowDown" ? -1 : 0; if (!d) return;
+      e.preventDefault(); const st = d * (e.shiftKey ? .05 : .01);
+      if (el === hLo) setZone(Math.min(S.zlo + st, S.zhi - .06), S.zhi); else setZone(S.zlo, Math.max(S.zhi + st, S.zlo + .06));
+    }));
+    const qb = [...cv.querySelectorAll(".tt__step button")];
+    const bump = (d) => { S.qty = clamp(S.qty + d * (d && Math.abs(S.qty) >= 100 ? 10 : 5) * (S.qty === 1 && d > 0 ? 1 : 1), 5, 250); sync(); kick(); };
+    const sync = () => qb.forEach((b) => { b.disabled = (+b.dataset.d < 0 && S.qty <= 5) || (+b.dataset.d > 0 && S.qty >= 250); });
+    qb.forEach((b) => {
+      const d = +b.dataset.d; let t = 0;
+      const stop = () => { clearTimeout(t); t = 0; if (held === "qty") held = null; };
+      b.addEventListener("pointerdown", (e) => { if (e.button > 0 || b.disabled) return; bump(d); held = "qty"; t = setTimeout(function loop() { bump(d); if (b.disabled) return stop(); loop.gap = Math.max(40, (loop.gap || 120) - 10); t = setTimeout(loop, loop.gap); }, 380); });
+      ["pointerup", "pointerleave", "pointercancel", "blur"].forEach((ev) => b.addEventListener(ev, stop));
+      b.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); bump(d); } });
+    });
+
+    // ── Step 2: risk ──
+    const setPad = (x, y) => { S.sx = r3(clamp(x, 0, 1)); S.sy = r3(clamp(y, 0, 1)); kick(); };
+    offs.push(drag(pad, (e) => { const b = pad.getBoundingClientRect(); setPad((e.clientX - b.left) / b.width, (e.clientY - b.top) / b.height); },
+      { onStart: () => { held = "pad"; pad.classList.add("is-drag"); }, onEnd: () => { held = null; pad.classList.remove("is-drag"); kick(); } }));
+    pad.addEventListener("keydown", (e) => {
+      const st = e.shiftKey ? .1 : .02, m = { ArrowLeft: [-st, 0], ArrowRight: [st, 0], ArrowUp: [0, -st], ArrowDown: [0, st] }[e.key];
+      if (m) { e.preventDefault(); setPad(S.sx + m[0], S.sy + m[1]); } else if (e.key === "Home") { e.preventDefault(); setPad(DEF.sx, DEF.sy); }
+    });
+    const sw = {}; cv.querySelectorAll("[data-sw]").forEach((b) => { sw[b.dataset.sw] = b; b.addEventListener("click", () => toggleSw(b.dataset.sw)); });
+    const toggleSw = (k) => { S[k] = !S[k]; sw[k].setAttribute("aria-checked", S[k]); fillList(); };
+
+    // ── Flow: one open step at a time, finished steps fold to a summary ──
+    let step = 0, filled = false;
+    const setState = () => cards.forEach((c, i) => {
+      const st = filled || i < step ? "done" : i === step ? "active" : "locked";
+      c.dataset.s = st; c.querySelector(".tt__fi").inert = st !== "active" && !(i === 2 && filled);
+      c.querySelector(".tt__head").setAttribute("aria-expanded", st === "active" || (i === 2 && filled));
+    });
+    const fillList = () => {
+      const c = calc(S), ty = TYPES[S.type];
+      const rows = [["Action", `Buy ${c.q} ${SYM}`], ["Type", `${ty} · ${S.gtc ? "GTC" : "Day"}`], ["Entry", S.type === 0 ? `${usd(c.e)} at market` : usd(c.e)], ["Stop loss", `${usd(c.stop)} (${sgn(-c.sp)})`], ["Take profit", `${usd(c.tgt)} (${sgn(c.tp)})`], ["Trailing stop", S.trail ? "On" : "Off"]];
+      const dl = $("[data-list]"); dl.replaceChildren(); rows.forEach(([k, v]) => { const d = h("div"); d.append(h("dt", "", k), h("dd", "", v)); dl.append(d); });
+    };
+    const summaries = () => {
+      const c = calc(S);
+      cards[0].querySelector("[data-sum]").textContent = S.type === 0 ? `Market · ${c.q} sh` : `${TYPES[S.type]} · ${c.q} sh · ${usd(zp(S.zlo))}–${usd(zp(S.zhi))}`;
+      cards[1].querySelector("[data-sum]").textContent = `Stop ${sgn(-c.sp)} · Target ${sgn(c.tp)} · 1 : ${c.rr.toFixed(1)}`;
+    };
+    const setStep = (n) => { step = n; filled = false; cards[2].querySelector(".tt__head p").textContent = "Check it, then hold to send"; cv.querySelector(".tt__ok").parentElement.classList.remove("is-filled"); setState(); };
+    const confirm = (i) => { if (i === 0 && calc(S).cost > BP) return; summaries(); fillList(); setStep(i + 1); };
+    cv.querySelectorAll("[data-go]").forEach((b) => b.addEventListener("click", () => confirm(+b.dataset.go)));
+    cv.querySelectorAll(".tt__edit").forEach((b, i) => b.addEventListener("click", () => setStep(i)));
+
+    // Hold to place: a deliberate press fills slowly, letting go drains fast
+    const placeBtn = $("[data-place]"), body3 = cards[2].querySelector(".tt__body");
+    let holdT = 0;
+    const holdOn = () => { if (holdT || filled || step !== 2) return; placeBtn.classList.add("is-hold"); holdT = setTimeout(() => { holdT = 0; placeBtn.classList.remove("is-hold"); place(); }, 1200); };
+    const holdOff = () => { clearTimeout(holdT); holdT = 0; placeBtn.classList.remove("is-hold"); };
+    placeBtn.addEventListener("pointerdown", (e) => { if (e.button > 0) return; holdOn(); });
+    ["pointerup", "pointerleave", "pointercancel", "blur"].forEach((ev) => placeBtn.addEventListener(ev, holdOff));
+    placeBtn.addEventListener("keydown", (e) => { if ((e.key === "Enter" || e.key === " ") && !e.repeat) { e.preventDefault(); holdOn(); } });
+    placeBtn.addEventListener("keyup", (e) => { if (e.key === "Enter" || e.key === " ") holdOff(); });
+    const place = () => {
+      const c = calc(S), id = `#ORD-${48000 + Math.floor(rnd() * 900)}`;
+      $("[data-fill]").textContent = `${c.q} ${SYM} @ ${usd(c.e)}`;
+      $("[data-oknote]").textContent = `${id} · stop ${usd(c.stop)} and target ${usd(c.tgt)} are live${S.trail ? ", trailing" : ""}.`;
+      cards[2].querySelector("[data-sum]").textContent = `Filled · ${id}`;
+      cards[2].querySelector(".tt__head p").textContent = "Order sent";
+      filled = true; body3.classList.add("is-filled"); setState();
+    };
+    $("[data-new]").addEventListener("click", () => reset());
+    const reset = () => { Object.assign(S, { ...DEF, trail: true, gtc: false }); setType(1); Object.keys(sw).forEach((k) => sw[k].setAttribute("aria-checked", S[k])); sync(); kick(); body3.classList.remove("is-filled"); setStep(0); };
+
+    // A quiet price feed, only while the ticket is on screen
+    let feed = 0;
+    const startFeed = () => { if (feed) return; feed = setInterval(() => { price = clamp(price + (rnd() - .5) * .14, DL + .5, DH - .5); priceTxt(); if (!raf) paint(); }, 1500); };
+    const stopFeed = () => { clearInterval(feed); feed = 0; };
+    const ioFeed = new IntersectionObserver(([e]) => (e.isIntersecting ? startFeed() : stopFeed()), { threshold: .1 }); ioFeed.observe(root);
+
+    setType(1); sync(); fillList(); summaries(); setState(); priceTxt(); aria(); paint();
+
+    // ── Tile loop: place an order from start to finish ──
+    let stopLoop = null;
+    if (auto && !reduce) stopLoop = whileVisible(root, () => {
+      let on = true;
+      const go = async (ms, fn) => { if (!on) throw 0; fn && fn(); await wait(ms); };
+      (async () => {
+        await wait(1400);
+        try {
+          while (on) {
+            await go(1000, () => setType(1)); await go(800, () => setZone(.28, .52));
+            for (let i = 0; i < 3; i++) await go(260, () => bump(1));
+            await go(1000, () => setZone(.34, .6)); await go(900, () => confirm(0));
+            await go(1100, () => setPad(.2, .3)); await go(1000, () => setPad(.46, .18)); await go(800, () => toggleSw("gtc"));
+            await go(1000, () => confirm(1));
+            await go(500, () => { if (!holdT) { placeBtn.classList.add("is-hold"); } }); await go(1250, () => { placeBtn.classList.remove("is-hold"); place(); });
+            await go(3000); await go(900, reset);
+          }
+        } catch {}
+      })();
+      return () => { on = false; placeBtn.classList.remove("is-hold"); };
+    });
+    return () => { cancelAnimationFrame(raf); f.stop(); offs.forEach((o) => o()); clearTimeout(holdT); stopFeed(); ioFeed.disconnect(); stopLoop && stopLoop(); };
+  }
 
   // ── Overlay: opens over the board from a tile; arrows step through the board, Esc closes ──
   function openOverlay(items, start, opener) {
