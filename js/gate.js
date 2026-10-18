@@ -2,9 +2,11 @@
 // Note: this is a courtesy gate. It is client-side only and keeps casual visitors out, not determined ones.
 (() => {
   const LOCKED = { 2: "CotonAI Modes", 3: "CotonAI Design System", 6: "CotonAI Agent" };
+  const SLUGS = { "cotonai-modes": 2, "cotonai-design-system": 3, "cotonai-agent": 6 };
   const PASSCODE = "hello";
   const KEY = "samfolio-unlocked";
-  const id = parseInt(new URLSearchParams(location.search).get("case") || "1", 10);
+  const slug = location.pathname.replace(/\.html$/, "").split("/").filter(Boolean).pop();
+  const id = SLUGS[slug] || parseInt(new URLSearchParams(location.search).get("case") || "1", 10);
   const read = () => { try { return sessionStorage.getItem(KEY) === "1"; } catch { return false; } };
   const write = () => { try { sessionStorage.setItem(KEY, "1"); } catch {} };
   if (!LOCKED[id] || read()) return;

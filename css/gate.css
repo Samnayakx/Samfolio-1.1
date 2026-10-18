@@ -19,7 +19,7 @@ body[data-page="case"] .gate .gate__bg { filter: none; }
 .gate__card.is-shaking { animation: gate-shake .42s cubic-bezier(.36, .07, .19, .97); }
 @keyframes gate-shake { 10%, 90% { transform: translateX(-2px); } 20%, 80% { transform: translateX(4px); } 30%, 50%, 70% { transform: translateX(-7px); } 40%, 60% { transform: translateX(7px); } }
 
-.gate__label { margin: 0 0 14px; font: 400 12px/1 var(--font-mono, monospace); text-transform: uppercase; letter-spacing: .04em; color: #5c5c5a; display: flex; gap: 8px; align-items: center; }
+.gate__label { margin: 0 0 14px; font: 400 12px/1 var(--font-mono, monospace); text-transform: uppercase; letter-spacing: .04em; color: #4a4a48; display: flex; gap: 8px; align-items: center; }
 .gate__label::before { content: ""; width: 8px; height: 8px; background: #161616; border-radius: 1px; }
 .gate__title { margin: 0 0 6px; font: 400 32px/1.1 var(--font-serif, "Newsreader", serif); letter-spacing: -.01em; }
 .gate__hint { margin: 0 0 20px; font: 400 15px/1.45 var(--font-body, sans-serif); color: #4a4a48; }
