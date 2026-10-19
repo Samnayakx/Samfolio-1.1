@@ -21,6 +21,7 @@ const esc = (s) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g
   const slugs = [...fs.readFileSync(path.join(root, "js/site.js"), "utf8").matchAll(/slug: "([a-z0-9-]+)", href: "\/work\//g)].map((m) => m[1]);
   const tpl = fs.readFileSync(path.join(root, "case-study.html"), "utf8");
   const browser = await chromium.launch(), page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await page.addInitScript(() => { try { sessionStorage.setItem("samfolio-unlocked", "1"); } catch {} }); // the passcode gate would cover the locked studies
   fs.mkdirSync(path.join(root, "work"), { recursive: true });
   for (const slug of slugs) {
     await page.goto(`${base}/work/${slug}`, { waitUntil: "domcontentloaded" });

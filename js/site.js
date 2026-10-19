@@ -255,23 +255,39 @@ const PROJECTS = [
     cs: {
       meta: [["Role", "Product Designer (Apprentice)"], ["Timeline", "Aug 2025 – Apr 2026"], ["Skills", "Conversational UX, RAG workflows, power-user research, dashboard design"], ["Team", "Team of five with the Salesforce Trailhead product team"]],
       sections: [
-        { title: "Overview", statement: "Overview: built for the climb, and it loses experts at the top.",
+        { title: "Overview / Background", statement: "Overview: built for the climb, and it loses experts at the top.",
           text: ["Trailhead is Salesforce's free learning platform, taking millions of professionals from beginner to certified expert. The Trailhead product team brought us one question: why are the platform's most experienced users showing up less?",
             "What we found changed the brief: power users weren't unhappy with Trailhead. They were taking their hardest questions to ChatGPT. We ran it like a product bet: kill ideas fast, ship working software, test with real experts. This was a team of five; the research, prototype and media are shared work."],
           cards: [["Problem: Experts took their questions elsewhere.", "Salesforce's most experienced users were taking their questions to ChatGPT and Slack instead of Trailhead's own community, and between milestones, nothing gave them a reason to come back."], ["Solution: Answers, plus prompts.", "Plain-language answers to real Salesforce problems inside Trailhead, paired with proactive prompts that surface what's relevant next without being asked."], ["Outcome: 6/8", "Given the same Salesforce question, 6 of 8 power users preferred Solve over ChatGPT."]],
           media: [{ video: "/assets/images/trailhead/video-trailhead-promo-web.mp4", poster: "/assets/images/trailhead/video-trailhead-promo-web-poster.webp", alt: "Promo video for the Trailhead Solve project", cap: "Project promo" }] },
 
-        { title: "Insight", statement: "Insight: the certification path ended, and ChatGPT caught them on the way out.",
+        { title: "Defining the Problem", statement: "Problem: the certification path ended, and ChatGPT caught experts on the way out.",
           text: ["Salesforce's ecosystem runs on power users who answer questions, mentor newcomers and champion the platform. They weren't churning in anger. They were quietly drifting, and nothing on the platform noticed.",
-            "We reached 650+ professionals, qualified 72 power users and interviewed 12. A first round on opinion gave warm, useless answers, so we switched to behavior: where people drop off and where they go instead. Engagement fell exactly where certification ended, and between milestones experts took their questions to ChatGPT."],
-          stats: [["650+", "Reached across five regions"], ["72", "Qualified power users"], ["12", "Interviewed, two rounds"]],
+            "Engagement fell exactly where certification ended. Between milestones, experts took their hardest questions to ChatGPT instead.",
+            "That turned the brief from retention into re-engagement. The question we carried into every decision: how might Trailhead become the first place an expert goes when they're stuck, not only when they're studying?"],
           mediaLayout: "duo",
           media: [{ src: "/assets/images/trailhead/trailhead-user-journey.png", alt: "Diagram of the engaged state (trails, badges, certifications) and the disengaged state, where a user runs into a Salesforce issue and turns to ChatGPT, Claude or Google.", cap: "The journey: churn after certification, and the moment to win it back" }, { src: "/assets/images/trailhead/case-study-trailhead-5.webp", alt: "Graph comparing Trailhead engagement against the learner journey from certification to real-world problem solving.", cap: "Engagement against the learner journey" }],
+        },
+
+        { title: "Understanding your Users", statement: "Users: we reached 650+ power users and asked where they go instead.",
+          text: ["We reached 650+ professionals, qualified 72 power users and interviewed 12. A first round on opinion gave warm, useless answers, so we switched to behavior: where people drop off and where they go instead."],
+          stats: [["650+", "Reached across five regions"], ["72", "Qualified power users"], ["12", "Interviewed, two rounds"]],
           trades: [
             { n: "Findings", t: "Why experts left", rows: [["64% post-milestone", "Disengaged after major milestones like certifications."], ["45% workarounds", "Supplemented Trailhead with ChatGPT, YouTube and Slack."], ["45% depth", "Found the content too shallow for their experience."], ["36% personalization", "Were unhappy with the existing personalization."]] },
-            { n: "Reframe", t: "Re-engagement, not retention", rows: [["Question", "How might Trailhead become the first place an expert goes when they're stuck, not only when they're studying?"], ["Success metric", "Preference over ChatGPT on a real question, session duration, and drop-off after milestones."], ["Guardrail", "Protect Trailhead's warm, human brand. No AI speaking on behalf of a real person."]] },
           ] },
 
+        { title: "Your Role and Responsibilities", statement: "Role: product designer on a team of five, working inside Trailhead's product team.",
+          text: ["I was the Product Designer (Apprentice) on a team of five, working with the Salesforce Trailhead product team from August 2025 to April 2026.",
+            "The research, the prototype and the media were shared work. We designed in Figma against Trailhead's design system, then took it into working software with Figma MCP, Cursor and Claude Code, so each of us could test what we designed."],
+          cards: [["Product Designer (Apprentice)", "Conversational UX, RAG workflows, power-user research and dashboard design."], ["A team of five", "Worked alongside the Salesforce Trailhead product team."], ["Design to working code", "Figma, Figma MCP, Cursor and Claude Code, wired to OpenAI."]] },
+
+        { title: "Scope and Constraints", statement: "Constraints: public documentation only, a brand that can't be faked, and eight real experts.",
+          text: ["Proprietary Salesforce data and Agentforce were never on the table, so we built on OpenAI with curated public documentation and focused on proving the experience. Power users were scarce, so how we tested mattered as much as what we built."],
+          cards: [["Success metric", "Preference over ChatGPT on a real question, session duration, and drop-off after milestones."], ["Guardrail", "Protect Trailhead's warm, human brand. No AI speaking on behalf of a real person."], ["Limits: data and people", "Curated public documentation, not Salesforce's proprietary data or Agentforce, and only 8 real power users."]] },
+
+        { title: "Ideation Steps (The Solution)", statement: "Solution: kill two ideas on purpose, then ship the bet that held.",
+          text: ["We worked in three moves: kill the ideas that don't hold, ship the two features that do, then test them as working software instead of a slideshow."],
+          parts: [
         { title: "What we killed", statement: "What we killed: two ideas we built on purpose, so the real bet had room.",
           text: ["We explored community status, leverage and skill visibility, then skipped wireframes and vibe-coded the two strongest into working proofs of concept. Trying them ourselves was faster than debating them.",
             "Neither held up. Killing them told us what not to build, and shaped the two features we shipped."],
@@ -282,7 +298,7 @@ const PROJECTS = [
           ] },
 
         { title: "What we shipped", statement: "What we shipped: catch the ChatGPT moment, then give experts a reason to come back.",
-          text: ["We bet that plain-language answers drawn from Salesforce's own knowledge would beat any general AI. Proprietary data and Agentforce were never on the table, so we built on OpenAI with curated Salesforce documentation and focused on proving the experience.",
+          text: ["We bet that plain-language answers drawn from Salesforce's own knowledge would beat any general AI.",
             "The bet became two connected features. Solve catches power users at the moment they would otherwise open ChatGPT; proactive prompts make returning worth it. Neither works alone."],
           trades: [
             { n: "01 · Solve", t: "A plain-language answer, calibrated to you", rows: [["Ask in plain language", "A specific, actionable answer that cites Salesforce documentation."], ["Set the depth", "Beginner, Intermediate or Advanced, so you are never over-explained or underserved."], ["Never a dead end", "When Solve can't fully help, it drafts a ready-to-post Trailblazer Community question from your conversation."]],
@@ -298,7 +314,9 @@ const PROJECTS = [
             "Real power users were scarce, so we turned our research into 12 AI agents and ran them through the flows first. By the time 8 real power users arrived, the obvious rough edges were gone and their time went to what needed a person."],
           cards: [["What was running", "React front end, Express and SQLite back end, OpenAI for responses, voice input, expertise calibration and community-post drafting."], ["12 agents, then 8 users", "Synthetic users built from research data caught usability problems before real sessions."]] },
 
-        { title: "Impact & learning", statement: "Impact & learning: preferred over ChatGPT, with honest limits on what we proved.",
+          ] },
+
+        { title: "Outcomes and Takeaways", statement: "Outcomes: preferred over ChatGPT, with honest limits on what we proved.",
           text: ["Each participant asked the same question about the Salesforce product they work with to both ChatGPT and Solve. 6 of 8 preferred Solve.",
             "The prototype also pulled experts back into the content, lifting session duration 35% and cutting drop-off after milestones 22%, the half of the problem we most needed to prove.",
             "The honest limit: curated public documentation, not Salesforce's proprietary data or Agentforce, and 8 power users. The next step is a larger test on real support data, where the bet can be proven at scale."],
@@ -316,22 +334,28 @@ const PROJECTS = [
     cs: {
       meta: [["Role", "Founding Product Designer"], ["Timeline", "Aug 2025 – Present"], ["Skills", "Interaction architecture, AI UX, design systems, prototyping, analytics"], ["Team", "Founder, PM, engineering"]],
       sections: [
-        { title: "Overview", statement: "Overview: great AI visuals shouldn't require a prompting degree.",
+        { title: "Overview / Background", statement: "Overview: great AI visuals shouldn't require a prompting degree.",
           text: ["At CotonAI we're building the Figma for fashion: an AI workspace fine-tuned for fashion and adjacent industries. As founding product designer there was no brief. I owned the problem, the interaction model and the design system, working directly with the founder, PM and engineering.",
             "This is how a prompt box became Modes, structured entry points mapped to the way fashion teams actually work, and how that decision helped turn our MVP into a paid enterprise pilot."],
           media: [{ src: "/assets/images/cotonai-modes/canvas-hero.webp", alt: "The CotonAI canvas: a fashion board of generated looks with the Modes bar open at the bottom.", cap: "The CotonAI canvas, with the Modes bar open under a board of looks." }],
           cards: [["Problem: Prompting was a tax.", "Great visuals needed great prompts, and fashion designers aren't prompt engineers."], ["Solution: Modes, not better prompts.", "Edit, Render, Colourway and Studio, each mapped to a real workflow stage."], ["Outcome: +125% adoption", "After the V2 Modes bar, alongside a paid enterprise pilot and 584 hours saved for one client."]] },
-        { title: "Problem", ph: "01", media: [{ src: "/assets/images/cotonai-modes/mvp-wireframes.webp", alt: "Four grey wireframes exploring the canvas, toolbar and side panel.", cap: "Initial wireframes while ideating" }, { src: "/assets/images/cotonai-modes/mvp-shipped.webp", alt: "The shipped MVP: a garment on a dark canvas with a single prompt bar underneath.", cap: "The shipped MVP: a canvas and a prompt box" }], statement: "Problem: to get high-quality visuals, users need strong prompting skills.",
+        { title: "Defining the Problem", ph: "01", media: [{ src: "/assets/images/cotonai-modes/mvp-wireframes.webp", alt: "Four grey wireframes exploring the canvas, toolbar and side panel.", cap: "Initial wireframes while ideating" }, { src: "/assets/images/cotonai-modes/mvp-shipped.webp", alt: "The shipped MVP: a garment on a dark canvas with a single prompt bar underneath.", cap: "The shipped MVP: a canvas and a prompt box" }], statement: "Problem: to get high-quality visuals, users need strong prompting skills.",
           text: ["Our MVP opened on a canvas and a prompt box. Users who could write precise prompts got striking results. Everyone else got unpredictable images and stalled.", "So the question became: can we make something so intuitive that any fashion user gets a high-quality result without writing a prompt?"],
           cards: [["Users don't know how to prompt", "Blank-page prompting put the burden on the user's language skills."], ["Too much prompting makes AI hallucinate", "Especially with visuals, long prompts led to unpredictable results."]] },
-        { title: "Research", ph: "02", media: [{ src: "/assets/images/cotonai-modes/prompt-templates.webp", alt: "The MVP prompt bar with suggested prompt chips such as re-design to a modern style.", cap: "Smarter prompt templates: less blank page, still language-precise" }, { src: "/assets/images/cotonai-modes/prompt-system-generated.webp", alt: "The MVP prompt bar pre-filled with a system-written prompt.", cap: "System-generated prompts: complexity hidden, not removed" }], statement: "Research: we shipped an MVP in 3 weeks to learn where it broke.",
+        { title: "Understanding your Users", ph: "02", media: [{ src: "/assets/images/cotonai-modes/prompt-templates.webp", alt: "The MVP prompt bar with suggested prompt chips such as re-design to a modern style.", cap: "Smarter prompt templates: less blank page, still language-precise" }, { src: "/assets/images/cotonai-modes/prompt-system-generated.webp", alt: "The MVP prompt bar pre-filled with a system-written prompt.", cap: "System-generated prompts: complexity hidden, not removed" }], statement: "Users: we shipped an MVP in 3 weeks and shadowed fashion teams to learn where it broke.",
           text: ["Our team has a combined 8 years of fashion industry experience, so we started from what we had observed and shipped an MVP in a record 3 weeks. Then we shadowed users on it and tested two ways of helping them prompt better. Both failed, and that was the most useful result of the quarter."],
           cards: [["Fashion tools had broken user flows", "Hypothesis from our industry experience."], ["Adoption of new tech is lower", "Hypothesis from our industry experience."], ["Fashion pipelines are disconnected", "Hypothesis from our industry experience."], ["They hesitated before typing prompts", "Pattern noticed while shadowing users."], ["They reused vague prompts repeatedly", "“change color”, “Make this editorial”, “Change the Model”."], ["Smarter prompt templates failed", "Reduced the blank page problem, but still required language precision and did not reduce hallucination."], ["System-generated prompts failed", "Still hid complexity instead of removing it, were hard to make predictable across fashion workflows, and users couldn't understand why results changed."]] },
-        { title: "Principles", statement: "Principles: AI should adapt to designer intent, not the other way round.",
-          text: ["Before redesigning anything, I set the rules every later trade-off would be judged against. They came straight from what failed in research."],
+        { title: "Your Role and Responsibilities", statement: "Role: founding designer with no brief, owning the problem as well as the screens.",
+          text: ["There was no brief. As founding product designer I owned the problem, the interaction model and the design system, working directly with the founder, PM and engineering.",
+            "That meant specifying the tokens with developers, defining flows as states before they were built, and using usage data to decide what shipped next."],
+          cards: [["Founding Product Designer", "August 2025 to present."], ["Owned", "The problem, the interaction model and the design system."], ["Worked with", "The founder, the PM and engineering."]] },
+
+        { title: "Scope and Constraints", statement: "Constraints: AI should adapt to designer intent, with modes guiding the entry and nothing more.",
+          text: ["The scope was deliberate. Modes guide where you start, and creativity stays open. Sub-modes exist only for very specific use cases, and an Open mode stays for advanced control.",
+            "Before redesigning anything, I set the rules every later trade-off would be judged against. They came straight from what failed in research."],
           stepsTitle: "Principles",
           steps: [["Intent over syntax", "Designers choose what they want to do, not how to phrase it."], ["Structure the entry, not the output", "Modes guide where you start. Creativity stays open."], ["Familiar before novel", "Borrow patterns fashion teams already know from design tools."], ["Every mode earns its place", "Instrument adoption so each iteration has a verdict."]] },
-        { title: "Solution", ph: "03", media: [{ src: "/assets/images/cotonai-modes/workspace.webp", alt: "The CotonAI workspace with the Modes bar at the bottom of an empty board.", cap: "The workspace, with the Modes bar docked at the bottom" }, { src: "/assets/images/cotonai-modes/toolbar-v2.webp", alt: "Edit mode open: the selected garment beside Open, Combine, Upscale and Figure options.", cap: "Edit mode: options open alongside the edit" }, { diagram: { kind: "versus", title: "Figure submode", cards: [{ tag: "V1 · Editorial", title: "Try-on on a model", body: "Took 8 clicks and prompting.", status: "8 clicks" }, { tag: "V2 · Edit mode", title: "Figure submode", body: "No prompting needed.", status: "3 clicks", hi: true }] } }],
+        { title: "Ideation Steps (The Solution)", ph: "03", media: [{ src: "/assets/images/cotonai-modes/workspace.webp", alt: "The CotonAI workspace with the Modes bar at the bottom of an empty board.", cap: "The workspace, with the Modes bar docked at the bottom" }, { src: "/assets/images/cotonai-modes/toolbar-v2.webp", alt: "Edit mode open: the selected garment beside Open, Combine, Upscale and Figure options.", cap: "Edit mode: options open alongside the edit" }, { diagram: { kind: "versus", title: "Figure submode", cards: [{ tag: "V1 · Editorial", title: "Try-on on a model", body: "Took 8 clicks and prompting.", status: "8 clicks" }, { tag: "V2 · Edit mode", title: "Figure submode", body: "No prompting needed.", status: "3 clicks", hi: true }] } }],
           ui: { kind: "tour", title: "Modes at CotonAI", items: [["Edit", "Edit, with options alongside", "Multiple options open next to your edit, so you compare without re-prompting."], ["Render", "Render a material or fabric", "Add the required material or fabric to your garment."], ["Colourway", "Change colour and prints", "A visual picker alongside hex input, so there are no codes to recall."], ["Studio", "Editorial photoshoots", "Create editorial-level shoots from a reference image."]] }, dash: [{ type: "trend", w: 6, label: "Mode-bar adoption", value: "+125%", chip: "V1 → V2", points: [["V1", 100], ["V2", 225]], note: "Indexed to V1 = 100. Visual annotation helped users pick a mode faster." }, { type: "bars", w: 6, label: "Clicks to a try-on", value: "8 → 3", chip: "−5 clicks", rows: [["Editorial, V1", 8, "8"], ["Figure submode, V2", 3, "3"]], note: "No prompting needed in V2." }], statement: "Solution: we replaced the prompt box with modes.",
           text: ["Instead of helping users prompt better, I removed the need to. Modes became structured entry points into AI capability, reducing ambiguity while keeping creativity open.", "After the MVP we refined the direction, launched V1 for paid pilots on a more stable backend, and rolled out V2. Each mode maps to a real fashion workflow stage, and each iteration was decided by usage data, not opinion."],
           steps: [["Edit", "Multiple options alongside edit open."], ["Render", "Add required material or fabric to your garment."], ["Colourway", "Change garment colour and prints."], ["Studio", "Create editorial-level photoshoots with a reference image."]],
@@ -343,13 +367,15 @@ const PROJECTS = [
             { n: "Decision 5", t: "Scaling the design system with AI", rows: [["Step 1", "Designed tokens in the Figma library."], ["Step 2", "Collaborated with dev to finalize the token specification, using shadcn as the base layer."], ["Step 3", "Created an .md file and pushed it as a UI library."], ["Result", "Every new custom UI pulls from the same GitHub repo, with no redesigning again and again."]], note: "The full system, and how a flow is specified before it is built, is case study 03.", media: [{ src: "/assets/images/cotonai-modes/tokens-workflow.webp", alt: "The token workflow: Figma library, token specification with the developer, then an md file pushed to GitHub, beside the mode buttons built from those tokens.", cap: "The token workflow, and the mode buttons it produces" }] },
             { n: "Decision 6", t: "Specify flows as states, not screens", rows: [["Flow", "In Editorial mode the user clicks + Look or + Reference, enters a temporary assignment state, and picks an image from the board or overlay. The system assigns it to the slot, shows the thumbnail, switches to Replace and exits with clear visual feedback."], ["Spec", "Each flow is defined as states, events, constraints and acceptance criteria, so selection logic, slot mapping and Generate gating stay predictable and error resistant."], ["Ship", "The spec goes into Cursor to prototype. A feature branch is created, slot state and overlay logic are implemented and pushed to GitHub, reviewed in check-in and finalized before merge."]], media: [{ src: "/assets/images/cotonai-modes/flow-1.webp", alt: "Editorial mode flow, part one: clicking Reference, the board entering assignment state, an image assigned to the slot.", cap: "Editorial mode: assign a look or reference" }, { src: "/assets/images/cotonai-modes/flow-2.webp", alt: "Editorial mode flow, part two: the thumbnail shown in the slot, the button switching to Replace, Generate unlocked.", cap: "Then the slot, Replace and Generate states" }] },
           ] },
-        { title: "Impact", dash: [{ type: "kpi", w: 4, label: "Images generated", value: "6000+", note: "In editorial mode on CotonAI" }, { type: "kpi", w: 4, label: "Cost saved", value: "$5k+", note: "Deciding UX flows and which AI models to work with" }, { type: "kpi", w: 4, label: "Enterprise pilot", value: "$$$", chip: "Paid", note: "Converted the MVP to a paid pilot with an enterprise client" }, { type: "waffle", w: 8, label: "Client time saved", value: "584 hrs", cells: 80, filled: 73, note: "In one season, about 73 working days at 8 hours a day. Each square is one day." }, { type: "kpi", w: 4, label: "Feature adoption", value: "125%", chip: "↑ vs V1", note: "After redesigning the Modes bar" }], statement: "Impact: a paid pilot, 584 hours saved for a client, and 125% higher adoption.",
+        { title: "Outcomes and Takeaways", dash: [{ type: "kpi", w: 4, label: "Images generated", value: "6000+", note: "In editorial mode on CotonAI" }, { type: "kpi", w: 4, label: "Cost saved", value: "$5k+", note: "Deciding UX flows and which AI models to work with" }, { type: "kpi", w: 4, label: "Enterprise pilot", value: "$$$", chip: "Paid", note: "Converted the MVP to a paid pilot with an enterprise client" }, { type: "waffle", w: 8, label: "Client time saved", value: "584 hrs", cells: 80, filled: 73, note: "In one season, about 73 working days at 8 hours a day. Each square is one day." }, { type: "kpi", w: 4, label: "Feature adoption", value: "125%", chip: "↑ vs V1", note: "After redesigning the Modes bar" }], statement: "Outcome: a paid pilot, 584 hours saved for a client, and 125% higher adoption.",
 
-          text: ["Modes changed what CotonAI could sell. The MVP converted into a paid pilot with an enterprise client, one client saved 584 hours in a single season, and the Modes bar redesign more than doubled adoption.", "It also changed how we build: deciding UX flows before committing to AI models saved $5k+."] },
+          text: ["Modes changed what CotonAI could sell. The MVP converted into a paid pilot with an enterprise client, one client saved 584 hours in a single season, and the Modes bar redesign more than doubled adoption.", "It also changed how we build: deciding UX flows before committing to AI models saved $5k+."],
+          parts: [
         { title: "Learning", statement: "Learning: shape the interaction model, not more controls.",
           text: ["Designing CotonAI shifted my perspective on AI interfaces from feature design to interaction architecture. The real challenge wasn't model capability, but how people translate intent into action. Modes were a strategic move to reduce ambiguity, stabilize outcomes, and align AI behavior with how designers already think visually.", "Successful AI products are not built by adding more controls, but by shaping interaction models that make complex technology feel predictable, trustworthy, and native to human workflows. The risks below are what I'm watching as Modes grow."],
           quote: "While building CotonAI, I realized designers can directly influence business decisions through human-centered thinking, amplified by AI.", quoteBy: "Sambit Nayak",
           cards: [["Risk: over-structuring", "Could reduce creative freedom. Mitigation: modes guide the entry point, not the output style."], ["Risk: power users feel constrained", "Mitigation: Open mode retained for advanced control."], ["Risk: mode explosion", "Could confuse users. Mitigation: submodes nested inside parent workflows."]] },
+          ] },
       ],
     },
   },
@@ -362,25 +388,40 @@ const PROJECTS = [
     cs: {
       meta: [["Role", "Founding Product Designer"], ["Timeline", "Aug 2025 – Present"], ["Skills", "Design tokens, Figma variables, shadcn, AI-assisted UI"], ["Team", "Founder, PM, engineering"]],
       sections: [
-        { title: "Overview", statement: "Overview: the canvas stays quiet.",
+        { title: "Overview / Background", statement: "Overview: the canvas stays quiet.",
           text: ["CotonAI is a fashion board. The work on it is the product, so the chrome around it has to stay out of the way. The system under it names every gray by its lightness, keeps one blue in both themes, and measures the chrome so it never competes with the work.",
-            "I owned the design system as founding product designer, with the founder, PM and engineering."],
+            "I owned it end to end as founding product designer, from the first extraction to the Figma handoff."],
           cards: [["Problem: Color was a class, not a name.", "Hex strings in Tailwind classes, and HSL variables that only covered the shadcn layer."], ["Solution: Four collections, shaped like Figma variables.", "Primitives, semantic aliases, dimensions and effects, with Light and Dark as modes."], ["Outcome: A file Figma can import.", "57 primitives, 48 semantic aliases, 2 modes, regenerated from the stylesheet."]] },
 
-        { title: "Problem", statement: "Problem: the board was designed. The names were not.",
+        { title: "Defining the Problem", statement: "Problem: the board was designed. The names were not.",
           text: ["Board chrome, the inspector and the dashboard were already a coherent picture: white surfaces, a soft gray page, a single blue for anything that means “this.” The picture was not a system. It lived as hex strings inside Tailwind classes, and as HSL variables in index.css that only covered the shadcn layer.",
             "Light and dark were two parallel strings, not two modes of one token. #232323 and #242424 both meant “dark control.” A Figma file had nothing honest to import, because the code had never agreed on a name."],
           cards: [["Color was a class", "Values lived inside Tailwind strings, not behind names."], ["Two themes, two strings", "Light and dark were parallel values, not modes of one token."], ["Nothing to import", "Figma had no honest source, because the code never agreed on a name."]] },
 
-        { title: "Collections", statement: "Collections: four, shaped like Figma variables.",
+        { title: "Understanding your Users", statement: "Users: designers in Figma and engineers in Tailwind, describing the same blue in two languages.",
+          text: ["A design system's users are the people who build with it. Here that is the designer working in Figma and the engineer working in Tailwind and shadcn, both describing the same grays and the same blue without a shared name.",
+            "There was no user study for this one. The evidence is the code and the board themselves."],
+          cards: [["Designers", "Need a Figma file with names they can import and trust."], ["Engineers", "Need tokens regenerated from the stylesheet, not a second copy to keep in sync."], ["The next surface", "Needs the measurements the board already uses, so it matches without guessing."]] },
+
+        { title: "Your Role and Responsibilities", statement: "Role: owning the system from the first extraction to the Figma handoff.",
+          text: ["I owned the design system as founding product designer, working with the founder, PM and engineering. That meant deciding what repeats and becomes a token, what is a role and becomes an alias, and what to leave unnamed."],
+          cards: [["Founding Product Designer", "August 2025 to present."], ["Owned", "The extraction, the names, the collections and the handoff into Figma."], ["Worked with", "The founder, the PM and engineering."]] },
+
+        { title: "Scope and Constraints", statement: "Constraints: the board already had its measurements, and some colors never earned a name.",
+          text: ["These sizes were not invented for a scale. They are the measurements the board already used, written down so the next surface can match them. The scope was what to name, and just as much what to leave out."],
+          dash: [{ type: "kpi", w: 4, label: "Inset", value: "17px", note: "Space between the board and the screen edge" }, { type: "kpi", w: 4, label: "Top bar", value: "45px", note: "Chrome buttons are 28px with a 12px radius" }, { type: "kpi", w: 4, label: "Inspector", value: "300px", note: "Panel width" }, { type: "kpi", w: 6, label: "Floating asset bar", value: "38px", note: "Buttons 26px, icons 14px, radius 10px" }, { type: "kpi", w: 6, label: "Default UI type", value: "12px", note: "Inter. Focus field is a 30% blue fill with a full blue stroke." }],
+          parts: [
+        { title: "Exclusions", statement: "Exclusions: near-duplicates collapsed, debug color stayed out.",
+          text: ["Three dark grays were close enough to be the same decision. They now point at one primitive each: #232323 and #242424 to gray/14, #1C1C1C and #1D1D1D to gray/11, #292929 and #2A2A2A to gray/16.",
+            "Colors that only appeared as debug marks were not given a name: #FF0000, #00FF00, #3B82F6, #6366F1, #3B6BFF and #FFF44F. #8A38F5 stayed, but only as icon/layer-text, the text-layer mark in the layers panel. It is a job, not a brand color.",
+            "Two line heights, 14 for 10px type and 18 for 13px type, are proposed. The code never set them."] },
+          ] },
+
+        { title: "Ideation Steps (The Solution)", statement: "Solution: four collections shaped like Figma variables, one blue, and a file Figma can import.",
           text: ["The extraction reads src/index.css, boardUiTokens.ts and tailwind.config.ts. What repeats becomes a token. What is a role becomes an alias. What is a shadow stays a style, because a variable is the wrong container for a blur."],
           stepsTitle: "The four collections",
-          steps: [["Primitives", "Raw values, 57 in one mode. Grays are named by HSL lightness, the way the CSS was already written. gray/96 is the page."], ["Semantic", "48 roles aliased to primitives: background, border, text, icon, accent, success, danger. Light and Dark are modes of one collection."], ["Dimensions", "Spacing, radius, control sizes, icon sizes, type, opacity and duration, in one mode."], ["Effects", "Four styles: panel, popover and overlay shadows. They become Figma effect styles, not color variables."]] },
-
-        { title: "Chrome", statement: "Chrome: measured, then named.",
-          text: ["These sizes were not invented for a scale. They are the measurements the board already used, written down so the next surface can match them."],
-          dash: [{ type: "kpi", w: 4, label: "Inset", value: "17px", note: "Space between the board and the screen edge" }, { type: "kpi", w: 4, label: "Top bar", value: "45px", note: "Chrome buttons are 28px with a 12px radius" }, { type: "kpi", w: 4, label: "Inspector", value: "300px", note: "Panel width" }, { type: "kpi", w: 6, label: "Floating asset bar", value: "38px", note: "Buttons 26px, icons 14px, radius 10px" }, { type: "kpi", w: 6, label: "Default UI type", value: "12px", note: "Inter. Focus field is a 30% blue fill with a full blue stroke." }] },
-
+          steps: [["Primitives", "Raw values, 57 in one mode. Grays are named by HSL lightness, the way the CSS was already written. gray/96 is the page."], ["Semantic", "48 roles aliased to primitives: background, border, text, icon, accent, success, danger. Light and Dark are modes of one collection."], ["Dimensions", "Spacing, radius, control sizes, icon sizes, type, opacity and duration, in one mode."], ["Effects", "Four styles: panel, popover and overlay shadows. They become Figma effect styles, not color variables."]],
+          parts: [
         { title: "Color", statement: "Color: grays by lightness, and one blue that does not flip.",
           text: ["A primitive is a fact. gray/96 is always #F5F5F5. A semantic token is a job. In light mode that job is the page; in dark mode the page is gray/2.",
             "Accent, Generate and Cancel keep their hue in both modes. Accent is #0C8CE9 in light and dark, with #0A7BD0 on hover and #096BB8 on press."],
@@ -391,24 +432,21 @@ const PROJECTS = [
             { n: "Decision 3", t: "Two layers, one blue and one gray page", rows: [["Board chrome", "boardUiTokens.ts: New project, Credits, Generate and Cancel."], ["App UI", "button.tsx: six shadcn variants, default, destructive, outline, secondary, ghost and link, with one radius."], ["Shared", "Both layers use the same blue and the same gray page. Control sizes are 40, 36, 44 and a 40px icon square."]] },
           ] },
 
-        { title: "Exclusions", statement: "Exclusions: near-duplicates collapsed, debug color stayed out.",
-          text: ["Three dark grays were close enough to be the same decision. They now point at one primitive each: #232323 and #242424 to gray/14, #1C1C1C and #1D1D1D to gray/11, #292929 and #2A2A2A to gray/16.",
-            "Colors that only appeared as debug marks were not given a name: #FF0000, #00FF00, #3B82F6, #6366F1, #3B6BFF and #FFF44F. #8A38F5 stayed, but only as icon/layer-text, the text-layer mark in the layers panel. It is a job, not a brand color.",
-            "Two line heights, 14 for 10px type and 18 for 13px type, are proposed. The code never set them."] },
-
         { title: "Handoff", media: [{ diagram: { kind: "merge", title: "From the stylesheet to Figma", inputs: ["src/index.css", "boardUiTokens.ts", "tailwind.config.ts"], output: "Figma-importable tokens", note: "design-tokens/build.py regenerates the files." } }],
           statement: "Handoff: from the stylesheet to a file Figma can import.",
           text: ["design-tokens/build.py regenerates the token files. The W3C files in design-tokens/figma are one collection per file. cotonai.tokens.json is the same system in a single file for Tokens Studio."],
           stepsTitle: "Import order",
           steps: [["primitives.tokens.json", "Imported first."], ["semantic.light and semantic.dark", "Imported as two modes of one collection."], ["dimensions and effects", "Dimensions as variables, effects as styles."]] },
+          ] },
 
-        { title: "Impact", dash: [{ type: "kpi", w: 4, label: "Primitives", value: "57", note: "Named values, one mode" }, { type: "kpi", w: 4, label: "Semantic aliases", value: "48", note: "Light and Dark as modes of one collection" }, { type: "kpi", w: 4, label: "Accent", value: "1 blue", note: "#0C8CE9 in light and dark" }], statement: "Impact: one named system, in two modes.",
-          text: ["The code and Figma now agree on a name for every color the board uses. The tokens are regenerated from the stylesheet, so a new surface matches the measurements the board already had."] },
-
+        { title: "Outcomes and Takeaways", dash: [{ type: "kpi", w: 4, label: "Primitives", value: "57", note: "Named values, one mode" }, { type: "kpi", w: 4, label: "Semantic aliases", value: "48", note: "Light and Dark as modes of one collection" }, { type: "kpi", w: 4, label: "Accent", value: "1 blue", note: "#0C8CE9 in light and dark" }], statement: "Outcome: one named system, in two modes.",
+          text: ["The code and Figma now agree on a name for every color the board uses. The tokens are regenerated from the stylesheet, so a new surface matches the measurements the board already had."],
+          parts: [
         { title: "Learning", statement: "Learning: a variable is the wrong container for a blur.",
           text: ["Naming the grays was the easy part. The work was deciding what not to name: three near-duplicate darks collapsed into one primitive each, and debug colors stayed out. A system is as much what it refuses as what it holds.",
             "The limit: the line heights are proposed, not measured, and the tokens only stay honest while build.py keeps regenerating them from the stylesheet."],
           quote: "The board was designed. The names were not.", quoteBy: "Sambit Nayak" },
+          ] },
       ],
     },
   },
@@ -421,14 +459,12 @@ const PROJECTS = [
     cs: {
       meta: [["Role", "Product Designer, end to end"], ["Format", "Take-home challenge, solo"], ["Skills", "Product strategy, IA, onboarding, AI UX, prototyping"], ["Tools", "Figma, shadcn/ui, Cursor + Figma MCP, ChatGPT"]],
       sections: [
-        { title: "Context", statement: "Context: Arcade wins when the first tool call works.",
-          text: ["Arcade is the auth and tool-calling layer for AI agents. The take-home was open-ended, so I treated it like week one as a founding designer: no PM, no spec. I owned the problem, the scope and how to measure it.", "Before designing anything, I tried every product flow myself, logged where it broke, and shadowed an AI engineer for 30 minutes."],
-          bento: { label: "Context at a glance", tiles: [
-            { k: "num", tone: "ac", w: 4, label: "North star", value: "1", sub: "First successful, authorized, reviewable tool call." },
-            { k: "stack", tone: "mid", w: 4, label: "How I worked", rows: [["Product flows tried", "All", "Logged wins and failures", "white"], ["AI engineer interview", "30", "Minutes, with shadowing", "light"]] },
-            { k: "text", tone: "dark", w: 4, label: "Shipped", title: "A deck and a working prototype in code.", body: "Figma and shadcn/ui first, then Cursor with the Figma MCP." }] } },
+        { title: "Overview / Background", statement: "Overview: Arcade wins when the first tool call works.",
+          text: ["Arcade is the auth and tool-calling layer for AI agents. Its dashboard shows everything Arcade can do, but a new user only succeeds when one thing happens: an agent makes its first authorized tool call.",
+            "This take-home asked me to redesign it. I made that first call the north star and built the path to it."],
+          cards: [["North star: 1", "First successful, authorized, reviewable tool call."], ["Problem: Architecture before value", "A resource inventory that makes users assemble Arcade's runtime in their heads before anything runs."], ["Outcome: A working path", "A prototype of the path to a first authorized tool call, on simulated data."]] },
 
-        { title: "Problem", statement: "Problem: users meet the architecture before the value.",
+        { title: "Defining the Problem", statement: "Problem: users meet the architecture before the value.",
           text: ["The dashboard is a resource inventory. Users have to assemble Arcade's runtime in their heads before anything runs."],
           bento: { label: "The problem in numbers", tiles: [
             { k: "num", tone: "dark", w: 4, label: "Old dashboard", value: "≈8k", sub: "Tools exposed by default." },
@@ -436,13 +472,26 @@ const PROJECTS = [
             { k: "num", tone: "soft", w: 4, label: "First decision", value: "3", sub: "Paths to pick before any value: code, gateway, sandbox." },
             { k: "list", tone: "graphite", w: 12, label: "Diagnosis", rows: [["01", "Resource inventory", "18 items"], ["02", "Decision paralysis", "3 paths"], ["03", "Fragmented setup", "4 places"], ["04", "Weak feedback", "No next step"]] }] } },
 
-        { title: "Strategy", statement: "Strategy: build one path, completely.",
-          text: ["Everything served one moment. I built the path to it end to end and labelled the rest."],
+        { title: "Understanding your Users", statement: "Users: AI engineers wiring agents to real tools, studied first-hand.",
+          text: ["The people who use Arcade are AI engineers connecting agents to tools they already rely on. As a solo take-home, my evidence was first-hand: before designing anything, I tried every product flow myself, logged where it broke, and shadowed an AI engineer for 30 minutes."],
+          bento: { label: "How I worked", tiles: [
+            { k: "stack", tone: "mid", w: 12, label: "How I worked", rows: [["Product flows tried", "All", "Logged wins and failures", "white"], ["AI engineer interview", "30", "Minutes, with shadowing", "light"]] }] } },
+
+        { title: "Your Role and Responsibilities", statement: "Role: the only designer, treating the brief like week one at a startup.",
+          text: ["The take-home was open-ended, so I treated it like week one as a founding designer: no PM, no spec. I owned the problem, the scope and how to measure it.",
+            "I shipped a deck and a working prototype in code: Figma and shadcn/ui first, then Cursor with the Figma MCP."],
+          cards: [["Product Designer, end to end", "Strategy, information architecture, onboarding, AI UX and prototyping."], ["Take-home challenge, solo", "No PM and no spec. I chose the problem."], ["Tools", "Figma, shadcn/ui, Cursor with the Figma MCP, ChatGPT."]] },
+
+        { title: "Scope and Constraints", statement: "Constraints: build one path, completely, and label the rest.",
+          text: ["Everything served one moment. I built the path to it end to end and labelled the rest. The data is simulated, so the prototype shows the shape of the path, not production results."],
           bento: { label: "Scope", tiles: [
             { k: "donut", tone: "light", w: 4, h: 2, label: "Sidebar built", value: "4/12", pct: 33, sub: "Plus onboarding and the code wizard, outside the sidebar." },
             { k: "list", tone: "dark", w: 8, label: "Built", rows: [["✓", "Dashboard", "4 states"], ["✓", "Playground", "Chat + Execute"], ["✓", "Tool catalog", "39 integrations"], ["✓", "Servers", "Gateway wizard"]] },
             { k: "text", tone: "soft", w: 8, label: "Deferred", title: "Users, policies, runs, audit and usage wait.", body: "They matter, but none gets a new user closer to the first call." }] } },
 
+        { title: "Ideation Steps (The Solution)", statement: "Solution: four surfaces, each shortening the path to the first call.",
+          text: ["The design moves a new user from a resource inventory to a first authorized tool call in four steps: navigation grouped by the job, onboarding that starts with intent, a playground that shows the run, and a home page that follows progress."],
+          parts: [
         { title: "Navigation", statement: "Navigation: group by the job, not the object.",
           text: ["Same features, regrouped into Build, Roll out and Observe. Ten old items were really one job."],
           bento: { label: "Information architecture", tiles: [
@@ -480,6 +529,11 @@ const PROJECTS = [
             { k: "list", tone: "graphite", w: 8, label: "Blockers, ranked", rows: [["▲", "Salesforce auth expired", "Fix now"], ["▲", "Slack missing chat:write", "Reauthorize"], ["■", "Slack approval pending", "Review"], ["▼", "Gateway has no client", "Copy config"]] }] },
           mediaLayout: "stack", media: [{ src: "/assets/images/arcade/dashboard-needs-auth.jpg", alt: "Dashboard in the Needs auth state, with a setup checklist and a single next action.", cap: "Needs auth: one next action" }, { src: "/assets/images/arcade/dashboard-active.jpg", alt: "Dashboard in the Active state with KPIs, project summary and a recent execution map.", cap: "Active: health, runs and blockers (prototype data)" }] },
 
+          ] },
+
+        { title: "Outcomes and Takeaways", statement: "Outcome: a working path to the first call, with a plan to prove it.",
+          text: ["Simulated data, no production results yet. The measurement plan below decides whether the path scales."],
+          parts: [
         { title: "Measurement", statement: "Measurement: time to a safe agent in production.",
           text: ["Scale it if time to first call drops without new auth drop-off. Rethink it if users run but never open a trace.", "Prototype target: a new user reaches a first authorized, reviewable tool call in a single session, without leaving the product for docs."],
           bento: { label: "Metrics and rollout", tiles: [
@@ -487,13 +541,13 @@ const PROJECTS = [
             { k: "list", tone: "dark", w: 6, h: 2, label: "Five metrics", title: "Measured by safe production use, not time in the dashboard.", rows: [["M1", "Time to first authorized call", "Activation"], ["M2", "Setup completion by path", "Onboarding"], ["M3", "First trace opened", "Understanding"], ["M4", "Repeat call in week 1", "Retention"], ["M5", "Invited user activation", "Rollout"]] },
             { k: "timeline", tone: "white", w: 12, label: "Same design, three levels of build", phases: [["2 weeks", "Validate", "Built", 2, "Prototype, tested with 5–10 agent builders."], ["4 weeks", "Beta", "Next", 2, "Onboarding and Playground MVP, instrumented."], ["8 weeks", "Production", "Later", 4, "Live node canvas, real-time runs, readiness score."]] }] } },
 
-        { title: "Outcome", statement: "Outcome: a working path to the first call.",
-          text: ["Simulated data, no production results yet. The metrics above decide whether it scales.", "The call I'd want to own as a first designer: pick the moment that matters, build the path to it, and be honest about what waits."],
+        { title: "Takeaway", statement: "Takeaway: pick the moment that matters, build the path to it, be honest about what waits.",
           bento: { label: "Risks", tiles: [
             { k: "text", tone: "dark", w: 4, label: "Risk", title: "The guided path hides power.", body: "Mitigation: “Explore dashboard first” stays one click away." },
             { k: "text", tone: "graphite", w: 4, label: "Risk", title: "Sandbox success doesn't transfer.", body: "Mitigation: First run ends in “Enable test users”." },
             { k: "text", tone: "light", w: 4, label: "Risk", title: "Simulated data.", body: "Mitigation: the 2-week plan tests with real agent builders." }] },
           cta: { label: "View the prototype", href: "https://arcadedevv.vercel.app/" } },
+          ] },
       ],
     },
   },
@@ -506,15 +560,28 @@ const PROJECTS = [
     cs: {
       meta: [["Role", "Technical Product Designer"], ["Timeline", "6 months"], ["Skills", "UX flow, fit logic, UI, testing, 3D optimization · Web, iOS"], ["Team", "2 PMs, 1 designer, 1 UXR"]],
       sections: [
-        { title: "Overview", statement: "Overview: fit is the biggest friction in online denim. Showing it wasn't enough.",
+        { title: "Overview / Background", statement: "Overview: fit is the biggest friction in online denim. Showing it wasn't enough.",
           text: ["Drapr built a 3D avatar that lets shoppers try on clothes. Gap Inc. acquired it in August 2021 to improve fit across its brands, and called fit “the number one point of friction for customers” (Gap Inc. press release, 26 August 2021).",
             "My hypothesis: a 3D avatar shows fit, but shoppers buy on trust. So I designed the flow around what a shopper needs to believe a size, then tested it against the old one."],
           cards: [["Drapr: 3D avatar try-on", "A Y Combinator startup. Gap acquired it in August 2021."], ["Hypothesis: ask less, prove more", "Little upfront. Explain the size when trust is at stake."], ["Result: +61% add-to-bag", "An A/B test of the new flow against the old one."]] },
-        { title: "Problem", statement: "Problem: the old flow showed fit. Shoppers still felt risk.",
+        { title: "Defining the Problem", statement: "Problem: the old flow showed fit. Shoppers still felt risk.",
           text: ["Denim made sizing harder: one size had to explain multiple body zones without turning checkout into a long form."],
           media: [{ src: "/assets/images/gap/problem-size-chart.webp", alt: "Gap size guide for women's jeans, with women's regular, petite and tall tabs and a table of waist and hip measurements in inches for each size from XXXS to S.", cap: "Charts were precise; comfort was not." }, { src: "/assets/images/gap/problem-denim-fit.webp", alt: "Jeans fit diagram with body-zone measurement markers.", cap: "Fit was multi-zone: waist, hip, thigh, calf, and inseam all mattered." }, { src: "/assets/images/gap/problem-recommendations.webp", alt: "Product recommendation carousel for Gap apparel.", cap: "A size recommendation without evidence felt risky." }],
           cards: [["Measurements were not enough", "Charts were precise; comfort was not."], ["Fit was multi-zone", "Waist, hip, thigh, calf, and inseam all mattered."], ["The answer needed a reason", "A size recommendation without evidence felt risky."], ["Every extra input had a cost", "More personalization could also mean more drop-off."]] },
-        { title: "Decisions", statement: "Decisions: I asked less upfront and showed more evidence when trust was at stake.",
+        { title: "Understanding your Users", statement: "Users: online denim shoppers who needed a reason to believe a size.",
+          text: ["I designed for shoppers choosing denim online, where one size has to explain several body zones. I tested each call with participants before it shipped, and what they said sits under each decision below."],
+          cards: [["Credible sizing", "A size they could believe, not just a number."], ["Evidence behind the size", "A recommendation needed a reason."], ["Little effort", "Every extra input cost completion."]] },
+
+        { title: "Your Role and Responsibilities", statement: "Role: technical product designer, leading the 3D Fit redesign across four disciplines.",
+          text: ["I was the technical product designer on Drapr, the Y Combinator 3D-fit startup Gap Inc. acquired. Over six months I led the redesign of the 3D Fit flow for web and iOS, working with two PMs and a UX researcher.",
+            "Leading meant keeping four disciplines on one definition of success:"],
+          cards: [["Product", "Connected confidence to commerce signals"], ["Engineering", "Balanced 3D assets with mobile performance"], ["Research", "Mapped trust breakdowns"], ["Fit language", "Aligned product, research, and merchandising terms"]] },
+
+        { title: "Scope and Constraints", statement: "Constraints: too many inputs lost shoppers, too much rationale slowed them, and fidelity slowed phones.",
+          text: ["Three limits shaped every call. The flow had to earn trust without turning into a long form, without slowing the purchase, and without making 3D too heavy for mobile."],
+          cards: [["Too many inputs", "Caused drop-off."], ["Too much rationale", "Slowed action."], ["Too much fidelity", "Slowed performance on mobile."]] },
+
+        { title: "Ideation Steps (The Solution)", statement: "Solution: I asked less upfront and showed more evidence when trust was at stake.",
           text: ["The key move was sequencing: what to ask, what to defer, and when to explain. I tested each call with participants before it shipped."],
           trades: [
             { n: "Decision 1", t: "Accuracy vs completion rate", mediaLayout: "stack", media: [{ wide: true, src: "/assets/images/gap/decision-1.webp", alt: "Two versions of the Further customize your avatar screen, one showing size numbers beside each body measurement and one without.", cap: "The avatar customization screen, with and without size numbers" }],
@@ -529,19 +596,23 @@ const PROJECTS = [
               rows: [["User need", "Realistic body-zone fit."], ["Business need", "Reach mobile shoppers."], ["Constraint", "Fidelity slowed performance."], ["Compromise", "Use copy to support visuals."]],
               find: [["What testing showed", "Participants knew to click the question mark for more information and valued the clarity of what fitted, loose and relaxed mean."], ["What I did next", "Add definitions for the fit descriptors, so shoppers know what each one feels like."]],
               note: "Fit copy became interface logic: short, local, decision-tied." },
-          ] },
+          ],
+          parts: [
         { title: "Solution", statement: "Solution: the final flow made fit easier to trust without adding friction.",
           text: ["Each step either improved the model or helped shoppers verify the recommendation."],
           mediaLayout: "stack",
           media: [{ wide: true, src: "/assets/images/gap/solution-flow.webp", alt: "The final flow in the QuickFit Finder: how tall are you, optional avatar customization, and a size shown on the avatar with Waist, Hips and Calf fit descriptors.", cap: "The final flow in the QuickFit Finder" }],
           steps: [["Baseline input", "How tall are you?"], ["Fit calibration"], ["Optional tuning", "Further customize your avatar"], ["Explainable fit", "Why this recommendation, and what tight, fitted and loose feel like"]] },
-        { title: "Impact", statement: "Impact: an A/B test showed a 61% lift in add-to-bag.",
+          ] },
+
+        { title: "Outcomes and Takeaways", statement: "Outcome: an A/B test showed a 61% lift in add-to-bag.",
           dash: [{ type: "kpi", w: 4, label: "Add-to-bag", value: "+61%", chip: "A/B test", note: "New flow against the old flow" }, { type: "trend", w: 8, label: "Add-to-bag, indexed", value: "100 → 161", chip: "Old → new flow", points: [["Old flow", 100], ["New flow", 161]], note: "Indexed to the old flow = 100. The same 61% lift, shown as a change, not a share." }],
-          text: ["The strongest signal was not more 3D realism. It was reducing sizing ambiguity at the moment shoppers decided whether to trust a size and add to bag.", "Leading the team meant keeping four disciplines on one definition of success:"],
-          cards: [["Product", "Connected confidence to commerce signals"], ["Engineering", "Balanced 3D assets with mobile performance"], ["Research", "Mapped trust breakdowns"], ["Fit language", "Aligned product, research, and merchandising terms"]] },
+          text: ["The strongest signal was not more 3D realism. It was reducing sizing ambiguity at the moment shoppers decided whether to trust a size and add to bag."],
+          parts: [
         { title: "Reflection", statement: "Reflection: I changed my mind about the job of 3D.",
           text: ["The visual was not the product. Confidence was what shoppers believed, understood, and felt ready to do next.", "I would cut more today: every control should earn its place at the moment of doubt."],
           cta: { label: "Book a call", href: BOOK_A_CALL } },
+          ] },
       ],
     },
   },
@@ -554,15 +625,28 @@ const PROJECTS = [
     cs: {
       meta: [["Role", "Co-founder & Founding Product Designer"], ["Timeline", "2025 – Present"], ["Scope", "Product strategy, user research, interaction design, agent UX, design systems"], ["Focus", "0→1 product design, human–AI interaction, creative tools"]],
       sections: [
-        { title: "Overview", statement: "Overview: from an image generator to an agent that remembers the brief.",
+        { title: "Overview / Background", statement: "Overview: from an image generator to an agent that remembers the brief.",
           text: ["As co-founder and founding product designer at CotonAI, I owned product strategy as well as design. The question I kept bringing back to the team wasn't \u201chow do we generate better images?\u201d but \u201cwhy does every prompt start from zero?\u201d",
             "This is how that question moved CotonAI from a visual workspace toward an agent that carries creative intent across a whole collection."],
           cards: [["Problem: Every prompt started over.", "The AI forgot why a colour was rejected or which silhouette was approved."], ["Solution: The canvas is the context.", "An agent that plans, executes and returns work to the canvas, with designers approving each step."], ["Outcome: 71% first-pass", "Designs accepted without a revision in the Steele pilot."]] },
-        { title: "Problem", media: [{ diagram: { kind: "merge", title: "Before CotonAI", inputs: ["Moodboards", "Spreadsheets", "Image generators", "Review threads"], output: "One collection", note: "Designers spent hours moving between them." } }], statement: "Problem: we didn't need another AI image generator.",
+        { title: "Defining the Problem", media: [{ diagram: { kind: "merge", title: "Before CotonAI", inputs: ["Moodboards", "Spreadsheets", "Image generators", "Review threads"], output: "One collection", note: "Designers spent hours moving between them." } }], statement: "Problem: we didn't need another AI image generator.",
           text: ["Fashion teams already had plenty of tools to generate images. Yet designers were still spending hours moving between moodboards, spreadsheets, image generators, review threads and production files.", "The real problem wasn't creating an image. It was everything that happened before and after it. A designer could generate 20 variations in minutes, but the AI wouldn't remember why a color was rejected, which silhouette was approved, or how the collection needed to evolve. Every new prompt felt like starting over."],
           cards: [["No memory of decisions", "Rejected colors and approved silhouettes were lost between prompts."], ["Context scattered across tools", "References, material constraints, brand identity and feedback lived in different places."]] },
-        { title: "Direction", media: [{ diagram: { kind: "flow", title: "One shared canvas", nodes: ["Sketch", "Generate", "Edit", "Colourway", "Review"] } }, { diagram: { kind: "merge", title: "Canvas as context", inputs: ["Selected region", "Annotation", "Reference"], output: "Agent", note: "An image, sketch, annotation or selected region communicates intent." } }], statement: "Direction: what if AI understood the whole creative process, not just the next prompt?",
-          text: ["Working with fashion brands and production teams, we saw how much creative work depended on invisible context: reference images, material constraints, brand identity, previous decisions and feedback.", "We started CotonAI as a collaborative visual workspace where designers could sketch, generate, edit, explore colorways and review work together on a shared canvas. The bigger opportunity emerged from those workflows: the canvas shouldn't just hold the work. It should become the context through which an agent understands the work."] },
+        { title: "Understanding your Users", statement: "Users: fashion teams ran on invisible context that no prompt could carry.",
+          text: ["Working with fashion brands and production teams, we saw how much creative work depended on invisible context: reference images, material constraints, brand identity, previous decisions and feedback."] },
+
+        { title: "Your Role and Responsibilities", statement: "Role: co-founder, owning product strategy as well as design.",
+          text: ["As co-founder and founding product designer, I carried product strategy alongside design. The question I kept bringing back to the team was why every prompt starts from zero."],
+          cards: [["Co-founder & Founding Product Designer", "2025 to present."], ["Owned", "Product strategy as well as design."], ["Scope", "Product strategy, user research, interaction design, agent UX and design systems."]] },
+
+        { title: "Scope and Constraints", statement: "Constraints: the workspace is live, the agent is a proposal, and the designer stays in control.",
+          text: ["The live workspace is the foundation. Persistent creative memory, multi-step orchestration and richer agent controls are the next product direction, so this study keeps what ran in the pilot apart from what is proposed."],
+          cards: [["Live: the collaborative workspace", "Every pilot outcome below comes from the workspace."], ["Proposed: the agent architecture", "Persistent memory, multi-step orchestration and richer controls."], ["Constraint: human judgment", "Autonomy is useful until an agent makes the wrong creative decision, so designers stay creative directors."]] },
+
+        { title: "Ideation Steps (The Solution)", statement: "Solution: the canvas becomes the context, and the agent works inside it.",
+          text: ["We started CotonAI as a collaborative visual workspace where designers could sketch, generate, edit, explore colorways and review work together on a shared canvas. The bigger opportunity emerged from those workflows: the canvas shouldn't just hold the work. It should become the context through which an agent understands the work."],
+          media: [{ diagram: { kind: "flow", title: "One shared canvas", nodes: ["Sketch", "Generate", "Edit", "Colourway", "Review"] } }, { diagram: { kind: "merge", title: "Canvas as context", inputs: ["Selected region", "Annotation", "Reference"], output: "Agent", note: "An image, sketch, annotation or selected region communicates intent." } }],
+          parts: [
         { title: "Solution", statement: "Solution: three product decisions for the agent experience.",
           ui: { kind: "trio", cards: [{ t: "Show the agent what you're working on", chips: ["Sketch", "Annotation", "Canvas region"], hi: 2, d: "An image, sketch, annotation or selected region communicates intent, so you don't have to describe it." }, { t: "Execution, not just generation", chips: ["Plan", "Execute", "Review"], hi: 1, d: "The agent plans steps, selects tools, generates alternatives and returns outputs to the canvas." }, { t: "Humans stay creative directors", chips: ["Compare versions", "Approve"], hi: 1, d: "Visible progress, contextual feedback and approval checkpoints keep creative judgment with the designer." }] },
           media: [{ video: "/assets/images/cotonai/video-cotonai-agent.mp4", poster: "/assets/images/cotonai/video-cotonai-agent-poster.jpg", alt: "CotonAI Agent walkthrough: asking the agent about a board, selection and brand memory", cap: "The agent panel beside the canvas, using board, selection, brand and memory context." }],
@@ -573,12 +657,16 @@ const PROJECTS = [
             { n: "Decision 2", t: "Execution, not just generation", rows: [["Before", "A creative task rarely ends with one image, but the tool did."], ["Change", "A harness for managing context, planning steps, selecting tools, generating alternatives and returning outputs to the canvas."], ["Result", "Multi-step work that stays understandable."]] },
             { n: "Decision 3", t: "Humans remain creative directors", rows: [["Risk", "Autonomy is useful until an agent makes the wrong creative decision."], ["Change", "Visible progress, contextual feedback, version comparison and approval checkpoints."], ["Result", "The agent handles repetitive execution. The designer keeps creative judgment."]] },
           ] },
-        { title: "Impact", dash: [{ type: "kpi", w: 4, label: "AI-assisted designs", value: "140+", note: "Steele pilot" }, { type: "kpi", w: 4, label: "Review comments", value: "188", note: "Left by teams on the shared canvas" }, { type: "donut", w: 4, label: "First-pass acceptance", value: "71%", pct: 71, note: "Designs accepted without a revision, Steele pilot" }, { type: "bars", w: 6, label: "Revisions per design", value: "3–5 → 1–2", chip: "Typical", rows: [["Before", 4, "3–5"], ["With CotonAI", 1.5, "1–2"]], note: "Typical revisions in the Steele pilot. Bars sit at the midpoint of each range." }, { type: "kpi", w: 6, label: "Visual assets per month", value: "~5,000", note: "Workflows supported through CreateNet" }],
-          statement: "Impact: early pilot outcomes validated the collaborative workflow.",
-          text: ["These are early workspace and pilot outcomes, not evidence that the proposed autonomous agent architecture has already achieved the same results."] },
+          ] },
+
+        { title: "Outcomes and Takeaways", dash: [{ type: "kpi", w: 4, label: "AI-assisted designs", value: "140+", note: "Steele pilot" }, { type: "kpi", w: 4, label: "Review comments", value: "188", note: "Left by teams on the shared canvas" }, { type: "donut", w: 4, label: "First-pass acceptance", value: "71%", pct: 71, note: "Designs accepted without a revision, Steele pilot" }, { type: "bars", w: 6, label: "Revisions per design", value: "3–5 → 1–2", chip: "Typical", rows: [["Before", 4, "3–5"], ["With CotonAI", 1.5, "1–2"]], note: "Typical revisions in the Steele pilot. Bars sit at the midpoint of each range." }, { type: "kpi", w: 6, label: "Visual assets per month", value: "~5,000", note: "Workflows supported through CreateNet" }],
+          statement: "Outcome: early pilot outcomes validated the collaborative workflow.",
+          text: ["These are early workspace and pilot outcomes, not evidence that the proposed autonomous agent architecture has already achieved the same results."],
+          parts: [
         { title: "Learning", statement: "Learning: make intelligence understandable, controllable and useful inside real work.",
           text: ["The hardest part of designing AI products isn't making intelligence more powerful. It's making it understandable, controllable and useful inside real work.", "The live workspace established the foundation. Persistent creative memory, multi-step orchestration and richer agent controls are the next product direction: moving from AI that generates creative outputs toward AI that helps teams carry creative intent across an entire workflow."],
           quote: "That's the design problem I'm most interested in solving.", quoteBy: "Sambit Nayak" },
+          ] },
       ],
     },
   },
@@ -591,18 +679,31 @@ const PROJECTS = [
     cs: {
       meta: [["Role", "Brand and Web Designer, end to end"], ["Timeline", "2026"], ["Format", "Portfolio redesign of paymanai.com, solo"], ["Skills", "Brand audit, positioning, visual identity, web design, front-end build"]],
       sections: [
-        { title: "The Setup", statement: "Setup: real money, and a buyer who trusts nothing yet.",
+        { title: "Overview / Background", statement: "Setup: real money, and a buyer who trusts nothing yet.",
           text: ["Payman deploys agents that move real money inside a bank's own systems. This is my redesign of paymanai.com, as it stood."],
           media: [{ wide: true, src: "/assets/images/payman-case/before-hero.jpg", alt: "The live paymanai.com hero: the headline We deploy AI agents that handle money on a cream background, a choice between Banks and Credit Unions, and a mountain illustration.", cap: "paymanai.com as I found it" }] },
 
-        { title: "The Tension", statement: "Tension: the page sold warmth to a buyer who needs proof.",
+        { title: "Defining the Problem", statement: "Tension: the page sold warmth to a buyer who needs proof.",
           stats: [["55%", "of U.S. consumers already ask AI about money. TD Bank, 2026"], ["200M+", "people ask ChatGPT about money every month. OpenAI, 2026"]],
           media: [{ wide: true, src: "/assets/images/payman-case/first-screen-analytics.webp", alt: "The old Payman first screen with three numbered callouts: the announcement bar, a header with no primary action, and a segment picker, each with a mock analytics figure.", cap: "Where the first screen loses a buyer (illustrative, not measured)" }, { src: "/assets/images/payman-case/before-first-load.jpg", alt: "The live paymanai.com on first load: an announcement bar, a newsletter pop-up covering the headline, and a cookie banner.", cap: "First load, desktop" }, { src: "/assets/images/payman-case/before-mobile-first-load.jpg", alt: "The live paymanai.com on a phone: the newsletter pop-up with its email field clipped to the word Enter.", cap: "First load, phone" }] },
 
-        { title: "The Decision", statement: "Decision: sell the control, not the magic.",
-          mediaLayout: "stack",
-          media: [{ diagram: { kind: "flow", title: "The control process, shown in the hero", hi: 1, nodes: ["Request", "Policy check", "Approval required", "Audit log"], note: "Requested, checked, approved, logged. The same four steps return in the explainer and in the audit log." } }, { wide: true, src: "/assets/images/payman-case/layout-exploration.webp", alt: "A two-by-two grid of wireframes comparing control steps below the fold or in the hero, with a segment picker or one primary action; the hero with one action is chosen and leads to the final hero.", cap: "Layout exploration: control steps in the hero, one primary action" }, { wide: true, src: "/assets/images/payman-case/redesign-control.webp", alt: "The redesigned control section on a deep teal stage: Your rules, Full audit trail and Kill switch, with stepped bars above a governed agent layer between cores and anything that moves money.", cap: "Rules, audit trail and kill switch, moved up to the fourth section" }, { wide: true, src: "/assets/images/payman-case/redesign-how-logged.webp", alt: "The four-step section: a live chat in a bank app where Payman lists five vendor payments, asks for a phone code, and confirms five payments sent.", cap: "Four steps as a live chat: ask, check, approve, log" }, { diagram: { kind: "audit", title: "Audit: what I found, what I did", rows: [["One friendly voice for everything", "Two voices: a serif for the signed statement, a mono for the system record"], ["Decorative mountain art on the first screen", "The control process is the hero image: request, policy check, approval, audit log"], ["Rules, audit trail and kill switch in the last third", "Moved up to the fourth section, on their own teal stage"], ["Announcement bar, pop-up and cookie banner before the headline", "Nothing between the visitor and the headline; the pop-up is dropped"], ["A segment choice instead of an action", "One primary action, “Meet your agent”, in the header and the hero"], ["Pop-up clips the email field on phones", "One column on phones, form fields at least 44px tall, no overlays"]] } }] },
+        { title: "Understanding your Users", statement: "Users: bank and credit-union buyers, weighing control before capability.",
+          text: ["The reader I designed for is a bank or credit-union buyer deciding whether to let agents move real money. I audited the site as that buyer would, and wrote down every place it asked for trust before it had earned any.",
+            "I did not test with real bank buyers. The audit stands in for that, and it is the main limit of this study."],
+          cards: [["Bank and credit-union buyers", "Weigh control, proof and risk before capability."], ["Their customers and members", "Already ask AI about money, inside or outside the bank."]] },
 
+        { title: "Your Role and Responsibilities", statement: "Role: one designer across the audit, the identity, the page and the build.",
+          text: ["This is an independent redesign of paymanai.com, so every call was mine: the audit, the positioning, the visual identity, the web design and the front-end build."],
+          cards: [["Brand and Web Designer, end to end", "2026."], ["Portfolio redesign, solo", "A redesign of paymanai.com, as it stood."], ["Skills", "Brand audit, positioning, visual identity, web design and front-end build."]] },
+
+        { title: "Scope and Constraints", statement: "Constraints: same facts, same viewport, and no production data.",
+          text: ["I rebuilt the live site with the same facts, so before and after compare like for like. It is a portfolio redesign: there are no production metrics, and the chat and approval code are illustrative."],
+          cards: [["Same facts, same viewport", "Before and after compare like for like."], ["Illustrative", "The chat and approval code are illustrative, and there are no production metrics."], ["Not tested", "No testing with real bank buyers, and a free stand-in serif."]] },
+
+        { title: "Ideation Steps (The Solution)", statement: "Decision: sell the control, not the magic.",
+          mediaLayout: "stack",
+          media: [{ diagram: { kind: "flow", title: "The control process, shown in the hero", hi: 1, nodes: ["Request", "Policy check", "Approval required", "Audit log"], note: "Requested, checked, approved, logged. The same four steps return in the explainer and in the audit log." } }, { wide: true, src: "/assets/images/payman-case/layout-exploration.webp", alt: "A two-by-two grid of wireframes comparing control steps below the fold or in the hero, with a segment picker or one primary action; the hero with one action is chosen and leads to the final hero.", cap: "Layout exploration: control steps in the hero, one primary action" }, { wide: true, src: "/assets/images/payman-case/redesign-control.webp", alt: "The redesigned control section on a deep teal stage: Your rules, Full audit trail and Kill switch, with stepped bars above a governed agent layer between cores and anything that moves money.", cap: "Rules, audit trail and kill switch, moved up to the fourth section" }, { wide: true, src: "/assets/images/payman-case/redesign-how-logged.webp", alt: "The four-step section: a live chat in a bank app where Payman lists five vendor payments, asks for a phone code, and confirms five payments sent.", cap: "Four steps as a live chat: ask, check, approve, log" }, { diagram: { kind: "audit", title: "Audit: what I found, what I did", rows: [["One friendly voice for everything", "Two voices: a serif for the signed statement, a mono for the system record"], ["Decorative mountain art on the first screen", "The control process is the hero image: request, policy check, approval, audit log"], ["Rules, audit trail and kill switch in the last third", "Moved up to the fourth section, on their own teal stage"], ["Announcement bar, pop-up and cookie banner before the headline", "Nothing between the visitor and the headline; the pop-up is dropped"], ["A segment choice instead of an action", "One primary action, “Meet your agent”, in the header and the hero"], ["Pop-up clips the email field on phones", "One column on phones, form fields at least 44px tall, no overlays"]] } }],
+          parts: [
         { title: "The System", statement: "System: an identity derived from the position, not from taste.",
           mediaLayout: "stack",
           media: [{ wide: true, src: "/assets/images/payman-case/design-system.webp", alt: "Design system preview: typography, colour tokens and icons; buttons in active, hovered and disabled states; form inputs, checkboxes and radios; and components such as status tags, the kill switch and audit rows.", cap: "The design system behind the page" }, { diagram: { kind: "swatches", title: "Palette", chips: [["#F3F3F0", "Paper", "Page"], ["#171717", "Ink", "Text"], ["#0E3D42", "Teal", "Trust"], ["#2F8A8C", "Mid teal", "Focus"], ["#D4B3CA", "Mauve", "Warmth"], ["#F4FF45", "Signal yellow", "Signal only"]], note: "Yellow is a bar, a digit or a strip. Never a fill." } }, { diagram: { kind: "specimen", title: "Type: three voices, one job each", lines: [["Display · Newsreader", "'Newsreader', 'Times New Roman', serif", 46, "We deploy AI agents that handle money."], ["Body · Geist", "'Geist', sans-serif", 17, "Agents that carry out real banking transactions for your customers, under policies, approvals and audit trails you control."], ["Record · Geist Mono", "'Geist Mono', monospace", 12, "PM-2026-001 // VERSION 1.0 · REQUESTED → CHECKED → APPROVED → LOGGED"]] } }] },
@@ -611,13 +712,16 @@ const PROJECTS = [
           mediaLayout: "stack",
           media: [{ wide: true, src: "/assets/images/payman-case/redesign-shift.webp", alt: "Two columns: when the customer asks AI outside the bank, the customer leaves; inside the bank, the customer stays, with data, audit trail and a kill switch.", cap: "Risk: where the question is asked decides who keeps the customer" }, { wide: true, src: "/assets/images/payman-case/redesign-security.webp", alt: "The security section: Built like bank infrastructure. Because it is. Tabs for data and custody, identity and policy, and audit and control, with a teal panel of details.", cap: "Proof: built like bank infrastructure" }, { wide: true, src: "/assets/images/payman-case/redesign-who.webp", alt: "Banks, credit unions, and the people they serve: a grid of customers, members, staff, core banking, digital banking and voice and text around the Payman mark.", cap: "Fit: banks, credit unions, and the people they serve" }] },
 
-        { title: "The Impact", statement: "Impact: the surfaces now match the claim.",
+                  ] },
+
+        { title: "Outcomes and Takeaways", statement: "Outcome: the surfaces now match the claim.",
           text: ["Same facts, same viewport. This is a portfolio redesign: no production metrics, and the chat and approval code are illustrative."],
           media: [{ diagram: { kind: "slider", title: "Hero, desktop. Drag to compare", before: "/assets/images/payman-case/before-hero.jpg", after: "/assets/images/payman-case/after-hero.jpg", ar: "1440 / 900", altBefore: "The live paymanai.com hero.", altAfter: "The redesigned hero with the four-step control process." } }, { diagram: { kind: "slider", title: "The numbers, desktop. Drag to compare", before: "/assets/images/payman-case/before-numbers.jpg", after: "/assets/images/payman-case/after-numbers.jpg", ar: "1440 / 900", altBefore: "The live site's statistics section.", altAfter: "The redesigned statistics section, with sources in mono." } }, { diagram: { kind: "slider", title: "Hero, phone. Drag to compare", before: "/assets/images/payman-case/before-mobile.jpg", after: "/assets/images/payman-case/after-mobile.jpg", ar: "390 / 844", narrow: true, altBefore: "The live site's hero on a phone.", altAfter: "The redesigned hero on a phone." } }],
-          cta: { label: "View the prototype", href: "/payman" } },
-
+          parts: [
         { title: "The Takeaway", statement: "Takeaway: in regulated software, show the control before the capability.",
-          text: ["The page works because it drops the category's vocabulary of magic and warmth. Limits: a free stand-in serif, and no testing with real bank buyers. Next, I'd see whether compliance leads find the kill switch unprompted."] },
+          text: ["The page works because it drops the category's vocabulary of magic and warmth. Limits: a free stand-in serif, and no testing with real bank buyers. Next, I'd see whether compliance leads find the kill switch unprompted."],
+          cta: { label: "View the prototype", href: "/payman" } },
+          ] },
       ],
     },
   },
@@ -2306,7 +2410,11 @@ function openLightbox(src, alt, opener) {
       return g;
     };
     const statementOf = (sec) => { const s = sec.statement || sec.title, k = s.indexOf(": "); const t = k > -1 && k < 48 ? s.slice(k + 2) : s; return t.charAt(0).toUpperCase() + t.slice(1); };
-    const secs = p.cs.sections.map((sec, i) => ({ sec, i, id: slug(sec.title) || `section-${i + 1}` }));
+    // Every study tells its story in the same seven sections, in this order. A section's own `title` is optional;
+    // `parts` hold the extra beats (what we killed, what we shipped, one per surface) that sit under a section.
+    const CS_STRUCTURE = ["Overview / Background", "Defining the Problem", "Understanding your Users", "Your Role and Responsibilities", "Scope and Constraints", "Ideation Steps (The Solution)", "Outcomes and Takeaways"];
+    if (p.cs.sections.length !== CS_STRUCTURE.length) console.warn(`${p.name}: expected ${CS_STRUCTURE.length} sections, found ${p.cs.sections.length}`);
+    const secs = p.cs.sections.map((sec, i) => { const title = CS_STRUCTURE[i] || sec.title; return { sec, i, title, id: slug(title) || `section-${i + 1}` }; });
 
     // Placeholders take the project's colour, not grey
     mount.style.setProperty("--ph-bg", p.photo ? `url("${p.photo.src}") ${p.photo.pos} / cover` : `radial-gradient(70% 90% at 18% 12%, ${p.tint[0]}, transparent 70%), radial-gradient(80% 80% at 88% 92%, ${p.tint[1]}, transparent 72%), ${p.tint[2]}`);
@@ -2341,11 +2449,8 @@ function openLightbox(src, alt, opener) {
     main.append(crumb, hero, head);
 
     // ── Sections ──
-    secs.forEach(({ sec, i, id: sid }) => {
-      main.appendChild(el("hr", "study__hr"));
-      const s = el("section", "study__sec"); s.id = sid; s.setAttribute("aria-labelledby", `${sid}-t`);
-      const h = el("h2", "study__t", statementOf(sec)); h.id = `${sid}-t`;
-      s.append(el("p", "study__k", sec.title), h);
+    // A section and each of its parts fill the same way: text, stats, rows, media, steps, decisions, cards, quote, button
+    const fillSection = (s, sec, ph) => {
       (sec.text || []).forEach((t) => s.appendChild(el("p", "study__p", t)));
 
       if (sec.stats) s.appendChild(statsEl(sec.stats));
@@ -2354,7 +2459,7 @@ function openLightbox(src, alt, opener) {
       if (sec.prototype) { const ap = arcadePrototype(sec.prototype); ap.classList.add("is-wide"); s.appendChild(ap); }
       if (sec.media && sec.media.length) {
         const g = el("div", studyMediaGrid(sec.media, sec.mediaLayout));
-        sec.media.forEach((m, mk) => g.appendChild(mediaEl(m, sec.ph || pad2(i + 1), mk))); s.appendChild(g);
+        sec.media.forEach((m, mk) => g.appendChild(mediaEl(m, ph, mk))); s.appendChild(g);
       }
       if (sec.steps) { s.appendChild(el("h3", "study__sub", sec.stepsTitle || "How it works")); s.appendChild(trio(sec.steps, true)); }
       (sec.trades || []).forEach((t) => {
@@ -2377,6 +2482,20 @@ function openLightbox(src, alt, opener) {
         s.appendChild(q);
       }
       if (sec.cta) { const a = el("a", "study__btn"); a.href = sec.cta.href; a.target = "_blank"; a.rel = "noopener"; a.innerHTML = chev; a.prepend(sec.cta.label); s.appendChild(a); }
+    };
+    secs.forEach(({ sec, i, title, id: sid }) => {
+      main.appendChild(el("hr", "study__hr"));
+      const s = el("section", "study__sec"); s.id = sid; s.setAttribute("aria-labelledby", `${sid}-t`);
+      const h = el("h2", "study__t", statementOf(sec)); h.id = `${sid}-t`;
+      const k = el("p", "study__k"); k.append(el("span", "study__num", pad2(i + 1)), title);
+      s.append(k, h);
+      fillSection(s, sec, sec.ph || pad2(i + 1));
+      (sec.parts || []).forEach((part) => {
+        const ph3 = el("h3", "study__sub");   // the mono label sits inside the heading, so label and claim read as one
+        if (part.statement) ph3.append(el("span", "study__k", part.title), statementOf(part)); else ph3.append(part.title);
+        s.appendChild(ph3);
+        fillSection(s, part, part.ph || sec.ph || pad2(i + 1));
+      });
       main.appendChild(s);
     });
 
@@ -2393,8 +2512,8 @@ function openLightbox(src, alt, opener) {
     // ── Contents rail: section links, the current one marked ──
     const toc = el("nav", "study__toc"); toc.setAttribute("aria-label", "Contents");
     const ol = el("ol"); ol.setAttribute("role", "list");
-    const links = secs.map(({ sec, id: sid }) => {
-      const li = el("li"), a = el("a", "", sec.title); a.href = `#${sid}`;
+    const links = secs.map(({ i, title, id: sid }) => {
+      const li = el("li"), a = el("a"); a.append(el("span", "study__num", pad2(i + 1)), title); a.href = `#${sid}`;
       a.addEventListener("click", (e) => { e.preventDefault(); document.getElementById(sid).scrollIntoView({ behavior: smooth, block: "start" }); history.replaceState(null, "", `#${sid}`); });
       li.appendChild(a); ol.appendChild(li); return a;
     });

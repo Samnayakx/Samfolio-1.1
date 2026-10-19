@@ -206,6 +206,9 @@ body[data-page="case"] { --greyscale-200: 216 216 216; --greyscale-700: 133 133 
 .study__t { font: 400 clamp(26px, 2.6vw, 32px)/1.1 var(--font-ntype); text-wrap: balance; margin: var(--space-2) 0 var(--space-2) !important; }
 .study__p { font: 400 15px/1.55 var(--font-body); color: var(--st-muted); max-width: 64ch; }
 .study__note { font-size: 14px; }
+.study__num { color: var(--st-ac); margin-right: var(--space-2); }
+.study__toc .study__num { color: inherit; margin-right: var(--space-1); }
+.study__sub .study__k { display: block; margin-bottom: var(--space-2); }
 .study__sub { font: 400 clamp(20px, 2vw, 22px)/1.2 var(--font-ntype); margin-top: var(--space-6) !important; }
 
 /* Three-up items */

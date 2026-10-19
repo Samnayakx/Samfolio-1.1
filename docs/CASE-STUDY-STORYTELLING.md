@@ -4,6 +4,7 @@
 > case studies (Promo Zone, Cart Abandonment, Partner.fit, Fitclub V2, WhatsApp Polls), then tuned
 > for a senior / founding product designer narrative. Layout and UI are defined in `DESIGN.md`
 > ("Case-study long-form direction"); this file only covers **what the story says and in what order**.
+> Every case study, UX or branding, uses the same seven sections (after Ruben Cespedes' "Case Study Structure").
 
 ---
 
@@ -22,35 +23,31 @@
 
 ---
 
-## 2. The master arc
+## 2. The seven sections
 
-Ten beats. Most case studies use six to nine of them; the order never changes.
+Every case study has exactly seven sections, in this order. The order never changes, and the renderer
+(`CS_STRUCTURE` in `js/site.js`) supplies the numbered label, so a section object has no `title` to maintain.
+`tools/check-seo.cjs` fails if a prerendered page does not have all seven.
 
-| # | Beat | Section `title` (contents rail) | The statement answers | Typical blocks |
-|---|---|---|---|---|
-| 01 | **The brief** | `Overview` or `The brief` | What was I asked to do, and what was really at stake? | `text`, three `cards` (Problem / Solution / Outcome), hero media |
-| 02 | **The turn** | `Problem` | What did I find that changed the question? | `text`, `media` (journey, old flow) |
-| 03 | **Evidence** | `Research` / `Insights` | What did we learn, from whom, and how many? | numbered `cards` (count, method, finding), `dash` |
-| 04 | **Reframe** | `Reframe` / `Strategy` | What is the problem now, how will we know we won, what must not break? | `cards`: Goal, Success metric, Guardrail |
-| 05 | **Principles** | `Principles` | What rules did I set before designing, so later trade-offs had a referee? | `steps` (3–4 principles) |
-| 06 | **Explorations** | `Ideation` / `Exploration` | What did we try and kill, and why? | `media` diagram `versus`, `cards` with reasons |
-| 07 | **Decisions** | `Solution` / feature names | What did I decide, what did it cost, what did it buy? | `trades` (Decision 1…n), `ui`, `media` |
-| 08 | **Validation** | `Validation` / `Testing` | How did we test it before and after shipping? | `text`, `cards`, `dash` |
-| 09 | **Impact** | `Impact` / `Outcome` | What changed for users and for the business? | `dash`, `cards`, `quote` |
-| 10 | **Reflection** | `Learning` / `Next steps` | What would I do differently, and what comes next? | `text`, `quote`, risks as `cards` |
+| # | Section (contents rail) | The statement answers | Typical blocks |
+|---|---|---|---|
+| 01 | **Overview / Background** | What is this, who is it for, and what happened? | `text`, three `cards` (Problem / Solution / Outcome), hero media |
+| 02 | **Defining the Problem** | What was broken, what did I find that changed the question, and what did it cost? | `text`, `media` (journey, old flow), `cards` |
+| 03 | **Understanding your Users** | Who are they, what did we learn from them, and how many? | `stats`, numbered findings (`trades` or `cards`) |
+| 04 | **Your Role and Responsibilities** | What was mine, who did I work with, and for how long? | `text`, `cards` (role, team, tools) |
+| 05 | **Scope and Constraints** | What boxed this in, how will we know we won, and what did we choose not to do? | `cards`: Success metric, Guardrail, Limits; `steps` for principles |
+| 06 | **Ideation Steps (The Solution)** | What did we try, kill and ship, and why? | `parts` (one per beat), `trades` (Decision 1…n), `media`, `ui` |
+| 07 | **Outcomes and Takeaways** | What changed, what are the honest limits, and what would I do differently? | `dash`, `cards`, `quote`, `parts` for Learning |
 
-### Prompts for each beat
+### Prompts for each section
 
-1. **The brief.** "When I joined ___, I was asked to ___. The real problem was ___." End with one line of stakes (revenue, retention, trust, time).
-2. **The turn.** One sentence that reframes the brief. "They weren't churning, they were quietly drifting."
-3. **Evidence.** Lead with scale (`650+ reached, 72 qualified, 12 interviewed`), then 3–4 numbered findings. Each finding is a number plus a plain-language meaning.
-4. **Reframe.** Write the new problem statement as a question. Add one success metric and one guardrail.
-5. **Principles.** Three or four imperative rules ("Ask less upfront", "Never a dead end").
-6. **Explorations.** For each killed idea: the idea in one line, the reason it died in one line.
-7. **Decisions.** Use the trade-off rows: `User need / Business need / Constraint / Compromise`, or `Issue / Hypothesis / Result` for iterations.
-8. **Validation.** Method, sample, duration. "A 2-week A/B test", "12 AI agents, then 8 power users".
-9. **Impact.** The headline metric first, then two or three supporting metrics, then what it meant for the business.
-10. **Reflection.** One lesson that generalises beyond the project, and one honest limitation.
+1. **Overview / Background.** "When I joined ___, I was asked to ___. The real problem was ___." End with one line of stakes (revenue, retention, trust, time).
+2. **Defining the Problem.** One sentence that reframes the brief. "They weren't churning, they were quietly drifting." Then the question the rest of the study answers.
+3. **Understanding your Users.** Lead with scale (`650+ reached, 72 qualified, 12 interviewed`), then 3–4 findings. Each finding is a number plus a plain-language meaning. If there was no user research, say so and name the evidence you used instead.
+4. **Your Role and Responsibilities.** Title, timeline, team, and what you owned. Use "I" for owned work and "we" for team work, and say so once. Say plainly when the project was solo.
+5. **Scope and Constraints.** The success metric, the guardrail, and the limits (data, time, people, platform). Include the rules you set before designing, so later trade-offs had a referee.
+6. **Ideation Steps (The Solution).** Killed ideas first (the idea in one line, the reason it died in one line), then decisions with trade-off rows: `User need / Business need / Constraint / Compromise`, or `Issue / Hypothesis / Result` for iterations. Put each beat in a `part`.
+7. **Outcomes and Takeaways.** The headline metric first, then two or three supporting metrics, then what it meant for the business. Close with one lesson that generalises, and one honest limitation.
 
 ---
 
@@ -107,25 +104,31 @@ Named clients (Gap, Salesforce, Steele) only carry numbers that are already in t
 
 ## 6. Variants
 
-- **Shipped product.** Full arc, Impact carries measured results.
-- **Concept / take-home.** Swap `Validation` for `Measurement` (plan, not results) and add `Risks` in the reflection. Say "simulated data" once, plainly.
-- **Confidential.** Brief + one decision + headline outcome + `cta` "Book a call". Three sections at most.
-- **Early-stage AI.** Separate *what the live product proved* from *where the agent is going*. Pilot numbers are labelled "early pilot".
-- **Startup, then acquired (Gap 3D Fit).** Keep the original storyline (Problem, Decisions, Solution, Impact, Reflection) and add a short Overview that states the hypothesis with the startup and acquisition context, using public sources. For each decision: the real screen first, then the four trade-off rows, then "What testing showed / What I did next" taken from the real research. Lead Impact with the method ("A/B test") before the number. Use real screens and published numbers only; do not redraw UI that already exists.
-- **Compressed six-beat.** Overview · Insight · What we killed · What we shipped · Build & test · Impact & learning. Merge evidence, findings and reframe into one Insight section; put sub-beats (findings, killed ideas, features) in `trades` so they get subheads without adding rail items. Trailhead Solve uses this.
+The seven sections never change. A variant only changes what goes inside them.
+
+- **Shipped product.** Outcomes carries measured results.
+- **Concept / take-home (Arcade).** In 07, show a `Measurement` part (a plan, not results) and a `Takeaway` part with risks. Say "simulated data" once, plainly, in 05.
+- **Confidential.** Keep all seven, but keep each short. Overview, one decision in 06, the headline outcome, and `cta` "Book a call".
+- **Early-stage AI (CotonAI Agent).** In 05, separate *what the live product proved* from *where the agent is going*. Pilot numbers are labelled "early pilot".
+- **Startup, then acquired (Gap 3D Fit).** Overview states the hypothesis with the startup and acquisition context, using public sources. 06 holds the decisions (real screen first, then the four trade-off rows, then "What testing showed / What I did next") and the final flow as a part. Lead 07 with the method ("A/B test") before the number. Use real screens and published numbers only.
+- **Compressed (Trailhead Solve).** 06 carries `What we killed`, `What we shipped` and `Build & test` as parts, so the longer beats get sub-heads without adding rail items.
+- **Systems work (CotonAI Design System).** 03 is about the people who build with the system, not end users. If there was no user study, say so.
+- **Branding and redesign (Payman AI).** Positioning is the decision. 02 is the tension between product and surface, 03 is the buyer, 06 holds the decision, the system and the page as parts, and 07 names when there are no production metrics. The system is *derived from* the decision, never assembled from taste, and each system paragraph starts with its own name.
 
 ---
 
 ## 7. Schema reference (`PROJECTS[].cs.sections` in `js/site.js`)
 
+`sections` is an array of exactly seven objects, in the order above. The label and number come from `CS_STRUCTURE`, not from the object. Put an optional `title` on a section for readability only.
+
 ```js
 {
-  title: "Reframe",                                   // contents rail + mono label
-  statement: "Reframe: re-engagement, not retention.", // NType heading (prefix stripped)
+  title: "Scope and Constraints",                      // optional, for readability. The rail label comes from CS_STRUCTURE.
+  statement: "Constraints: public docs only, no Agentforce.", // NType heading (prefix stripped)
   text: ["Two or three short paragraphs."],
-  cards: [["Goal", "Bring power users back between milestones."],
-          ["Success metric", "Session duration and post-milestone drop-off."],
-          ["Guardrail", "No AI speaking on a real person's behalf."]],
+  cards: [["Success metric", "Session duration and post-milestone drop-off."],
+          ["Guardrail", "No AI speaking on a real person's behalf."],
+          ["Limits", "Curated public documentation, 8 power users."]],
   steps: [["Ask less upfront", "Optional line."]],    // numbered
   stepsTitle: "Principles",                           // heading above steps (default "How it works")
   trades: [{ n: "Decision 1", t: "Accuracy vs completion",
@@ -135,31 +138,35 @@ Named clients (Gap, Salesforce, Steele) only carry numbers that are already in t
   dash: [{ type: "kpi", w: 4, label: "Add-to-bag", value: "+61%", note: "…" }],
   quote: "One sentence.", quoteBy: "Name or role",
   cta: { label: "Book a call", href: BOOK_A_CALL },
-  ph: "02",   // optional: pins placeholder IDs (C2-02-1…) when sections are inserted above
+  parts: [{ title: "What we killed", statement: "What we killed: …", /* any field above */ }],
+  ph: "02",   // optional: pins placeholder IDs (C2-02-1…) when sections move
 }
 ```
+
+`parts` render under the section's own content. Each part shows a mono label (its `title`) and an NType sub-heading (its `statement`), then fills like a section. Use parts when more than one beat belongs under one of the seven sections.
 
 ### Copy-ready skeleton
 
 ```js
 sections: [
-  { title: "Overview", statement: "Overview: <the stakes in one line>.",
+  { statement: "Overview: <the stakes in one line>.",
     text: ["When I joined <team>, I was asked to <brief>.", "<What was really at stake>."],
     cards: [["Problem: <claim>", "<line>"], ["Solution: <claim>", "<line>"], ["Outcome: <metric>", "<line>"]] },
-  { title: "Problem", statement: "Problem: <the turn>.", text: ["<Why the brief was the wrong question>."] },
-  { title: "Research", statement: "Research: <what the evidence said>.",
+  { statement: "Problem: <the turn>.", text: ["<Why the brief was the wrong question>."] },
+  { statement: "Users: <what the evidence said>.",
     text: ["<Method, scale, duration>."], cards: [["<n> <finding>", "<meaning>"], ["…", "…"], ["…", "…"]] },
-  { title: "Reframe", statement: "Reframe: <new problem as a claim>.",
-    cards: [["Goal", "…"], ["Success metric", "…"], ["Guardrail", "…"]] },
-  { title: "Principles", statement: "Principles: <the rule that refereed every trade-off>.",
-    stepsTitle: "Principles", steps: [["<Principle 1>", "…"], ["<Principle 2>", "…"], ["<Principle 3>", "…"]] },
-  { title: "Explorations", statement: "Explorations: <n> ideas, built to be killed.",
-    cards: [["<Idea>: killed", "<reason>"], ["<Idea>: killed", "<reason>"]] },
-  { title: "Solution", statement: "Solution: <the bet>.",
-    trades: [{ n: "Decision 1", t: "<A vs B>", rows: [["User need", "…"], ["Business need", "…"], ["Constraint", "…"], ["Compromise", "…"]] }] },
-  { title: "Validation", statement: "Validation: <how we knew before launch>.", text: ["<Method, sample, duration>."] },
-  { title: "Impact", statement: "Impact: <headline metric>.", dash: [/* kpis */], cards: [/* supporting */] },
-  { title: "Learning", statement: "Learning: <the lesson that generalises>.", text: ["…"], quote: "…", quoteBy: "…" },
+  { statement: "Role: <what I owned>.", text: ["<Title, timeline, team>."],
+    cards: [["<Title>", "<dates>"], ["Owned", "<what>"], ["Worked with", "<who>"]] },
+  { statement: "Constraints: <what boxed it in>.",
+    cards: [["Success metric", "…"], ["Guardrail", "…"], ["Limits", "…"]] },
+  { statement: "Solution: <the bet>.",
+    parts: [
+      { title: "What we killed", statement: "What we killed: <n> ideas, built to be killed.", cards: [["<Idea>: killed", "<reason>"]] },
+      { title: "What we shipped", statement: "What we shipped: <the bet>.",
+        trades: [{ n: "Decision 1", t: "<A vs B>", rows: [["User need", "…"], ["Business need", "…"], ["Constraint", "…"], ["Compromise", "…"]] }] },
+    ] },
+  { statement: "Outcome: <headline metric>.", dash: [/* kpis */], cards: [/* supporting */],
+    parts: [{ title: "Learning", statement: "Learning: <the lesson that generalises>.", text: ["…"], quote: "…", quoteBy: "…" }] },
 ]
 ```
 
@@ -167,29 +174,16 @@ sections: [
 
 ## 8. Pre-publish checklist
 
+- [ ] There are exactly seven sections, in order. `node tools/check-seo.cjs` passes after the prerender.
 - [ ] The first paragraph says what I was asked to do and what I found.
 - [ ] Every statement is a claim a reviewer could disagree with.
 - [ ] There is at least one killed idea or explicit trade-off.
-- [ ] Success metric and guardrail are named before the solution.
-- [ ] The headline metric appears in the hero tile, the Overview and Impact, with the same value.
+- [ ] Success metric and guardrail are named in Scope and Constraints, before the solution.
+- [ ] Section 03 says who the users are, or says plainly that there was no user research.
+- [ ] Section 04 says what I owned and what was shared.
+- [ ] The headline metric appears in the hero tile, the Overview and Outcomes, with the same value.
 - [ ] Every number is observed, or labelled `Prototype target`, `Modeled estimate`, `Illustrative` or `Measurement plan`.
 - [ ] Team work says "we" and names the team once.
 - [ ] The reflection names one limitation.
 
 ---
-
-## 5. The branding and redesign arc (after Contra, "Crown AI Rebranding for Enterprise Credibility")
-
-Used for identity and redesign work where the story is a positioning call, not a research process (Payman AI). Six beats, in this order, with these section titles:
-
-| # | Section `title` | The statement answers | What goes in it |
-|---|---|---|---|
-| 1 | **The Setup** | Who is the company, what is the product, who is the buyer, and what does the surface say today? | Two or three paragraphs, hero media |
-| 2 | **The Tension** | Why does the category's default fail this buyer? What is the gap between product and surface? | The category problem, the pressure, the real challenge (belief, not awareness) |
-| 3 | **The Decision** | What was the one strategic call? What did it reject? | Positioning line, the rejected conventions, the principle |
-| 4 | **The System** | How does the identity follow from the decision? | Color, Typography, Artwork, Messaging architecture, one paragraph each, led by its name |
-| 5 | **The Impact** | What do the surfaces now say? | Qualitative outcome; name when there are no production metrics |
-| 6 | **The Takeaway** | What generalises? | One principle, then honest limits and the next step |
-
-Rules: the system is *derived from* the decision, never assembled from taste; each System paragraph starts with its own name and explains the reasoning, not only the value; copy is exactly one idea per paragraph; honesty about a portfolio redesign (no invented metrics) is part of the story.
-

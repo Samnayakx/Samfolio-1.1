@@ -670,19 +670,19 @@ Three page templates share one skeleton, so a new page only needs content: **Pla
 
 **Writing**: rows of `label | content`. The label holds the date and read time. The content holds a mono tag, the title (NType 26–40px, `ch` limit 22), an excerpt (Geist 15px, muted, ≤52ch) and an underlined "Read article ›" link. The first post is a **feature**: a 21:9 gradient tile with a pixel artifact and a larger title (up to 52px). Hover dims the title and nudges the chevron. A newsletter block closes the page, with an email input (48px, outlined, mono caps, yellow focus ring) and a primary button. The form validates locally and confirms in a mono caption line.
 
-**Case study**: the same head, then a full-width metric tile (as in §9.5b), a meta strip of up to five items (Role, Timeline, Scope, Team, Platform; any that apply) between hairlines, and a sequence of rows, each `label | content`. The rows are rendered from the project's `cs.sections` data, so each case study carries its own structure and numbering. Each section can combine a statement, stat cards, paragraphs, a pull quote, outlined cards, trade-off cards (user need / business need / constraint / compromise) and numbered steps. The default template looks like this:
+**Case study**: the same head, a meta strip of up to five items (Role, Timeline, Scope, Team, Platform; any that apply) between hairlines, and a sequence of sections rendered from the project's `cs.sections` data. Every case study has the same seven sections, in this order, and the mono eyebrow above each statement carries its number in the accent colour (`01 OVERVIEW / BACKGROUND`); the contents rail repeats the numbers:
 
-| # | Row | Content |
+| # | Section | Content |
 |---|---|---|
-| 01 | Overview | Lead sentence (NType 20–28px) and three stat cards |
-| 02 | The problem | One-sentence statement (NType 28–48px) and context |
-| 03 | Research | What was done, and three outlined cards (count, method, finding) |
-| 04 | Process | Four steps in a 2-up grid, each an image tile, title and line |
-| 05 | The solution | Feature blocks: one full-width, then split image/text pairs that alternate sides |
-| 06 | Outcome | Two large metrics (up to 88px) and a note on how success was measured |
-| 07 | Reflection | Two columns: what worked, what I'd change |
+| 01 | Overview / Background | Statement, short paragraphs and Problem / Solution / Outcome cards |
+| 02 | Defining the Problem | The turn, and the context that changed the question |
+| 03 | Understanding your Users | Scale, method and findings (stat row and outlined cards) |
+| 04 | Your Role and Responsibilities | Title, team, timeline and what I owned |
+| 05 | Scope and Constraints | Success metric, guardrail and limits |
+| 06 | Ideation Steps (The Solution) | Killed ideas, trade-off decisions and the shipped design, as sub-sections (`parts`) |
+| 07 | Outcomes and Takeaways | Headline metrics, honest limits and what I'd change |
 
-It ends with previous and next case study links in two outlined cards. The page title, client, year, description, hero image and tint are filled from the `PROJECTS` list in `site.js`, using the `case` query parameter, so all four Work cards open the same template with their own content.
+A section can combine a statement, stat cards, paragraphs, a pull quote, outlined cards, trade-off cards (user need / business need / constraint / compromise), numbered steps and `parts`. A part shows a mono label and an NType 20-22px sub-heading, with a larger gap above it than between a section's own blocks. What each section says is covered in `CASE-STUDY-STORYTELLING.md`. It ends with previous and next case study links in two outlined cards. The page title, client, year, description, hero image and tint are filled from the `PROJECTS` list in `site.js`, using the `case` query parameter, so all four Work cards open the same template with their own content.
 
 Placeholder content is marked as such (for example "Template text. Replace with your own.", and image placeholders labelled with their aspect ratio) and uses the project's tint, so an unfilled template still looks designed.
 
@@ -846,9 +846,10 @@ meta row → sections, each preceded by a hairline → previous / next cards.
 | Contents rail | Sticky at `--space-12`. Section titles in mono 12px caps, muted. The current section turns accent with a 6px **square** marker to its left (scroll-spy). A "Book a call ›" link sits below. Hidden below 1024px |
 | Hero | The product video, or the project name (NType 32–48px) on a soft gradient of the project's tint. Square corners |
 | Title block | Mono eyebrow `Case study ( 01 ) · Org`, NType h1 32–40px, Geist 16px muted lead, then a meta row (`auto-fit, minmax(150px)`): mono caps label over a Geist 15px value |
-| Section | Mono caps label (the section title) → NType heading 26–32px (the statement) → Geist 15px/1.55 muted paragraphs, max 64ch. Hairline above, `--space-9` before and `--space-7` after it |
+| Section | Mono caps label, prefixed with the section number in accent (`01`–`07`, the fixed seven-section structure in `CASE-STUDY-STORYTELLING.md`) → NType heading 26–32px (the statement) → Geist 15px/1.55 muted paragraphs, max 64ch. Hairline above, `--space-9` before and `--space-7` after it |
 | Three-up | Cards, steps and decision rows render as a borderless 3-column list (2 columns for 2 or 4 items): Geist 15px/500 title over a muted line. Steps carry an accent mono index |
 | Decisions | NType 20–22px subheading `Decision 1: …`, then its rows as a three-up |
+| Parts | Extra beats under a section: a mono caps label, then an NType 20–22px sub-heading, with `--space-7` above the label |
 | Figure panel | `--greyscale-100` ground (dm-light in dark mode), 1px hairline, square corners, mono caps caption in the top left. Data tiles inside are white 4px-radius cards; the accent marks only the data |
 | Media | One item full column width, two items side by side, square corners, Geist 13px muted captions |
 | Quote | NType 22–26px with a mono caps attribution. No border or fill |

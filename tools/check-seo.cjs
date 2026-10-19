@@ -3,6 +3,7 @@
 const fs = require("fs"), path = require("path");
 const root = path.resolve(__dirname, "..");
 const files = ["index.html", "about.html", "writing.html", "playground.html", "case-study.html", ...["writing", "work"].flatMap((d) => (fs.existsSync(path.join(root, d)) ? fs.readdirSync(path.join(root, d)).filter((f) => f.endsWith(".html")).map((f) => `${d}/${f}`) : []))];
+const STRUCTURE = "overview-background,defining-the-problem,understanding-your-users,your-role-and-responsibilities,scope-and-constraints,ideation-steps-the-solution,outcomes-and-takeaways";
 const seen = { title: new Map(), desc: new Map() }; let bad = 0;
 const fail = (f, m) => { console.error(`✗ ${f}: ${m}`); bad++; };
 for (const f of files) {
@@ -11,5 +12,9 @@ for (const f of files) {
   if (!title) fail(f, "missing <title>"); if (!desc) fail(f, "missing meta description"); if (!canon) fail(f, "missing canonical");
   if (f !== "case-study.html") for (const [k, v] of [["title", title], ["desc", desc]]) if (v) { if (seen[k].has(v)) fail(f, `duplicate ${k} with ${seen[k].get(v)}`); seen[k].set(v, f); }
   if (f.startsWith("work/") && !/study__sec/.test(s)) fail(f, "not prerendered (no case content in HTML)");
+  if (f.startsWith("work/")) { // every case study tells its story in the same seven sections, in order
+    const ids = [...s.matchAll(/<section class="study__sec" id="([^"]+)"/g)].map((m) => m[1]).join(",");
+    if (ids !== STRUCTURE) fail(f, `sections are not the seven-section structure (found: ${ids || "none"})`);
+  }
 }
 console.log(bad ? `${bad} problem(s)` : `OK: ${files.length} pages checked`); process.exit(bad ? 1 : 0);
