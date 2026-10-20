@@ -109,7 +109,7 @@
      preference, not a live input. */
   const stillness = () =>
     typeof window !== "undefined" &&
-    !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    (window.motionReduced ? window.motionReduced() : !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches);
 
   /* ── inlined from lab/motion ──────────────────────── */
   /* ── elastic, as numbers a person can hold ─────────────────

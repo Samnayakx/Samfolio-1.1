@@ -3,7 +3,8 @@
 // Demos take { auto } — in a tile they play a scripted loop; in the overlay they are fully interactive.
 (() => {
   const NS = "http://www.w3.org/2000/svg";
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const motionOff = () => (window.motionReduced ? window.motionReduced() : matchMedia("(prefers-reduced-motion: reduce)").matches);
+  const reduce = motionOff();
   const h = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -22,14 +23,19 @@
   }
 
   // Runs a loop only while the element is on screen
+  // ...and only while the tab is shown and motion isn't paused (the header's Pause motion switch applies live)
   function whileVisible(node, start) {
-    let stop = null;
-    const io = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting && !stop) stop = start();
-      else if (!e.isIntersecting && stop) { stop(); stop = null; }
-    }, { threshold: 0.2 });
+    let stop = null, visible = false;
+    const sync = () => {
+      const run = visible && !document.hidden && !motionOff();
+      if (run && !stop) stop = start();
+      else if (!run && stop) { stop(); stop = null; }
+    };
+    const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; sync(); }, { threshold: 0.2 });
     io.observe(node);
-    return () => { io.disconnect(); stop && stop(); };
+    document.addEventListener("visibilitychange", sync);
+    addEventListener("motionchange", sync);
+    return () => { io.disconnect(); document.removeEventListener("visibilitychange", sync); removeEventListener("motionchange", sync); stop && stop(); stop = null; };
   }
 
   const ICON = {
@@ -127,7 +133,7 @@
 
     // Tile loop: replay the intro, then a scripted corner drag and an edge drag
     let stopLoop = null;
-    if (auto && !reduce) stopLoop = whileVisible(c, () => {
+    if (auto) stopLoop = whileVisible(c, () => {
       let on = true;
       const tween = (d, to, ms) => new Promise((res) => {
         const s0 = { ...r }, t0 = performance.now(), el = c.querySelector(`.bb__h[data-d="${d}"]`);
@@ -210,7 +216,7 @@
 
     // Tile loop: a cursor that drifts across the bar, pauses, and leaves
     let stopLoop = null;
-    if (auto && !reduce) stopLoop = whileVisible(c, () => {
+    if (auto) stopLoop = whileVisible(c, () => {
       let on = true, real = false;
       const enter = () => (real = true), leave = () => (real = false);
       bar.addEventListener("pointerenter", enter); bar.addEventListener("pointerleave", leave);
@@ -278,7 +284,7 @@
       it.raf = requestAnimationFrame(step);
     }
     let stopLoop = null;
-    if (auto && !reduce) stopLoop = whileVisible(c, () => {
+    if (auto) stopLoop = whileVisible(c, () => {
       let on = true;
       (async () => { let prev = -1; while (on) { await wait(900 + Math.random() * 700); if (!on) break; let i; do { i = Math.floor(Math.random() * items.length); } while (i === prev); prev = i; wiggle(items[i]); } })();
       return () => { on = false; };
@@ -518,7 +524,7 @@
 
     // Tile loop: the whole flow, by hand and then by AI
     let stopLoop = null;
-    if (auto && !reduce) stopLoop = whileVisible(root, () => {
+    if (auto) stopLoop = whileVisible(root, () => {
       let on = true;
       const press = async (el, ms = 160) => { el.classList.add("is-press"); await wait(ms); el.classList.remove("is-press"); };
       (async () => {
@@ -629,7 +635,7 @@
     requestAnimationFrame(() => { place(); c.style.visibility = ""; });
     document.fonts && document.fonts.ready.then(place);
     let stopLoop = null;
-    if (auto && !reduce) stopLoop = whileVisible(c, () => { const id = setInterval(() => go((cur + 1) % STEPS.length), 3400); return () => clearInterval(id); });
+    if (auto) stopLoop = whileVisible(c, () => { const id = setInterval(() => go((cur + 1) % STEPS.length), 3400); return () => clearInterval(id); });
     return () => { clearTimeout(swap); f.stop(); stopLoop && stopLoop(); };
   }
 
@@ -697,7 +703,7 @@
     });
     paint("NPM"); requestAnimationFrame(place); document.fonts && document.fonts.ready.then(place);
     let stopLoop = null;
-    if (auto && !reduce) stopLoop = whileVisible(c, () => {
+    if (auto) stopLoop = whileVisible(c, () => {
       let on = true;
       (async () => {
         while (on) {
@@ -756,7 +762,7 @@
     };
     raf = requestAnimationFrame(tick);
     let stopLoop = null;
-    if (auto && !reduce) stopLoop = whileVisible(c, () => {
+    if (auto) stopLoop = whileVisible(c, () => {
       let on = true;
       (async () => {
         while (on) {
@@ -814,7 +820,7 @@
     apply(); ROWS.forEach((r) => { st[r.key].shown = frac(st[r.key]); });
     raf = requestAnimationFrame(tick);
     let stopLoop = null;
-    if (auto && !reduce) stopLoop = whileVisible(root, () => {
+    if (auto) stopLoop = whileVisible(root, () => {
       let on = true;
       (async () => {
         while (on) {
@@ -901,7 +907,7 @@
     raf = requestAnimationFrame(tick);
     setTimeout(() => { off = offT; }, 60);
     let stopLoop = null;
-    if (auto && !reduce) stopLoop = whileVisible(c, () => { setPlaying(true); if (t > DUR - 20) seek(60); return () => setPlaying(false); });
+    if (auto) stopLoop = whileVisible(c, () => { setPlaying(true); if (t > DUR - 20) seek(60); return () => setPlaying(false); });
     return () => { cancelAnimationFrame(raf); document.removeEventListener("click", onDoc); unDrag(); f.stop(); stopLoop && stopLoop(); };
   }
 
@@ -989,7 +995,7 @@
 
     // In the board tile: write a line, send it, change the look, and go round again
     let stopLoop = null;
-    if (auto && !reduce) stopLoop = whileVisible(c, () => {
+    if (auto) stopLoop = whileVisible(c, () => {
       let on = true;
       const lines = ["Call mum on Sunday", "Draft the launch note", "Walk before sunset"];
       (async () => {
@@ -1047,7 +1053,7 @@
     if (!reduce) { card.addEventListener("pointermove", (e) => { if (e.pointerType !== "touch") move(e); }); card.addEventListener("pointerleave", leave); }
     place();
     let stopLoop = null;
-    if (auto && !reduce) stopLoop = whileVisible(c, () => {
+    if (auto) stopLoop = whileVisible(c, () => {
       let on = true;
       (async () => { let k = 0; while (on) { await wait(2400); if (!on) return; shuffle(); const g = c.querySelectorAll(".es__g")[k++ % 5]; g.classList.remove("is-hop"); void g.offsetWidth; g.classList.add("is-hop"); } })();
       return () => { on = false; };
@@ -1317,7 +1323,7 @@
 
     // ── Tile loop: place an order from start to finish ──
     let stopLoop = null;
-    if (auto && !reduce) stopLoop = whileVisible(root, () => {
+    if (auto) stopLoop = whileVisible(root, () => {
       let on = true;
       const go = async (ms, fn) => { if (!on) throw 0; fn && fn(); await wait(ms); };
       (async () => {
@@ -2385,7 +2391,7 @@ ${stops}
     if (auto && !reduce) {
       const seq = ["all", "asterisk", "orbit", "cells", "word", "matrix", "burst", "ptrail", "ribbon", "proc"];
       let n = 0;
-      tour = setInterval(() => { n++; if (n % 2 === 0) S.color = (S.color + 1) % PAL.length; show(seq[n % seq.length]); refreshTop(); }, 2800);
+      tour = setInterval(() => { if (motionOff() || document.hidden) return; n++; if (n % 2 === 0) S.color = (S.color + 1) % PAL.length; show(seq[n % seq.length]); refreshTop(); }, 2800);
     }
     return () => { stopRun(); f.stop(); clearInterval(tour); clearTimeout(commitT); clearTimeout(linkT); ro && ro.disconnect(); themeWatch && themeWatch.disconnect(); if (full) document.removeEventListener("keydown", onKey); };
   }

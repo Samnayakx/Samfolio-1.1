@@ -1,6 +1,17 @@
 // Brand mark: a ring of 12 flat discs seen in perspective, plus the page loader.
 // Disc i sits at angle θ around the ring: x = RX·sin θ, y = −RY·cos θ, and narrows as it turns edge-on.
 (function () {
+  // Motion preference: the OS setting, or the site's own "Pause motion" switch (saved). Applied before first paint.
+  const osReduce = matchMedia("(prefers-reduced-motion: reduce)");
+  try { if (localStorage.getItem("motion") === "reduce") document.documentElement.dataset.motion = "reduce"; } catch (e) {}
+  window.motionReduced = () => osReduce.matches || document.documentElement.dataset.motion === "reduce";
+  window.motionLocked = () => osReduce.matches;   // the OS asks for reduced motion; the switch can't override it
+  window.setMotion = (reduce) => {
+    document.documentElement.dataset.motion = reduce ? "reduce" : "full";
+    try { localStorage.setItem("motion", reduce ? "reduce" : "full"); } catch (e) {}
+    dispatchEvent(new Event("motionchange"));
+  };
+  osReduce.addEventListener?.("change", () => dispatchEvent(new Event("motionchange")));
   // Apply the saved theme before first paint so the loader (and page) start in the right mode
   // The browser chrome (Safari toolbar, Android address bar) follows the page theme too
   window.setThemeColor = (t) => {
@@ -15,7 +26,7 @@
   window.setThemeColor(document.documentElement.dataset.theme);
   // Page transition: arriving from another page of the site, start under a black cover; site.js lifts it and plays the entrance
   try {
-    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (!window.motionReduced()) {
       const h = document.documentElement, c = document.createElement("div");
       c.className = "pt-cover"; document.body.appendChild(c);
       if (sessionStorage.getItem("pt")) h.classList.add("pt-in");
@@ -26,7 +37,7 @@
   } catch (e) {}
   const NS = "http://www.w3.org/2000/svg";
   const RX = 228, RY = 118, R = 50, N = 12, STEP = 360 / N;
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduce = window.motionReduced();
   const ease = { out: (u) => 1 - (1 - u) ** 2, back: (u) => 1 + 2.2 * (u - 1) ** 3 + 1.2 * (u - 1) ** 2 };
 
   function mount(svg) {

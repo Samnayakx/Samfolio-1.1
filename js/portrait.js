@@ -86,17 +86,18 @@
 
   /* ── Behaviour: stand → push-ups → stand …; hover/tap = stand up & wave ── */
   const fig = host;
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduce = () => (window.motionReduced ? window.motionReduced() : matchMedia('(prefers-reduced-motion: reduce)').matches);
   let mode = 'stand', hovering = false, timer;
   const set = m => { mode = m; fig.dataset.mode = hovering ? 'hi' : m; };
   const loop = () => {
     clearTimeout(timer);
-    if (reduce) return;
-    timer = setTimeout(() => { if (!hovering) set(mode === 'stand' ? 'push' : 'stand'); loop(); }, mode === 'stand' ? 4200 : 6400);
+    if (reduce()) return;
+    timer = setTimeout(() => { if (!hovering && !document.hidden) set(mode === 'stand' ? 'push' : 'stand'); loop(); }, mode === 'stand' ? 4200 : 6400);
   };
   const hi = on => { hovering = on; fig.dataset.mode = on ? 'hi' : mode; };
   fig.closest('.portrait__frame').addEventListener('pointerenter', () => hi(true));
   fig.closest('.portrait__frame').addEventListener('pointerleave', () => hi(false));
   fig.closest('.portrait__frame').addEventListener('click', () => { hi(true); setTimeout(() => hi(false), 2200); });
-  set(reduce ? 'stand' : 'push'); loop();
+  set(reduce() ? 'stand' : 'push'); loop();
+  addEventListener('motionchange', () => { if (reduce()) { clearTimeout(timer); set('stand'); } else loop(); });
 })();

@@ -1,3 +1,20 @@
+// Motion preference helper: loader.js defines the real one (OS setting + the site's Pause motion switch)
+window.motionReduced ||= () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Looping muted videos play only while on screen, the tab is visible and motion isn't paused.
+// With motion paused they show their poster; `manual` ones (case-study demos) get native controls instead.
+const autoVideo = (v, threshold, manual = false) => {
+  let visible = false;
+  const sync = () => {
+    const off = motionReduced();
+    if (manual) v.controls = off;
+    if (visible && !document.hidden && !off) v.play().catch(() => {}); else v.pause();
+  };
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; sync(); }, { threshold }).observe(v);
+  document.addEventListener("visibilitychange", sync);
+  addEventListener("motionchange", sync);
+};
+
 // ── Dot-matrix glyphs: 11×11 bitmaps, "#" = lit dot ──
 const GLYPHS = {
   // About page characters (13×13, "e" = blinking eye)
@@ -545,7 +562,7 @@ const PROJECTS = [
           cards: [["Drapr: 3D avatar try-on", "A Y Combinator startup. Gap acquired it in August 2021."], ["Hypothesis: ask less, prove more", "Little upfront. Explain the size when trust is at stake."], ["Result: +61% add-to-bag", "An A/B test of the new flow against the old one."]] },
         { title: "Defining the Problem", statement: "Problem: the old flow showed fit. Shoppers still felt risk.",
           text: ["Denim made sizing harder: one size had to explain multiple body zones without turning checkout into a long form."],
-          media: [{ src: "/assets/images/gap/problem-size-chart.webp", alt: "Gap size guide for women's jeans, with women's regular, petite and tall tabs and a table of waist and hip measurements in inches for each size from XXXS to S.", cap: "Charts were precise; comfort was not." }, { src: "/assets/images/gap/problem-denim-fit.webp", alt: "Jeans fit diagram with body-zone measurement markers.", cap: "Fit was multi-zone: waist, hip, thigh, calf, and inseam all mattered." }, { src: "/assets/images/gap/problem-recommendations.webp", alt: "Product recommendation carousel for Gap apparel.", cap: "A size recommendation without evidence felt risky." }],
+          media: [{ src: "/assets/images/gap/problem-size-chart.webp", alt: "Gap size guide for women's jeans, with women's regular, petite and tall tabs and a table of waist and hip measurements in inches for each size from XXXS to S.", cap: "Charts were precise; comfort was not." }, { src: "/assets/images/gap/problem-denim-fit.webp", alt: "Model in a white top and mid-wash jeans, with five numbered measurement lines marked on her body: two across the torso, one at the hip, one running down the leg and one at the hem.", cap: "Fit was multi-zone: waist, hip, thigh, calf, and inseam all mattered." }, { src: "/assets/images/gap/problem-recommendations.webp", alt: "A \"Customers Also Purchased\" carousel on a Gap product page: wide-leg jeans at $44.99 and two pairs of denim shorts on sale, each with an add-to-bag button, plus previous and next arrows.", cap: "A size recommendation without evidence felt risky." }],
           cards: [["Measurements were not enough", "Charts were precise; comfort was not."], ["Fit was multi-zone", "Waist, hip, thigh, calf, and inseam all mattered."], ["The answer needed a reason", "A size recommendation without evidence felt risky."], ["Every extra input had a cost", "More personalization could also mean more drop-off."]] },
         { title: "Understanding your Users", statement: "Users: online denim shoppers who needed a reason to believe a size.",
           text: ["I designed for shoppers choosing denim online, where one size has to explain several body zones. I tested each call with participants before it shipped, and what they said sits under each decision below."],
@@ -628,7 +645,7 @@ const PROJECTS = [
           parts: [
         { title: "Solution", statement: "Solution: three product decisions for the agent experience.",
           ui: { kind: "trio", cards: [{ t: "Show the agent what you're working on", chips: ["Sketch", "Annotation", "Canvas region"], hi: 2, d: "An image, sketch, annotation or selected region communicates intent, so you don't have to describe it." }, { t: "Execution, not just generation", chips: ["Plan", "Execute", "Review"], hi: 1, d: "The agent plans steps, selects tools, generates alternatives and returns outputs to the canvas." }, { t: "Humans stay creative directors", chips: ["Compare versions", "Approve"], hi: 1, d: "Visible progress, contextual feedback and approval checkpoints keep creative judgment with the designer." }] },
-          media: [{ video: "/assets/images/cotonai/video-cotonai-agent.mp4", poster: "/assets/images/cotonai/video-cotonai-agent-poster.jpg", alt: "CotonAI Agent walkthrough: asking the agent about a board, selection and brand memory", cap: "The agent panel beside the canvas, using board, selection, brand and memory context." }],
+          media: [{ video: "/assets/images/cotonai/video-cotonai-agent.mp4", poster: "/assets/images/cotonai/video-cotonai-agent-poster.jpg", alt: "The same walkthrough in context: the agent panel beside the canvas, answering with the board, the selection, brand and memory as context", cap: "The agent panel beside the canvas, using board, selection, brand and memory context." }],
           text: ["The proposed workflow became a loop the agent runs with the designer. The design challenge was making complex execution feel understandable, without exposing unnecessary technical complexity."],
           steps: [["Understand context"], ["Plan"], ["Execute"], ["Review"], ["Refine"], ["Remember"]],
           trades: [
@@ -737,8 +754,7 @@ function metricTile(p, el, small = false) {
     const v = document.createElement("video");
     v.className = "case__vid"; v.muted = true; v.loop = true; v.playsInline = true; v.preload = "none"; v.poster = p.thumb.poster; v.setAttribute("aria-label", p.thumb.alt);
     const src = document.createElement("source"); src.src = p.thumb.video; src.type = "video/mp4"; v.appendChild(src);
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches) v.controls = false;
-    else new IntersectionObserver(([e]) => { e.isIntersecting && !document.hidden ? v.play().catch(() => {}) : v.pause(); }, { threshold: 0.4 }).observe(v);
+    autoVideo(v, 0.4);
     el.appendChild(v); return;
   }
   const m = document.createElement("div");
@@ -787,11 +803,7 @@ if (list) PROJECTS.forEach((p, i) => {
       v.setAttribute("muted", ""); v.setAttribute("playsinline", ""); v.setAttribute("aria-label", p.thumb.alt || p.name);
       const src = document.createElement("source"); src.src = p.thumb.video; src.type = "video/mp4"; v.appendChild(src);
       img.replaceWith(v);
-      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        const play = () => { if (!document.hidden && v.getBoundingClientRect().bottom > 0 && v.getBoundingClientRect().top < innerHeight) v.play().catch(() => {}); else v.pause(); };
-        new IntersectionObserver(play, { threshold: 0.25 }).observe(v);
-        document.addEventListener("visibilitychange", play);
-      }
+      autoVideo(v, 0.25);
     } else {
       const th = p.thumbnail ? p.thumbnail.src : p.thumb && p.thumb.poster; if (th) { img.src = th; if (p.thumbnail && p.thumbnail.fit === "contain") tile.classList.add("lockcard__tile--contain"); } else { img.remove(); if (p.photo) tile.style.background = `url("${p.photo.src}") ${p.photo.pos} / cover`; }
     }
@@ -886,7 +898,7 @@ if (list && units.length) {
 (() => {
   const work = document.querySelector(".work");
   if (!work || !matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches, IDLE = 0.45;
+  const reduced = motionReduced(), IDLE = 0.45;
   let gx = 50, gi = IDLE, tx = 50, ti = IDLE, raf = 0;
   const paint = () => { work.style.setProperty("--gx", gx.toFixed(2) + "%"); work.style.setProperty("--gi", gi.toFixed(3)); };
   const tick = () => {
@@ -922,7 +934,9 @@ if (field) {
     }
   };
   lightRandom();
-  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(lightRandom, 1400);
+  let fieldVisible = true;
+  new IntersectionObserver(([e]) => { fieldVisible = e.isIntersecting; }, { threshold: 0 }).observe(field);
+  setInterval(() => { if (fieldVisible && !document.hidden && !motionReduced()) lightRandom(); }, 1400);
 }
 
 // ── Theme toggle ──
@@ -938,6 +952,21 @@ let saved = null;
 try { saved = localStorage.getItem("theme"); } catch (e) {}
 setTheme(saved || "dark");
 themeBtn.addEventListener("click", () => setTheme(root.dataset.theme === "dark" ? "light" : "dark"));
+
+// ── Motion switch: pauses ambient motion everywhere (OS "reduce motion" is honoured automatically and can't be overridden) ──
+const motionBtn = document.createElement("button");
+motionBtn.className = "icon-btn"; motionBtn.type = "button"; motionBtn.id = "motion";
+motionBtn.setAttribute("aria-label", "Pause motion");
+motionBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="2.5" width="3" height="11" fill="currentColor"/><rect x="9.5" y="2.5" width="3" height="11" fill="currentColor"/></svg>';
+const syncMotionBtn = () => {
+  motionBtn.setAttribute("aria-pressed", String(motionReduced()));
+  motionBtn.disabled = !!window.motionLocked?.();
+  motionBtn.title = motionBtn.disabled ? "Your device is set to reduce motion" : motionReduced() ? "Motion is paused. Click to resume." : "Pause motion";
+};
+motionBtn.addEventListener("click", () => window.setMotion?.(!motionReduced()));
+addEventListener("motionchange", syncMotionBtn);
+themeBtn.before(motionBtn);
+syncMotionBtn();
 
 // ── Contact details (replace the placeholders with your own) ──
 const CONTACT = {
@@ -1583,11 +1612,12 @@ document.querySelectorAll(".logo").forEach((svg) => {
   if (ringSvg) {
     const ring = Ring.mount(ringSvg);
     ring.grow(700, 60);
-    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (!motionReduced()) {
       ring.spin(40);
       const t = ringSvg.closest(".tile");
       t.addEventListener("pointerenter", () => ring.spin(160));
       t.addEventListener("pointerleave", () => ring.spin(40));
+      addEventListener("motionchange", () => ring.spin(motionReduced() ? 0 : 40));
     }
   }
 
@@ -1607,7 +1637,7 @@ document.querySelectorAll(".logo").forEach((svg) => {
 
   // Pointer parallax: only the System tile reads --mx/--my, and the write is batched to one per frame
   const sys = tiles.querySelector(".tile--sys");
-  if (sys && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  if (sys && !motionReduced()) {
     let raf = 0, px = 0, py = 0;
     sys.addEventListener("pointermove", (e) => {
       if (e.pointerType === "touch") return;
@@ -1781,7 +1811,7 @@ document.querySelectorAll(".logo").forEach((svg) => {
 
   // Gentle pointer parallax
   const hero = wrap.parentElement;
-  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  if (!motionReduced()) {
     hero.addEventListener("pointermove", (e) => {
       if (e.pointerType === "touch") return;
       const r = hero.getBoundingClientRect();
@@ -2201,6 +2231,7 @@ function openLightbox(src, alt, opener) {
         if (it.bleed) li.classList.add("lab__tile--bleed");
         li.style.setProperty("--ix-bg", it.bg);
         const stage = el("div", "lab__stage"); li.appendChild(stage);
+        if (it.ptr !== "hover") stage.inert = true;   // the cover button owns the tile; controls inside the loop must not be tabbable or announced twice
         window.Playground && window.Playground.DEMOS[it.demo](stage, { auto: true });
       } else if (it.image) {
         // Branding: the artwork itself, contained on a tint taken from it
@@ -2274,7 +2305,7 @@ function openLightbox(src, alt, opener) {
       document.head.appendChild(bc);
     }
     }
-    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduced = motionReduced();
     const smooth = reduced ? "auto" : "smooth";
     const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
     const chev = '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5"/></svg>';
@@ -2380,8 +2411,7 @@ function openLightbox(src, alt, opener) {
         const f = el("figure", "shot shot--video"), tile = el("div", "shot__tile"), v = el("video");
         v.muted = true; v.loop = true; v.playsInline = true; v.preload = "none"; v.poster = m.poster || ""; v.setAttribute("aria-label", m.alt || m.cap || "Video");
         const src = el("source"); src.src = m.video; src.type = "video/mp4"; v.appendChild(src);
-        if (reduced) v.controls = true;
-        else new IntersectionObserver(([e]) => { e.isIntersecting && !document.hidden ? v.play().catch(() => {}) : v.pause(); }, { threshold: 0.45 }).observe(v);
+        autoVideo(v, 0.45, true);
         tile.appendChild(v); f.appendChild(tile); if (m.cap) f.appendChild(el("figcaption", "", m.cap)); return f;
       }
       const f = el("figure", "shot" + (m.wide ? " shot--wide" : "")), tile = el("button", "shot__tile"), img = el("img");
@@ -2422,8 +2452,7 @@ function openLightbox(src, alt, opener) {
     if (p.thumb) {
       const v = el("video"); v.muted = true; v.loop = true; v.playsInline = true; v.preload = "metadata"; v.poster = p.thumb.poster; v.setAttribute("aria-label", p.thumb.alt);
       const src = el("source"); src.src = p.thumb.video; src.type = "video/mp4"; v.appendChild(src);
-      if (reduced) v.controls = true;
-      else new IntersectionObserver(([e]) => { e.isIntersecting && !document.hidden ? v.play().catch(() => {}) : v.pause(); }, { threshold: 0.3 }).observe(v);
+      autoVideo(v, 0.3, true);
       hero.appendChild(v);
     } else {
       hero.classList.add("study__hero--tint");
@@ -2529,7 +2558,7 @@ function openLightbox(src, alt, opener) {
 // ── Motion, after bymonolog.com: fade-to-black page transitions, headlines rising line by line out of masks,
 //    supporting copy and media arriving in order, and section headings and case tiles revealing on scroll ──
 (() => {
-  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduced = motionReduced();
   const html = document.documentElement;
   const cover = document.querySelector(".pt-cover") || document.body.appendChild(Object.assign(document.createElement("div"), { className: "pt-cover" }));
   const done = (el, cls, ms) => setTimeout(() => el.classList.remove(...cls), ms);   // hand elements back to their own styles once revealed

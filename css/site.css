@@ -436,6 +436,17 @@ html { scroll-behavior: smooth; }
   }
   .glyph.booting rect.on { opacity: 1; }
 }
+/* The header's Pause motion switch gives the same calm whatever the OS setting */
+html[data-motion="reduce"] { scroll-behavior: auto; }
+html[data-motion="reduce"] *, html[data-motion="reduce"] *::before, html[data-motion="reduce"] *::after {
+  animation: none !important;
+  transition-property: opacity, color, background-color, border-color, text-decoration-color, fill, stroke !important;
+  transition-duration: .2s !important; transition-delay: 0s !important;
+}
+html[data-motion="reduce"] .glyph.booting rect.on { opacity: 1; }
+html[data-motion="reduce"] .artifact { translate: none; }
+.icon-btn[aria-pressed="true"] { background: var(--seg-hover); }
+.icon-btn:disabled { opacity: .45; cursor: not-allowed; }
 
 /* ───────── About page ───────── */
 .glyph rect.eye { animation: blink 6s var(--ease-standard) infinite; animation-delay: var(--blink, 2s); }
