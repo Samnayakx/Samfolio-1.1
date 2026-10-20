@@ -40,7 +40,9 @@ body[data-page="case"] .gate .gate__bg { filter: none; }
 .gate__btn:hover { background: #333; }
 .gate__btn:active { transform: scale(.97); }
 .gate__msg { min-height: 20px; margin: 10px 0 0; font: 400 13px/1.4 var(--font-body, sans-serif); color: #B7471D; }
-.gate__back { display: inline-block; margin-top: 6px; font: 400 12px/1 var(--font-mono, monospace); text-transform: uppercase; letter-spacing: .04em; color: #161616; text-decoration: underline; text-underline-offset: 3px; }
+.gate__links { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 16px; margin-top: 6px; }
+.gate__back, .gate__ask { display: inline-flex; align-items: center; min-height: 44px; font: 400 12px/1 var(--font-mono, monospace); text-transform: uppercase; letter-spacing: .04em; color: #161616; text-decoration: underline; text-underline-offset: 3px; }
+.gate__back:focus-visible, .gate__ask:focus-visible { outline: 2px solid #161616; outline-offset: 2px; border-radius: 2px; }
 
 @media (max-width: 480px) { .gate__card { padding: 22px 20px 20px; } .gate__title { font-size: 28px; } }
 @media (prefers-reduced-motion: reduce) { .gate__card.is-shaking { animation: none; } .gate { transition: none; } }

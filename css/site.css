@@ -240,7 +240,7 @@ html.is-loading .seg__brand .logo { opacity: 0; }
 @media (prefers-reduced-motion: reduce) { .grain { animation: none; } }
 
 /* ───────── Motion, after bymonolog.com: page transitions and reveals (js/site.js, js/loader.js) ───────── */
-.pt-cover { position: fixed; inset: 0; z-index: 2000; background: #000; opacity: 0; pointer-events: none; transition: opacity .33s cubic-bezier(.65, 0, .35, 1); }
+.pt-cover { position: fixed; inset: 0; z-index: 2000; background: #000; opacity: 0; pointer-events: none; transition: opacity .14s cubic-bezier(.65, 0, .35, 1); }
 .pt-cover.is-on { opacity: 1; pointer-events: auto; }
 html.pt-in .pt-cover { opacity: 1; transition: none; }
 .pt-cover.is-lift { transition: opacity .45s cubic-bezier(.65, 0, .35, 1); }
@@ -320,6 +320,10 @@ html.pt-in .header .seg { opacity: 0; }
   transition: opacity .2s var(--ease-standard), transform .16s var(--ease-out);
 }
 .btn:hover { opacity: .85; }
+.intro__cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.intro__cta .btn--ghost { background: var(--bg-page); box-shadow: inset 0 0 0 1px rgb(var(--greyscale-black) / .25); -webkit-backdrop-filter: none; backdrop-filter: none; }
+:root[data-theme="dark"] .intro__cta .btn--ghost { box-shadow: inset 0 0 0 1px rgb(var(--greyscale-white) / .3); }
+.intro__cta .btn--ghost:hover { opacity: .7; background: var(--bg-page); }
 .btn svg { width: 16px; height: 16px; }
 /* Press feedback: a small scale that responds the instant the pointer goes down */
 .seg__item:active, .icon-btn:active, .btn:active, .chip:active, .work__tab:active { transform: scale(.97); }
@@ -650,8 +654,8 @@ html { scroll-behavior: smooth; }
 
 /* Loader: the brand ring spins, then settles and flies into the nav logo */
 .loader { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; color: var(--text-primary); transition: color .7s var(--ease-standard); }
-.loader__bg { position: absolute; inset: 0; background: var(--bg-page); transition: opacity .6s var(--ease-standard) .1s; }
-.loader svg { position: relative; width: min(34vw, 240px); height: auto; aspect-ratio: 480 / 350; overflow: visible; transition: transform .75s var(--ease-expressive); }
+.loader__bg { position: absolute; inset: 0; background: var(--bg-page); transition: opacity .4s var(--ease-standard); }
+.loader svg { position: relative; width: min(34vw, 240px); height: auto; aspect-ratio: 480 / 350; overflow: visible; transition: transform .45s var(--ease-expressive); }
 html.is-loading { overflow: hidden; }
 
 /* ───────── Capabilities: tile grid ───────── */
@@ -1538,7 +1542,8 @@ a.inline:hover { opacity: .7; }
 
 /* ── Work filter: Recent, Featured, then the sectors ── */
 .work__tabs { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0 0 var(--space-6); padding: 0; }
-#work .work__tabs { width: 100%; justify-content: space-between; flex-wrap: nowrap; gap: var(--space-1); }
+#work .work__tabs { width: 100%; justify-content: flex-start; flex-wrap: wrap; gap: var(--space-1); }
+@media (min-width: 1024px) { #work .work__tabs { justify-content: space-between; flex-wrap: nowrap; } }
 .work__tab { display: inline-flex; align-items: center; gap: 8px; border: 0; cursor: pointer; padding: 8px 12px; border-radius: var(--radius); background: transparent; color: var(--sec-muted);
   box-shadow: inset 0 0 0 1px var(--sec-line); font: 400 12px/1 var(--font-mono); text-transform: uppercase; letter-spacing: .04em; white-space: nowrap;
   transition: background-color .2s var(--ease-standard), color .2s var(--ease-standard), transform .16s var(--ease-out); }
@@ -1547,11 +1552,8 @@ a.inline:hover { opacity: .7; }
 .work__tab[aria-selected="true"] { background: var(--sec-fg); color: var(--sec-bg); box-shadow: none; }
 .work__tab:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 .work__tabs + .cards > .case:first-child { border-top: 0; }
-@media (max-width: 767px) {
-  .work__tabs { flex-wrap: nowrap; overflow-x: auto; margin-inline: calc(var(--gutter, 16px) * -1); padding-inline: var(--gutter, 16px); scrollbar-width: none; }
-  .work__tabs::-webkit-scrollbar { display: none; }
-  #work .work__tabs { justify-content: flex-start; width: auto; }
-}
+/* Below desktop every category stays visible: chips wrap onto extra rows instead of scrolling out of sight, with touch-sized targets */
+@media (max-width: 1023px) { .work__tab { min-height: 44px; padding: 8px 14px; } }
 @media (max-width: 1023px) {
   #work .work__headline { align-items: flex-start; text-align: left; }
   #work .work__headline .work__title { text-align: left; }

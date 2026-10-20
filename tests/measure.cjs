@@ -38,7 +38,7 @@ const periodProbe = () => {
       await page.addInitScript(() => {
         window.__m = { lcp: 0, loaderGone: null };
         new PerformanceObserver((l) => { for (const e of l.getEntries()) window.__m.lcp = e.startTime; }).observe({ type: "largest-contentful-paint", buffered: true });
-        document.addEventListener("loader:done", () => (window.__m.loaderGone = performance.now()));
+        window.addEventListener("loader:done", () => (window.__m.loaderGone = performance.now()));
       });
       await page.goto(BASE + "/", { waitUntil: "commit" });
       await page.waitForFunction(() => window.__m.loaderGone !== null || (document.readyState !== "loading" && !document.getElementById("loader")), null, { timeout: 30000 });

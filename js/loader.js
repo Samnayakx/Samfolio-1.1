@@ -13,7 +13,7 @@
       c.className = "pt-cover"; document.body.appendChild(c);
       if (sessionStorage.getItem("pt")) h.classList.add("pt-in");
       h.classList.add("pt-pending");
-      setTimeout(() => h.classList.remove("pt-pending", "pt-in"), 4000);   // never leave content hidden
+      setTimeout(() => h.classList.remove("pt-pending", "pt-in"), 2500);   // never leave content hidden (outlasts the loader fallback below)
     }
     sessionStorage.removeItem("pt");
   } catch (e) {}
@@ -67,9 +67,10 @@
       // coast to the next rest pose (a multiple of 30°) with an ease-out that matches the current speed
       settle(cb, minTurn = 60) {
         const v = Math.max(st.v, 60);
-        const to = Math.ceil((st.phi + minTurn) / STEP) * STEP;
+        let to = Math.ceil((st.phi + minTurn) / STEP) * STEP;
+        if (to - st.phi < 4) to += STEP;   // already at rest: still glide one step so the exit reads as a settle
         st.spin = 0;
-        st.target = { t0: performance.now(), from: st.phi, to, delta: to - st.phi, dur: (2 * (to - st.phi)) / v * 1000, cb };
+        st.target = { t0: performance.now(), from: st.phi, to, delta: to - st.phi, dur: Math.min(500, (2 * (to - st.phi)) / v * 1000), cb };
         kick();
       },
       get v() { return st.v; },
@@ -89,26 +90,20 @@
   const root = document.documentElement;
   root.classList.add("is-loading");
   const ring = mount(el.querySelector("svg"));
-  const t0 = performance.now();
-  const MIN = reduce ? 700 : 1500;
   ring.grow(600, 50);
   if (!reduce) ring.spin(200);
 
-  let ready = false, started = false;
-  const check = () => {
-    if (ready && !started && performance.now() - t0 >= MIN) { started = true; finish(); }
-    else if (!started) setTimeout(check, 60);
-  };
-  const markReady = () => { if (!ready) { ready = true; check(); } };
-  Promise.all([
-    new Promise((r) => (document.readyState === "complete" ? r() : addEventListener("load", r))),
-    document.fonts ? document.fonts.ready : Promise.resolve(),
-  ]).then(markReady);
-  setTimeout(markReady, 6000);
+  // The loader is a cover, not a delay: it leaves as soon as the page is parsed. Web fonts get a brief
+  // chance to arrive (so the first paint is final), but fonts, images and video never hold it.
+  let started = false;
+  const go = () => { if (!started) { started = true; finish(); } };
+  const parsed = new Promise((r) => (document.readyState === "loading" ? addEventListener("DOMContentLoaded", r, { once: true }) : r()));
+  parsed.then(() => Promise.race([document.fonts ? document.fonts.ready : 0, new Promise((r) => setTimeout(r, 250))])).then(go);
+  setTimeout(go, 2000);
 
   function finish() {
-    const done = () => setTimeout(fly, reduce ? 0 : 140);
-    reduce ? done() : ring.settle(done, 70);
+    const done = () => setTimeout(fly, reduce ? 0 : 40);
+    reduce ? done() : ring.settle(done, 0);
   }
   function fly() {
     const svg = ring.el, target = document.querySelector(".seg__brand .logo");
@@ -125,6 +120,6 @@
       el.remove();
       root.classList.remove("is-loading");
       dispatchEvent(new Event("loader:done"));
-    }, reduce ? 200 : 750);
+    }, reduce ? 0 : 450);
   }
 })();

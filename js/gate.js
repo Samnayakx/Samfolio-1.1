@@ -51,6 +51,10 @@
   }
 
   // ── Build the overlay ──
+  // Opens the visitor's own mail client with a prefilled subject; nothing is sent from the page.
+  // Same address as CONTACT.email in site.js (gate.js loads first, in <head>).
+  const ASK = "mailto:sambitnayak.ux@gmail.com?subject=" + encodeURIComponent("Access request: " + LOCKED[id]);
+
   function build() {
     const gate = document.createElement("div");
     gate.className = "gate";
@@ -65,7 +69,10 @@
           <button class="gate__btn" type="submit">Unlock</button>
         </div>
         <p class="gate__msg" role="status" aria-live="polite"></p>
-        <a class="gate__back" href="/#work">← Back to work</a>
+        <div class="gate__links">
+          <a class="gate__back" href="/#work"><span aria-hidden="true">←&nbsp;</span>Back to work</a>
+          <a class="gate__ask" href="${ASK}">Request access</a>
+        </div>
       </form>`;
     document.body.appendChild(gate);
     const canvas = gate.querySelector("canvas"), ctx = canvas.getContext("2d");

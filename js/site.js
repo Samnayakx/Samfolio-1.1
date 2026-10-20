@@ -839,13 +839,16 @@ if (list && units.length) {
   const fits = (p, key) => key === "recent" || (key === "featured" ? meta(p).featured : meta(p).sectors.includes(key));
   const tabs = document.getElementById("work-tabs"), unitDate = (u) => u.members.reduce((m, x) => (meta(x.p).date > m ? meta(x.p).date : m), "");
   const countEls = document.querySelectorAll("[data-work-count]");
-  let active = "recent";
+  // Featured is the default so public work leads; the choice survives a trip into a case study and back
+  const FILTER_KEY = "work-filter";
+  let active = "featured";
   const render = (key) => {
     active = key;
+    try { sessionStorage.setItem(FILTER_KEY, key); } catch (err) {}
     tabs.querySelectorAll(".work__tab").forEach((b) => { const on = b.dataset.key === key; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; });
     list.setAttribute("aria-labelledby", `work-tab-${filters.findIndex((f) => f.key === key) === 0 ? "recent" : key.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`);
     let shown = 0;
-    const ordered = units.map((u, idx) => ({ u, idx })).sort((a, b) => (key === "recent" ? (unitDate(b.u) > unitDate(a.u) ? 1 : unitDate(b.u) < unitDate(a.u) ? -1 : 0) : 0) || a.idx - b.idx);
+    const ordered = units.map((u, idx) => ({ u, idx })).sort((a, b) => (key === "recent" ? (unitDate(b.u) > unitDate(a.u) ? 1 : unitDate(b.u) < unitDate(a.u) ? -1 : 0) : (a.u.group ? 1 : 0) - (b.u.group ? 1 : 0)) || a.idx - b.idx);
     ordered.forEach(({ u }) => {
       const vis = u.members.filter((m) => fits(m.p, key));
       u.li.hidden = vis.length === 0;
@@ -862,18 +865,21 @@ if (list && units.length) {
   };
   filters.forEach((f) => {
     const b = document.createElement("button");
-    b.type = "button"; b.className = "work__tab"; b.dataset.key = f.key; b.setAttribute("role", "tab"); b.id = `work-tab-${f.key === "recent" ? "recent" : f.key.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+    b.type = "button"; b.className = "work__tab"; b.dataset.key = f.key; b.setAttribute("role", "tab"); b.setAttribute("aria-controls", "work-cards"); b.id = `work-tab-${f.key === "recent" ? "recent" : f.key.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
     const n = PROJECTS.filter((p) => fits(p, f.key)).length;
     b.append(f.label); const sup = document.createElement("sup"); sup.textContent = pad(n); b.appendChild(sup);
     b.addEventListener("click", () => render(f.key));
     tabs.appendChild(b);
   });
   tabs.addEventListener("keydown", (e) => {
-    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
-    const bs = [...tabs.querySelectorAll(".work__tab")], at = bs.findIndex((b) => b.dataset.key === active), next = bs[(at + (e.key === "ArrowRight" ? 1 : bs.length - 1)) % bs.length];
-    next.focus(); render(next.dataset.key); e.preventDefault();
+    if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(e.key)) return;
+    const bs = [...tabs.querySelectorAll(".work__tab")], at = bs.findIndex((b) => b.dataset.key === active);
+    const next = e.key === "Home" ? bs[0] : e.key === "End" ? bs[bs.length - 1] : bs[(at + (e.key === "ArrowRight" ? 1 : bs.length - 1)) % bs.length];
+    next.focus(); next.scrollIntoView({ block: "nearest", inline: "nearest" }); render(next.dataset.key); e.preventDefault();
   });
-  render("recent");
+  let saved = null;
+  try { saved = sessionStorage.getItem(FILTER_KEY); } catch (err) {}
+  render(filters.some((f) => f.key === saved) ? saved : "featured");
 }
 
 // ── Work: the rim glow under the hero follows the pointer and brightens on hover ──
@@ -1241,6 +1247,7 @@ if (weatherEl) fetch("https://api.open-meteo.com/v1/forecast?latitude=37.3382&lo
   };
   fitMark();
   document.fonts?.ready.then(fitMark);
+  document.fonts?.addEventListener("loadingdone", fitMark);   // the stylesheet is non-blocking, so faces can arrive after fonts.ready
   new ResizeObserver(fitMark).observe(host);
 
   // ── Game: Claude mascot endless runner. The 24-hour chart is the level and repeats day after day. ──
@@ -2528,9 +2535,14 @@ function openLightbox(src, alt, opener) {
       const walk = (node) => [...node.childNodes].forEach((n) => {
         if (n.nodeType === 3) {
           const frag = document.createDocumentFragment();
+          // Punctuation right after a link or other inline element joins that element's last word, so a line can't break before it
+          const tail = n.previousSibling && n.previousSibling.nodeType === 1 && [...n.previousSibling.querySelectorAll(".w > span")].pop();
+          let first = true;
           n.textContent.split(/(\s+)/).forEach((p) => {
             if (!p) return;
-            if (/^\s+$/.test(p)) { frag.append(p); return; }
+            if (/^\s+$/.test(p)) { frag.append(p); first = false; return; }
+            if (first && tail && /^[.,;:!?)\]”’…]+$/.test(p)) { tail.append(p); first = false; return; }
+            first = false;
             const w = document.createElement("span"), i = document.createElement("span");
             w.className = "w"; i.textContent = p; w.append(i); frag.append(w);
           });
@@ -2606,7 +2618,8 @@ function openLightbox(src, alt, opener) {
     e.preventDefault();
     cover.classList.add("is-on");
     try { sessionStorage.setItem("pt", "1"); } catch (err) {}
-    setTimeout(() => (location.href = url.href), 330);
+    setTimeout(() => (location.href = url.href), 140);
+    setTimeout(() => cover.classList.remove("is-on"), 2500);   // navigation cancelled or failed: never leave the page black
   });
   // Coming back through the back button restores the page as it was left; lift the cover
   addEventListener("pageshow", (e) => { if (e.persisted) { cover.classList.remove("is-on"); html.classList.remove("pt-in", "pt-pending"); } });
@@ -2623,7 +2636,7 @@ function openLightbox(src, alt, opener) {
     }
   };
   // Wait briefly for web fonts so lines split where they will settle, but never hold the black cover for long
-  const ready = Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise((r) => setTimeout(r, 350))]);
+  const ready = Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise((r) => setTimeout(r, 200))]);
   if (document.getElementById("loader")) addEventListener("loader:done", () => ready.then(start), { once: true });
   else ready.then(start);
 })();
