@@ -5,7 +5,7 @@ Static visuals and looping cover videos for the case studies are authored as HTM
 | Folder | Produces |
 |---|---|
 | `payman-boards/` | Payman design system, layout exploration, first-screen analytics (WebP) |
-| `payman-cover/` (earlier cut), `payman-grid-cover/` (current), `arcade-cover/`, `gap-cover/`, `cotonai-ds-cover/` | 8s looping cover videos (1920x1080, 30fps) |
+| `payman-cover/` (earlier cut), `payman-grid-cover/` (current), `arcade-cover/`, `gap-cover/`, `cotonai-ds-cover/` | Looping cover videos (1920x1080, 30fps; 8s, Arcade 12s) |
 | `gap-boards/` | Gap 3D Fit solution board, composed from real QuickFit screens in `src/` (the three decision images are the original concept SVGs, rendered to WebP) |
 
 ## Boards (PNG, then WebP)
@@ -16,6 +16,8 @@ python3 -c "from PIL import Image; Image.open('/tmp/gap-boards/b-flow.png').conv
 ```
 
 ## Covers (frames, then MP4)
+
+The Arcade cover is 12s: `node tools/case-boards/video.mjs tools/case-boards/arcade-cover /tmp/arcade-frames 30 12`, poster from frame 0285.
 
 ```sh
 node tools/case-boards/video.mjs tools/case-boards/gap-cover /tmp/gap-frames 30 8

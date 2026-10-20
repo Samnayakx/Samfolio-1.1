@@ -3,193 +3,266 @@
 <head>
 <meta charset="utf-8" />
 <title>Arcade cover</title>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=block" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=block" rel="stylesheet" />
 <style>
+  /* Paced like a product launch film: a warm, quiet stage; Arcade's own dark UI shown as crisp crops; type that writes itself in */
   :root {
-    --bg: #000; --panel: #0a0a0a; --panel-2: #141414; --line: rgba(255,255,255,.09); --line-2: rgba(255,255,255,.16);
-    --text: #fff; --dim: #a3a3a3; --faint: #737373; --lime: #c6ff00; --green: #86efac; --amber: #f59e0b; --pink: #F0299B;
+    --ink: #161616; --ink-2: #6f6c68; --ink-3: #b3afa9;
+    --ui: #0b0b0b; --ui-2: #151515; --ui-3: #1d1d1d; --line: rgba(255,255,255,.09); --dim: #a3a3a3; --faint: #737373;
+    --lime: #c6ff00; --green: #86efac; --amber: #f5a524; --violet: #6d28d9;
     --serif: "Newsreader", "Times New Roman", serif; --sans: "Geist", system-ui, sans-serif; --mono: "Geist Mono", ui-monospace, monospace;
-    --shadow: 0 30px 60px -18px rgba(90, 10, 60, .45), 0 10px 22px -10px rgba(40, 0, 30, .35);
-    --shadow-light: 0 0 0 1px rgba(23,23,23,.06), 0 24px 48px -12px rgba(150, 30, 100, .22), 0 6px 14px -6px rgba(150, 30, 100, .12);
+    --lift: 0 0 0 1px rgba(0,0,0,.06), 0 40px 80px -30px rgba(60, 50, 90, .35), 0 14px 30px -14px rgba(40, 30, 60, .25);
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; }
-  body { font: 400 16px/1.4 var(--sans); color: var(--text); -webkit-font-smoothing: antialiased; }
-  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #FBC9E2; }
-  .bg { position: absolute; inset: -20%; }
-  .bg--base { background: linear-gradient(180deg, #F39BC9 0%, #F8BEDC 36%, #FDE3F0 70%, #FFF5FA 100%); }
-  .bg--glow { background: radial-gradient(38% 45% at 50% 50%, rgba(160, 110, 255, .45), transparent 70%); mix-blend-mode: soft-light; }
-  .bg--glow2 { background: radial-gradient(35% 40% at 50% 50%, rgba(255, 255, 255, .6), transparent 70%); }
+  body { font: 400 16px/1.4 var(--sans); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #EFEDEA; }
+  .bg { position: absolute; inset: -20%; pointer-events: none; }
+  .bg--lav { background: radial-gradient(45% 40% at 50% 100%, rgba(186, 178, 236, .55), transparent 70%); }
+  .bg--warm { background: radial-gradient(40% 40% at 50% 50%, rgba(252, 236, 196, .7), transparent 70%); opacity: 0; }
   .layer { position: absolute; left: 0; top: 0; will-change: transform, opacity; }
-  .mono { font-family: var(--mono); text-transform: uppercase; letter-spacing: .06em; }
 
-  /* A: the primary action */
-  .cta { display: inline-flex; align-items: center; gap: 22px; height: 132px; padding: 0 64px; background: var(--lime); color: #0a0a0a; border-radius: 10px; font: 500 60px/1 var(--sans); letter-spacing: -.02em; box-shadow: 0 30px 60px -18px rgba(70, 90, 0, .45), 0 0 0 1px rgba(0,0,0,.06), 0 10px 20px -10px rgba(0,0,0,.25); white-space: nowrap; }
-  .cta svg { width: 46px; height: 46px; }
-  .tag { display: inline-flex; align-items: center; gap: 14px; padding: 10px 18px 10px 12px; border-radius: 8px; background: #0a0a0a; color: #fff; box-shadow: var(--shadow); font-size: 18px; }
-  .tag b { font: 400 26px/1 var(--serif); letter-spacing: -.01em; text-transform: none; }
-  .tag span { color: var(--dim); }
+  /* Kinetic lines: each word fades up from pale to ink */
+  .line { font: 400 104px/1.1 var(--sans); letter-spacing: -.025em; text-align: center; white-space: nowrap; }
+  .line .wd { display: inline-block; }
 
-  /* B: dark product cards */
-  .card { width: 430px; padding: 24px 26px; background: var(--panel); border-radius: 12px; box-shadow: 0 0 0 1px var(--line), var(--shadow); }
-  .card h4 { margin: 0 0 8px; font: 500 24px/1.2 var(--sans); }
-  .card p { margin: 0 0 18px; font: 400 17px/1.4 var(--sans); color: var(--dim); }
-  .chips { display: flex; gap: 8px; flex-wrap: wrap; }
-  .chip { display: inline-flex; align-items: center; gap: 7px; padding: 6px 12px; border-radius: 6px; background: var(--panel-2); box-shadow: inset 0 0 0 1px var(--line); font: 400 15px var(--sans); color: #e5e5e5; }
-  .chip i { width: 9px; height: 9px; border-radius: 50%; }
-  .k { display: block; font: 500 13px/1 var(--mono); color: var(--faint); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 14px; }
-  .toolrow { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-  .toolrow code { font: 500 21px var(--mono); color: #fff; }
-  .badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 5px; font: 500 14px var(--mono); text-transform: uppercase; letter-spacing: .05em; white-space: nowrap; }
-  .badge--amber { color: var(--amber); background: rgba(245, 158, 11, .12); box-shadow: inset 0 0 0 1px rgba(245, 158, 11, .35); }
+  /* Segmented nav, after the redesigned sidebar groups */
+  .seg { position: relative; display: flex; gap: 6px; padding: 10px; border-radius: 26px; background: var(--ui); box-shadow: var(--lift); }
+  .seg__pill { position: absolute; top: 10px; height: calc(100% - 20px); border-radius: 18px; background: var(--ui-3); box-shadow: inset 0 0 0 1px var(--line); }
+  .seg span { position: relative; display: inline-flex; align-items: center; gap: 14px; height: 136px; padding: 0 56px; font: 400 68px/1 var(--sans); color: var(--faint); letter-spacing: -.01em; }
+  .seg span.on { color: #fff; }
+  .seg svg { width: 52px; height: 52px; }
+  .navrow { display: flex; align-items: center; gap: 22px; width: 1000px; height: 136px; padding: 0 44px; border-radius: 26px; background: linear-gradient(90deg, #0b0b0b 0%, #2a0f5c 70%, var(--violet) 100%); color: #fff; font: 500 60px/1 var(--sans); box-shadow: var(--lift); }
+  .navrow svg { width: 52px; height: 52px; }
+
+  /* Status column, the click that turns a blocker into a working connection */
+  .col { width: 1000px; color: var(--ink); }
+  .col__h { padding: 0 0 30px; font: 400 58px/1 var(--sans); color: var(--ink-2); text-align: center; border-bottom: 1px solid rgba(0,0,0,.08); }
+  .col__r { position: relative; height: 200px; display: grid; place-items: center; border-bottom: 1px solid rgba(0,0,0,.08); }
+  .chip { display: inline-flex; align-items: center; gap: 12px; padding: 18px 30px; border-radius: 12px; font: 500 50px/1 var(--sans); white-space: nowrap; }
+  .chip--amber { color: #a15c00; background: #fbe9c8; }
+  .chip--green { color: #1d7a3e; background: #d9f4e1; }
+  .chip--ghost { color: var(--ink-2); background: #fff; box-shadow: inset 0 0 0 1.5px rgba(0,0,0,.12); }
+  .cta { display: inline-flex; align-items: center; gap: 16px; padding: 28px 46px; border-radius: 14px; background: var(--lime); color: #0a0a0a; font: 500 56px/1 var(--sans); white-space: nowrap; box-shadow: 0 18px 36px -14px rgba(90, 120, 0, .55), 0 0 0 1px rgba(0,0,0,.06); }
+  .cta svg { width: 44px; height: 44px; }
+  .swap { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+
+  /* Stacked chips */
+  .lead { font: 400 84px/1 var(--sans); letter-spacing: -.02em; color: var(--ink); white-space: nowrap; }
+  .stack { display: inline-flex; align-items: center; gap: 18px; padding: 28px 44px 28px 32px; border-radius: 20px; background: #fff; box-shadow: var(--lift); font: 400 76px/1 var(--sans); letter-spacing: -.02em; white-space: nowrap; }
+  .stack i { width: 28px; height: 28px; border-radius: 7px; }
+
+  /* The trace, as a crop of the Playground's execution rail */
+  .trace { width: 980px; background: var(--ui); border-radius: 22px; box-shadow: 0 0 0 1px rgba(0,0,0,.08), var(--lift); overflow: hidden; color: #fff; }
+  .trace__head { display: flex; align-items: center; justify-content: space-between; padding: 28px 34px; border-bottom: 1px solid var(--line); }
+  .k { font: 500 17px/1 var(--mono); color: var(--dim); text-transform: uppercase; letter-spacing: .08em; }
+  .badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 7px; font: 500 17px var(--mono); text-transform: uppercase; letter-spacing: .05em; white-space: nowrap; }
+  .badge--amber { color: var(--amber); background: rgba(245, 165, 36, .12); box-shadow: inset 0 0 0 1px rgba(245, 165, 36, .35); }
   .badge--green { color: var(--green); background: rgba(134, 239, 172, .1); box-shadow: inset 0 0 0 1px rgba(134, 239, 172, .3); }
-  .kv { display: flex; justify-content: space-between; padding: 11px 0; border-top: 1px solid var(--line); font: 400 16px var(--mono); color: var(--dim); text-transform: uppercase; letter-spacing: .05em; }
-  .kv b { font-weight: 500; color: #fff; }
-  .agent { display: flex; align-items: center; gap: 16px; }
-  .agent__ico { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 10px; background: var(--panel-2); box-shadow: inset 0 0 0 1px var(--line); color: var(--lime); }
-  .agent__ico svg { width: 26px; height: 26px; }
-  .agent div { flex: 1; } .agent h4 { margin: 0 0 4px; } .agent small { font: 400 15px var(--sans); color: var(--faint); }
-
-  /* C: the execution trace */
-  .trace { width: 820px; background: var(--panel); border-radius: 14px; box-shadow: 0 0 0 1px var(--line), var(--shadow); overflow: hidden; }
-  .trace__head { display: flex; align-items: center; justify-content: space-between; padding: 20px 26px; border-bottom: 1px solid var(--line); }
-  .trace__head .k { margin: 0; font-size: 14px; color: var(--dim); }
-  .trace__sub { padding: 14px 26px; border-bottom: 1px solid var(--line); font: 400 15px var(--mono); color: var(--faint); text-transform: uppercase; letter-spacing: .05em; }
-  .trace__sub b { color: #fff; font-weight: 500; margin-right: 10px; padding: 3px 8px; border-radius: 4px; background: var(--panel-2); box-shadow: inset 0 0 0 1px var(--line); }
-  .steps { list-style: none; margin: 0; padding: 14px 26px 22px; }
-  .step { display: flex; gap: 16px; padding: 12px 0; }
-  .dot { position: relative; flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px var(--line-2); }
-  .dot svg { position: absolute; inset: 0; width: 28px; height: 28px; opacity: 0; }
+  .steps { list-style: none; margin: 0; padding: 18px 34px 8px; }
+  .step { display: flex; gap: 20px; padding: 14px 0; }
+  .dot { position: relative; flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.18); }
+  .dot svg { position: absolute; inset: 0; width: 34px; height: 34px; opacity: 0; }
   .step.is-done .dot { background: rgba(134, 239, 172, .14); box-shadow: inset 0 0 0 1.5px rgba(134, 239, 172, .55); }
   .step.is-done .dot svg { opacity: 1; }
-  .step.is-active .dot { box-shadow: inset 0 0 0 2px var(--lime), 0 0 0 6px rgba(198, 255, 0, .14); }
-  .step__body { flex: 1; }
-  .step__t { font: 500 20px/28px var(--sans); color: var(--faint); }
+  .step.is-active .dot { box-shadow: inset 0 0 0 2px var(--lime), 0 0 0 7px rgba(198, 255, 0, .14); }
+  .step__b { flex: 1; }
+  .step__t { font: 500 25px/34px var(--sans); color: var(--faint); }
   .step.is-done .step__t, .step.is-active .step__t { color: #fff; }
-  .step__s { font: 400 15px var(--sans); color: var(--faint); }
-  .auth { margin-top: 12px; padding: 18px 20px; border-radius: 10px; background: var(--panel-2); box-shadow: inset 0 0 0 1px var(--line); }
-  .auth code { display: block; font: 500 19px var(--mono); margin-bottom: 12px; }
-  .auth .kv { font-size: 14px; padding: 8px 0; }
-  .auth__btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 14px; padding: 12px 20px; border-radius: 8px; background: var(--lime); color: #0a0a0a; font: 500 18px var(--sans); }
-  .result { display: inline-flex; align-items: center; gap: 10px; margin: 0 26px 24px; padding: 12px 18px; border-radius: 8px; background: rgba(134, 239, 172, .1); box-shadow: inset 0 0 0 1px rgba(134, 239, 172, .3); color: var(--green); font: 500 18px var(--sans); }
+  .auth { margin-top: 14px; padding: 22px 24px; border-radius: 14px; background: var(--ui-2); box-shadow: inset 0 0 0 1px var(--line); }
+  .auth code { display: block; font: 500 23px var(--mono); margin-bottom: 14px; }
+  .kv { display: flex; justify-content: space-between; padding: 10px 0; border-top: 1px solid var(--line); font: 400 17px var(--mono); color: var(--dim); text-transform: uppercase; letter-spacing: .05em; }
+  .kv b { font-weight: 500; color: #fff; }
+  .auth__btn { display: inline-flex; align-items: center; gap: 12px; margin-top: 16px; padding: 15px 24px; border-radius: 10px; background: var(--lime); color: #0a0a0a; font: 500 23px var(--sans); }
+  .result { display: inline-flex; align-items: center; gap: 12px; margin: 6px 34px 30px; padding: 14px 22px; border-radius: 10px; background: rgba(134, 239, 172, .1); box-shadow: inset 0 0 0 1px rgba(134, 239, 172, .3); color: var(--green); font: 500 23px var(--sans); }
 
-  /* D: the numbers, on white like the reference */
-  .stat { display: flex; align-items: center; gap: 28px; width: 540px; height: 184px; padding: 0 36px; background: #fff; color: #0a0a0a; border-radius: 12px; box-shadow: var(--shadow-light); }
-  .stat__icon { flex: 0 0 auto; display: grid; place-items: center; width: 96px; height: 96px; border-radius: 50%; background: #0a0a0a; color: var(--lime); }
-  .stat__icon svg { display: block; width: 44px; height: 44px; }
-  .stat strong { display: block; font: 400 72px/1 var(--serif); letter-spacing: -.02em; }
-  .stat > div > span { display: block; margin-top: 10px; font: 400 21px/1.25 var(--sans); color: #6b6b6b; }
+  /* Lockup */
+  .lock { display: flex; align-items: center; gap: 30px; }
+  .lock b { font: 400 156px/1 var(--serif); letter-spacing: -.03em; color: var(--ink); }
+  .lock span { display: inline-flex; align-items: center; gap: 14px; padding: 20px 32px; border-radius: 18px; background: rgba(0,0,0,.05); font: 400 62px/1 var(--sans); color: var(--ink); letter-spacing: -.01em; }
+  .lock span svg { width: 50px; height: 50px; }
+
+  /* Pointer */
+  .cursor { width: 80px; height: 80px; filter: drop-shadow(0 6px 10px rgba(0,0,0,.25)); }
 </style>
 </head>
 <body>
 <div id="stage">
-  <div class="bg bg--base"></div>
-  <div class="bg bg--glow" id="glow"></div>
-  <div class="bg bg--glow2" id="glow2"></div>
+  <div class="bg bg--lav" id="lav"></div>
+  <div class="bg bg--warm" id="warm"></div>
 
-  <!-- A -->
-  <div class="layer" id="tag"><span class="tag"><b>Arcade</b><span class="mono">Agent control plane</span></span></div>
-  <div class="layer" id="cta"><span class="cta">Authorize &amp; run <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h13m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.8"/></svg></span></div>
+  <!-- 1: the north star, written in -->
+  <div class="layer" id="l1"><div class="line" data-words>Arcade wins when the first</div></div>
+  <div class="layer" id="l2"><div class="line" data-words>tool call works.</div></div>
 
-  <!-- B -->
-  <div class="layer" id="s1"><div class="card"><span class="k">Pick a goal</span><h4>Triage inbound issues</h4><p>Label, route and reply to new issues as they land.</p>
-    <div class="chips"><span class="chip"><i style="background:#e5e5e5"></i>GitHub</span><span class="chip"><i style="background:#8b8cf8"></i>Linear</span><span class="chip"><i style="background:#e11d74"></i>Slack</span></div></div></div>
-  <div class="layer" id="s2"><div class="card"><span class="k">Tool bundle</span><div class="toolrow"><code>Linear.CreateIssue</code><span class="badge badge--amber">Auth needed</span></div></div></div>
-  <div class="layer" id="s3"><div class="card"><span class="k">Gateway status</span><div class="kv"><span>Gateway</span><b>Draft</b></div><div class="kv"><span>Client</span><b>Waiting</b></div><div class="kv"><span>Tool calls</span><b>Waiting</b></div></div></div>
-  <div class="layer" id="s4"><div class="card"><div class="agent"><span class="agent__ico"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="6" width="16" height="12" rx="3" stroke="currentColor" stroke-width="1.6"/><circle cx="9.5" cy="12" r="1.3" fill="currentColor"/><circle cx="14.5" cy="12" r="1.3" fill="currentColor"/><path d="M12 3v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span><div><h4>Support Triage</h4><small>2 min ago · Sandbox</small></div><span class="badge badge--green">Healthy</span></div></div></div>
+  <!-- 2: the new navigation, grouped by what you're doing -->
+  <div class="layer" id="seg"><div class="seg"><i class="seg__pill" id="pill"></i>
+    <span data-k="0">Build</span><span data-k="1">Roll out</span><span data-k="2">Observe</span></div></div>
+  <div class="layer" id="navrow"><div class="navrow"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2 3 10.4V21h6.2v-6.1h5.6V21H21V10.4z"/></svg>Dashboard</div></div>
 
-  <!-- C -->
+  <!-- 3: status column -->
+  <div class="layer" id="col"><div class="col">
+    <div class="col__h">Status</div>
+    <div class="col__r"><span class="chip chip--green">Healthy</span></div>
+    <div class="col__r" id="mid">
+      <span class="swap" id="m-cta"><span class="cta">Authorize GitHub <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h13m-5-5 5 5-5 5" stroke="currentColor" stroke-width="2"/></svg></span></span>
+      <span class="swap" id="m-wait"><span class="chip chip--ghost">Connecting</span></span>
+      <span class="swap" id="m-ok"><span class="chip chip--green">Connected</span></span>
+    </div>
+    <div class="col__r"><span class="chip chip--amber">Needs auth</span></div>
+  </div></div>
+
+  <!-- 4: stacked chips -->
+  <div class="layer" id="lead"><span class="lead">Connect</span></div>
+  <div class="layer" id="c1"><span class="stack"><i style="background:#1f2328"></i>GitHub</span></div>
+  <div class="layer" id="c2"><span class="stack"><i style="background:#5e6ad2"></i>Linear</span></div>
+  <div class="layer" id="c3"><span class="stack"><i style="background:#e01e5a"></i>Slack</span></div>
+
+  <!-- 5: the run pauses for authorization, then finishes -->
   <div class="layer" id="trace"><div class="trace">
     <div class="trace__head"><span class="k">Execution visibility</span><span class="badge badge--amber" id="status">Action needed</span></div>
-    <div class="trace__sub"><b>Sandbox</b>acting as Alex Morgan</div>
     <ol class="steps" id="steps">
-      <li class="step"><span class="dot"><svg viewBox="0 0 28 28" fill="none"><path d="m9 14.5 3.2 3.2L19 11" stroke="#86efac" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="step__body"><div class="step__t">1. User intent received</div></div></li>
-      <li class="step"><span class="dot"><svg viewBox="0 0 28 28" fill="none"><path d="m9 14.5 3.2 3.2L19 11" stroke="#86efac" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="step__body"><div class="step__t">2. Tool selected</div></div></li>
-      <li class="step"><span class="dot"><svg viewBox="0 0 28 28" fill="none"><path d="m9 14.5 3.2 3.2L19 11" stroke="#86efac" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="step__body"><div class="step__t">3. Authorization required</div>
-        <div class="auth" id="auth"><code>Linear.CreateIssue</code><div class="kv"><span>Status</span><b id="auth-status">Waiting for authorization</b></div><div class="kv"><span>User</span><b>Alex Morgan</b></div><span class="auth__btn" id="auth-btn">Continue to Linear <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h13m-5-5 5 5-5 5" stroke="currentColor" stroke-width="2"/></svg></span></div></div></li>
-      <li class="step"><span class="dot"><svg viewBox="0 0 28 28" fill="none"><path d="m9 14.5 3.2 3.2L19 11" stroke="#86efac" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="step__body"><div class="step__t">4. Scope and policy check</div></div></li>
-      <li class="step"><span class="dot"><svg viewBox="0 0 28 28" fill="none"><path d="m9 14.5 3.2 3.2L19 11" stroke="#86efac" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="step__body"><div class="step__t">5. Tool execution</div></div></li>
-      <li class="step"><span class="dot"><svg viewBox="0 0 28 28" fill="none"><path d="m9 14.5 3.2 3.2L19 11" stroke="#86efac" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="step__body"><div class="step__t">6. Result returned</div></div></li>
+      <li class="step"><span class="dot"><svg viewBox="0 0 34 34" fill="none"><path d="m11 17.5 4 4L23 13" stroke="#86efac" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="step__b"><div class="step__t">User intent received</div></div></li>
+      <li class="step"><span class="dot"><svg viewBox="0 0 34 34" fill="none"><path d="m11 17.5 4 4L23 13" stroke="#86efac" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="step__b"><div class="step__t">Tool selected</div></div></li>
+      <li class="step"><span class="dot"><svg viewBox="0 0 34 34" fill="none"><path d="m11 17.5 4 4L23 13" stroke="#86efac" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="step__b"><div class="step__t">Authorization required</div>
+        <div class="auth" id="auth"><code>Linear.CreateIssue</code><div class="kv"><span>Status</span><b id="auth-status">Waiting</b></div><div class="kv"><span>User</span><b>Alex Morgan</b></div>
+          <span class="auth__btn" id="auth-btn">Continue to Linear <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 12h13m-5-5 5 5-5 5" stroke="currentColor" stroke-width="2"/></svg></span></div></div></li>
+      <li class="step"><span class="dot"><svg viewBox="0 0 34 34" fill="none"><path d="m11 17.5 4 4L23 13" stroke="#86efac" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="step__b"><div class="step__t">Tool execution</div></div></li>
     </ol>
     <div class="result" id="result">✓ ENG-482 created in Linear</div>
   </div></div>
 
-  <!-- D -->
-  <div class="layer" id="d1"><div class="stat"><span class="stat__icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span><div><strong>1</strong><span>first authorized tool call</span></div></div></div>
-  <div class="layer" id="d2"><div class="stat"><span class="stat__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h5m0 0 4-5h5m-9 5 4 5h5M10 12h9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><strong>3</strong><span>paths: Playground, gateway, SDK</span></div></div></div>
-  <div class="layer" id="d3"><div class="stat"><span class="stat__icon"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5" stroke="currentColor" stroke-width="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5" stroke="currentColor" stroke-width="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5" stroke="currentColor" stroke-width="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5" stroke="currentColor" stroke-width="1.6"/></svg></span><div><strong>39</strong><span>integrations in the catalog</span></div></div></div>
+  <!-- 6: the line, then the lockup -->
+  <div class="layer" id="l3"><div class="line" data-words>Authorize once,</div></div>
+  <div class="layer" id="l4"><div class="line" data-words>inside the run.</div></div>
+  <div class="layer" id="lock"><div class="lock"><b>Arcade</b><span><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Control plane</span></div></div>
+
+  <div class="layer" id="cursor"><svg class="cursor" viewBox="0 0 32 32"><path d="M7 3.5v21.2l5.6-5.2 3.6 8.3 3.6-1.6-3.6-8.1 7.6-.3z" fill="#111" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
 </div>
 
 <script>
   // Every frame is a pure function of t (seconds), so the render is deterministic and loops cleanly.
-  const DUR = 8;
+  const DUR = 12;
   const $ = (id) => document.getElementById(id);
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
   const seg = (t, a, b) => clamp((t - a) / (b - a));
   const outCubic = (p) => 1 - Math.pow(1 - p, 3);
+  const outQuint = (p) => 1 - Math.pow(1 - p, 5);
   const inOut = (p) => (p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
-  const outBack = (p) => { const c = 1.4; return 1 + (c + 1) * Math.pow(p - 1, 3) + c * Math.pow(p - 1, 2); };
+  const outBack = (p) => { const c = 1.5; return 1 + (c + 1) * Math.pow(p - 1, 3) + c * Math.pow(p - 1, 2); };
   const lerp = (a, b, p) => a + (b - a) * p;
+  const mix = (a, b, p) => `rgb(${a.map((v, i) => Math.round(lerp(v, b[i], p))).join(",")})`;
   const sizes = {};
-  const place = (id, cx, cy, { s = 1, o = 1, r = 0, blur = 0 } = {}) => {
+  const place = (id, cx, cy, { s = 1, o = 1, blur = 0 } = {}) => {
     const el = $(id), sz = sizes[id] || (sizes[id] = [el.offsetWidth, el.offsetHeight]);
-    el.style.transform = `translate(${cx - sz[0] / 2}px, ${cy - sz[1] / 2}px) scale(${s}) rotate(${r}deg)`;
+    el.style.transform = `translate(${cx - sz[0] / 2}px, ${cy - sz[1] / 2}px) scale(${s})`;
     el.style.transformOrigin = "50% 50%";
     el.style.opacity = o;
     el.style.filter = blur > 0.05 ? `blur(${blur}px)` : "none";
     el.style.visibility = o <= 0.001 ? "hidden" : "visible";
   };
-  const life = (t, a, b, fi = .5, fo = .35) => Math.min(outCubic(seg(t, a, a + fi)), 1 - seg(t, b - fo, b));
+  const life = (t, a, b, fi = .45, fo = .35) => Math.min(outCubic(seg(t, a, a + fi)), 1 - seg(t, b - fo, b));
+
+  // Split kinetic lines into words once
+  document.querySelectorAll("[data-words]").forEach((el) => {
+    el.innerHTML = el.textContent.split(" ").map((w) => `<span class="wd">${w}</span>`).join(" ");
+  });
+  const INK = [22, 22, 22], PALE = [200, 196, 190];
+  // Words arrive one after another: each rises a little and darkens from pale to ink
+  const write = (id, t, a, gap = .11) => [...$(id).querySelectorAll(".wd")].forEach((w, i) => {
+    const p = outCubic(seg(t, a + i * gap, a + i * gap + .5));
+    w.style.opacity = clamp(p * 1.6);
+    w.style.color = mix(PALE, INK, outCubic(seg(t, a + i * gap + .12, a + i * gap + .6)));
+    w.style.transform = `translateY(${(1 - p) * 14}px)`;
+  });
 
   window.render = (t) => {
     const w = (2 * Math.PI * t) / DUR;
-    $("glow").style.transform = `translate(${Math.sin(w) * 90 + 200}px, ${Math.cos(w) * 50}px)`;
-    $("glow2").style.transform = `translate(${-Math.cos(w) * 120 - 260}px, ${Math.sin(w) * 60 - 260}px)`;
+    $("lav").style.transform = `translate(${Math.sin(w) * 120}px, ${Math.cos(w) * 40}px)`;
 
-    // ── A: the primary action, large, then pressed (0 – 2.2s)
-    const aIn = outCubic(seg(t, .05, 1.0));
-    const press = Math.sin(Math.PI * seg(t, 1.25, 1.55)) * .045;
-    const toB = inOut(seg(t, 1.75, 2.35));
-    const ctaOut = 1 - seg(t, 3.85, 4.15);
-    place("cta", 960, 540, { s: lerp(1.32 - .32 * aIn, .5, toB) - press, o: Math.min(aIn, ctaOut), blur: (1 - aIn) * 10 });
-    place("tag", 960, 380 - (1 - aIn) * 18, { o: Math.min(outCubic(seg(t, .35, 1.0)), 1 - seg(t, 1.75, 2.1)) });
+    // ── 1. North star (0 – 2.1s)
+    const s1o = 1 - seg(t, 1.8, 2.1), s1b = seg(t, 1.8, 2.1) * 8;
+    write("l1", t, .15); write("l2", t, .7);
+    place("l1", 960, 480, { o: s1o, blur: s1b, s: 1 + .02 * seg(t, 0, 2.1) });
+    place("l2", 960, 600, { o: s1o, blur: s1b, s: 1 + .02 * seg(t, 0, 2.1) });
 
-    // ── B: product cards drift past at different speeds (1.9 – 4.2s)
-    const cards = [["s1", 470, 320, 120, -2.0, 1.95], ["s2", 1470, 290, 70, 1.6, 2.05], ["s3", 540, 790, 150, 1.4, 2.15], ["s4", 1440, 770, 95, -1.3, 2.25]];
-    cards.forEach(([id, x, y, drift, rot, a]) => {
-      const p = seg(t, a, 4.3), o = life(t, a, 4.2, .55, .4), e = outCubic(seg(t, a, a + .7));
-      place(id, x, y + 70 * (1 - e) - drift * p, { s: lerp(1.08, 1.16, e), o, r: rot * (1 - p * .6), blur: (1 - e) * 6 });
+    // ── 2. Navigation (2.0 – 4.0s): the active group slides Build → Roll out → Observe, Dashboard settles under it
+    const n = life(t, 2.0, 4.0), nIn = outQuint(seg(t, 2.0, 2.7));
+    place("seg", 960, 450 + 30 * (1 - nIn), { o: n, s: lerp(1.12, 1, nIn), blur: (1 - nIn) * 8 });
+    const spans = [...$("seg").querySelectorAll("span")];
+    const pos = inOut(seg(t, 2.55, 2.95)) + inOut(seg(t, 3.15, 3.55));
+    const at = (k) => [spans[k].offsetLeft, spans[k].offsetWidth];
+    const lo = Math.floor(clamp(pos, 0, 1.999)), f = pos - lo, A = at(lo), B = at(Math.min(2, lo + 1));
+    $("pill").style.left = lerp(A[0], B[0], f) + "px";
+    $("pill").style.width = lerp(A[1], B[1], f) + "px";
+    spans.forEach((sp, k) => sp.classList.toggle("on", Math.round(pos) === k));
+    const rIn = outQuint(seg(t, 2.4, 3.0));
+    place("navrow", 960, 660 + 40 * (1 - rIn), { o: Math.min(rIn, 1 - seg(t, 3.65, 4.0)), blur: (1 - rIn) * 6 });
+
+    // ── 3. Status (4.0 – 6.0s): the cursor clicks Authorize GitHub, it becomes Connecting, then Connected
+    const c = life(t, 4.0, 6.0), cIn = outQuint(seg(t, 4.0, 4.6));
+    place("col", 960, 560 + 30 * (1 - cIn), { o: c, s: lerp(1.08, 1, cIn) - .02 * seg(t, 4.6, 6), blur: (1 - cIn) * 8 });
+    const press = Math.sin(Math.PI * seg(t, 4.85, 5.05)) * .08;
+    const toWait = seg(t, 5.05, 5.15), toOk = seg(t, 5.45, 5.6);
+    $("m-cta").style.opacity = 1 - toWait;
+    $("m-cta").style.transform = `translate(-50%, -50%) scale(${1 - press})`;
+    $("m-wait").style.opacity = Math.min(toWait, 1 - toOk);
+    $("m-ok").style.opacity = toOk;
+    $("m-ok").style.transform = `translate(-50%, -50%) scale(${lerp(.85, 1, outBack(seg(t, 5.45, 5.75)))})`;
+
+    // ── 4. Connect + stacked chips (6.0 – 7.6s)
+    const g = life(t, 6.0, 7.6);
+    place("lead", 520, 420, { o: Math.min(g, outCubic(seg(t, 6.0, 6.4))) });
+    [["c1", 900, 420, 6.1], ["c2", 1010, 560, 6.25], ["c3", 1120, 700, 6.4]].forEach(([id, x, y, a]) => {
+      const e = outQuint(seg(t, a, a + .5));
+      place(id, x + 40 * (1 - e), y + 26 * (1 - e) - 30 * seg(t, 6, 7.6), { o: Math.min(e, 1 - seg(t, 7.25, 7.6)), s: lerp(.94, 1, e), blur: (1 - e) * 5 });
     });
 
-    // ── C: the trace walks to authorization, gets approved, completes (4.0 – 6.45s)
-    const cIn = outCubic(seg(t, 4.0, 4.65)), cOut = seg(t, 6.15, 6.5);
-    place("trace", 960, 560 + 40 * (1 - cIn) - 26 * seg(t, 4.0, 6.5), { s: lerp(1.16, 1.08, cIn) - .03 * cOut, o: Math.min(cIn, 1 - cOut), blur: (1 - cIn) * 8 + cOut * 6 });
-    const authed = t >= 5.25;
-    const doneAt = [4.55, 4.75, 5.3, 5.5, 5.68, 5.86];
+    // ── 5. Trace (7.5 – 10.0s): steps tick, the run pauses for Linear, the cursor approves, the issue is created
+    const r = life(t, 7.5, 10.0, .55, .4), rIn2 = outQuint(seg(t, 7.5, 8.2));
+    place("trace", 960, 580 + 40 * (1 - rIn2) - 30 * seg(t, 7.5, 10), { o: r, s: lerp(1.42, 1.3, rIn2), blur: (1 - rIn2) * 8 });
+    const doneAt = [7.85, 8.05, 9.05, 9.25];
     [...$("steps").children].forEach((li, i) => {
       const done = t >= doneAt[i];
       li.classList.toggle("is-done", done);
-      li.classList.toggle("is-active", !done && i === 2 && t >= 4.75);
+      li.classList.toggle("is-active", !done && i === 2 && t >= 8.05);
     });
-    $("auth").style.opacity = outCubic(seg(t, 4.8, 5.0));
-    const press2 = Math.sin(Math.PI * seg(t, 5.0, 5.22)) * .07;
+    $("auth").style.opacity = outCubic(seg(t, 8.1, 8.35));
+    const press2 = Math.sin(Math.PI * seg(t, 8.8, 9.0)) * .08;
     $("auth-btn").style.transform = `scale(${1 - press2})`;
-    $("auth-btn").style.opacity = authed ? 1 - seg(t, 5.25, 5.4) * .65 : 1;
-    $("auth-status").textContent = authed ? "Authorized" : "Waiting for authorization";
+    const authed = t >= 9.0;
+    $("auth-btn").style.opacity = authed ? 1 - seg(t, 9.0, 9.15) * .6 : 1;
+    $("auth-status").textContent = authed ? "Authorized" : "Waiting";
     $("auth-status").style.color = authed ? "#86efac" : "#fff";
-    const complete = t >= 5.9;
+    const complete = t >= 9.3;
     $("status").textContent = complete ? "Complete" : "Action needed";
     $("status").className = "badge " + (complete ? "badge--green" : "badge--amber");
-    const rp = outBack(seg(t, 5.95, 6.2));
-    $("result").style.opacity = seg(t, 5.95, 6.05);
-    $("result").style.transform = `scale(${lerp(.85, 1, rp)})`;
+    $("result").style.opacity = seg(t, 9.35, 9.45);
+    $("result").style.transform = `scale(${lerp(.85, 1, outBack(seg(t, 9.35, 9.6)))})`;
+    $("warm").style.opacity = .9 * Math.min(seg(t, 8.9, 9.3), 1 - seg(t, 9.6, 10.1));   // a warm bloom when it works, like the approval beat in the reference
 
-    // ── D: the numbers rise in a row, then the frame clears for the loop (6.3 – 8.0s)
-    [["d1", 380], ["d2", 960], ["d3", 1540]].forEach(([id, x], i) => {
-      const a = 6.35 + i * .1, e = outCubic(seg(t, a, a + .6));
-      const o = Math.min(e, 1 - seg(t, 7.55, 7.9));
-      place(id, x, 560 + 90 * (1 - e) - 20 * seg(t, a, 8), { o, s: lerp(.95, 1, e), blur: (1 - e) * 6 });
-    });
+    // ── Cursor: in for each click, out between
+    const cur = (() => {
+      // [arrive, click, leave, from, to]
+      const shots = [[4.4, 4.95, 5.4, [1300, 820], [1010, 556]], [8.35, 8.9, 9.4, [1350, 960], [800, 820]]];
+      for (const [a, k, l, p0, p1] of shots) if (t >= a - .05 && t <= l + .3) {
+        const m = inOut(seg(t, a, k - .1)), o = Math.min(seg(t, a - .05, a + .15), 1 - seg(t, l, l + .3));
+        return { x: lerp(p0[0], p1[0], m), y: lerp(p0[1], p1[1], m), o, s: 1 - Math.sin(Math.PI * seg(t, k - .1, k + .1)) * .12 };
+      }
+      return { x: 0, y: 0, o: 0, s: 1 };
+    })();
+    // the trace's button sits in the moving card: track it
+    if (t > 8.3 && t < 9.8) { const b = $("auth-btn").getBoundingClientRect(); const tx = b.left + b.width * .6, ty = b.top + b.height * .6; const m = inOut(seg(t, 8.35, 8.8)); cur.x = lerp(1350, tx, m); cur.y = lerp(960, ty, m); }
+    if (t > 4.3 && t < 5.8) { const b = $("m-cta").getBoundingClientRect(); const tx = b.left + b.width * .62, ty = b.top + b.height * .62; const m = inOut(seg(t, 4.4, 4.85)); cur.x = lerp(1300, tx, m); cur.y = lerp(820, ty, m); }
+    place("cursor", cur.x + 22, cur.y + 26, { o: cur.o, s: cur.s });
+
+    // ── 6. Line, then lockup (9.9 – 12s); the lockup fades to the empty stage the loop starts from
+    const s6o = 1 - seg(t, 10.85, 11.1), s6b = seg(t, 10.85, 11.1) * 8;
+    write("l3", t, 9.95); write("l4", t, 10.3);
+    place("l3", 960, 480, { o: Math.min(s6o, t >= 9.9 ? 1 : 0), blur: s6b });
+    place("l4", 960, 600, { o: Math.min(s6o, t >= 9.9 ? 1 : 0), blur: s6b });
+    const k = outQuint(seg(t, 11.0, 11.45));
+    place("lock", 960, 540, { o: Math.min(k, 1 - seg(t, 11.65, 11.95)), s: lerp(.96, 1, k), blur: (1 - k) * 6 });
   };
   document.fonts.ready.then(() => { window.render(0); window.__ready = true; });
 </script>
