@@ -82,7 +82,7 @@ a { color: inherit; }
   --thumb-bg:    rgb(var(--greyscale-black));
 }
 .header {
-  position: fixed; inset: 0 0 auto; z-index: 20; padding: 8px;
+  position: fixed; inset: 0 0 auto; z-index: 20; padding: max(8px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) 8px max(8px, env(safe-area-inset-left));
   display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;
   pointer-events: none;
 }
@@ -123,6 +123,7 @@ html.is-loading .seg__brand .logo { opacity: 0; }
 /* Dropdown panels: stacks of frosted cards */
 .panel {
   position: absolute; top: 56px; width: 360px;
+  max-height: calc(100vh - 72px); max-height: calc(100dvh - 72px); overflow-y: auto; overscroll-behavior: contain;   /* short screens scroll the panel instead of cutting it off */
   display: flex; flex-direction: column; gap: 8px; align-items: flex-start;
   visibility: hidden; pointer-events: none;
 }
@@ -183,7 +184,8 @@ html.is-loading .seg__brand .logo { opacity: 0; }
   .only-desktop { display: none !important; }
   .only-mobile { display: inline-flex !important; }
   .pcard.only-mobile { display: grid !important; }
-  .panel, .panel--right { position: fixed; top: 64px; left: 8px; right: 8px; width: auto; }
+  .panel, .panel--right { position: fixed; top: calc(64px + env(safe-area-inset-top)); left: max(8px, env(safe-area-inset-left)); right: max(8px, env(safe-area-inset-right)); width: auto; max-height: calc(100vh - 80px); max-height: calc(100dvh - 72px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); }
+  body.nav-open, html:has(body.nav-open) { overflow: hidden; }
   .pcard__list a { font-size: 22px; }
   .pcard--more { display: none; }
   body::after {
@@ -549,7 +551,7 @@ html { scroll-behavior: smooth; }
 }
 .sitefoot {
   container-type: inline-size;
-  margin: 0 var(--space-2) var(--space-2); padding: max(var(--section-y), 120px) var(--gutter) var(--space-5);
+  margin: 0 var(--space-2) var(--space-2); padding: max(var(--section-y), 120px) var(--gutter) calc(var(--space-5) + env(safe-area-inset-bottom));
   background: var(--sec-bg); color: var(--sec-fg); border-radius: var(--radius-lg);
 }
 .sf__chart {

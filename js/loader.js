@@ -2,10 +2,17 @@
 // Disc i sits at angle θ around the ring: x = RX·sin θ, y = −RY·cos θ, and narrows as it turns edge-on.
 (function () {
   // Apply the saved theme before first paint so the loader (and page) start in the right mode
+  // The browser chrome (Safari toolbar, Android address bar) follows the page theme too
+  window.setThemeColor = (t) => {
+    let m = document.querySelector('meta[name="theme-color"]');
+    if (!m) { m = document.createElement("meta"); m.name = "theme-color"; document.head.appendChild(m); }
+    m.content = t === "light" ? "#FFFEF2" : "#040404";
+  };
   try {
     const saved = localStorage.getItem("theme");
     document.documentElement.dataset.theme = saved || "dark";
   } catch (e) {}
+  window.setThemeColor(document.documentElement.dataset.theme);
   // Page transition: arriving from another page of the site, start under a black cover; site.js lifts it and plays the entrance
   try {
     if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {

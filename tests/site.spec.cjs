@@ -176,3 +176,51 @@ test.describe("assets", () => {
     await expect(page.locator(".work__tab").first()).toBeVisible();
   });
 });
+
+test.describe("menus", () => {
+  for (const [width, height] of [[320, 568], [390, 520], [844, 390]]) {
+    test(`Menu and Contact stay usable at ${width}x${height}`, async ({ page }) => {
+      await page.setViewportSize({ width, height });
+      await page.goto("/", { waitUntil: "load" });
+      await page.waitForSelector(".headline.in");
+      const mobile = width < 768;
+      const tab = page.locator(mobile ? "#menu-tab" : "#work-tab");
+      const panel = page.locator("#work-panel");
+      await tab.click();
+      await expect(tab).toHaveAttribute("aria-expanded", "true");
+      await expect(panel).toBeVisible();
+      const inside = await panel.evaluate((el) => { const r = el.getBoundingClientRect(); return { bottom: r.bottom, vh: innerHeight, scrollable: el.scrollHeight > el.clientHeight, canScroll: getComputedStyle(el).overflowY }; });
+      expect(inside.bottom).toBeLessThanOrEqual(inside.vh);
+      expect(inside.canScroll).toBe("auto");
+      if (mobile) expect(await page.evaluate(() => getComputedStyle(document.body).overflow)).toBe("hidden");   // page behind does not scroll
+      await page.keyboard.press("Escape");
+      await expect(panel).toBeHidden();
+      await expect(tab).toBeFocused();
+
+      const contact = page.locator("#contact-tab");
+      await contact.click();
+      await expect(page.locator("#contact-panel")).toBeVisible();
+      await page.mouse.click(width / 2, height - 4);   // outside the header and the panel
+      await expect(page.locator("#contact-panel")).toBeHidden();
+    });
+  }
+
+  test("the last Work link is reachable by scrolling the panel on a short phone", async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 420 });
+    await page.goto("/", { waitUntil: "load" });
+    await page.waitForSelector(".headline.in");
+    await page.locator("#menu-tab").click();
+    const last = page.locator("#work-panel a:visible").last();
+    await last.scrollIntoViewIfNeeded();
+    const r = await last.boundingBox();
+    expect(r.y + r.height).toBeLessThanOrEqual(420);
+  });
+
+  test("theme-color follows the theme toggle", async ({ page }) => {
+    await page.goto("/", { waitUntil: "load" });
+    const read = () => page.locator('meta[name="theme-color"]').getAttribute("content");
+    const before = await read();
+    await page.locator("#theme").click();
+    expect(await read()).not.toBe(before);
+  });
+});

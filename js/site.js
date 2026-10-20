@@ -930,6 +930,7 @@ const root = document.documentElement;
 const themeBtn = document.getElementById("theme");
 const setTheme = (t) => {
   root.dataset.theme = t;
+  window.setThemeColor?.(t);
   themeBtn.setAttribute("aria-label", t === "dark" ? "Switch to light mode" : "Switch to dark mode");
   try { localStorage.setItem("theme", t); } catch (e) {}
 };
@@ -1063,7 +1064,12 @@ MENUS.forEach((m) => {
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && openMenu) { const tab = openMenu.tab; closeAll(); tab.focus(); }
 });
-document.addEventListener("click", (e) => { if (openMenu && !e.target.closest(".navgroup")) closeAll(); });
+document.addEventListener("click", (e) => {
+  if (!openMenu || e.target.closest(".navgroup")) return;
+  const { tab, panel } = openMenu;
+  closeAll();
+  if (panel.contains(document.activeElement)) tab.focus();   // focus was inside the panel: hand it back to the tab that opened it
+});
 document.querySelectorAll(".panel a").forEach((a) => a.addEventListener("click", closeAll));
 
 // Align the Work panel under its tab
