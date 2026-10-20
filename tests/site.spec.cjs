@@ -216,6 +216,16 @@ test.describe("menus", () => {
     expect(r.y + r.height).toBeLessThanOrEqual(420);
   });
 
+  test("Contact and Work dropdowns share the same width and card style on desktop", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/", { waitUntil: "load" });
+    await page.waitForSelector(".headline.in");
+    const width = (sel) => page.locator(sel).evaluate((el) => Math.round(el.getBoundingClientRect().width));
+    expect(await width("#contact-panel")).toBe(await width("#work-panel"));
+    const card = (sel) => page.locator(`${sel} .pcard`).first().evaluate((el) => { const c = getComputedStyle(el); return [c.borderRadius, c.paddingTop, c.paddingLeft]; });
+    expect(await card("#contact-panel")).toEqual(await card("#work-panel"));
+  });
+
   test("theme-color follows the theme toggle", async ({ page }) => {
     await page.goto("/", { waitUntil: "load" });
     const read = () => page.locator('meta[name="theme-color"]').getAttribute("content");
@@ -226,53 +236,24 @@ test.describe("menus", () => {
 });
 
 test.describe("motion", () => {
-  test("Pause motion stops ambient loops and persists across pages", async ({ page }) => {
-    await page.goto("/", { waitUntil: "load" });
-    await page.waitForSelector(".headline.in");
-    const btn = page.getByRole("button", { name: "Pause motion" });
-    await expect(btn).toHaveAttribute("aria-pressed", "false");
-    await btn.click();
-    await expect(btn).toHaveAttribute("aria-pressed", "true");
-    expect(await page.evaluate(() => document.documentElement.dataset.motion)).toBe("reduce");
-    // CSS keyframes are off
-    expect(await page.evaluate(() => getComputedStyle(document.querySelector(".grain")).animationName)).toBe("none");
-    // card videos are paused and show a poster
-    await page.locator("#work").scrollIntoViewIfNeeded();
-    await page.waitForTimeout(600);
-    const playing = await page.evaluate(() => [...document.querySelectorAll("video")].filter((v) => !v.paused).length);
-    expect(playing).toBe(0);
-    // the choice carries to the next page before first paint
-    await page.goto("/about", { waitUntil: "commit" });
-    await page.waitForFunction(() => document.documentElement.dataset.motion === "reduce");
-    await expect(page.getByRole("button", { name: "Pause motion" })).toHaveAttribute("aria-pressed", "true");
-  });
-
-  test("looping cover videos play while visible and pause when motion is paused", async ({ page, browserName }) => {
+  test("looping cover videos play while visible and pause when the device asks for reduced motion", async ({ page, browserName }) => {
     test.skip(browserName === "webkit", "headless WebKit may refuse muted autoplay without a user gesture");
     await page.goto("/", { waitUntil: "load" });
     await page.waitForSelector(".headline.in");
     await page.locator(".case__vid").first().scrollIntoViewIfNeeded();
     await page.waitForFunction(() => [...document.querySelectorAll("video")].some((v) => !v.paused), null, { timeout: 8000 });
-    await page.locator("#motion").click();
+    await page.emulateMedia({ reducedMotion: "reduce" });
     await page.waitForFunction(() => [...document.querySelectorAll("video")].every((v) => v.paused));
   });
 
-  test("OS reduced motion locks the switch on", async ({ browser }) => {
+  test("case-study demos stay playable by hand under reduced motion", async ({ browser }) => {
     const ctx = await browser.newContext({ reducedMotion: "reduce" });
     const page = await ctx.newPage();
-    await page.goto("/", { waitUntil: "load" });
-    const btn = page.locator("#motion");
-    await expect(btn).toBeDisabled();
-    await expect(btn).toHaveAttribute("aria-pressed", "true");
-    await ctx.close();
-  });
-
-  test("case-study demos stay playable by hand when motion is paused", async ({ page }) => {
-    await page.addInitScript(() => localStorage.setItem("motion", "reduce"));
     await page.goto("/work/gap-3d-fit", { waitUntil: "load" });
     await page.waitForSelector(".study__sec");
     const controls = await page.evaluate(() => [...document.querySelectorAll(".study video")].map((v) => v.controls));
     expect(controls.length).toBeGreaterThan(0);
     expect(controls.every(Boolean)).toBe(true);
+    await ctx.close();
   });
 });

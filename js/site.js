@@ -1,8 +1,8 @@
 // Motion preference helper: loader.js defines the real one (OS setting + the site's Pause motion switch)
 window.motionReduced ||= () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-// Looping muted videos play only while on screen, the tab is visible and motion isn't paused.
-// With motion paused they show their poster; `manual` ones (case-study demos) get native controls instead.
+// Looping muted videos play only while on screen, the tab is visible and the device isn't set to reduce motion.
+// With reduced motion they show their poster; `manual` ones (case-study demos) get native controls instead.
 const autoVideo = (v, threshold, manual = false) => {
   let visible = false;
   const sync = () => {
@@ -953,20 +953,6 @@ try { saved = localStorage.getItem("theme"); } catch (e) {}
 setTheme(saved || "dark");
 themeBtn.addEventListener("click", () => setTheme(root.dataset.theme === "dark" ? "light" : "dark"));
 
-// ── Motion switch: pauses ambient motion everywhere (OS "reduce motion" is honoured automatically and can't be overridden) ──
-const motionBtn = document.createElement("button");
-motionBtn.className = "icon-btn"; motionBtn.type = "button"; motionBtn.id = "motion";
-motionBtn.setAttribute("aria-label", "Pause motion");
-motionBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="2.5" width="3" height="11" fill="currentColor"/><rect x="9.5" y="2.5" width="3" height="11" fill="currentColor"/></svg>';
-const syncMotionBtn = () => {
-  motionBtn.setAttribute("aria-pressed", String(motionReduced()));
-  motionBtn.disabled = !!window.motionLocked?.();
-  motionBtn.title = motionBtn.disabled ? "Your device is set to reduce motion" : motionReduced() ? "Motion is paused. Click to resume." : "Pause motion";
-};
-motionBtn.addEventListener("click", () => window.setMotion?.(!motionReduced()));
-addEventListener("motionchange", syncMotionBtn);
-themeBtn.before(motionBtn);
-syncMotionBtn();
 
 // ── Contact details (replace the placeholders with your own) ──
 const CONTACT = {

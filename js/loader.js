@@ -1,16 +1,9 @@
 // Brand mark: a ring of 12 flat discs seen in perspective, plus the page loader.
 // Disc i sits at angle θ around the ring: x = RX·sin θ, y = −RY·cos θ, and narrows as it turns edge-on.
 (function () {
-  // Motion preference: the OS setting, or the site's own "Pause motion" switch (saved). Applied before first paint.
+  // Motion preference: follows the OS "reduce motion" setting, live
   const osReduce = matchMedia("(prefers-reduced-motion: reduce)");
-  try { if (localStorage.getItem("motion") === "reduce") document.documentElement.dataset.motion = "reduce"; } catch (e) {}
-  window.motionReduced = () => osReduce.matches || document.documentElement.dataset.motion === "reduce";
-  window.motionLocked = () => osReduce.matches;   // the OS asks for reduced motion; the switch can't override it
-  window.setMotion = (reduce) => {
-    document.documentElement.dataset.motion = reduce ? "reduce" : "full";
-    try { localStorage.setItem("motion", reduce ? "reduce" : "full"); } catch (e) {}
-    dispatchEvent(new Event("motionchange"));
-  };
+  window.motionReduced = () => osReduce.matches;
   osReduce.addEventListener?.("change", () => dispatchEvent(new Event("motionchange")));
   // Apply the saved theme before first paint so the loader (and page) start in the right mode
   // The browser chrome (Safari toolbar, Android address bar) follows the page theme too
