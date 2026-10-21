@@ -247,6 +247,16 @@ body[data-page="case"] { --greyscale-200: 216 216 216; --greyscale-700: 133 133 
   display: block; width: 100%; max-width: none; height: auto; max-height: min(68vh, 640px); object-fit: contain; border-radius: var(--radius);
 }
 .study .study__media--hero-trio > .shot:first-child img { max-height: min(78vh, 820px); }
+/* Explainer boards fill their tile edge to edge; the board carries its own background and margins */
+.study .study__media .shot--board .shot__tile { padding: 0; min-height: 0; background: none; border-radius: var(--radius-lg); }
+.study .study__media .shot--board img { max-height: none; border-radius: var(--radius-lg); }
+.study .study__media .shot--board .shot__tile:focus-visible { outline: 2px solid var(--st-ac); outline-offset: 2px; }
+/* On a phone the board keeps a readable size and scrolls sideways inside its tile instead of shrinking to unreadable type */
+@media (max-width: 767px) {
+  .study .study__media .shot--board .shot__tile { display: flex; justify-content: flex-start; align-items: flex-start; overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
+  .study .study__media .shot--board img { width: 880px; max-width: none; flex: none; }
+  .study .study__media .shot--board figcaption::after { content: " · Swipe sideways to see the whole board"; color: var(--st-muted); }
+}
 .study .study__media--quad .shot img, .study .study__media--quad .shot--video video { max-height: min(72vh, 680px); }
 .study .study__media figcaption { font: 400 13px/1.45 var(--font-body); text-transform: none; letter-spacing: 0; color: var(--st-muted); max-width: 42ch; }
 

@@ -1,0 +1,44 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8" /><title>CotonAI Design System boards</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=block" rel="stylesheet" />
+<link rel="stylesheet" href="../../ref-boards.css" /></head><body>
+
+<div class="board" id="collections">
+  <div class="card" style="--x:45;--y:60;--w:250;--h:92"><h3>src/index.css</h3></div>
+  <div class="card" style="--x:45;--y:166;--w:250;--h:92"><h3>boardUiTokens.ts</h3></div>
+  <div class="card" style="--x:45;--y:272;--w:250;--h:92"><h3>tailwind.config.ts</h3></div>
+  <i class="arr" style="--x:318;--y:200">→</i>
+  <div class="card navy" style="--x:342;--y:60;--w:230;--h:304"><h3>Extraction</h3><p>What repeats becomes a token. A role becomes an alias. A shadow stays a style.</p></div>
+  <i class="arr" style="--x:595;--y:200">→</i>
+  <div class="card l" style="--x:618;--y:44;--w:417;--h:80;padding:12px 22px;justify-content:center"><h3>Primitives · 57</h3><p>Raw values in one mode. Grays named by HSL lightness.</p></div>
+  <div class="card l" style="--x:618;--y:136;--w:417;--h:80;padding:12px 22px;justify-content:center"><h3>Semantic · 48</h3><p>Roles aliased to primitives. Light and Dark are modes.</p></div>
+  <div class="card l" style="--x:618;--y:228;--w:417;--h:80;padding:12px 22px;justify-content:center"><h3>Dimensions</h3><p>Spacing, radius, control sizes, type, opacity, duration.</p></div>
+  <div class="card l" style="--x:618;--y:320;--w:417;--h:80;padding:12px 22px;justify-content:center"><h3>Effects · 4</h3><p>Shadows stay Figma effect styles, not color variables.</p></div>
+  <div class="card line" style="--x:45;--y:450;--w:990;--h:100"><h3>A file Figma can import</h3><p>Regenerated from the stylesheet by build.py, so the tokens stay honest</p></div>
+</div>
+
+<div class="board" id="collapse">
+  <div class="ttl" style="--x:45;--y:36">Near-duplicates collapsed into one primitive each</div>
+  <div class="card" style="--x:45;--y:92;--w:520;--h:84"><h3><span class="sw" style="background:#232323"></span>#232323 &nbsp; <span class="sw" style="background:#242424"></span>#242424</h3></div>
+  <i class="arr" style="--x:585;--y:120">→</i>
+  <div class="card navy" style="--x:605;--y:92;--w:170;--h:84"><h3>gray/14</h3></div>
+  <div class="card" style="--x:45;--y:192;--w:520;--h:84"><h3><span class="sw" style="background:#1C1C1C"></span>#1C1C1C &nbsp; <span class="sw" style="background:#1D1D1D"></span>#1D1D1D</h3></div>
+  <i class="arr" style="--x:585;--y:220">→</i>
+  <div class="card navy" style="--x:605;--y:192;--w:170;--h:84"><h3>gray/11</h3></div>
+  <div class="card" style="--x:45;--y:292;--w:520;--h:84"><h3><span class="sw" style="background:#292929"></span>#292929 &nbsp; <span class="sw" style="background:#2A2A2A"></span>#2A2A2A</h3></div>
+  <i class="arr" style="--x:585;--y:320">→</i>
+  <div class="card navy" style="--x:605;--y:292;--w:170;--h:84"><h3>gray/16</h3></div>
+  <div class="card line l" style="--x:800;--y:92;--w:235;--h:284;padding:20px 22px"><h4>Left unnamed</h4><h3>Debug colors</h3><ul style="margin-top:6px"><li class="row"><span class="sw" style="background:#FF0000"></span>#FF0000</li><li class="row"><span class="sw" style="background:#00FF00"></span>#00FF00</li><li class="row"><span class="sw" style="background:#3B82F6"></span>#3B82F6</li><li class="row"><span class="sw" style="background:#6366F1"></span>#6366F1</li><li class="row"><span class="sw" style="background:#3B6BFF"></span>#3B6BFF</li><li class="row"><span class="sw" style="background:#FFF44F"></span>#FFF44F</li></ul></div>
+  <div class="card white" style="--x:45;--y:424;--w:990;--h:120"><h4>Kept, for one job</h4><h3><span class="sw" style="background:#8A38F5"></span>#8A38F5 · icon/layer-text</h3><p>The text-layer mark in the layers panel. A job, not a brand color.</p></div>
+</div>
+
+<div class="board" id="color">
+  <div class="card" style="--x:45;--y:90;--w:300;--h:130"><h4>Primitive · a fact</h4><h3>gray/96</h3><p>Always #F5F5F5</p></div>
+  <i class="arr" style="--x:362;--y:142">→</i>
+  <div class="card" style="--x:380;--y:90;--w:300;--h:130"><h4>Semantic · a job</h4><h3>The page</h3><p>gray/96 in light mode, gray/2 in dark</p></div>
+  <i class="arr" style="--x:697;--y:142">→</i>
+  <div class="card navy" style="--x:715;--y:90;--w:320;--h:130"><h3>Two modes of one collection</h3><p>Light and Dark</p></div>
+  <div class="card l" style="--x:45;--y:270;--w:322;--h:230"><h4>Blue · points</h4><h3><span class="sw" style="background:#0C8CE9"></span>#0C8CE9</h3><p>Focus, selection and the primary action. The same in light and dark, with #0A7BD0 on hover and #096BB8 on press.</p></div>
+  <div class="card l" style="--x:379;--y:270;--w:322;--h:230"><h4>Green · commits</h4><h3><span class="sw" style="background:#71CE82"></span>#71CE82</h3><p>Generate is green type until hover, then a 30% fill and a full stroke.</p></div>
+  <div class="card l" style="--x:713;--y:270;--w:322;--h:230"><h4>Red · stops</h4><h3><span class="sw" style="background:#FF383C"></span>#FF383C</h3><p>Cancel borrows the same ghost logic. Press deepens the fill to 50%.</p></div>
+</div>
+</body></html>

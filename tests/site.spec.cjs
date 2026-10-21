@@ -257,3 +257,37 @@ test.describe("motion", () => {
     await ctx.close();
   });
 });
+
+test.describe("explainer boards", () => {
+  const SLUGS = ["trailhead-solve", "cotonai-modes", "cotonai-design-system", "arcade-control-plane", "gap-3d-fit", "cotonai-agent", "payman-ai"];
+  for (const slug of SLUGS) {
+    test(`${slug}: boards load, fit the column and keep an accessible name`, async ({ page }) => {
+      await page.addInitScript(() => sessionStorage.setItem("samfolio-unlocked", "1"));
+      await page.goto(`/work/${slug}`, { waitUntil: "load" });
+      await page.waitForSelector(".study__sec");
+      const boards = page.locator(".shot--board");
+      expect(await boards.count()).toBeGreaterThan(0);
+      for (const b of await boards.all()) {
+        await b.scrollIntoViewIfNeeded();
+        await expect(b.locator("img")).toHaveJSProperty("complete", true, { timeout: 20000 });
+        expect(await b.locator("img").evaluate((i) => i.naturalWidth)).toBeGreaterThan(1000);
+        expect((await b.locator("img").getAttribute("alt")).length).toBeGreaterThan(60);
+        await expect(b.locator(".shot__tile")).toHaveAttribute("role", "region");
+      }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0);
+    });
+  }
+
+  test("on a phone a board stays readable and scrolls sideways inside its tile", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/work/gap-3d-fit", { waitUntil: "load" });
+    await page.waitForSelector(".study__sec");
+    const tile = page.locator(".shot--board .shot__tile").first();
+    await tile.scrollIntoViewIfNeeded();
+    await expect(tile.locator("img")).toHaveJSProperty("complete", true, { timeout: 20000 });
+    const m = await tile.evaluate((t) => ({ client: t.clientWidth, scroll: t.scrollWidth, img: t.querySelector("img").getBoundingClientRect().width }));
+    expect(m.img).toBeGreaterThanOrEqual(850);
+    expect(m.scroll).toBeGreaterThan(m.client);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0);
+  });
+});

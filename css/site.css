@@ -307,7 +307,7 @@ html.pt-in .header .seg { opacity: 0; }
 }
 .headline {
   margin: 0 0 40px; font-family: var(--font-ntype); font-weight: 400;
-  font-size: 48px; line-height: 1; letter-spacing: -.01em; text-wrap: balance;
+  font-size: 28px; line-height: 1; letter-spacing: -.01em; text-wrap: balance;
 }
 .headline a {
   text-decoration: none;
@@ -419,13 +419,7 @@ html { scroll-behavior: smooth; }
 /* ───────── Responsive (DESIGN.md §4.4) ───────── */
 @media (max-width: 1023px) { :root { --section-y: var(--space-11); --head-gap: var(--space-8); } }
 @media (max-width: 767px)  { :root { --section-y: var(--space-10); --head-gap: var(--space-7); --gutter: var(--space-4); } }
-@media (max-width: 1279px) {
-  .headline { font-size: 40px; }
-}
-@media (max-width: 1023px) {
-}
 @media (max-width: 767px) {
-  .headline { font-size: 32px; }
   .welcome, .intro > .eyebrow { margin-bottom: 28px; }
 }
 @media (prefers-reduced-motion: reduce) {
