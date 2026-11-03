@@ -1,0 +1,113 @@
+{
+  "sections": [
+    {
+      "before": "My hypothesis",
+      "h": "What holding the bar means day to day",
+      "flag": "Illustrative: my own sketch, not a sourced fact.",
+      "p": [
+        "<strong>A bar is something you can point at.</strong> If the spec is the baseline and not the finish line, then someone has to know what sits above the baseline. I picture that as a short written standard plus a person who will say no against it. Without both, quality is a mood, and moods do not survive a busy week. A short list of examples does more than a long list of principles, because examples show where the line actually sits.",
+        "<strong>It is a continuous standard.</strong> Saarinen's point that quality is not perfection matters here. Holding the bar does not mean rejecting everything. It means the gap between what shipped and what was intended stays small and visible, and someone owns closing it each time. If that gap grows, the bar has quietly moved, and it is better to notice that early than to find it in a review months later."
+      ]
+    },
+    {
+      "before": "How I'd test it",
+      "h": "Where I would not trust the small-team bet",
+      "flag": "My opinion, based on the tradeoffs above.",
+      "p": [
+        "<strong>One owner is also one point of failure.</strong> A single person reviewing everything against a written bar is fast and consistent, but they get tired, they get busy, and they have blind spots. I would want to know what happens to quality the week that person is out. A backup reviewer who has been trained on the same written bar seems like the cheapest answer, though I have not tested that.",
+        "<strong>Taste can be a polite word for preference.</strong> Linear's approach works partly because the team shares a bar. If a small team's taste is narrow, agents will just scale that narrowness faster. I would not assume that small and craft-led automatically means right. I would check whether users actually feel the difference. The check I would use is simple: can someone outside the team tell which of two screens came from the more careful process?"
+      ]
+    },
+    {
+      "h": "What I would do first on a real product",
+      "flag": "Illustrative: my own sketch, not a sourced fact.",
+      "p": [
+        "<strong>Write the bar down before using agents.</strong> I would start with a page that says what good looks like for this product, with a few examples of yes and a few of no. It does not need to be long. It needs to be specific enough that two people would reach the same verdict on the same screen. Keeping it short matters, because a long document becomes something people agree with and then ignore.",
+        "<strong>Then count who can apply it.</strong> I would ask how many people on the team could review agent output against that page and agree with each other. If the answer is one or two, that is the real capacity of the team, whatever the headcount says, and that is the number I would plan around. It also gives me an honest answer to how much agent output we can safely govern, which headcount never could."
+      ]
+    }
+  ],
+  "maps": [
+    {
+      "after": "What's true right now",
+      "caption": "Linear's craft culture as publicly stated.",
+      "center": "Linear craft",
+      "branches": [
+        {
+          "label": "Strategy",
+          "children": [
+            "craft on purpose",
+            "quality noticed"
+          ]
+        },
+        {
+          "label": "Ten rules",
+          "children": [
+            "small teams",
+            "spec is the baseline"
+          ]
+        },
+        {
+          "label": "Operating",
+          "children": [
+            "taste over metrics",
+            "no OKRs"
+          ]
+        },
+        {
+          "label": "Values",
+          "children": [
+            "quality as gravity",
+            "the Linear Method"
+          ]
+        },
+        {
+          "label": "AI",
+          "children": [
+            "part of design practice"
+          ]
+        }
+      ]
+    },
+    {
+      "after": "What holding the bar means day to day",
+      "caption": "My bet: judgment is the bottleneck once building is cheap.",
+      "center": "Taste",
+      "branches": [
+        {
+          "label": "Agents",
+          "children": [
+            "many plausible builds",
+            "production gets cheap"
+          ]
+        },
+        {
+          "label": "Bottleneck",
+          "children": [
+            "judgment",
+            "does not parallelize"
+          ]
+        },
+        {
+          "label": "Small team",
+          "children": [
+            "everyone holds the bar"
+          ]
+        },
+        {
+          "label": "Large team",
+          "children": [
+            "consensus dilutes",
+            "inconsistent output"
+          ]
+        },
+        {
+          "label": "Real metric",
+          "children": [
+            "people who hold the line"
+          ]
+        }
+      ]
+    }
+  ]
+}

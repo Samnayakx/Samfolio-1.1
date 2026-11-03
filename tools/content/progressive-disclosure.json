@@ -1,0 +1,114 @@
+{
+  "sections": [
+    {
+      "before": "My hypothesis",
+      "h": "Stakes in a hypothetical agent task",
+      "flag": "Illustrative: my own sketch, not a sourced fact.",
+      "p": [
+        "<strong>One imagined run.</strong> Picture an agent asked to tidy a shared folder and tell the team. It reads files, which is quiet. It proposes new names, which deserves a one-line summary. It moves files others rely on, which should show what moves where. It posts to the team, which should show the message and the audience. Four steps, four levels of detail. I made it up to see whether the rule gives a sensible answer, and it does, though a real workflow will have messier edges than four tidy steps.",
+        "<strong>What the user sees.</strong> Most of that run is a calm stream they can ignore. The interface only gets louder at the two steps where a mistake would reach other people. The user never has to ask for detail, because the screen asks for their attention in proportion to what could go wrong. It is worth noticing what is missing, too. There is no settings page asking the user to decide in advance what they want to see, which is the clutter I was trying to avoid."
+      ]
+    },
+    {
+      "before": "My hypothesis",
+      "h": "Where stakes can go wrong",
+      "flag": "My opinion, based on the tradeoffs above.",
+      "p": [
+        "<strong>Misjudged stakes.</strong> The rule only works if the system classifies steps correctly. A step it calls minor that turns out to be costly will pass silently, which is worse than uniform detail because it also removes the user's habit of checking. I would treat the classification itself as something to review, not assume. That is also the case for testing a planted bad step, as described above. It is the cleanest way to find out whether the silent steps really were safe to be silent.",
+        "<strong>Stakes are not the same for everyone.</strong> Something trivial for one person may matter a lot to another. I do not have a clean answer to that. A cautious default that the user can raise or lower seems the least bad option, though it brings back some of the settings clutter I started out avoiding. Even then, I would want to see how people react when a step they expected to be quiet suddenly gets loud. That could feel helpful, or it could feel like an alarm, and I do not know which."
+      ]
+    },
+    {
+      "h": "What I would do first on a real product",
+      "flag": "My opinion, a sketch of a first step rather than a method I have run.",
+      "p": [
+        "<strong>List the irreversible steps.</strong> Before building anything adaptive, I would walk through the existing flow and mark every step that cannot be undone or that spends something. That short list is the real design brief, and it is usually shorter than people expect. Doing less at first also keeps the argument honest. If the stakes version wins, it wins on the part I changed, not on a pile of unrelated polish.",
+        "<strong>Make those steps unmistakable, leave the rest alone.</strong> I would resist redesigning the quiet steps at all in the first pass. If the loud moments are clear and the rest stays unchanged, I can compare against the uniform version in the test above without too many variables moving at once. It is a modest step, but the irreversible list is the part nobody argues with, so it is a good place for a team to start agreeing."
+      ]
+    }
+  ],
+  "maps": [
+    {
+      "after": "What's true right now",
+      "caption": "Progressive disclosure, and why agents change the question.",
+      "center": "Disclosure",
+      "branches": [
+        {
+          "label": "Definition",
+          "children": [
+            "core first",
+            "rest on a second level"
+          ]
+        },
+        {
+          "label": "Old idea",
+          "children": [
+            "1992 guidelines",
+            "training wheels study"
+          ]
+        },
+        {
+          "label": "Failure",
+          "children": [
+            "wrong split",
+            "interaction tax"
+          ]
+        },
+        {
+          "label": "Agents",
+          "children": [
+            "many phases",
+            "what to show when"
+          ]
+        },
+        {
+          "label": "Stakes rule",
+          "children": [
+            "scale with stakes",
+            "quiet unless costly"
+          ]
+        },
+        {
+          "label": "Could be off",
+          "children": [
+            "surprise costs more"
+          ]
+        }
+      ]
+    },
+    {
+      "after": "Where stakes can go wrong",
+      "caption": "Risks in the stakes rule, and the first step I would take.",
+      "center": "Stakes rule",
+      "branches": [
+        {
+          "label": "Misjudged",
+          "children": [
+            "quiet step is costly",
+            "review the classes"
+          ]
+        },
+        {
+          "label": "Personal",
+          "children": [
+            "stakes differ by user",
+            "adjustable default"
+          ]
+        },
+        {
+          "label": "First step",
+          "children": [
+            "list one-way steps",
+            "leave quiet ones alone"
+          ]
+        },
+        {
+          "label": "Compare",
+          "children": [
+            "uniform vs scaled"
+          ]
+        }
+      ]
+    }
+  ]
+}

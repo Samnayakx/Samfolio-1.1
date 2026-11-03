@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Catalog Beats Canvas: A Realistic Look at Generative UI | Sambit Nayak</title>
+  <meta name="description" content="A2UI, the three flavors of generative interfaces, and why I think the controlled kind wins for brand-heavy commerce." />
+  <link rel="canonical" href="https://www.sambitnayak.com/writing/generative-ui" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Sambit Nayak" />
+  <meta property="og:title" content="Catalog Beats Canvas: A Realistic Look at Generative UI | Sambit Nayak" />
+  <meta property="og:description" content="A2UI, the three flavors of generative interfaces, and why I think the controlled kind wins for brand-heavy commerce." />
+  <meta property="og:url" content="https://www.sambitnayak.com/writing/generative-ui" />
+  <meta property="og:image" content="https://www.sambitnayak.com/assets/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@sambit_nayak_" />
+  <meta name="twitter:title" content="Catalog Beats Canvas: A Realistic Look at Generative UI | Sambit Nayak" />
+  <meta name="twitter:description" content="A2UI, the three flavors of generative interfaces, and why I think the controlled kind wins for brand-heavy commerce." />
+  <meta name="twitter:image" content="https://www.sambitnayak.com/assets/og-image.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;700&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;700&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" /></noscript>
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+  <link rel="stylesheet" href="/css/site.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.sambitnayak.com/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://www.sambitnayak.com/writing"},{"@type":"ListItem","position":3,"name":"Catalog Beats Canvas: A Realistic Look at Generative UI","item":"https://www.sambitnayak.com/writing/generative-ui"}]}</script>
+</head>
+<body data-page="essay">
+  <div class="loader" id="loader" aria-hidden="true"><div class="loader__bg"></div><svg></svg></div>
+  <noscript><style>.loader{display:none}</style></noscript>
+  <script src="/js/loader.js"></script>
+  <header class="header">
+    <div class="navgroup" data-nav="work">
+      <nav class="seg" aria-label="Primary">
+        <a class="seg__item seg__brand" href="/" aria-label="Sambit Nayak, home"><svg class="logo" aria-hidden="true"></svg></a>
+        <button class="seg__item only-desktop" type="button" id="work-tab" aria-expanded="false" aria-controls="work-panel">Work <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <a class="seg__item only-desktop" href="/about">About</a>
+        <a class="seg__item only-desktop" href="/writing" aria-current="true">Writing</a>
+        <a class="seg__item only-desktop" href="/playground">Playground</a>
+        <button class="seg__item only-mobile" type="button" id="menu-tab" aria-expanded="false" aria-controls="work-panel" aria-label="Menu">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <rect x="2" y="2" width="2" height="2"/><rect x="7" y="2" width="2" height="2"/><rect x="12" y="2" width="2" height="2"/>
+            <rect x="2" y="7" width="2" height="2"/><rect x="7" y="7" width="2" height="2"/><rect x="12" y="7" width="2" height="2"/>
+            <rect x="2" y="12" width="2" height="2"/><rect x="7" y="12" width="2" height="2"/><rect x="12" y="12" width="2" height="2"/>
+          </svg>
+        </button>
+      </nav>
+      <div class="panel" id="work-panel">
+        <div class="pcard only-mobile pcard--plain">
+          <div class="pcard__main">
+            <p class="pcard__label">Navigate</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/#work">Work</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/writing">Writing</a></li>
+              <li><a href="/playground">Playground</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pcard is-active">
+          <div class="pcard__main">
+            <p class="pcard__label">Case studies ( <span data-work-count>04</span> )</p>
+            <ul class="pcard__list" role="list" id="nav-projects"></ul>
+          </div>
+          <div class="pcard__thumb" id="nav-thumb" aria-hidden="true"></div>
+        </div>
+        <div class="pcard pcard--plain pcard--more">
+          <div class="pcard__main">
+            <p class="pcard__label">More</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/playground">Playground</a></li>
+              <li><a href="/writing">Writing</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="navgroup" data-nav="contact">
+      <div class="seg">
+        <span class="seg__item seg__time" title="Local time in San Francisco, California">San Francisco <time id="nav-clock" data-clock>--:--</time></span>
+        <button class="seg__item" type="button" id="contact-tab" aria-expanded="false" aria-controls="contact-panel">Contact <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <button class="icon-btn" type="button" id="theme" aria-label="Switch to dark mode">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+      <div class="panel panel--right" id="contact-panel"></div>
+    </div>
+  </header>
+
+  <main id="top">
+    <article class="sheet sheet--first">
+      <div class="work__inner">
+        <div class="rd" data-reader>
+          <aside class="rd__side">
+            <a class="rd__back" href="/writing"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" aria-hidden="true"><path d="M7 4L3 8l4 4M3 8h9a1 1 0 0 1 1 1v2" stroke="currentColor" stroke-width="1.4"/></svg>Writing</a>
+            <nav class="rd__toc" aria-label="On this page">
+              <p class="rd__doc">On this page</p>
+              <a href="#why-this-is-on-my-mind">Why this is on my mind</a>
+              <a href="#what-s-true-right-now">What's true right now</a>
+              <a href="#three-kinds-three-different-jobs">Three kinds, three different jobs</a>
+              <a href="#a-worked-example-from-a-commerce-flow">A worked example from a commerce flow</a>
+              <a href="#my-hypothesis">My hypothesis</a>
+              <a href="#how-i-d-test-it">How I'd test it</a>
+              <a href="#what-would-change-my-mind">What would change my mind</a>
+              <a href="#what-i-would-do-first-on-a-real-product">What I would do first on a real product</a>
+              <a href="#sources-title">References</a>
+            </nav>
+            
+          </aside>
+          <div class="rd__main essay__body">
+            <header class="rd__head">
+              <div class="rd__top"><h1 class="rd__title" id="essay-title">Catalog Beats Canvas: A Realistic Look at Generative UI</h1><span class="rd__date">Nov 2026</span></div>
+              <p class="rd__meta">6 min read · AI interfaces · Craft</p>
+              <p class="rd__lede">A2UI, the three flavors of generative interfaces, and why I think the controlled kind wins for brand-heavy commerce.</p>
+            </header>
+
+            <figure class="essay__map">
+              <img src="/assets/images/writing/craft/generative-ui.webp" alt="Hand-drawn mindmap of generative UI" width="1500" height="1060" loading="eager">
+            </figure>
+
+            <h2 id="why-this-is-on-my-mind">Why this is on my mind</h2>
+            <p>&quot;Generative UI&quot; gets used to mean at least three different things, and mixing them up is how teams end up building the wrong one. I'm building for fashion and creative commerce, where brand consistency is non-negotiable, so I care which kind is realistic.</p>
+            <h2 id="what-s-true-right-now">What's true right now</h2>
+            <p><strong>There's an emerging standard.</strong> Google released A2UI (Agent-to-User Interface) as an open protocol under the Apache 2.0 license. The core design choice is that the agent sends data, not code: a JSON description of the interface it wants, which the host app renders with its own native components. Google contrasts this with approaches that treat UI as a prefab HTML resource in a sandbox. The announcement noted use in Google's Opal mini-app platform and Gemini Enterprise, a Flutter GenUI SDK, and day-one support from the AG-UI and CopilotKit teams. Agents pick from component catalogs that are already approved. An early hands-on write-up described progressive rendering as components stream in, and noted the protocol was still at v0.8 then.</p>
+            <p><strong>It's already shipping in consumer products.</strong> One agency overview says Google now ships generative interfaces inside Gemini and Search, and separates design-time generation (AI drafts screens for humans to ship) from runtime generation (the interface is assembled live per request).</p>
+            <p><strong>It's not one thing.</strong> A 2026 breakdown describes three patterns: controlled, A2UI-style declarative, and open-ended. The open-ended kind requires sandboxed execution and an explicit security model and is best suited to prototyping, power-user tools, or products where the generative interface is the core value.</p>
+            <p><strong>The practical advice is about components.</strong> A developer who has shipped it says the framework matters less than the discipline you bring to the components: a generated form may arrive with partial information already gathered, so components need strong defaults.</p>
+            <figure class="mm" data-x><svg viewBox="0 0 640 426" role="img" aria-label="Generative UI mindmap"><circle class="mm__orb" cx="320" cy="213" r="113"/><path class="mm__w" d="M233 213C191.2 213 198.8 70.5 157 70.5"/><circle class="mm__end" cx="157" cy="70.5" r="4"/><path class="mm__w" d="M233 213C171.39999999999998 213 182.60000000000002 194.5 121 194.5"/><circle class="mm__end" cx="121" cy="194.5" r="4"/><path class="mm__w" d="M233 213C181.3 213 190.7 318.5 139 318.5"/><circle class="mm__end" cx="139" cy="318.5" r="4"/><path class="mm__w" d="M407 213C425.15 213 421.85 57 440 57"/><circle class="mm__end" cx="440" cy="57" r="4"/><path class="mm__w" d="M407 213C425.15 213 421.85 181 440 181"/><circle class="mm__end" cx="440" cy="181" r="4"/><path class="mm__w" d="M407 213C425.15 213 421.85 305 440 305"/><circle class="mm__end" cx="440" cy="305" r="4"/><rect class="mm__b" x="24" y="53.5" width="133" height="34" rx="17"/><text class="mm__bt" x="90.5" y="76" text-anchor="middle">Declarative</text><path class="mm__g" d="M44 91.5V134.5"/><path class="mm__g" d="M44 106.5h9"/><text class="mm__t" x="60" y="111.5">agent sends data</text><path class="mm__g" d="M44 133.5h9"/><text class="mm__t" x="60" y="138.5">host renders natively</text><rect class="mm__b" x="24" y="177.5" width="97" height="34" rx="17"/><text class="mm__bt" x="72.5" y="200" text-anchor="middle">Catalog</text><path class="mm__g" d="M44 215.5V258.5"/><path class="mm__g" d="M44 230.5h9"/><text class="mm__t" x="60" y="235.5">approved components</text><path class="mm__g" d="M44 257.5h9"/><text class="mm__t" x="60" y="262.5">something to test</text><rect class="mm__b" x="24" y="301.5" width="115" height="34" rx="17"/><text class="mm__bt" x="81.5" y="324" text-anchor="middle">Fallbacks</text><path class="mm__g" d="M44 339.5V355.5"/><path class="mm__g" d="M44 354.5h9"/><text class="mm__t" x="60" y="359.5">request doesn't fit</text><rect class="mm__b" x="440" y="40" width="124" height="34" rx="17"/><text class="mm__bt" x="502" y="62.5" text-anchor="middle">Controlled</text><path class="mm__g" d="M460 78V121"/><path class="mm__g" d="M460 93h9"/><text class="mm__t" x="476" y="98">product decides</text><path class="mm__g" d="M460 120h9"/><text class="mm__t" x="476" y="125">easiest to test</text><rect class="mm__b" x="440" y="164" width="124" height="34" rx="17"/><text class="mm__bt" x="502" y="186.5" text-anchor="middle">Open-ended</text><path class="mm__g" d="M460 202V245"/><path class="mm__g" d="M460 217h9"/><text class="mm__t" x="476" y="222">needs a sandbox</text><path class="mm__g" d="M460 244h9"/><text class="mm__t" x="476" y="249">prototypes, power</text><rect class="mm__b" x="440" y="288" width="106" height="34" rx="17"/><text class="mm__bt" x="493" y="310.5" text-anchor="middle">Defaults</text><path class="mm__g" d="M460 326V369"/><path class="mm__g" d="M460 341h9"/><text class="mm__t" x="476" y="346">partial info arrives</text><path class="mm__g" d="M460 368h9"/><text class="mm__t" x="476" y="373">strong defaults</text><rect class="mm__c" x="233" y="190" width="174" height="46" rx="23"/><text class="mm__ct" x="320" y="219" text-anchor="middle">Generative UI</text></svg><figcaption>Three kinds of generative UI and what each depends on.</figcaption></figure>
+            <h2 id="three-kinds-three-different-jobs" data-x>Three kinds, three different jobs</h2>
+            <p class="essay__flag" data-x>My opinion, a way to keep the three apart.</p>
+            <p data-x><strong>Controlled.</strong> The product decides almost everything, and the model fills in content. This is the safest and the easiest to test, and it is the least surprising to the user. For a brand that cannot afford a mistake, this is where I would begin, even though it feels the least exciting. The trade-off is control against range. The more of the interface the product fixes in advance, the less surprising it is, and the less the model can do for a user with an unusual request.</p>
+            <p data-x><strong>Declarative and open-ended.</strong> Declarative sits in the middle: the model chooses and arranges approved pieces. Open-ended gives the model the most freedom and asks the most of your security model. The useful habit is to name which one a team means before the project starts, because the three need very different safeguards. I would not treat them as a ladder where everyone eventually climbs to the top. They are different tools, and a single product could reasonably use more than one in different places.</p>
+            <h2 id="a-worked-example-from-a-commerce-flow" data-x>A worked example from a commerce flow</h2>
+            <p class="essay__flag" data-x>Illustrative: my own sketch, not a sourced fact.</p>
+            <p data-x><strong>Imagine a user asks to compare two jackets.</strong> With a catalog, the model might compose a comparison card, a size selector, and a short note. Each of those exists already, with brand styling, accessibility, and validation built in. The model only decides which to show and in what order. That is the whole appeal for a brand-heavy product. The expensive and risky parts, like validation and styling, were settled earlier by people, so the model's choices stay inside a space that was already checked.</p>
+            <p data-x><strong>Now imagine the request does not fit.</strong> Someone asks for something no component can express. A catalog system needs a fallback here, such as a plain text answer or a hand-off to a human-designed screen. I would design that fallback first, because it is the moment people will actually notice. It also tells you what to measure. The number of requests the catalog cannot express is a direct signal about what is missing, and it is far more useful than a general sense that the output feels fine.</p>
+            <h2 id="my-hypothesis">My hypothesis</h2>
+            <p class="essay__flag">This section is my opinion, not a sourced fact.</p>
+            <p><strong>For brand-heavy, transaction-heavy products like commerce, controlled and declarative generative UI will dominate; open-ended generation will stay in prototyping and power-user tools.</strong></p>
+            <p>Reasoning: commerce interfaces have to be on-brand, accessible, and safe around money and personal data. A model that picks from a catalog of approved components can't produce an off-brand checkout or a payment form that skips validation. A model that writes arbitrary interface code can. The catalog also gives you the one thing open-ended generation can't: something to test.</p>
+            <p>That makes the design work mostly about the catalog. Which components exist, how they combine, and what the fallbacks look like when the model's request doesn't fit any of them.</p>
+            <h2 id="how-i-d-test-it">How I'd test it</h2>
+            <p>Build a small catalog of eight components for one flow. Let a model compose them in response to 30 realistic requests. Count requests the catalog couldn't express (catalog gaps) and compositions that were valid but poor (catalog design problems). Those two numbers tell you what to build next.</p>
+            <h2 id="what-would-change-my-mind">What would change my mind</h2>
+            <p>If open-ended generation becomes safe enough in practice (reliable sandboxes, strong automated brand checks), the quality ceiling might favor it, and the catalog could become a starting point instead of a boundary.</p>
+
+            <h2 id="what-i-would-do-first-on-a-real-product" data-x>What I would do first on a real product</h2>
+            <p class="essay__flag" data-x>My opinion, a suggested starting order.</p>
+            <p data-x><strong>Write the catalog on paper.</strong> Before any model is involved, I would list the components, what each one needs, and what a sensible default looks like. Since a generated form may arrive with partial information, defaults are not a nice extra. They are what keeps the half-filled version usable. Defaults deserve more attention than they usually get. They decide what the user sees when the model supplies only half of what the component needs, which will happen more often than the demo suggests.</p>
+            <p data-x><strong>Then decide what happens when nothing fits.</strong> I would agree a fallback with the team early and treat it as a real screen with real design work, not an error message added at the end. If that screen is good, the rest of the system can afford to be a bit imperfect. It also keeps expectations honest for the people around the project. Everyone can see the boundary of what the system will do, and a clear boundary is easier to improve than an open-ended promise.</p>
+            <section class="essay__sources" aria-labelledby="sources-title">
+              <h2 id="sources-title">References</h2>
+              <ol>
+                <li id="source-1">The Decoder, <a href="https://the-decoder.com/googles-open-standard-lets-ai-agents-build-user-interfaces-on-the-fly/" target="_blank" rel="noopener">Google's open standard lets AI agents build user interfaces on the fly</a></li>
+                <li id="source-2">Analytics Vidhya, <a href="https://www.analyticsvidhya.com/blog/2025/12/google-a2ui-explained/" target="_blank" rel="noopener">Google A2UI Explained</a></li>
+                <li id="source-3">HackerNoon, <a href="https://hackernoon.com/chat-is-a-terrible-interface-for-agentsand-2026-will-prove-it" target="_blank" rel="noopener">Chat Is a Terrible Interface for Agents, and 2026 Will Prove It</a></li>
+                <li id="source-4">Lazarev.agency, <a href="https://www.lazarev.agency/articles/generative-ui-design" target="_blank" rel="noopener">6 generative UI design patterns behind real products</a></li>
+                <li id="source-5">mer.vin, <a href="https://mer.vin/linkedin/generative-ui-in-2026-controlled-a2ui-declarative-and-open-ended-patterns-on-ag-ui-linkedin/" target="_blank" rel="noopener">Generative UI in 2026: Controlled, A2UI Declarative, and Open-Ended Patterns on AG-UI</a></li>
+                <li id="source-6">Alex Cloudstar, <a href="https://alexcloudstar.com/blog/generative-ui-developer-guide-2026/" target="_blank" rel="noopener">Generative UI in 2026: What Actually Works for Developers</a></li>
+              </ol>
+            </section>
+
+            <div class="essay__foot">
+              <nav class="cs__next" aria-label="More writing">
+                <a href="/writing"><small>Index</small><strong>All writing</strong></a>
+                <a href="/writing/jobs-to-be-done"><small>Next</small><strong>When the Customer Is an Agent</strong></a>
+              </nav>
+            </div>
+          
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer data-footer></footer>
+  <script src="/js/analytics.js"></script>
+  <script src="/js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+{
+  "sections": [
+    {
+      "before": "My hypothesis",
+      "h": "A worked example of reviewing a distribution",
+      "flag": "Illustrative: my own sketch, not a sourced fact.",
+      "p": [
+        "<strong>Imagine a generate-an-outfit feature.</strong> You run one request ten times. Three results are great, five are fine, and two are strange: wrong occasion, clashing pieces, or something that cannot be acted on. A single-mockup review would have shown you one of the great ones and signed it off. The point is not the exact split. It is that a distribution has a shape, and the shape only shows up when you look at many outputs side by side instead of one at a time.",
+        "<strong>Review the strange two.</strong> The useful questions are about those outputs. Can the user see quickly that something is off? Can they regenerate, undo, or step back in one move? If yes, the feature may be shippable. If the strange outputs leave the user stuck, the great ones do not matter, because users will eventually meet a strange one. This is also why the worst of ten is such a useful lens. It does not require a metric or a dashboard, only a willingness to look at the ones nobody put in the demo."
+      ]
+    },
+    {
+      "before": "My hypothesis",
+      "h": "The trade-off underneath",
+      "flag": "My opinion, based on the tradeoffs above.",
+      "p": [
+        "<strong>Variety and control pull against each other.</strong> Regenerate buttons and side-by-side variations give users a lot of choice, but they also hand users the work of sampling. A tighter system hides the spread, but then the user cannot steer it. I do not think there is a right answer, only a deliberate one for each feature. The right setting depends on the feature. A creative tool might want a wide spread because exploring is the whole point, while a task that touches money may want it very narrow.",
+        "<strong>Spread is a design material.</strong> Once you accept the output is a distribution, spread stops being a bug to remove and becomes something you shape. How wide should it be here? Where is narrow better? Those are design questions, and they only appear once you stop reviewing one output at a time. Treating it that way also changes the conversation with engineers. Instead of asking for the model to be better, you can ask for a narrower spread here and a wider one there."
+      ]
+    },
+    {
+      "h": "What I would do first on a real product",
+      "flag": "My opinion, a suggested starting order.",
+      "p": [
+        "<strong>Pick the riskiest input.</strong> I would not begin with the typical request. I would begin with the input I am most afraid of, the one a user might type on a bad day, and run it ten times. What comes back tells me more about the feature than a hundred happy-path runs. That is a deliberately small first step. It needs no new tooling, only a handful of awkward inputs, a few minutes of patience, and someone willing to look at what comes back without flinching.",
+        "<strong>Write down the floor.</strong> Next, I would put a sentence in the spec for what must be true of even the worst result. It does not need to be fancy. Once it is written down, designers, engineers, and anyone reviewing have the same bar to argue about, and the argument becomes concrete. It also gives the team something to improve against. If the floor changes, you can see it change, and you can tell the difference between polishing the best case and actually raising the worst one."
+      ]
+    }
+  ],
+  "maps": [
+    {
+      "after": "What changes",
+      "caption": "Designing the distribution, not the single output.",
+      "center": "Distribution",
+      "branches": [
+        {
+          "label": "Median",
+          "children": [
+            "the typical result",
+            "what demos show"
+          ]
+        },
+        {
+          "label": "Bad tail",
+          "children": [
+            "worst of ten",
+            "p10 quality bar"
+          ]
+        },
+        {
+          "label": "Sampling",
+          "children": [
+            "regenerate",
+            "side-by-side options"
+          ]
+        },
+        {
+          "label": "Recovery",
+          "children": [
+            "undo",
+            "version history"
+          ]
+        },
+        {
+          "label": "Review",
+          "children": [
+            "adversarial inputs",
+            "not just happy path"
+          ]
+        },
+        {
+          "label": "Fallback",
+          "children": [
+            "unusable output"
+          ]
+        }
+      ]
+    }
+  ]
+}

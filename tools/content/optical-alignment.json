@@ -1,0 +1,25 @@
+{
+  "sections": [
+    { "before": "My hypothesis", "h": "A worked example with a play button", "flag": "Illustrative: my own sketch, not a sourced fact.", "p": [
+      "<strong>Why the centered one looks wrong.</strong> Take a play triangle inside a circle. Center its bounding box and it reads as sliding left, because the heavy flat side sits there and the point is nearly empty. The eye wants the visual mass in the middle, so the triangle has to move toward its point, away from the weight.",
+      "<strong>Where the fix usually lives.</strong> Someone nudges it a pixel or so by feel and moves on. That is the right call in the moment, and it works. The trouble is that the nudge is now a private fact about one component, and the next place the icon appears starts from the centered, wrong version again."
+    ]},
+    { "before": "How I'd test it", "h": "What I would do first on a real product", "flag": "My opinion, based on the tradeoffs above.", "p": [
+      "<strong>Look at the shipped size first.</strong> Before any metadata, I would review the handful of icons that sit inside shapes, at the size they actually ship. Circles, rounded squares and badges are where the mismatch is most visible. A short list of the offenders tells me whether this is a real problem for the product or just a taste preference of mine.",
+      "<strong>Record the fix where it is made.</strong> When a designer adjusts an icon by eye, I would want the number captured at that moment, next to the icon, not in a comment or a chat thread. Capturing it costs seconds. Reconstructing it months later, from a transform buried in a component, is the expensive part."
+    ]},
+    { "h": "Where I would not trust this yet", "flag": "My opinion, based on the tradeoffs above.", "p": [
+      "<strong>Taste does not fully reduce to a number.</strong> Two designers may both be right and still disagree by a pixel. I would not want metadata to become a rule that overrides a careful eye in a context it was never tuned for. The offset should be a default that people can override, not a law.",
+      "<strong>One value may hide a dependency.</strong> The right nudge may depend on stroke weight, size or the shape around it. If so, a stored value is correct in one place and subtly wrong in another, which is worse than no value because it looks authoritative. I would flag any offset that has only been checked in one container."
+    ]}
+  ],
+  "maps": [
+    { "after": "What's true right now", "caption": "Optical versus geometric alignment, and where the fix could live.", "center": "Optical align", "branches": [
+      { "label": "Geometric", "children": ["bounding boxes", "looks slightly off"] },
+      { "label": "Optical", "children": ["visual mass", "shift against weight"] },
+      { "label": "Context", "children": ["judge at ship size"] },
+      { "label": "Beyond icons", "children": ["icon plus text padding"] },
+      { "label": "Metadata", "children": ["offset on the glyph", "taste sets the number"] }
+    ]}
+  ]
+}

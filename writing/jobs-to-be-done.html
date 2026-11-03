@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>When the Customer Is an Agent: Jobs to Be Done | Sambit Nayak</title>
+  <meta name="description" content="The framework, its two schools, and what I think happens to &quot;hiring a product&quot; when software starts hiring other software." />
+  <link rel="canonical" href="https://www.sambitnayak.com/writing/jobs-to-be-done" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Sambit Nayak" />
+  <meta property="og:title" content="When the Customer Is an Agent: Jobs to Be Done | Sambit Nayak" />
+  <meta property="og:description" content="The framework, its two schools, and what I think happens to &quot;hiring a product&quot; when software starts hiring other software." />
+  <meta property="og:url" content="https://www.sambitnayak.com/writing/jobs-to-be-done" />
+  <meta property="og:image" content="https://www.sambitnayak.com/assets/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@sambit_nayak_" />
+  <meta name="twitter:title" content="When the Customer Is an Agent: Jobs to Be Done | Sambit Nayak" />
+  <meta name="twitter:description" content="The framework, its two schools, and what I think happens to &quot;hiring a product&quot; when software starts hiring other software." />
+  <meta name="twitter:image" content="https://www.sambitnayak.com/assets/og-image.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;700&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;700&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" /></noscript>
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+  <link rel="stylesheet" href="/css/site.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.sambitnayak.com/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://www.sambitnayak.com/writing"},{"@type":"ListItem","position":3,"name":"When the Customer Is an Agent: Jobs to Be Done","item":"https://www.sambitnayak.com/writing/jobs-to-be-done"}]}</script>
+</head>
+<body data-page="essay">
+  <div class="loader" id="loader" aria-hidden="true"><div class="loader__bg"></div><svg></svg></div>
+  <noscript><style>.loader{display:none}</style></noscript>
+  <script src="/js/loader.js"></script>
+  <header class="header">
+    <div class="navgroup" data-nav="work">
+      <nav class="seg" aria-label="Primary">
+        <a class="seg__item seg__brand" href="/" aria-label="Sambit Nayak, home"><svg class="logo" aria-hidden="true"></svg></a>
+        <button class="seg__item only-desktop" type="button" id="work-tab" aria-expanded="false" aria-controls="work-panel">Work <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <a class="seg__item only-desktop" href="/about">About</a>
+        <a class="seg__item only-desktop" href="/writing" aria-current="true">Writing</a>
+        <a class="seg__item only-desktop" href="/playground">Playground</a>
+        <button class="seg__item only-mobile" type="button" id="menu-tab" aria-expanded="false" aria-controls="work-panel" aria-label="Menu">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <rect x="2" y="2" width="2" height="2"/><rect x="7" y="2" width="2" height="2"/><rect x="12" y="2" width="2" height="2"/>
+            <rect x="2" y="7" width="2" height="2"/><rect x="7" y="7" width="2" height="2"/><rect x="12" y="7" width="2" height="2"/>
+            <rect x="2" y="12" width="2" height="2"/><rect x="7" y="12" width="2" height="2"/><rect x="12" y="12" width="2" height="2"/>
+          </svg>
+        </button>
+      </nav>
+      <div class="panel" id="work-panel">
+        <div class="pcard only-mobile pcard--plain">
+          <div class="pcard__main">
+            <p class="pcard__label">Navigate</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/#work">Work</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/writing">Writing</a></li>
+              <li><a href="/playground">Playground</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pcard is-active">
+          <div class="pcard__main">
+            <p class="pcard__label">Case studies ( <span data-work-count>04</span> )</p>
+            <ul class="pcard__list" role="list" id="nav-projects"></ul>
+          </div>
+          <div class="pcard__thumb" id="nav-thumb" aria-hidden="true"></div>
+        </div>
+        <div class="pcard pcard--plain pcard--more">
+          <div class="pcard__main">
+            <p class="pcard__label">More</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/playground">Playground</a></li>
+              <li><a href="/writing">Writing</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="navgroup" data-nav="contact">
+      <div class="seg">
+        <span class="seg__item seg__time" title="Local time in San Francisco, California">San Francisco <time id="nav-clock" data-clock>--:--</time></span>
+        <button class="seg__item" type="button" id="contact-tab" aria-expanded="false" aria-controls="contact-panel">Contact <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <button class="icon-btn" type="button" id="theme" aria-label="Switch to dark mode">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+      <div class="panel panel--right" id="contact-panel"></div>
+    </div>
+  </header>
+
+  <main id="top">
+    <article class="sheet sheet--first">
+      <div class="work__inner">
+        <div class="rd" data-reader>
+          <aside class="rd__side">
+            <a class="rd__back" href="/writing"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" aria-hidden="true"><path d="M7 4L3 8l4 4M3 8h9a1 1 0 0 1 1 1v2" stroke="currentColor" stroke-width="1.4"/></svg>Writing</a>
+            <nav class="rd__toc" aria-label="On this page">
+              <p class="rd__doc">On this page</p>
+              <a href="#why-this-is-on-my-mind">Why this is on my mind</a>
+              <a href="#what-s-true-right-now">What's true right now</a>
+              <a href="#reading-a-request-as-a-job">Reading a request as a job</a>
+              <a href="#my-hypothesis">My hypothesis</a>
+              <a href="#where-the-agent-lens-could-mislead-me">Where the agent lens could mislead me</a>
+              <a href="#how-i-d-test-it">How I'd test it</a>
+              <a href="#what-would-change-my-mind">What would change my mind</a>
+              <a href="#how-i-would-explain-it-to-a-teammate">How I would explain it to a teammate</a>
+              <a href="#sources-title">References</a>
+            </nav>
+            
+          </aside>
+          <div class="rd__main essay__body">
+            <header class="rd__head">
+              <div class="rd__top"><h1 class="rd__title" id="essay-title">When the Customer Is an Agent: Jobs to Be Done</h1><span class="rd__date">Nov 2026</span></div>
+              <p class="rd__meta">6 min read · Strategy · Culture</p>
+              <p class="rd__lede">The framework, its two schools, and what I think happens to &quot;hiring a product&quot; when software starts hiring other software.</p>
+            </header>
+
+            <figure class="essay__map">
+              <img src="/assets/images/writing/craft/jobs-to-be-done.webp" alt="Hand-drawn mindmap of jobs to be done" width="1500" height="1060" loading="eager">
+            </figure>
+
+            <h2 id="why-this-is-on-my-mind">Why this is on my mind</h2>
+            <p>Jobs to be done keeps getting rediscovered whenever the product landscape shifts. AI is the biggest shift in years, so I wanted to look at what the framework actually claims before I stretch it.</p>
+            <h2 id="what-s-true-right-now">What's true right now</h2>
+            <p><strong>The core claim.</strong> JTBD says people don't buy products so much as hire them to make progress in a specific situation. A 2026 explainer frames that progress as functional, emotional, and social, and notes the framework now coexists with personas and ICP work rather than replacing them. Christensen first articulated the hiring idea in a 2005 paper on marketing malpractice, arguing jobs are stable while products are not.</p>
+            <p><strong>The history is contested.</strong> A thorough guide points out that the framework was originated by Tony Ulwick in 1990, and that there are two schools: Christensen and Moesta's jobs-as-progress and Ulwick's jobs-as-activities. Even the famous milkshake story is argued over, with Ulwick contending the better question is what job people are trying to get done when they stop at a quick-service restaurant in the morning, not what job the milkshake does.</p>
+            <p><strong>The method is interviews.</strong> The technique most associated with it is the switch interview or timeline interview, developed by Bob Moesta and Chris Spiek. The practice, as one guide puts it, is pressing people until they reach the real reason behind a purchase. Moesta has discussed common mistakes and when not to use JTBD in a long conversation on Lenny's Podcast.</p>
+            <p><strong>AI is already entering the research side.</strong> A reference page notes AI is increasingly used to mine support tickets, reviews, and transcripts to surface candidate jobs and struggling moments at scale.</p>
+            <figure class="mm" data-x><svg viewBox="0 0 640 426" role="img" aria-label="JTBD mindmap"><circle class="mm__orb" cx="320" cy="213" r="88"/><path class="mm__w" d="M258 213C187.6 213 200.4 119 130 119"/><circle class="mm__end" cx="130" cy="119" r="4"/><path class="mm__w" d="M258 213C177.7 213 192.3 243 112 243"/><circle class="mm__end" cx="112" cy="243" r="4"/><path class="mm__w" d="M382 213C413.9 213 408.1 57 440 57"/><circle class="mm__end" cx="440" cy="57" r="4"/><path class="mm__w" d="M382 213C413.9 213 408.1 181 440 181"/><circle class="mm__end" cx="440" cy="181" r="4"/><path class="mm__w" d="M382 213C413.9 213 408.1 305 440 305"/><circle class="mm__end" cx="440" cy="305" r="4"/><rect class="mm__b" x="24" y="102" width="106" height="34" rx="17"/><text class="mm__bt" x="77" y="124.5" text-anchor="middle">Progress</text><path class="mm__g" d="M44 140V183"/><path class="mm__g" d="M44 155h9"/><text class="mm__t" x="60" y="160">functional</text><path class="mm__g" d="M44 182h9"/><text class="mm__t" x="60" y="187">emotional and social</text><rect class="mm__b" x="24" y="226" width="88" height="34" rx="17"/><text class="mm__bt" x="68" y="248.5" text-anchor="middle">Method</text><path class="mm__g" d="M44 264V307"/><path class="mm__g" d="M44 279h9"/><text class="mm__t" x="60" y="284">switch interviews</text><path class="mm__g" d="M44 306h9"/><text class="mm__t" x="60" y="311">press for the real reason</text><rect class="mm__b" x="440" y="40" width="115" height="34" rx="17"/><text class="mm__bt" x="497.5" y="62.5" text-anchor="middle">Core idea</text><path class="mm__g" d="M460 78V121"/><path class="mm__g" d="M460 93h9"/><text class="mm__t" x="476" y="98">hire for progress</text><path class="mm__g" d="M460 120h9"/><text class="mm__t" x="476" y="125">jobs outlast products</text><rect class="mm__b" x="440" y="164" width="133" height="34" rx="17"/><text class="mm__bt" x="506.5" y="186.5" text-anchor="middle">Two schools</text><path class="mm__g" d="M460 202V245"/><path class="mm__g" d="M460 217h9"/><text class="mm__t" x="476" y="222">jobs as progress</text><path class="mm__g" d="M460 244h9"/><text class="mm__t" x="476" y="249">jobs as activities</text><rect class="mm__b" x="440" y="288" width="106" height="34" rx="17"/><text class="mm__bt" x="493" y="310.5" text-anchor="middle">AI today</text><path class="mm__g" d="M460 326V369"/><path class="mm__g" d="M460 341h9"/><text class="mm__t" x="476" y="346">mine tickets, reviews</text><path class="mm__g" d="M460 368h9"/><text class="mm__t" x="476" y="373">surface struggling m…</text><rect class="mm__c" x="258" y="190" width="124" height="46" rx="23"/><text class="mm__ct" x="320" y="219" text-anchor="middle">JTBD</text></svg><figcaption>Jobs to be done at a glance: what the framework says and where it splits.</figcaption></figure>
+            <h2 id="reading-a-request-as-a-job" data-x>Reading a request as a job</h2>
+            <p class="essay__flag" data-x>Illustrative: my own sketch, not a sourced fact.</p>
+            <p data-x><strong>Take one request apart.</strong> Imagine a customer tells an agent, "Pull together everything I need for the Tuesday meeting." Read it the way a switch interview would. The situation is a meeting coming up. The functional progress is having the right material in one place. The emotional part is not walking in unprepared, and the social part is looking organised in front of other people. I am not claiming the agent will get all of that right. I am saying the lens gives me a checklist for what a good answer should cover beyond the literal words.</p>
+            <p data-x><strong>Why the lens still helps.</strong> The agent only sees the sentence, but the job underneath is bigger than the sentence. A product that understands the emotional and social layers can serve the request better than one that only matches the words. That is the part I would not want to lose when requests become inputs. That is the same habit the interview method trains: keep asking until you reach the reason behind the request, not only the request itself.</p>
+            <figure class="mm" data-x><svg viewBox="0 0 640 340" role="img" aria-label="Agent jobs mindmap"><circle class="mm__orb" cx="320" cy="170" r="98"/><path class="mm__w" d="M248 170C197.95 170 207.05 89.5 157 89.5"/><circle class="mm__end" cx="157" cy="89.5" r="4"/><path class="mm__w" d="M248 170C183.1 170 194.9 186.5 130 186.5"/><circle class="mm__end" cx="130" cy="186.5" r="4"/><path class="mm__w" d="M392 170C418.4 170 413.6 76 440 76"/><circle class="mm__end" cx="440" cy="76" r="4"/><path class="mm__w" d="M392 170C418.4 170 413.6 200 440 200"/><circle class="mm__end" cx="440" cy="200" r="4"/><rect class="mm__b" x="24" y="72.5" width="133" height="34" rx="17"/><text class="mm__bt" x="90.5" y="95" text-anchor="middle">Positioning</text><path class="mm__g" d="M44 110.5V126.5"/><path class="mm__g" d="M44 125.5h9"/><text class="mm__t" x="60" y="130.5">describe jobs agents match</text><rect class="mm__b" x="24" y="169.5" width="106" height="34" rx="17"/><text class="mm__bt" x="77" y="192" text-anchor="middle">Exposure</text><path class="mm__g" d="M44 207.5V250.5"/><path class="mm__g" d="M44 222.5h9"/><text class="mm__t" x="60" y="227.5">cluster real requests</text><path class="mm__g" d="M44 249.5h9"/><text class="mm__t" x="60" y="254.5">the not-at-all share</text><rect class="mm__b" x="440" y="59" width="133" height="34" rx="17"/><text class="mm__bt" x="506.5" y="81.5" text-anchor="middle">The request</text><path class="mm__g" d="M460 97V140"/><path class="mm__g" d="M460 112h9"/><text class="mm__t" x="476" y="117">plain-language job s…</text><path class="mm__g" d="M460 139h9"/><text class="mm__t" x="476" y="144">agent picks the prod…</text><rect class="mm__b" x="440" y="183" width="133" height="34" rx="17"/><text class="mm__bt" x="506.5" y="205.5" text-anchor="middle">Competition</text><path class="mm__g" d="M460 221V264"/><path class="mm__g" d="M460 236h9"/><text class="mm__t" x="476" y="241">another product</text><path class="mm__g" d="M460 263h9"/><text class="mm__t" x="476" y="268">the agent itself</text><rect class="mm__c" x="248" y="147" width="144" height="46" rx="23"/><text class="mm__ct" x="320" y="176" text-anchor="middle">Agent jobs</text></svg><figcaption>The agent-era shift: the job becomes the input.</figcaption></figure>
+            <h2 id="my-hypothesis">My hypothesis</h2>
+            <p class="essay__flag">This section is my opinion, not a sourced fact.</p>
+            <p><strong>As people delegate more to agents, the customer's job statement becomes the literal input to the product, and the real competitor to your product is a well-written instruction.</strong></p>
+            <p>JTBD has always been a research lens: interview people to find the job. In an agent world, the job is also written down by the customer, in plain language, as a request. &quot;Reorder the thing I always run out of.&quot; &quot;Pull together everything I need for the Tuesday meeting.&quot; That text is the job spec, and the agent decides which product, if any, to hire for each step.</p>
+            <p>Two consequences. First, products need to describe the jobs they're good at in language an agent can match, which is a new kind of positioning. Second, the alternative your product competes with is no longer only another product; it's the agent doing the job itself with no product at all.</p>
+            <h2 id="where-the-agent-lens-could-mislead-me" data-x>Where the agent lens could mislead me</h2>
+            <p class="essay__flag" data-x>My opinion, based on the tradeoffs above.</p>
+            <p data-x><strong>Requests are not the whole job.</strong> People often cannot say what they want in a sentence, which is exactly why interviews exist. If I only cluster written requests, I may mistake the easy-to-type jobs for the important ones. The struggling moment that never turns into a request stays invisible. A good test is whether I can still describe the job without naming any product. If I cannot, I am probably describing a feature and not a job.</p>
+            <p data-x><strong>The two schools disagree here too.</strong> Jobs-as-progress and jobs-as-activities would read the same request differently. One hears a change in someone's life, the other hears a task to complete. I would not pretend an agent resolves that argument. I would pick a school on purpose and say which one I am using. Whichever school I pick, the point is consistency. Mixing the two quietly would make the clusters hard to compare and the conclusions harder to defend.</p>
+            <h2 id="how-i-d-test-it">How I'd test it</h2>
+            <p>Collect 50 real requests customers might give an agent in your category. Cluster them into jobs. See what share of them your product handles end-to-end, partially, or not at all. The &quot;not at all&quot; share is your exposure.</p>
+            <h2 id="what-would-change-my-mind">What would change my mind</h2>
+            <p>If people keep preferring to pick products themselves for high-trust or taste-driven purchases, agents will stay at the edges of those categories, and the traditional hire-a-product lens will hold.</p>
+
+            <h2 id="how-i-would-explain-it-to-a-teammate" data-x>How I would explain it to a teammate</h2>
+            <p class="essay__flag" data-x>Illustrative: my own sketch, not a sourced fact.</p>
+            <p data-x><strong>Start with the sentence.</strong> I would say that customers do not want our product, they want progress, and from now on they may type that progress as an instruction. Then I would show one real request and ask the team to name the job, the situation and the alternative together, out loud, before anyone mentions a feature. I would keep it to one example and one sentence of theory. The framework sticks better when people see it work on something familiar than when they hear its history.</p>
+            <p data-x><strong>End with the uncomfortable question.</strong> If an agent did this job with no product at all, how would the customer notice the difference? If the honest answer is that they would not, that is useful. It tells us where our product is hired for a reason and where it is only hired out of habit. It is a question about value, asked honestly, and it works just as well in a research session as in a roadmap meeting.</p>
+            <section class="essay__sources" aria-labelledby="sources-title">
+              <h2 id="sources-title">References</h2>
+              <ol>
+                <li id="source-1">Launchrock, <a href="https://www.launchrock.com/library/expert-advice/jobs-to-be-done" target="_blank" rel="noopener">Jobs To Be Done</a></li>
+                <li id="source-2">Agile Brand Guide, <a href="https://agilebrandguide.com/wiki/models/jobs-to-be-done-jtbd/" target="_blank" rel="noopener">Jobs to Be Done (JTBD)</a></li>
+                <li id="source-3">Koji, <a href="https://www.koji.so/docs/jobs-to-be-done-framework" target="_blank" rel="noopener">Jobs to Be Done Framework: The Complete Guide</a></li>
+                <li id="source-4">CustomerThink, <a href="https://customerthink.com/marketing_milkshakes_and_innovation/" target="_blank" rel="noopener">Marketing, Milkshakes and Innovation</a></li>
+                <li id="source-5">Dovetail, <a href="https://dovetail.com/research/jobs-to-be-done/" target="_blank" rel="noopener">Jobs to be done</a></li>
+                <li id="source-6">Lenny's Newsletter, <a href="https://www.lennysnewsletter.com/p/the-ultimate-guide-to-jtbd-bob-moesta" target="_blank" rel="noopener">The ultimate guide to JTBD with Bob Moesta</a></li>
+              </ol>
+            </section>
+
+            <div class="essay__foot">
+              <nav class="cs__next" aria-label="More writing">
+                <a href="/writing"><small>Index</small><strong>All writing</strong></a>
+                <a href="/writing/linear-design-engineering-culture"><small>Next</small><strong>Taste Is Leverage</strong></a>
+              </nav>
+            </div>
+          
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer data-footer></footer>
+  <script src="/js/analytics.js"></script>
+  <script src="/js/site.js"></script>
+</body>
+</html>

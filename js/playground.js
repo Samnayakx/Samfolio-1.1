@@ -731,7 +731,7 @@
       <div class="tl__ph"><span class="tl__tip" aria-hidden="true">18:20</span><span class="tl__grip" aria-hidden="true"><i></i><i></i><i></i></span><span class="tl__cap"><svg viewBox="0 0 16 12" aria-hidden="true"><path d="M1 1h14L8 11 1 1Z" fill="currentColor"/></svg><i class="tl__ln"></i><i class="tl__dot"></i></span><i class="tl__dot tl__dot--b"></i><i class="tl__ln tl__ln--b"></i></div>
       <div class="tl__hit" role="slider" tabindex="0" aria-label="Time of day" aria-valuemin="${H0}" aria-valuemax="${H1}"></div>`;
     stage.appendChild(c);
-    const f = fit(stage, c, W, H, 0.94);
+    const f = fit(stage, c, W, H, 0.98);
     const $ = (s) => c.querySelector(s);
     const ph = $(".tl__ph"), hit = $(".tl__hit"), plus = $(".tl__plus"), tip = $(".tl__tip"), play = $(".tl__play"), labels = [...c.querySelectorAll(".tl__lbl")];
     hit.style.cssText = `left:${X0 - 24}px;width:${X1 - X0 + 48}px`;
@@ -1061,7 +1061,548 @@
     return () => { f.stop(); stopLoop && stopLoop(); };
   }
 
-  const DEMOS = { boundingBox, segmentedNav, clouds, marketSelect, onboardingTour, apiKey, timelineScrub, glassSliders, podcastPlayer, composeBars, emptySessions, tradeTicket, motionLab };
+
+  // ── 18 · The Box: image tiles that fly in fast and settle slowly (GSAP) ──
+  function theBox(stage, { auto }) {
+    const W = 720, H = 520, g = window.gsap;
+    const c = h("div", "ix ix-box");
+    // x, y, w, h, artwork, crop (position and zoom)
+    const T = [
+      [250, -30, 175, 165, 12, "50% 30%"], [28, 150, 215, 215, 9, "50% 25%"], [585, -34, 125, 112, 11, "50% 40%"],
+      [606, 92, 150, 235, 13, "40% 50%"], [452, 300, 172, 150, 4, "50% 20%"], [-34, 338, 130, 190, 6, "50% 20%"],
+      [226, 362, 172, 178, 8, "50% 40%"], [122, 400, 96, 96, 5, "50% 60%"], [640, 348, 120, 150, 10, "50% 30%"],
+    ];
+    const els = T.map(([x, y, w, hh, n, crop]) => {
+      const e = h("i", "bx__t"); e.style.cssText = `left:${x}px;top:${y}px;width:${w}px;height:${hh}px;background:url(/assets/images/playground/photos/p${n}.webp) ${crop} / cover no-repeat`;
+      c.appendChild(e); return e;
+    });
+    const title = h("p", "bx__title", 'THE BOX<sup>™</sup>'); c.appendChild(title);
+    stage.appendChild(c);
+    const f = fit(stage, c, W, H, 1.22);
+    const stopVis = whileVisible(c, () => {
+      if (!g) return () => {};
+      // each tile starts far out along its own direction, then shoots home: expo.out is very fast, then suddenly slow
+      const cx = W / 2, cy = H / 2;
+      const from = T.map(([x, y, w, hh]) => { const dx = x + w / 2 - cx, dy = y + hh / 2 - cy, d = Math.hypot(dx, dy) || 1; return { x: (dx / d) * 900, y: (dy / d) * 700 }; });
+      const tl = g.timeline({ repeat: -1, repeatDelay: 0.5 });
+      tl.fromTo(els, { x: (i) => from[i].x, y: (i) => from[i].y, scale: 0.6, rotate: (i) => (i % 2 ? 7 : -7), opacity: 0 },
+        { x: 0, y: 0, scale: 1, rotate: 0, opacity: 1, duration: 2.4, ease: "expo.out", stagger: { each: 0.08, from: "random" } }, 0);
+      tl.fromTo(title, { opacity: 0, y: 26, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 1.8, ease: "expo.out" }, 0.45);
+      tl.to(els, { x: (i) => (i % 2 ? 7 : -7), y: (i) => (i % 3 ? -6 : 6), duration: 3.2, ease: "sine.inOut" }, ">-0.6");
+      tl.to(els, { opacity: 0, scale: 0.92, duration: 0.5, ease: "power2.in", stagger: 0.03 }, ">+0.1");
+      tl.to(title, { opacity: 0, duration: 0.35, ease: "power1.in" }, "<");
+      return () => { tl.kill(); g.set([...els, title], { clearProps: "all" }); };
+    });
+    c.addEventListener("click", () => { if (g && !reduce) g.getTweensOf(els).forEach((t) => t.totalTime(0)); });
+    return () => { f.stop(); stopVis(); g && g.killTweensOf([...els, title]); };
+  }
+
+  // ── 20 · Armillary sphere: a wireframe globe that turns by itself, can be dragged, and lights up under the pointer ──
+  function armillary(stage, { auto }) {
+    const g = window.gsap, root = h("div", "sp");
+    const cv = h("canvas", "sp__cv"), card = h("div", "sp__card");
+    const MSG = [
+      "Every model needs an interface people trust. We design it.",
+      "Agents act fast. People need to see why. We make that visible.",
+      "Working prototypes beat decks. We ship the interface first.",
+    ];
+    card.innerHTML = '<svg class="sp__ico" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><circle cx="14" cy="14" r="10"/><ellipse cx="14" cy="14" rx="4.5" ry="10"/><ellipse cx="14" cy="14" rx="9" ry="10" opacity=".6"/><path d="M4.5 14h19M6 9h16M6 19h16M10 2l8 24" opacity=".7"/></svg><p class="sp__t"></p>';
+    const txt = card.querySelector(".sp__t"); txt.textContent = MSG[0];
+    root.append(cv, card); stage.appendChild(root);
+    const ctx = cv.getContext("2d");
+    let W = 0, H = 0, dpr = 1;
+    const ro = new ResizeObserver(() => { const r = stage.getBoundingClientRect(); W = r.width; H = r.height; dpr = Math.min(2, devicePixelRatio || 1); cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + "px"; cv.style.height = H + "px"; draw(); });
+    ro.observe(stage);
+
+    const S = { yaw: 0.6, pitch: -0.28, vy: 0, vp: 0, ring: 0, px: -999, py: -999, drag: false, ox: 0, oy: 0, moved: 0 };
+    const SPIN = 0.16;
+    const rot = (x, y, z) => { // yaw about the vertical axis, then pitch about the horizontal one
+      const cy = Math.cos(S.yaw), sy = Math.sin(S.yaw), cp = Math.cos(S.pitch), sp = Math.sin(S.pitch);
+      const x1 = x * cy + z * sy, z1 = -x * sy + z * cy, y1 = y * cp - z1 * sp, z2 = y * sp + z1 * cp;
+      return [x1, y1, z2];
+    };
+    // a circle on the sphere: a great or small circle given by its normal tilt, as points
+    const circle = (fn, n) => Array.from({ length: n }, (_, i) => fn((i / n) * Math.PI * 2));
+    const LINES = [];
+    for (let k = 0; k < 6; k++) { const a = (k / 6) * Math.PI; LINES.push({ r: 1, pts: circle((t) => [Math.cos(t) * Math.cos(a), Math.sin(t), Math.cos(t) * Math.sin(a)], 72), dots: 24 }); }
+    [-50, 0, 50].forEach((lat) => { const la = (lat * Math.PI) / 180; LINES.push({ r: 1, pts: circle((t) => [Math.cos(la) * Math.cos(t), Math.sin(la), Math.cos(la) * Math.sin(t)], 72), dots: 24 }); });
+    // three wider orbits, each tilted and drifting on its own
+    const ORB = [[1.2, 0.5, 0.2, 0.05], [1.3, -0.9, 0.9, -0.04], [1.16, 1.2, -0.4, 0.03]].map(([r, tx, tz, sp2], i) => ({ r, tx, tz, sp2, pts: circle((t) => [Math.cos(t), 0, Math.sin(t)], 90), dots: 28 }));
+    const orbRot = (o, p) => { const [x, y, z] = p; const cx = Math.cos(o.tx), sx = Math.sin(o.tx), cz = Math.cos(o.tz + S.ring * o.sp2 * 4), sz = Math.sin(o.tz + S.ring * o.sp2 * 4); const y1 = y * cx - z * sx, z1 = y * sx + z * cx; return [x * cz - y1 * sz, x * sz + y1 * cz, z1]; };
+    const GRAY = [205, 205, 205];
+    function draw() {
+      if (!W) return;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+      const cx = W / 2, cy = H / 2, R = Math.min(W * 0.46, H * 0.4);
+      const P = (x, y, z) => [cx + x * R, cy - y * R];
+      const near = (X, Y) => { const d = Math.hypot(X - S.px, Y - S.py); return Math.exp(-(d * d) / (R * R * 0.045)); };
+      const path = (pts, front) => { // draw only the visible side (or the hidden one, lighter)
+        ctx.beginPath(); let pen = false;
+        pts.forEach(([x, y, z]) => { const vis = front ? z >= -0.05 : z < 0.05; if (!vis) { pen = false; return; } const [X, Y] = P(x, y, z); pen ? ctx.lineTo(X, Y) : ctx.moveTo(X, Y); pen = true; });
+        ctx.stroke();
+      };
+      const set = (a) => { ctx.strokeStyle = `rgba(${GRAY[0]},${GRAY[1]},${GRAY[2]},${a})`; };
+      const dot = (x, y, z, a) => { const [X, Y] = P(x, y, z), n = near(X, Y), r = 2.4 + n * 3.2; ctx.fillStyle = n > 0.05 ? `rgba(${Math.round(205 - 150 * n)},${Math.round(205 - 150 * n)},${Math.round(205 - 150 * n)},${Math.min(1, a + n)})` : `rgba(${GRAY[0]},${GRAY[1]},${GRAY[2]},${a})`; ctx.beginPath(); ctx.arc(X, Y, r, 0, 7); ctx.fill(); };
+      ctx.lineWidth = 1.4; ctx.lineCap = "round";
+      LINES.forEach((L) => {
+        const pts = L.pts.map(([x, y, z]) => rot(x, y, z));
+        set(0.28); path(pts, false); set(1); path(pts, true);
+        for (let i = 0; i < L.dots; i++) { const q = pts[Math.round((i / L.dots) * (pts.length - 1))]; if (q[2] >= -0.02) dot(q[0], q[1], q[2], 1); }
+      });
+      ORB.forEach((O) => {
+        const pts = O.pts.map(([x, y, z]) => { const q = orbRot(O, [x * O.r, y * O.r, z * O.r]); return rot(q[0], q[1], q[2]); });
+        set(0.35); path(pts, false); set(0.9); path(pts, true);
+        for (let i = 0; i < O.dots; i++) { const q = pts[Math.round((i / O.dots) * (pts.length - 1))]; if (q[2] >= -0.02) dot(q[0], q[1], q[2], 0.9); }
+      });
+      // the silhouette ring with its ticks: it turns with the sphere, and the ticks are uneven so you can see it
+      ctx.strokeStyle = "rgb(205,205,205)"; ctx.lineWidth = 4.5; ctx.beginPath(); ctx.arc(cx, cy, R, 0, 7); ctx.stroke();
+      ctx.lineWidth = 3;
+      const T = 120;
+      for (let i = 0; i < T; i++) {
+        const a = (i / T) * Math.PI * 2 + S.ring, len = R * (0.05 + 0.07 * (0.5 + 0.5 * Math.sin(i * 0.45 + 1.3)) * (0.55 + 0.45 * Math.sin(a * 2 - 0.6))), lean = 0.22;
+        const px0 = cx + Math.cos(a) * (R + 5), py0 = cy + Math.sin(a) * (R + 5), n = near(px0, py0);
+        ctx.strokeStyle = `rgb(${Math.round(205 - 120 * n)},${Math.round(205 - 120 * n)},${Math.round(205 - 120 * n)})`;
+        ctx.beginPath(); ctx.moveTo(px0, py0); ctx.lineTo(cx + Math.cos(a + lean * (len / R) * 4) * (R + 5 + len + n * 6), cy + Math.sin(a + lean * (len / R) * 4) * (R + 5 + len + n * 6)); ctx.stroke();
+      }
+    }
+
+    // pointer: drag to turn it (with momentum), hover to light the dots under the pointer
+    const pos = (e) => { const r = stage.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+    cv.style.touchAction = "pan-y";
+    cv.addEventListener("pointerdown", (e) => { S.drag = true; S.moved = 0; [S.ox, S.oy] = pos(e); cv.setPointerCapture(e.pointerId); S.vy = 0; S.vp = 0; });
+    cv.addEventListener("pointermove", (e) => {
+      const [x, y] = pos(e); S.px = x; S.py = y;
+      if (S.drag) { const dx = x - S.ox, dy = y - S.oy; S.moved += Math.abs(dx) + Math.abs(dy); S.yaw += dx * 0.007; S.pitch = Math.max(-1.2, Math.min(1.2, S.pitch + dy * 0.007)); S.vy = dx * 0.007 * 60; S.vp = dy * 0.007 * 60; S.ox = x; S.oy = y; }
+      if (reduce || !g) draw();
+    });
+    const end = () => { S.drag = false; };
+    cv.addEventListener("pointerup", end); cv.addEventListener("pointercancel", end);
+    cv.addEventListener("pointerleave", () => { S.px = S.py = -999; if (reduce || !g) draw(); });
+    stage.addEventListener("click", (e) => { if (S.moved > 4) { e.stopPropagation(); e.preventDefault(); S.moved = 0; } }, true); // a drag is not a click on the tile
+    // the card: its line changes on a timer, and on click in the overlay
+    let mi = 0;
+    const say = (i) => { mi = (i + MSG.length) % MSG.length; if (!g || reduce) { txt.textContent = MSG[mi]; return; } g.to(txt, { opacity: 0, y: -6, duration: 0.25, ease: "power2.in", onComplete: () => { txt.textContent = MSG[mi]; g.fromTo(txt, { y: 8 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out" }); } }); };
+    if (!auto) card.addEventListener("click", (e) => { e.stopPropagation(); say(mi + 1); }), card.classList.add("is-live");
+
+    const stopVis = whileVisible(root, () => {
+      if (!g) return () => {};
+      const timer = g.delayedCall(4.6, function again() { say(mi + 1); timer2 = g.delayedCall(4.6, again); }); let timer2 = null;
+      const tick = (time, dt) => {
+        const s = Math.min(0.05, dt / 1000);
+        if (!S.drag) { // momentum decays toward the slow idle spin
+          S.yaw += (S.vy + SPIN) * s; S.pitch = Math.max(-1.2, Math.min(1.2, S.pitch + S.vp * s));
+          S.vy *= Math.exp(-s * 2.4); S.vp *= Math.exp(-s * 2.4);
+          S.pitch += (-0.28 - S.pitch) * (1 - Math.exp(-s * 0.5));  // and the tilt drifts back to rest
+        }
+        S.ring += s * 0.12; draw();
+      };
+      g.ticker.add(tick);
+      return () => { timer.kill(); timer2 && timer2.kill(); g.ticker.remove(tick); };
+    });
+    return () => { ro.disconnect(); stopVis(); g && g.killTweensOf(txt); };
+  }
+
+  // ── 21 · Media tray: a stack of cards that fans out on hover; tap a card to lift it, play the memo, add more with + (GSAP) ──
+  function mediaTray(stage, { auto }) {
+    const W = 700, H = 330, g = window.gsap, A = 440, CW = 108;
+    const c = h("div", "ix ix-mt");
+    const tray = h("div", "mt__tray"), stack = h("div", "mt__stack"), plus = h("button", "mt__plus", '<i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></i>');
+    plus.type = "button"; plus.setAttribute("aria-label", "Add a card");
+    tray.append(stack, plus); c.appendChild(tray); stage.appendChild(c);
+    const f = fit(stage, c, W, H, 0.98);
+    const bars = Array.from({ length: 23 }, (_, i) => `<b style="--h:${[10, 18, 30, 14, 36, 22, 44, 30, 16, 40, 26, 48, 24, 38, 16, 34, 20, 42, 14, 28, 12, 22, 8][i]}px"></b>`).join("");
+    const photo = (n) => `<span class="mt__ph" style="background:url(/assets/images/playground/photos/p${n}.webp) 50% 30% / cover no-repeat"></span>`;
+    const KINDS = {
+      photo1: () => photo(5),
+      note: () => '<span class="mt__note"><b>I had an incredible weekend at Yosemite. The views were absolutely breathtaking, and I can\u2019t wait to hike more.</b></span>',
+      photo2: () => photo(13),
+      voice: () => `<span class="mt__voice"><span class="mt__wave">${bars}</span><span class="mt__prog"><i></i></span></span>`,
+    };
+    const cards = [];
+    let spread = 0, lifted = null, uid = 0;
+    const step = (n) => { const full = Math.min(122, (A - CW) / Math.max(1, n - 1)), col = Math.min(44, (A - CW) / Math.max(1, n - 1)); return col + (full - col) * spread; };
+    const place = (animate) => {
+      const n = cards.length, st = step(n);
+      cards.forEach((C, i) => { const x = 16 + i * st, y = C === lifted ? -14 : 0; C.el.style.zIndex = C === lifted ? 60 : i + 1; if (!animate || !g) g && g.set(C.el, { x, y }); else C.x = x, C.y = y; });
+    };
+    const apply = () => { const n = cards.length, st = step(n); cards.forEach((C, i) => g.set(C.el, { x: 16 + i * st, y: C === lifted ? -14 : (C.y || 0) * 0 })); cards.forEach((C, i) => { C.el.style.zIndex = C === lifted ? 60 : i + 1; }); };
+    const addCard = (kind, fromPlus) => {
+      const C = { kind, id: ++uid, el: h("div", `mt__c mt__c--${kind.replace(/\d+$/, "").replace("-", "")}`, kind.startsWith("photo-") ? photo(+kind.slice(6)) : KINDS[kind]()) };
+      C.el.dataset.k = kind; stack.appendChild(C.el); cards.push(C);
+      if (g) { g.set(C.el, { x: 16 + (cards.length - 1) * step(cards.length), y: 0 }); if (fromPlus) g.fromTo(C.el, { x: 460, scale: 0.7, opacity: 0 }, { x: 16 + (cards.length - 1) * step(cards.length), scale: 1, opacity: 1, duration: 1.1, ease: "expo.out", overwrite: "auto" }); }
+      return C;
+    };
+    ["photo1", "note", "photo2", "voice"].forEach((k) => addCard(k));
+    apply();
+    const setSpread = (v, dur = 0.9) => { if (!g || reduce) { spread = v; apply(); return; } g.to({ v: spread }, { v, duration: dur, ease: v ? "expo.out" : "power3.inOut", onUpdate() { spread = this.targets()[0].v; apply(); } }); };
+    stack.addEventListener("pointerenter", () => setSpread(1)); stack.addEventListener("pointerleave", () => { lifted = null; setSpread(0, 1.1); });
+    // tap a card: lift it to the front (tap again to put it down); the voice memo plays and pauses
+    let playing = false, ptw = null, wtw = null;
+    const voice = () => cards.find((C) => C.kind === "voice");
+    const setPlay = (on) => {
+      const V = voice(); if (!V || !g) return; playing = on; wtw && wtw.kill(); ptw && ptw.kill();
+      const bs = V.el.querySelectorAll(".mt__wave b"), pr = V.el.querySelector(".mt__prog i");
+      if (on && !reduce) { wtw = g.to(bs, { scaleY: () => 0.35 + Math.random() * 0.75, duration: 0.28, ease: "sine.inOut", repeat: -1, yoyo: true, stagger: { each: 0.03, from: "center", repeat: -1, yoyo: true } }); ptw = g.fromTo(pr, { scaleX: 0.1 }, { scaleX: 1, duration: 9, ease: "none", onComplete: () => setPlay(false) }); }
+      else g.to(bs, { scaleY: 1, duration: 0.4, ease: "power3.out", overwrite: true });
+    };
+    stack.addEventListener("click", (e) => {
+      const el = e.target.closest(".mt__c"); if (!el) return; e.stopPropagation();
+      const C = cards.find((x) => x.el === el); lifted = lifted === C ? null : C; apply();
+      if (g) cards.forEach((x) => g.to(x.el, { y: x === lifted ? -14 : 0, scale: x === lifted ? 1.04 : 1, duration: 0.6, ease: "back.out(1.4)", overwrite: "auto" }));
+      if (C.kind === "voice") setPlay(!playing);
+    });
+    // + adds a card that flies in from the button; the oldest leaves when the tray is full
+    plus.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (g && !reduce) g.fromTo(plus.firstChild, { rotate: 0 }, { rotate: 90, duration: 0.7, ease: "expo.out" });
+      if (cards.length >= 6) { const old = cards.splice(0, 1)[0]; g ? g.to(old.el, { x: "-=60", opacity: 0, scale: 0.85, duration: 0.5, ease: "power2.in", onComplete: () => old.el.remove() }) : old.el.remove(); }
+      addCard("photo-" + (1 + Math.floor(Math.random() * 14)), true); lifted = null; setSpread(1, 0.8); apply();
+      const n2 = cards.length; cards.forEach((C2, i) => g && g.to(C2.el, { x: 16 + i * step(n2), duration: 0.8, ease: "expo.out", overwrite: "auto" }));
+    });
+    const stopVis = whileVisible(c, () => {
+      if (!g) return () => {};
+      if (auto) setPlay(true);
+      // idle hint for anyone not touching it: the stack opens, the memo plays, then it closes again
+      const tl = g.timeline({ repeat: -1, repeatDelay: 1.2, delay: 1.2 });
+      tl.call(() => setSpread(1, 1.1)).to({}, { duration: 2.4 }).call(() => { if (!stack.matches(":hover")) setSpread(0, 1.2); }).to({}, { duration: 3.6 });
+      return () => { tl.kill(); setPlay(false); };
+    });
+    return () => { f.stop(); stopVis(); g && g.killTweensOf([...cards.map((x) => x.el), plus]); };
+  }
+
+  // ── 22 · Word wheel: a vertical picker where the centre card is large and the rest recede; drag, wheel, arrows or tap (GSAP) ──
+  function wordWheel(stage, { auto }) {
+    const W = 520, H = 485, g = window.gsap;
+    const WORDS = [
+      ["syncing", "#9CFF6B", "#3B5BF5", "dot"], ["updating", "#7A1F2B", "#F7C9E8", "ring"], ["scheduling", "#FF4A12", "#E0F95A", "halo", "#E8C6F5"],
+      ["reviewing", "#245A4A", "#F5F26B", "ring"], ["organizing", "#D9F25A", "#E9C6F6", "ring2", "#4A64E8"], ["drafting", "#3F3A8F", "#FFC9A8", "ring"], ["planning", "#0F8B8D", "#FFF1C9", "dot"],
+    ];
+    const N = WORDS.length, c = h("div", "ix ix-ww");
+    const icon = ([, a, b, kind, c2]) => kind === "halo" ? `<i class="ww__i" style="--a:${a};--b:${b};--c:${c2}"><u></u></i>` : `<i class="ww__i ww__i--${kind}" style="--a:${a};--b:${b};--c:${c2 || a}"><u></u></i>`;
+    const rows = WORDS.map((w, i) => { const r = h("div", "ww__r", `${icon(w)}<span>${w[0]}</span>`); r.dataset.i = i; c.appendChild(r); return r; });
+    stage.appendChild(c);
+    const f = fit(stage, c, W, H, 1.0);
+    const S = { pos: 2, vel: 0 };
+    const wrap = (d) => ((d + N / 2) % N + N) % N - N / 2;
+    const layout = () => rows.forEach((r, i) => {
+      const d = wrap(i - S.pos), a = Math.abs(d);
+      const y = d * 92 + Math.sign(d) * Math.max(0, a - 1) * -6, w = 410 - Math.min(a, 2.2) * 26, hh = 96 - Math.min(a, 2.2) * 8;
+      r.style.cssText = `width:${w}px;height:${hh}px;transform:translate(-50%, calc(-50% + ${y}px));opacity:${Math.max(0, Math.min(1, 2.7 - a)).toFixed(3)};z-index:${Math.round(100 - a * 10)}`;
+      r.style.setProperty("--f", Math.max(0, 1 - a).toFixed(3));  // focus 0..1: drives the icon size and the ink
+    });
+    layout();
+    const goTo = (target) => { if (!g || reduce) { S.pos = target; layout(); return; } g.to(S, { pos: target, duration: 0.9, ease: "expo.out", overwrite: true, onUpdate: layout }); };
+    const snap = () => goTo(Math.round(S.pos));
+    // drag: the wheel follows the finger, throws with momentum and lands on a card
+    let down = false, y0 = 0, p0 = 0, lastY = 0, lastT = 0, moved = 0;
+    c.style.touchAction = "pan-x";
+    c.addEventListener("pointerdown", (e) => { down = true; moved = 0; y0 = lastY = e.clientY; lastT = performance.now(); p0 = S.pos; S.vel = 0; g && g.killTweensOf(S); c.setPointerCapture(e.pointerId); });
+    c.addEventListener("pointermove", (e) => { if (!down) return; const sc = c.getBoundingClientRect().height / H || 1; moved += Math.abs(e.clientY - lastY); S.pos = p0 - (e.clientY - y0) / (92 * sc); const now = performance.now(); S.vel = (-(e.clientY - lastY) / (92 * sc)) / Math.max(1, now - lastT) * 1000; lastY = e.clientY; lastT = now; layout(); });
+    const up = () => { if (!down) return; down = false; const t = Math.round(S.pos + S.vel * 0.18); goTo(t); };
+    c.addEventListener("pointerup", up); c.addEventListener("pointercancel", up);
+    c.addEventListener("click", (e) => { if (moved > 6) { e.stopPropagation(); return; } const r = e.target.closest(".ww__r"); if (!r) return; const d = wrap(+r.dataset.i - S.pos); if (Math.abs(d) > 0.3) { e.stopPropagation(); goTo(S.pos + Math.round(d)); } }, true);
+    if (!auto) { // in the overlay the wheel and the arrow keys also drive it
+      let acc = 0; c.addEventListener("wheel", (e) => { e.preventDefault(); acc += e.deltaY; if (Math.abs(acc) > 40) { goTo(Math.round(S.pos) + Math.sign(acc)); acc = 0; } }, { passive: false });
+      const key = (e) => { if (e.key === "ArrowDown") goTo(Math.round(S.pos) + 1); if (e.key === "ArrowUp") goTo(Math.round(S.pos) - 1); };
+      document.addEventListener("keydown", key); c.__key = key;
+    }
+    let hot = false; c.addEventListener("pointerenter", () => { hot = true; }); c.addEventListener("pointerleave", () => { hot = false; });
+    const stopVis = whileVisible(c, () => {
+      if (!g) return () => {};
+      const t = g.delayedCall(2.3, function again() { if (!hot && !down) goTo(Math.round(S.pos) + 1); t2 = g.delayedCall(2.3, again); }); let t2 = null;
+      return () => { t.kill(); t2 && t2.kill(); };
+    });
+    return () => { f.stop(); stopVis(); g && g.killTweensOf(S); c.__key && document.removeEventListener("keydown", c.__key); };
+  }
+
+  // ── 23 · Archive search: a globe of image tiles you can turn, with a search bar that finds and rotates to matches (GSAP) ──
+  function archiveSearch(stage, { auto }) {
+    const W = 560, H = 420, g = window.gsap, R = 214, TS = 104;
+    // one tag per photo (p1..p14)
+    const PT = ["footwear", "portrait", "bag", "coat", "leather", "navy", "knit", "loafer", "bomber", "purple", "orange", "studio", "bag", "tee"];
+    const c = h("div", "ix ix-as"), clip = h("div", "as__clip"), scene = h("div", "as__scene"), globe = h("div", "as__globe");
+    const tiles = []; let idx = 0;
+    // seamless: each row's tiles are cut to the exact chord between neighbours (plus a hair of overlap), rows touch, and the poles are covered
+    const ROW = 25, TH = 2 * R * Math.sin(((ROW / 2) * Math.PI) / 180) + 2;
+    [-75, -50, -25, 0, 25, 50, 75].forEach((lat, row) => {
+      const cl2 = Math.cos((lat * Math.PI) / 180), n = Math.max(4, Math.round(14 * cl2)), TW = 2 * R * cl2 * Math.sin(Math.PI / n) + 2;
+      for (let k = 0; k < n; k++) {
+        const ph = (idx * 5 + row * 3) % 14, lon = (k / n) * 360 + (row % 2 ? 180 / n : 0), tag = PT[ph];
+        const el = h("div", "as__t"), im = h("i");
+        im.style.background = `url(/assets/images/playground/photos/p${ph + 1}.webp) 50% 30% / cover no-repeat`;
+        el.style.width = `${TW.toFixed(1)}px`; el.style.height = `${TH.toFixed(1)}px`;
+        el.style.transform = `translate(-50%, -50%) rotateY(${lon}deg) rotateX(${-lat}deg) translateZ(${R}px)`;
+        el.appendChild(im); globe.appendChild(el); tiles.push({ el, im, lat, lon, tag }); idx++;
+      }
+    });
+    scene.appendChild(globe); clip.appendChild(scene); c.appendChild(clip);
+    // floating tiles around the edge: each one searches its own tag when tapped
+    const FL = [[16, 36, 66, 66, 13], [-12, 150, 66, 84, 11], [30, 300, 72, 72, 8], [488, 40, 72, 72, 10], [498, 172, 66, 88, 5], [470, 306, 70, 58, 12]];
+    const floats = FL.map(([x, y, w, hh, n], i) => {
+      const e = h("button", "as__f"); e.type = "button"; e.setAttribute("aria-label", `Search ${PT[n - 1]}`); e.style.cssText = `left:${x}px;top:${y}px;width:${w}px;height:${hh}px;background:url(/assets/images/playground/photos/p${n}.webp) 50% 30% / cover no-repeat`;
+      e.dataset.tag = PT[n - 1]; c.appendChild(e); return e;
+    });
+    const bar = h("label", "as__bar", '<svg class="as__mag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg><span class="as__txt"><em></em><i class="as__caret"></i></span><input class="as__in" type="text" aria-label="Search the archive" autocomplete="off" spellcheck="false"><button type="button" class="as__go" aria-label="Spin the globe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><ellipse cx="12" cy="12" rx="3.4" ry="8"/><path d="M4 12h16M5.6 8h12.8M5.6 16h12.8"/></svg></button>');
+    c.appendChild(bar); stage.appendChild(c);
+    const f = fit(stage, c, W, H, 1.0);
+    const input = bar.querySelector(".as__in"), em = bar.querySelector(".as__txt em"), go = bar.querySelector(".as__go");
+    const PLACE = "Search the archive";
+    const S = { yaw: -20, pitch: -8, px: 0, py: 0 };
+    let q = "", demoOn = true, down = false, vy = 0, vp = 0, moved = 0, ox = 0, oy = 0, idle = true;
+    const paint = () => { globe.style.transform = `rotateX(${S.pitch + S.py * 5}deg) rotateY(${S.yaw + S.px * 7}deg)`; };
+    const show = () => { em.textContent = q || PLACE; bar.classList.toggle("is-empty", !q); };
+    const match = () => {
+      const k = q.trim().toLowerCase(); let first = null;
+      tiles.forEach((T) => { const on = !k || T.tag.startsWith(k) || T.tag.includes(k); T.on = on; if (on && !first && k) first = T; if (g) g.to(T.im, { opacity: on ? 1 : 0.28, scale: on ? 1 : 0.9, duration: 0.5, ease: "power3.out", overwrite: "auto" }); else T.im.style.opacity = on ? 1 : 0.28; });
+      if (first) { // bring the first match to the front by the short way round
+        let ty = -first.lon, d = ((ty - S.yaw) % 360 + 540) % 360 - 180; ty = S.yaw + d;
+        g && !reduce ? g.to(S, { yaw: ty, pitch: -first.lat * 0.8, duration: 1.4, ease: "expo.out", overwrite: "auto", onUpdate: paint }) : (S.yaw = ty, S.pitch = -first.lat * 0.8, paint());
+      }
+    };
+    const setQ = (v) => { q = v; show(); match(); };
+    show(); paint();
+    // typing, for real
+    input.addEventListener("input", () => { demoOn = false; setQ(input.value); });
+    input.addEventListener("focus", () => { demoOn = false; bar.classList.add("is-focus"); }); input.addEventListener("blur", () => bar.classList.remove("is-focus"));
+    bar.addEventListener("click", (e) => { e.stopPropagation(); if (e.target.closest(".as__go")) return; input.focus(); });
+    go.addEventListener("click", (e) => { e.stopPropagation(); demoOn = false; if (g && !reduce) { vy = 0; g.to(S, { yaw: S.yaw + 360, duration: 1.6, ease: "expo.out", overwrite: "auto", onUpdate: paint }); } });
+    floats.forEach((e) => e.addEventListener("click", (ev) => { ev.stopPropagation(); demoOn = false; input.value = e.dataset.tag; setQ(e.dataset.tag); }));
+    // drag the globe; it keeps turning, and leans toward the pointer
+    scene.style.touchAction = "pan-y";
+    scene.addEventListener("pointerdown", (e) => { down = true; moved = 0; ox = e.clientX; oy = e.clientY; vy = vp = 0; demoOn = false; scene.setPointerCapture(e.pointerId); g && g.killTweensOf(S); });
+    scene.addEventListener("pointermove", (e) => { if (!down) return; const dx = e.clientX - ox, dy = e.clientY - oy; moved += Math.abs(dx) + Math.abs(dy); S.yaw += dx * 0.45; S.pitch = Math.max(-50, Math.min(50, S.pitch - dy * 0.3)); vy = dx * 0.45 * 60; vp = -dy * 0.3 * 60; ox = e.clientX; oy = e.clientY; paint(); });
+    const up = () => { down = false; }; scene.addEventListener("pointerup", up); scene.addEventListener("pointercancel", up);
+    stage.addEventListener("click", (e) => { if (moved > 4) { e.stopPropagation(); e.preventDefault(); moved = 0; } }, true);
+    stage.addEventListener("pointermove", (e) => { const r = stage.getBoundingClientRect(); const nx = ((e.clientX - r.left) / r.width) * 2 - 1, ny = ((e.clientY - r.top) / r.height) * 2 - 1; g && !reduce && (g.to(S, { px: nx, py: ny, duration: 0.8, ease: "power3.out", overwrite: false, onUpdate: paint })); });
+
+    const stopVis = whileVisible(c, () => {
+      if (!g) return () => {};
+      const tick = (t, dt) => { const s = Math.min(0.05, dt / 1000); if (!down) { S.yaw += (vy + 5) * s; S.pitch = Math.max(-50, Math.min(50, S.pitch + vp * s)); vy *= Math.exp(-s * 2.2); vp *= Math.exp(-s * 2.2); S.pitch += (-8 - S.pitch) * (1 - Math.exp(-s * 0.4)); paint(); } };
+      g.ticker.add(tick);
+      const bobs = floats.map((e, i) => g.to(e, { y: i % 2 ? -7 : 7, duration: 2.6 + i * 0.4, ease: "sine.inOut", repeat: -1, yoyo: true }));
+      // a demo for anyone not touching it: type a word, let the globe turn to the matches, clear, and try another
+      let run = 0;
+      const sleep = (ms) => new Promise((res) => g.delayedCall(ms / 1000, res));
+      (async () => {
+        const id = ++run, words = ["leather", "bag", "knit", "orange"]; let n = 0;
+        await sleep(1400);
+        while (id === run && demoOn && auto) {
+          const w = words[n++ % words.length];
+          for (let i = 1; i <= w.length && demoOn && id === run; i++) { setQ(w.slice(0, i)); await sleep(150); }
+          await sleep(2600); if (!demoOn || id !== run) break;
+          for (let i = w.length - 1; i >= 0 && demoOn && id === run; i--) { setQ(w.slice(0, i)); await sleep(60); }
+          await sleep(1100);
+        }
+      })();
+      return () => { run++; g.ticker.remove(tick); bobs.forEach((b) => b.kill()); };
+    });
+    return () => { f.stop(); stopVis(); g && (g.killTweensOf(S), tiles.forEach((T) => g.killTweensOf(T.im))); };
+  }
+
+  // ── Stageshow-style scripted cursor, shared: a shallow arc timed by distance on the travel curve, a visible press, aims measured live ──
+  function stageCursor(stage, g) {
+    const cub = (x1, y1, x2, y2) => (t) => { let q = t; for (let i = 0; i < 8; i++) { const x = 3 * (1 - q) * (1 - q) * q * x1 + 3 * (1 - q) * q * q * x2 + q * q * q - t, dx = 3 * (1 - q) * (1 - q) * x1 + 6 * (1 - q) * q * (x2 - x1) + 3 * q * q * (1 - x2); if (Math.abs(dx) < 1e-6) break; q -= x / dx; } q = Math.max(0, Math.min(1, q)); return 3 * (1 - q) * (1 - q) * q * y1 + 3 * (1 - q) * q * q * y2 + q * q * q; };
+    const ease = cub(0.45, 0, 0.1, 1), live = new Set(), pos = { x: 0, y: 0 };
+    const el = h("div", "sc__cur", '<svg viewBox="0 0 16 22" width="20" height="28" aria-hidden="true"><path d="M1.5 1.5v15.2l3.7-3.4 2.6 6 2.7-1.2-2.6-5.9h5.1z" fill="#fff" stroke="#111" stroke-width="1.2" stroke-linejoin="round"/></svg>');
+    stage.appendChild(el); g.set(el, { opacity: 0 });
+    const track = (tw) => (live.add(tw), tw);
+    const api = {
+      el,
+      at: (t, fx = 0.5, fy = 0.5) => { const r = t.getBoundingClientRect(), b = stage.getBoundingClientRect(); return { x: r.left - b.left + r.width * fx, y: r.top - b.top + r.height * fy }; },
+      sleep: (ms) => new Promise((res) => track(g.delayedCall(ms / 1000, res))),
+      place: (x, y) => { pos.x = x; pos.y = y; g.set(el, { x, y, scale: 1 }); },
+      show: () => track(g.to(el, { opacity: 1, duration: 0.35 })),
+      hide: () => track(g.to(el, { opacity: 0, duration: 0.35 })),
+      travel: (target) => new Promise((res) => {
+        const a = { x: pos.x, y: pos.y }, d0 = target(), k = { v: 0 };
+        const dur = Math.min(1.4, 0.42 + Math.hypot(d0.x - a.x, d0.y - a.y) / 520);
+        track(g.to(k, { v: 1, duration: dur, ease, onUpdate: () => {
+          const b = target(), t = k.v, dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy) || 1, arc = Math.sin(Math.PI * t) * Math.min(36, len * 0.12);
+          pos.x = a.x + dx * t - (dy / len) * arc; pos.y = a.y + dy * t + (dx / len) * arc; g.set(el, { x: pos.x, y: pos.y });
+        }, onComplete: res }));
+      }),
+      press: async () => { track(g.to(el, { scale: 0.84, duration: 0.1, yoyo: true, repeat: 1, ease: "power2.out", transformOrigin: "0 0" })); await api.sleep(220); },
+      stop: () => { live.forEach((t) => t.kill()); live.clear(); g.to(el, { opacity: 0, duration: 0.25 }); },
+    };
+    return api;
+  }
+
+  // ── 24 · Story reactions: stacked stories with progress, tap to move through them, double-tap or ♥ to burst, reply with an emoji (GSAP) ──
+  function storyReactions(stage, { auto }) {
+    const W = 560, H = 500, g = window.gsap, P = "/assets/images/playground/photos/p";
+    const STORIES = [[9, "Leather bomber"], [5, "Shearling jacket"], [13, "Python tote"], [12, "Striped shirt"], [10, "Purple puffer"], [7, "Fair Isle polo"]];
+    const EMO = ["🔮", "👀", "🤯", "😍", "🔥"];
+    const c = h("div", "ix ix-sr");
+    // stickers around the stack (from the references): a speech bubble that collects reactions, a heart, a close-friends chip, an avatar ring
+    const bubble = h("div", "sr__bubble", "<span>🔮</span><span>👀</span><span>🤯</span>");
+    const heartS = h("i", "sr__heart", '<svg viewBox="0 0 48 44" aria-hidden="true"><defs><linearGradient id="srh" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF7A1A"/><stop offset="1" stop-color="#E5139A"/></linearGradient></defs><path d="M24 43 5.6 25.2C-1.3 18.6 1.9 4.4 12.8 4.4c5 0 8.6 3 11.2 7 2.6-4 6.2-7 11.2-7 10.9 0 14.1 14.2 7.2 20.8z" fill="url(#srh)"/></svg>');
+    const chip = h("i", "sr__chip", '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z" fill="#fff"/></svg><b>✓</b>');
+    const avatar = h("i", "sr__avatar"); avatar.style.backgroundImage = `url(${P}4.webp)`;
+    const face1 = h("i", "sr__face", "😊"), face2 = h("i", "sr__face sr__face--b", "😍");
+    // three cards: left, centre, right; the centre one is the story you are watching
+    const SEG = STORIES.map(() => "<i><b></b></i>").join("");
+    const mk = () => { const el = h("div", "sr__card", `<span class="sr__ph"></span><span class="sr__seg">${SEG}</span><span class="sr__tag">🏷 <em></em></span><span class="sr__cmt"><i></i><em>Love it! Going to try it out.</em></span><span class="sr__bot"><button type="button" class="sr__reply">Send message</button><button type="button" class="sr__like" aria-label="Like"><svg viewBox="0 0 24 22" aria-hidden="true"><path d="M12 20.6 3.4 12.3C.3 9.3 1.8 3 6.7 3c2.4 0 4 1.4 5.3 3.2C13.3 4.4 14.9 3 17.3 3c4.9 0 6.4 6.3 3.3 9.3z"/></svg></button></span><span class="sr__tray">${EMO.map((e) => `<button type="button" data-e="${e}">${e}</button>`).join("")}</span><span class="sr__big"><svg viewBox="0 0 48 44"><path d="M24 43 5.6 25.2C-1.3 18.6 1.9 4.4 12.8 4.4c5 0 8.6 3 11.2 7 2.6-4 6.2-7 11.2-7 10.9 0 14.1 14.2 7.2 20.8z" fill="#fff"/></svg></span>`); return { el, story: 0 }; };
+    const cards = [mk(), mk(), mk()];
+    c.append(heartS, face1, ...cards.map((k) => k.el), bubble, chip, avatar, face2); stage.appendChild(c);
+    const f = fit(stage, c, W, H, 1.0);
+    const SLOT = { L: { x: -150, s: 0.84, r: -5, z: 1 }, C: { x: 0, s: 1, r: 0, z: 3 }, R: { x: 150, s: 0.84, r: 5, z: 2 } };
+    let order = [cards[0], cards[1], cards[2]], cur = 1, liked = new Set();
+    const fill = (k, i) => {
+      k.story = (i + STORIES.length) % STORIES.length; const [n, tag] = STORIES[k.story];
+      k.el.querySelector(".sr__ph").style.backgroundImage = `url(${P}${n}.webp)`; k.el.querySelector(".sr__tag em").textContent = tag;
+      k.el.querySelectorAll(".sr__seg b").forEach((b, j) => (b.style.transform = `scaleX(${j < k.story ? 1 : 0})`));
+      k.el.classList.toggle("is-liked", liked.has(k.story)); k.el.classList.remove("is-cmt", "is-tray");
+    };
+    fill(order[0], cur - 1); fill(order[1], cur); fill(order[2], cur + 1);
+    const slotOf = (k) => ["L", "C", "R"][order.indexOf(k)];
+    const put = (k, anim, d = 0) => { const S = SLOT[slotOf(k)]; k.el.style.zIndex = S.z; if (!g || !anim || reduce) { g ? g.set(k.el, { x: S.x, scale: S.s, rotate: S.r }) : (k.el.style.transform = `translateX(${S.x}px) scale(${S.s}) rotate(${S.r}deg)`); return; } g.to(k.el, { x: S.x, scale: S.s, rotate: S.r, duration: 0.85, ease: "expo.out", delay: d, overwrite: "auto" }); };
+    cards.forEach((k) => put(k, false));
+    // progress: the current segment of the centre card fills; when it ends, the next story comes forward
+    let prog = null;
+    const startProg = () => {
+      prog && prog.kill(); const k = order[1], seg = k.el.querySelectorAll(".sr__seg b")[k.story];
+      if (!g || reduce) { seg.style.transform = "scaleX(1)"; return; }
+      prog = g.fromTo(seg, { scaleX: 0 }, { scaleX: 1, duration: 9, ease: "none", onComplete: () => go(1) });
+      if (!running) prog.pause();
+    };
+    const go = (dir) => {
+      cur += dir; const front = order[1];
+      if (dir > 0) { order = [front, order[2], order[0]]; fill(order[2], cur + 1); }
+      else { order = [order[2], order[0], front]; fill(order[0], cur - 1); }
+      fill(order[1], cur);
+      // the card that travels around the back changes behind the others, so it never swaps in view
+      cards.forEach((k) => { if (k !== order[1] && k !== front) k.el.style.zIndex = 0; });
+      cards.forEach((k) => put(k, true));
+      startProg();
+    };
+    // likes: the ♥ fills with a pop, a big heart blooms on the photo, small hearts float up, and a comment arrives
+    const burst = (k) => {
+      liked.add(k.story); k.el.classList.add("is-liked");
+      if (!g || reduce) { k.el.classList.add("is-cmt"); return; }
+      const like = k.el.querySelector(".sr__like"), big = k.el.querySelector(".sr__big");
+      g.fromTo(like, { scale: 0.6 }, { scale: 1, duration: 0.6, ease: "back.out(3)" });
+      g.fromTo(big, { scale: 0.2, opacity: 0, rotate: -12 }, { scale: 1, opacity: 1, rotate: 0, duration: 0.55, ease: "back.out(2.2)" });
+      g.to(big, { scale: 1.12, opacity: 0, duration: 0.4, ease: "power2.in", delay: 0.75 });
+      for (let i = 0; i < 7; i++) {
+        const p = h("i", "sr__p", '<svg viewBox="0 0 48 44"><path d="M24 43 5.6 25.2C-1.3 18.6 1.9 4.4 12.8 4.4c5 0 8.6 3 11.2 7 2.6-4 6.2-7 11.2-7 10.9 0 14.1 14.2 7.2 20.8z" fill="url(#srh)"/></svg>'); k.el.appendChild(p);
+        g.fromTo(p, { x: 0, y: 0, scale: 0.4, opacity: 1, rotate: 0 }, { x: (Math.random() - 0.5) * 140, y: -120 - Math.random() * 120, scale: 0.7 + Math.random() * 0.6, rotate: (Math.random() - 0.5) * 60, opacity: 0, duration: 1.2 + Math.random() * 0.5, ease: "power2.out", delay: i * 0.04, onComplete: () => p.remove() });
+      }
+      g.delayedCall(0.5, () => { k.el.classList.add("is-cmt"); g.fromTo(k.el.querySelector(".sr__cmt"), { y: 12, opacity: 0, scale: 0.92 }, { y: 0, opacity: 1, scale: 1, duration: 0.7, ease: "expo.out" }); });
+    };
+    // reply: the tray of emoji rises from the pill; a pick flies up to the bubble, which keeps the last three
+    const openTray = (k, on) => { k.el.classList.toggle("is-tray", on); if (g && on && !reduce) g.fromTo(k.el.querySelectorAll(".sr__tray button"), { y: 14, scale: 0.6, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.5, ease: "back.out(2)", stagger: 0.04 }); };
+    const react = (k, btn) => {
+      const e = btn.dataset.e; openTray(k, false);
+      const fly = h("i", "sr__fly", e); c.appendChild(fly);
+      const cb = c.getBoundingClientRect(), sc = cb.width / W, a = btn.getBoundingClientRect(), b = bubble.getBoundingClientRect();
+      const ax = (a.left - cb.left) / sc, ay = (a.top - cb.top) / sc, bx = (b.right - cb.left) / sc - 30, by = (b.top - cb.top) / sc + 6;
+      const done = () => { fly.remove(); const s2 = h("span", "", e); bubble.appendChild(s2); while (bubble.children.length > 3) bubble.firstChild.remove(); g && g.fromTo(bubble, { scale: 1.12 }, { scale: 1, duration: 0.6, ease: "back.out(3)" }); };
+      if (!g || reduce) return done();
+      g.set(fly, { x: ax, y: ay }); const k2 = { t: 0 };
+      g.to(k2, { t: 1, duration: 0.9, ease: "power3.inOut", onUpdate: () => { const t = k2.t, lift = Math.sin(Math.PI * t) * 90; g.set(fly, { x: ax + (bx - ax) * t, y: ay + (by - ay) * t - lift, scale: 1 + Math.sin(Math.PI * t) * 0.8, rotate: t * 30 }); }, onComplete: done });
+    };
+    // taps: left third goes back, the rest goes forward; a double tap likes; hold pauses
+    let tapT = null;
+    c.addEventListener("click", (e) => {
+      const card = e.target.closest(".sr__card"); if (!card) return; e.stopPropagation();
+      const k = cards.find((x) => x.el === card);
+      if (k !== order[1]) { go(k === order[2] ? 1 : -1); return; }
+      const like = e.target.closest(".sr__like"), reply = e.target.closest(".sr__reply"), emo = e.target.closest(".sr__tray button");
+      if (like) { liked.has(k.story) ? (liked.delete(k.story), k.el.classList.remove("is-liked", "is-cmt")) : burst(k); return; }
+      if (reply) { openTray(k, !k.el.classList.contains("is-tray")); return; }
+      if (emo) { react(k, emo); return; }
+      if (k.el.classList.contains("is-tray")) { openTray(k, false); return; }
+      const r = card.getBoundingClientRect(), x = (e.clientX - r.left) / r.width;
+      if (tapT) { tapT.kill(); tapT = null; burst(k); return; }
+      tapT = g ? g.delayedCall(0.26, () => { tapT = null; go(x < 0.34 ? -1 : 1); }) : (go(x < 0.34 ? -1 : 1), null);
+    });
+    c.addEventListener("pointerdown", (e) => { if (e.target.closest(".sr__card") === order[1].el && !e.target.closest("button")) prog && prog.pause(); });
+    const resume = () => { running && prog && prog.resume(); };
+    c.addEventListener("pointerup", resume); c.addEventListener("pointercancel", resume);
+    // the stickers drift, and lean against the pointer
+    const stick = [bubble, heartS, chip, avatar, face1, face2];
+    stage.addEventListener("pointermove", (e) => { if (!g || reduce) return; const r = stage.getBoundingClientRect(), nx = ((e.clientX - r.left) / r.width - 0.5) * 2, ny = ((e.clientY - r.top) / r.height - 0.5) * 2; stick.forEach((s2, i) => g.to(s2, { x: nx * (6 + i * 2), y: ny * (5 + i * 2), duration: 0.9, ease: "power3.out", overwrite: "auto" })); });
+
+    // a scripted demo for the board: like, reply with an emoji, move on (Stageshow: every move goes to the next action, the payoff holds)
+    const curs = auto && g && !reduce ? stageCursor(stage, g) : null;
+    let run = 0, running = false, resumeT = null;
+    async function story(id) {
+      const ok = () => id === run, k = () => order[1], b = stage.getBoundingClientRect();
+      curs.place(b.width * 0.82, b.height * 0.9); curs.show(); await curs.sleep(350); if (!ok()) return;
+      await curs.travel(() => curs.at(k().el.querySelector(".sr__like"), 0.6, 0.62)); if (!ok()) return;
+      await curs.press(); if (!liked.has(k().story)) burst(k()); await curs.sleep(1900); if (!ok()) return;
+      await curs.travel(() => curs.at(k().el.querySelector(".sr__reply"), 0.82, 0.6)); if (!ok()) return;
+      await curs.press(); openTray(k(), true); await curs.sleep(650); if (!ok()) return;
+      const pick = k().el.querySelector('.sr__tray button[data-e="🤯"]');
+      await curs.travel(() => curs.at(pick, 0.7, 0.66)); if (!ok()) return;
+      await curs.press(); react(k(), pick); await curs.sleep(1500); if (!ok()) return;
+      await curs.travel(() => curs.at(k().el, 0.84, 0.42)); if (!ok()) return;
+      await curs.press(); go(1); await curs.sleep(900); if (!ok()) return;
+      await curs.travel(() => ({ x: b.width * 0.82, y: b.height * 0.9 })); curs.hide(); await curs.sleep(1300);
+    }
+    const startDemo = () => { if (!curs) return; const id = ++run; (async () => { while (id === run && running) await story(id); })(); };
+    const stopDemo = () => { run++; curs && curs.stop(); };
+    if (curs) {
+      stage.addEventListener("pointerenter", (e) => { if (e.pointerType === "touch") return; resumeT && resumeT.kill(); stopDemo(); });
+      stage.addEventListener("pointerleave", (e) => { if (e.pointerType === "touch" || !running) return; resumeT = g.delayedCall(3, startDemo); });
+    }
+    const stopVis = whileVisible(c, () => {
+      running = true; startProg(); startDemo();
+      const bobs = g ? stick.map((s2, i) => g.to(s2.firstChild && s2 === bubble ? s2 : s2, { "--bob": i % 2 ? -6 : 6, duration: 2.4 + i * 0.35, ease: "sine.inOut", repeat: -1, yoyo: true })) : [];
+      return () => { running = false; prog && prog.pause(); stopDemo(); resumeT && resumeT.kill(); bobs.forEach((t) => t.kill()); };
+    });
+    startProg();
+    return () => { f.stop(); stopVis(); prog && prog.kill(); g && cards.forEach((k) => g.killTweensOf(k.el)); };
+  }
+
+  // ── 25 · Fold cards: a row of dark cards that each fold down to a pill and open again ──
+  function foldCards(stage, { auto }) {
+    const W = 600, H = 560, P = "/assets/images/playground/photos/p";
+    const CARDS = [
+      { t: "Explore", s: "Looks", ph: 5, cap: "Browse looks cut for your mood." },
+      { t: "Fit Plan", s: "Mon", dial: true, cap: "Plan your week, balance your workload and stay within capacity." },
+      { t: "Capsule", s: "Winter", ph: 10, cap: "Meet the season's pieces, folded into one capsule." },
+    ];
+    const c = h("div", "ix ix-fc");
+    const cards = CARDS.map((d, i) => {
+      const body = d.dial
+        ? `<div class="fc__dial" data-dial><span class="fc__pct" data-pct>86%</span><i class="fc__ln"></i><i class="fc__tk"></i><i class="fc__ring" data-ring><u></u></i><i class="fc__dot" style="left:30%;top:62%"></i><i class="fc__dot" style="left:44%;top:70%"></i><i class="fc__dot" style="left:64%;top:58%"></i><i class="fc__dot" style="left:60%;top:78%"></i></div>`
+        : `<div class="fc__ph" style="background:url(${P}${d.ph}.webp) 50% 18% / cover no-repeat"></div>`;
+      const el = h("div", "fc__c", `<div class="fc__hd"><div class="fc__tt"><b>${d.t}</b><span>${d.s}</span></div><button class="fc__b" type="button" aria-expanded="true" aria-label="Fold ${d.t}"><i></i></button></div><div class="fc__bd">${body}<p>${d.cap}</p></div>`);
+      el.style.left = `${18 + i * 190}px`;
+      c.appendChild(el);
+      return el;
+    });
+    stage.appendChild(c);
+    const f = fit(stage, c, W, H, 1.0);
+    const toggle = (el, to) => {
+      const shut = to == null ? !el.classList.contains("is-shut") : !to;
+      el.classList.toggle("is-shut", shut);
+      const b = el.querySelector(".fc__b"); b.setAttribute("aria-expanded", String(!shut)); b.setAttribute("aria-label", `${shut ? "Open" : "Fold"} ${el.querySelector("b").textContent}`);
+    };
+    if (!auto) cards.forEach((el) => el.querySelector(".fc__b").addEventListener("click", () => toggle(el)));
+    // the dial: drag the ring up and down to set the load
+    const dial = c.querySelector("[data-dial]"), ring = c.querySelector("[data-ring]"), pct = c.querySelector("[data-pct]");
+    const setLoad = (v) => { v = clamp(v, 0.12, 0.88); ring.style.top = `${v * 100}%`; pct.textContent = `${Math.round((1 - v) * 100 + 0)}%`; };
+    setLoad(0.14);
+    let drag = false;
+    if (!auto) {
+      dial.style.cursor = "ns-resize"; dial.style.touchAction = "none";
+      dial.addEventListener("pointerdown", (e) => { drag = true; dial.setPointerCapture(e.pointerId); mv(e); });
+      const mv = (e) => { if (!drag) return; const r = dial.getBoundingClientRect(); setLoad((e.clientY - r.top) / r.height); };
+      dial.addEventListener("pointermove", mv);
+      dial.addEventListener("pointerup", () => { drag = false; }); dial.addEventListener("pointercancel", () => { drag = false; });
+    }
+    let hot = false; c.addEventListener("pointerenter", () => { hot = true; }); c.addEventListener("pointerleave", () => { hot = false; });
+    let n = 0;
+    const stopVis = whileVisible(c, () => {
+      const t = setInterval(() => { if (hot || document.hidden) return; toggle(cards[n % 3]); n++; }, 1700);
+      return () => clearInterval(t);
+    });
+    return () => { f.stop(); stopVis(); };
+  }
+
+  const DEMOS = { foldCards, storyReactions, archiveSearch, mediaTray, wordWheel, armillary, theBox, boundingBox, segmentedNav, clouds, marketSelect, onboardingTour, apiKey, timelineScrub, glassSliders, podcastPlayer, composeBars, emptySessions, tradeTicket, motionLab };
 
   // ── 16 · Trade ticket: a three-step stock order (entry, risk, review) where only the open step is expanded ──
   function tradeTicket(stage, { auto }) {

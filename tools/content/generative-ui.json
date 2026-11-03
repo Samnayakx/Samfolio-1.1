@@ -1,0 +1,80 @@
+{
+  "sections": [
+    {
+      "before": "My hypothesis",
+      "h": "Three kinds, three different jobs",
+      "flag": "My opinion, a way to keep the three apart.",
+      "p": [
+        "<strong>Controlled.</strong> The product decides almost everything, and the model fills in content. This is the safest and the easiest to test, and it is the least surprising to the user. For a brand that cannot afford a mistake, this is where I would begin, even though it feels the least exciting. The trade-off is control against range. The more of the interface the product fixes in advance, the less surprising it is, and the less the model can do for a user with an unusual request.",
+        "<strong>Declarative and open-ended.</strong> Declarative sits in the middle: the model chooses and arranges approved pieces. Open-ended gives the model the most freedom and asks the most of your security model. The useful habit is to name which one a team means before the project starts, because the three need very different safeguards. I would not treat them as a ladder where everyone eventually climbs to the top. They are different tools, and a single product could reasonably use more than one in different places."
+      ]
+    },
+    {
+      "before": "My hypothesis",
+      "h": "A worked example from a commerce flow",
+      "flag": "Illustrative: my own sketch, not a sourced fact.",
+      "p": [
+        "<strong>Imagine a user asks to compare two jackets.</strong> With a catalog, the model might compose a comparison card, a size selector, and a short note. Each of those exists already, with brand styling, accessibility, and validation built in. The model only decides which to show and in what order. That is the whole appeal for a brand-heavy product. The expensive and risky parts, like validation and styling, were settled earlier by people, so the model's choices stay inside a space that was already checked.",
+        "<strong>Now imagine the request does not fit.</strong> Someone asks for something no component can express. A catalog system needs a fallback here, such as a plain text answer or a hand-off to a human-designed screen. I would design that fallback first, because it is the moment people will actually notice. It also tells you what to measure. The number of requests the catalog cannot express is a direct signal about what is missing, and it is far more useful than a general sense that the output feels fine."
+      ]
+    },
+    {
+      "h": "What I would do first on a real product",
+      "flag": "My opinion, a suggested starting order.",
+      "p": [
+        "<strong>Write the catalog on paper.</strong> Before any model is involved, I would list the components, what each one needs, and what a sensible default looks like. Since a generated form may arrive with partial information, defaults are not a nice extra. They are what keeps the half-filled version usable. Defaults deserve more attention than they usually get. They decide what the user sees when the model supplies only half of what the component needs, which will happen more often than the demo suggests.",
+        "<strong>Then decide what happens when nothing fits.</strong> I would agree a fallback with the team early and treat it as a real screen with real design work, not an error message added at the end. If that screen is good, the rest of the system can afford to be a bit imperfect. It also keeps expectations honest for the people around the project. Everyone can see the boundary of what the system will do, and a clear boundary is easier to improve than an open-ended promise."
+      ]
+    }
+  ],
+  "maps": [
+    {
+      "after": "What's true right now",
+      "caption": "Three kinds of generative UI and what each depends on.",
+      "center": "Generative UI",
+      "branches": [
+        {
+          "label": "Controlled",
+          "children": [
+            "product decides",
+            "easiest to test"
+          ]
+        },
+        {
+          "label": "Declarative",
+          "children": [
+            "agent sends data",
+            "host renders natively"
+          ]
+        },
+        {
+          "label": "Open-ended",
+          "children": [
+            "needs a sandbox",
+            "prototypes, power"
+          ]
+        },
+        {
+          "label": "Catalog",
+          "children": [
+            "approved components",
+            "something to test"
+          ]
+        },
+        {
+          "label": "Defaults",
+          "children": [
+            "partial info arrives",
+            "strong defaults"
+          ]
+        },
+        {
+          "label": "Fallbacks",
+          "children": [
+            "request doesn't fit"
+          ]
+        }
+      ]
+    }
+  ]
+}

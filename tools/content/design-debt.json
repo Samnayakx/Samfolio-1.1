@@ -1,0 +1,25 @@
+{
+  "sections": [
+    { "before": "My hypothesis", "h": "A worked example of a debt tag", "flag": "Illustrative: my own sketch, not a sourced fact.", "p": [
+      "<strong>Two screens, two tags.</strong> Say a model generates a settings screen entirely from existing system components. That one is tagged composed, carries no debt, and needs no follow-up. Say it generates a pricing card with a new corner radius and a one-off shadow. That one is tagged novel, so it gets an owner and an expiry date before it ships.",
+      "<strong>What the tag forces.</strong> At the expiry, someone has to decide: promote the pattern into the system, or delete it. Doing nothing is no longer an option, which is the whole point. Without the tag, the pricing card just stays, and a year later it is one of the parts that looks like it belongs to a different product."
+    ]},
+    { "before": "How I'd test it", "h": "What I would do first on a real product", "flag": "My opinion, based on the tradeoffs above.", "p": [
+      "<strong>Count before you govern.</strong> I would not begin with a process. I would begin with the audit, one product area, composed versus custom, because a number is harder to argue with than a worry. If the novel share is already high before any generation, the debt problem is older than the model, and I want to know that.",
+      "<strong>Keep the ceremony light.</strong> A debt budget that takes real effort per screen will be skipped, and a skipped budget is worse than none because it implies control. I would want the tag to be close to automatic, something a pipeline can mark, with humans only deciding on the novel ones."
+    ]},
+    { "h": "Where I would not trust this yet", "flag": "My opinion, based on the tradeoffs above.", "p": [
+      "<strong>Novel is not the same as bad.</strong> A new pattern can be exactly what a product needs. Treating every novel surface as debt risks punishing good ideas along with sloppy ones. I would read the tag as a prompt to decide, not a verdict, and I would not want it to make people afraid to try something.",
+      "<strong>Expiry dates can become noise.</strong> If owners routinely extend them, the budget turns into a ritual. I would watch how often the answer is simply more time. If that happens often, either the review cycle is wrong or the system is not able to absorb new patterns fast enough, and that second problem is the real one."
+    ]}
+  ],
+  "maps": [
+    { "after": "What's true right now", "caption": "What design debt is, its kinds, and how it shows up.", "center": "Design debt", "branches": [
+      { "label": "Definition", "children": ["like technical debt", "compounds over time"] },
+      { "label": "Kinds", "children": ["UX, operational", "visual, testing"] },
+      { "label": "Measure", "children": ["heuristic review", "severity and frequency"] },
+      { "label": "Quiet", "children": ["users adapt", "churn, support load"] },
+      { "label": "Exception", "children": ["A/B test winners"] }
+    ]}
+  ]
+}

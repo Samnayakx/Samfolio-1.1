@@ -1,0 +1,152 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8" /><title>CotonAI design system rejected variations</title>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@500;700&family=Inter:wght@400;500;600;700&display=block" rel="stylesheet" />
+<style>
+/* Rejected-design boards: lo-fi sketches on dotted paper, red pins on the wireframe, the reasons in a column on the right. 1080x608, rendered at 2x. */
+* { box-sizing: border-box; }
+body { margin: 0; background: #fff; color: #1a1a1a; -webkit-font-smoothing: antialiased; }
+.board { position: relative; width: 1080px; height: 608px; margin: 0 0 24px; overflow: hidden; background: #FAFAF7 radial-gradient(#D6D6CF 1px, transparent 1.2px) 0 0 / 18px 18px; font: 400 13px/1.3 "Architects Daughter", cursive; }
+.a { position: absolute; left: calc(var(--x) * 1px); top: calc(var(--y) * 1px); width: calc(var(--w) * 1px); height: calc(var(--h) * 1px); }
+.hd { position: absolute; left: 34px; top: 22px; display: flex; align-items: center; gap: 12px; }
+.stamp { padding: 3px 9px; border: 2px solid #E5484D; border-radius: 4px; color: #E5484D; font: 700 11px/1.2 "Inter"; letter-spacing: .08em; text-transform: uppercase; transform: rotate(-2deg); }
+.hd h2 { margin: 0; font: 700 30px/1 "Caveat", cursive; }
+/* wireframe pieces */
+.frame { background: #fff; border: 2px solid #1a1a1a; border-radius: 4px; }
+.box { border: 1.6px solid #1a1a1a; border-radius: 4px; background: #fff; }
+.soft { border-color: #9a9a94; }
+.ln { height: 7px; border: 1.4px solid #1a1a1a; border-radius: 4px; background: #fff; margin: 0 0 7px; }
+.ln.g { border-color: #b9b9b2; }
+.lbl { font-size: 12px; }
+.btn { display: inline-block; padding: 2px 9px; border: 1.6px solid #1a1a1a; border-radius: 4px; font-size: 11px; background: #fff; }
+.btn.pk { background: #3E6E7E; border-color: #3E6E7E; color: #fff; }
+.dot { width: 18px; height: 18px; border: 1.6px solid #1a1a1a; border-radius: 50%; display: inline-block; }
+.hatch { border: 1.4px solid #E2A27E; background: repeating-linear-gradient(-45deg, #FBE3D3 0 6px, #F6D2BC 6px 7px); }
+.hatch.g { border-color: #A7CF8E; background: repeating-linear-gradient(-45deg, #E6F4DA 0 6px, #D3EAC2 6px 7px); }
+.pct { font: 500 12px/1 "Inter"; letter-spacing: .1em; color: #8a6a55; text-align: center; }
+/* pins and reasons */
+.pin { position: absolute; left: calc(var(--x) * 1px); top: calc(var(--y) * 1px); width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 50%; background: #E5484D; color: #fff; font: 700 13px/26px "Inter"; text-align: center; box-shadow: 0 0 0 3px #fff; z-index: 3; }
+.ring { position: absolute; left: calc(var(--x) * 1px); top: calc(var(--y) * 1px); width: calc(var(--w) * 1px); height: calc(var(--h) * 1px); border: 2.2px solid #E5484D; border-radius: 40% 46% 42% 48%; transform: rotate(-1.5deg); z-index: 2; }
+.why { position: absolute; left: 726px; top: 82px; width: 322px; }
+.why h4 { margin: 0 0 12px; font: 600 11px/1.2 "Inter"; letter-spacing: .1em; text-transform: uppercase; color: #E5484D; }
+.r { display: grid; grid-template-columns: 26px 1fr; gap: 0 12px; margin: 0 0 16px; }
+.r .n { width: 26px; height: 26px; border-radius: 50%; background: #E5484D; color: #fff; font: 700 13px/26px "Inter"; text-align: center; }
+.r b { display: block; font: 700 22px/1.05 "Caveat", cursive; margin: 1px 0 3px; }
+.r p { margin: 0; font: 400 12.5px/1.45 "Inter"; color: #4a4a46; }
+.kept { position: absolute; left: 726px; bottom: 26px; width: 322px; padding: 11px 14px; border-left: 3px solid #1a1a1a; background: #fff; font: 400 12.5px/1.45 "Inter"; color: #2b2b28; }
+.kept b { font-weight: 600; }
+</style></head><body>
+<style>
+/* token rows and swatches for the design-system sketches */
+.row { position: absolute; left: calc(var(--x) * 1px); top: calc(var(--y) * 1px); width: calc(var(--w) * 1px); height: 32px; display: flex; align-items: center; gap: 10px; padding: 0 10px; border: 1.4px solid #b9b9b2; border-radius: 4px; background: #fff; font-size: 13px; }
+.row .v { margin-left: auto; font: 500 11.5px/1 "Inter"; color: #555; }
+.row.add { border-style: dashed; color: #888; }
+.sw { width: 14px; height: 14px; border-radius: 50%; border: 1.4px solid #1a1a1a; flex: none; }
+.hdr { position: absolute; left: 0; top: 0; right: 0; height: 36px; border-bottom: 1.6px solid #1a1a1a; display: flex; align-items: center; gap: 10px; padding: 0 12px; }
+.chip { position: absolute; left: calc(var(--x) * 1px); top: calc(var(--y) * 1px); width: 66px; height: 110px; border: 1.6px solid #1a1a1a; border-radius: 4px; }
+.cl { position: absolute; left: calc(var(--x) * 1px); top: calc(var(--y) * 1px); width: 66px; text-align: center; font-size: 13px; }
+.ring.sq { border-radius: 12px; transform: none; }
+.cl small { display: block; font: 500 10px/1.3 "Inter"; color: #666; }
+</style>
+</head><body>
+
+<!-- A: light and dark as two parallel files -->
+<div class="board" id="rejected-themes">
+  <div class="hd"><span class="stamp">Rejected · A</span><h2>Light and dark as two parallel files</h2></div>
+  <div class="frame a" style="--x:34;--y:78;--w:660;--h:500">
+    <div class="hdr"><span class="lbl">design-tokens /</span></div>
+    <div class="box a" style="--x:20;--y:56;--w:300;--h:280"><div class="hdr"><span class="lbl">light.json</span></div>
+      <div class="row" style="--x:10;--y:44;--w:276"><span class="sw" style="background:#F5F5F5"></span>light/page<span class="v">#F5F5F5</span></div>
+      <div class="row" style="--x:10;--y:88;--w:276"><span class="sw" style="background:#0C8CE9"></span>light/accent<span class="v">#0C8CE9</span></div>
+      <div class="row" style="--x:10;--y:132;--w:276"><span class="sw" style="background:#71CE82"></span>light/generate<span class="v">#71CE82</span></div>
+      <div class="row" style="--x:10;--y:176;--w:276"><span class="sw" style="background:#FF383C"></span>light/cancel<span class="v">#FF383C</span></div>
+      <div class="row add" style="--x:10;--y:228;--w:276">+ new token</div>
+    </div>
+    <div class="box a" style="--x:336;--y:56;--w:300;--h:280"><div class="hdr"><span class="lbl">dark.json</span></div>
+      <div class="row" style="--x:10;--y:44;--w:276"><span class="sw" style="background:#050505"></span>dark/page<span class="v">#050505</span></div>
+      <div class="row" style="--x:10;--y:88;--w:276"><span class="sw" style="background:#0C8CE9"></span>dark/accent<span class="v">#0C8CE9</span></div>
+      <div class="row" style="--x:10;--y:132;--w:276"><span class="sw" style="background:#71CE82"></span>dark/generate<span class="v">#71CE82</span></div>
+      <div class="row" style="--x:10;--y:176;--w:276"><span class="sw" style="background:#FF383C"></span>dark/cancel<span class="v">#FF383C</span></div>
+      <div class="row add" style="--x:10;--y:228;--w:276">+ new token</div>
+    </div>
+    <div class="box a" style="--x:20;--y:368;--w:616;--h:100;padding:14px 18px">
+      <div style="font-size:16px;margin:0 0 6px">Figma · import variables</div>
+      <div class="lbl">light.json → collection 1 &nbsp;·&nbsp; dark.json → collection 2 &nbsp;·&nbsp; modes: none</div>
+      <div class="lbl" style="color:#888;margin-top:6px">Switch theme: swap the library</div>
+    </div>
+  </div>
+  <div class="ring" style="--x:58;--y:212;--w:610;--h:52"></div>
+  <div class="pin" style="--x:62;--y:216">1</div>
+  <div class="ring" style="--x:48;--y:440;--w:630;--h:122"></div>
+  <div class="pin" style="--x:54;--y:448">2</div>
+  <div class="ring" style="--x:378;--y:356;--w:300;--h:48;border-style:dashed"></div>
+  <div class="pin" style="--x:680;--y:362">3</div>
+  <div class="why"><h4>Why it failed</h4>
+    <div class="r"><span class="n">1</span><div><b>The same blue, written twice</b><p>Light and dark were parallel values, not modes of one token, so nothing kept the copies in step.</p></div></div>
+    <div class="r"><span class="n">2</span><div><b>Two collections, no modes</b><p>Figma saw two libraries. Switching theme meant swapping files, not flipping a mode.</p></div></div>
+    <div class="r"><span class="n">3</span><div><b>Every new role, added twice</b><p>Each token needed a twin in the other file.</p></div></div>
+  </div>
+  <div class="kept"><b>What shipped:</b> one semantic collection with Light and Dark as modes. Only the page changes, gray/96 to gray/2.</div>
+</div>
+
+<!-- B: a numbered gray scale -->
+<div class="board" id="rejected-scale">
+  <div class="hd"><span class="stamp">Rejected · B</span><h2>A numbered 50–950 gray scale</h2></div>
+  <div class="frame a" style="--x:34;--y:78;--w:660;--h:500">
+    <div class="hdr"><span class="lbl">gray scale · step numbers</span></div>
+    <div class="chip" style="--x:20;--y:62;background:#F5F5F5"></div><div class="chip" style="--x:98;--y:62;background:#2A2A2A"></div><div class="chip" style="--x:176;--y:62;background:#292929"></div><div class="chip" style="--x:254;--y:62;background:#242424"></div>
+    <div class="chip" style="--x:332;--y:62;background:#232323"></div><div class="chip" style="--x:410;--y:62;background:#1D1D1D"></div><div class="chip" style="--x:488;--y:62;background:#1C1C1C"></div><div class="chip" style="--x:566;--y:62;background:#050505"></div>
+    <div class="cl" style="--x:20;--y:184">gray-50<small>#F5F5F5</small></div><div class="cl" style="--x:98;--y:184">gray-700<small>#2A2A2A</small></div><div class="cl" style="--x:176;--y:184">gray-750<small>#292929</small></div><div class="cl" style="--x:254;--y:184">gray-800<small>#242424</small></div>
+    <div class="cl" style="--x:332;--y:184">gray-850<small>#232323</small></div><div class="cl" style="--x:410;--y:184">gray-900<small>#1D1D1D</small></div><div class="cl" style="--x:488;--y:184">gray-925<small>#1C1C1C</small></div><div class="cl" style="--x:566;--y:184">gray-950<small>#050505</small></div>
+    <div class="box a" style="--x:20;--y:268;--w:616;--h:200;padding:14px 18px">
+      <div style="font-size:16px;margin:0 0 10px">In components</div>
+      <div class="lbl" style="margin:0 0 8px">&lt;Board className="bg-gray-50"&gt;</div>
+      <div class="lbl" style="margin:0 0 8px">&lt;Button className="bg-gray-800 hover:bg-gray-850"&gt;</div>
+      <div class="lbl" style="margin:0 0 8px">&lt;Panel className="bg-gray-900"&gt;</div>
+      <div class="lbl" style="color:#888">dark mode: rewrite every class ↑</div>
+    </div>
+  </div>
+  <div class="ring" style="--x:44;--y:256;--w:640;--h:56"></div>
+  <div class="pin" style="--x:48;--y:262">1</div>
+  <div class="ring" style="--x:280;--y:128;--w:164;--h:196;border-style:dashed"></div>
+  <div class="pin" style="--x:284;--y:134">2</div>
+  <div class="ring" style="--x:58;--y:384;--w:360;--h:104"></div>
+  <div class="pin" style="--x:62;--y:390">3</div>
+  <div class="why"><h4>Why it failed</h4>
+    <div class="r"><span class="n">1</span><div><b>Step numbers say order, not lightness</b><p>gray-800 tells you nothing about #242424. The CSS already spoke in HSL lightness.</p></div></div>
+    <div class="r"><span class="n">2</span><div><b>Near-duplicates claimed their own steps</b><p>#232323 and #242424 both meant "dark control", so the scale grew in-between steps.</p></div></div>
+    <div class="r"><span class="n">3</span><div><b>Still a class, not a name</b><p>Components picked steps directly, so a theme switch meant rewriting classes.</p></div></div>
+  </div>
+  <div class="kept"><b>What shipped:</b> grays named by lightness, gray/96 is #F5F5F5. Near-duplicates collapse into one primitive each.</div>
+</div>
+
+<!-- C: one flat collection -->
+<div class="board" id="rejected-flat">
+  <div class="hd"><span class="stamp">Rejected · C</span><h2>Everything as a variable, in one list</h2></div>
+  <div class="frame a" style="--x:34;--y:78;--w:660;--h:500">
+    <div class="hdr"><span class="lbl">tokens.json · one collection</span></div>
+    <div class="box a" style="--x:20;--y:56;--w:616;--h:420"><div class="hdr"><span class="lbl">variables</span><span style="flex:1"></span><span class="lbl" style="color:#888">mode: —</span></div>
+      <div class="row" style="--x:10;--y:44;--w:592"><span class="sw" style="background:#F5F5F5"></span>page<span class="v">#F5F5F5</span></div>
+      <div class="row" style="--x:10;--y:84;--w:592"><span class="sw" style="background:#0C8CE9"></span>accent<span class="v">#0C8CE9</span></div>
+      <div class="row" style="--x:10;--y:124;--w:592"><span class="sw" style="background:#232323"></span>gray-14<span class="v">#232323</span></div>
+      <div class="row" style="--x:10;--y:164;--w:592">radius-12<span class="v">12px</span></div>
+      <div class="row" style="--x:10;--y:204;--w:592">shadow/card<span class="v">x · y · blur · spread · color ?</span></div>
+      <div class="row" style="--x:10;--y:244;--w:592">shadow/float<span class="v">x · y · blur · spread · color ?</span></div>
+      <div class="row" style="--x:10;--y:284;--w:592"><span class="sw" style="background:#FF0000"></span>debug/red<span class="v">#FF0000</span></div>
+      <div class="row" style="--x:10;--y:324;--w:592"><span class="sw" style="background:#00FF00"></span>debug/green<span class="v">#00FF00</span></div>
+      <div class="row" style="--x:10;--y:364;--w:592"><span class="sw" style="background:#FFF44F"></span>debug/yellow<span class="v">#FFF44F</span></div>
+    </div>
+  </div>
+  <div class="ring sq" style="--x:62;--y:175;--w:610;--h:159"></div>
+  <div class="pin" style="--x:62;--y:178">1</div>
+  <div class="ring sq" style="--x:62;--y:337;--w:610;--h:79"></div>
+  <div class="pin" style="--x:62;--y:340">2</div>
+  <div class="ring sq" style="--x:62;--y:419;--w:610;--h:118"></div>
+  <div class="pin" style="--x:62;--y:422">3</div>
+  <div class="why"><h4>Why it failed</h4>
+    <div class="r"><span class="n">1</span><div><b>Facts and jobs in one list</b><p>Raw grays sat beside roles like page, with nowhere to put Light and Dark.</p></div></div>
+    <div class="r"><span class="n">2</span><div><b>A blur doesn't fit in a variable</b><p>A shadow is several values at once. A variable is the wrong container for it.</p></div></div>
+    <div class="r"><span class="n">3</span><div><b>Debug colors joined the palette</b><p>#FF0000 and #00FF00 got names, so they looked like choices.</p></div></div>
+  </div>
+  <div class="kept"><b>What shipped:</b> four collections: primitives, semantic aliases in two modes, dimensions, and effects as styles. Debug colors stay unnamed.</div>
+</div>
+
+</body></html>

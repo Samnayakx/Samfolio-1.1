@@ -165,7 +165,7 @@ body[data-page="case"] { --greyscale-200: 216 216 216; --greyscale-700: 133 133 
 .study__toc a[aria-current="true"] { color: var(--st-ac); }
 .study__toc a[aria-current="true"]::before { opacity: 1; }
 @media (hover: hover) and (pointer: fine) { .study__toc a:hover { color: var(--st-ink); } }
-.study__book { display: inline-flex; align-items: center; gap: 8px; font: 400 12px/1.25 var(--font-mono); text-transform: uppercase; letter-spacing: .04em; color: var(--st-ink); text-decoration: underline; text-underline-offset: 3px; }
+.study__book { display: inline-flex; align-items: center; gap: 8px; font: 400 12px/1.25 var(--font-mono); text-transform: uppercase; letter-spacing: .04em; color: var(--st-ink); }
 .study__book svg, .study__btn svg { width: 16px; height: 16px; transition: transform 200ms var(--st-ease); }
 @media (hover: hover) and (pointer: fine) { .study__book:hover svg, .study__btn:hover svg { transform: translateX(3px); } }
 
@@ -439,3 +439,14 @@ body[data-page="case"] { --greyscale-200: 216 216 216; --greyscale-700: 133 133 
 .study__findk { font: 500 11px/1.25 var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--st-ac); }
 .study__find p { font: 400 16px/1.5 var(--font-body); color: var(--st-ink); }
 @media (max-width: 767px) { .study__find { grid-template-columns: minmax(0, 1fr); } }
+
+/* Screenshots open full size: say so with the cursor and a small badge */
+.study .study__media button.shot__tile { position: relative; cursor: zoom-in; }
+.study .study__media button.shot__tile::after {
+  content: "Enlarge ⤢"; position: absolute; right: 12px; bottom: 12px; padding: 6px 10px; border-radius: 999px;
+  background: rgb(0 0 0 / .62); color: #fff; font: 400 11px/1 var(--font-mono, monospace); text-transform: uppercase; letter-spacing: .04em;
+  opacity: .0; transform: translateY(4px); transition: opacity .2s ease, transform .2s ease; pointer-events: none;
+}
+.study .study__media button.shot__tile:hover::after, .study .study__media button.shot__tile:focus-visible::after { opacity: 1; transform: none; }
+@media (hover: none) { .study .study__media button.shot__tile::after { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .study .study__media button.shot__tile::after { transition: none; } }

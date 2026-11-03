@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Name Things by What They Do: Why Semantic Tokens Are Becoming AI Infrastructure | Sambit Nayak</title>
+  <meta name="description" content="A product designer's notes on design tokens, the new W3C standard, and who is really reading your design system now." />
+  <link rel="canonical" href="https://www.sambitnayak.com/writing/semantic-tokens" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Sambit Nayak" />
+  <meta property="og:title" content="Name Things by What They Do: Why Semantic Tokens Are Becoming AI Infrastructure | Sambit Nayak" />
+  <meta property="og:description" content="A product designer's notes on design tokens, the new W3C standard, and who is really reading your design system now." />
+  <meta property="og:url" content="https://www.sambitnayak.com/writing/semantic-tokens" />
+  <meta property="og:image" content="https://www.sambitnayak.com/assets/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@sambit_nayak_" />
+  <meta name="twitter:title" content="Name Things by What They Do: Why Semantic Tokens Are Becoming AI Infrastructure | Sambit Nayak" />
+  <meta name="twitter:description" content="A product designer's notes on design tokens, the new W3C standard, and who is really reading your design system now." />
+  <meta name="twitter:image" content="https://www.sambitnayak.com/assets/og-image.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;700&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;700&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" /></noscript>
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+  <link rel="stylesheet" href="/css/site.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.sambitnayak.com/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://www.sambitnayak.com/writing"},{"@type":"ListItem","position":3,"name":"Name Things by What They Do: Why Semantic Tokens Are Becoming AI Infrastructure","item":"https://www.sambitnayak.com/writing/semantic-tokens"}]}</script>
+</head>
+<body data-page="essay">
+  <div class="loader" id="loader" aria-hidden="true"><div class="loader__bg"></div><svg></svg></div>
+  <noscript><style>.loader{display:none}</style></noscript>
+  <script src="/js/loader.js"></script>
+  <header class="header">
+    <div class="navgroup" data-nav="work">
+      <nav class="seg" aria-label="Primary">
+        <a class="seg__item seg__brand" href="/" aria-label="Sambit Nayak, home"><svg class="logo" aria-hidden="true"></svg></a>
+        <button class="seg__item only-desktop" type="button" id="work-tab" aria-expanded="false" aria-controls="work-panel">Work <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <a class="seg__item only-desktop" href="/about">About</a>
+        <a class="seg__item only-desktop" href="/writing" aria-current="true">Writing</a>
+        <a class="seg__item only-desktop" href="/playground">Playground</a>
+        <button class="seg__item only-mobile" type="button" id="menu-tab" aria-expanded="false" aria-controls="work-panel" aria-label="Menu">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <rect x="2" y="2" width="2" height="2"/><rect x="7" y="2" width="2" height="2"/><rect x="12" y="2" width="2" height="2"/>
+            <rect x="2" y="7" width="2" height="2"/><rect x="7" y="7" width="2" height="2"/><rect x="12" y="7" width="2" height="2"/>
+            <rect x="2" y="12" width="2" height="2"/><rect x="7" y="12" width="2" height="2"/><rect x="12" y="12" width="2" height="2"/>
+          </svg>
+        </button>
+      </nav>
+      <div class="panel" id="work-panel">
+        <div class="pcard only-mobile pcard--plain">
+          <div class="pcard__main">
+            <p class="pcard__label">Navigate</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/#work">Work</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/writing">Writing</a></li>
+              <li><a href="/playground">Playground</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pcard is-active">
+          <div class="pcard__main">
+            <p class="pcard__label">Case studies ( <span data-work-count>04</span> )</p>
+            <ul class="pcard__list" role="list" id="nav-projects"></ul>
+          </div>
+          <div class="pcard__thumb" id="nav-thumb" aria-hidden="true"></div>
+        </div>
+        <div class="pcard pcard--plain pcard--more">
+          <div class="pcard__main">
+            <p class="pcard__label">More</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/playground">Playground</a></li>
+              <li><a href="/writing">Writing</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="navgroup" data-nav="contact">
+      <div class="seg">
+        <span class="seg__item seg__time" title="Local time in San Francisco, California">San Francisco <time id="nav-clock" data-clock>--:--</time></span>
+        <button class="seg__item" type="button" id="contact-tab" aria-expanded="false" aria-controls="contact-panel">Contact <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <button class="icon-btn" type="button" id="theme" aria-label="Switch to dark mode">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+      <div class="panel panel--right" id="contact-panel"></div>
+    </div>
+  </header>
+
+  <main id="top">
+    <article class="sheet sheet--first">
+      <div class="work__inner">
+        <div class="rd" data-reader>
+          <aside class="rd__side">
+            <a class="rd__back" href="/writing"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" aria-hidden="true"><path d="M7 4L3 8l4 4M3 8h9a1 1 0 0 1 1 1v2" stroke="currentColor" stroke-width="1.4"/></svg>Writing</a>
+            <nav class="rd__toc" aria-label="On this page">
+              <p class="rd__doc">On this page</p>
+              <a href="#why-this-is-on-my-mind">Why this is on my mind</a>
+              <a href="#what-s-true-right-now">What's true right now</a>
+              <a href="#the-three-layers-and-who-should-see-which">The three layers, and who should see which</a>
+              <a href="#a-worked-example-of-naming-by-purpose">A worked example of naming by purpose</a>
+              <a href="#my-hypothesis">My hypothesis</a>
+              <a href="#what-i-would-do-first-on-a-real-product">What I would do first on a real product</a>
+              <a href="#how-i-d-test-it">How I'd test it</a>
+              <a href="#what-would-change-my-mind">What would change my mind</a>
+              <a href="#where-i-would-not-trust-this-yet">Where I would not trust this yet</a>
+              <a href="#sources-title">References</a>
+            </nav>
+            
+          </aside>
+          <div class="rd__main essay__body">
+            <header class="rd__head">
+              <div class="rd__top"><h1 class="rd__title" id="essay-title">Name Things by What They Do: Why Semantic Tokens Are Becoming AI Infrastructure</h1><span class="rd__date">Nov 2026</span></div>
+              <p class="rd__meta">5 min read · Design systems · Craft</p>
+              <p class="rd__lede">A product designer's notes on design tokens, the new W3C standard, and who is really reading your design system now.</p>
+            </header>
+
+            <figure class="essay__map">
+              <img src="/assets/images/writing/craft/semantic-tokens.webp" alt="Hand-drawn mindmap of semantic tokens" width="1500" height="1060" loading="eager">
+            </figure>
+
+            <h2 id="why-this-is-on-my-mind">Why this is on my mind</h2>
+            <p>I'm a product designer building an AI workflow layer for fashion and creative commerce. Every time a model generates something for one of our flows, I find out how good (or bad) our naming is. A color called <code>red-500</code> tells a model nothing about when to use it. A color called <code>color-text-danger</code> tells it exactly when.</p>
+            <h2 id="what-s-true-right-now">What's true right now</h2>
+            <p><strong>The format is now a real standard.</strong> In October 2025 the Design Tokens Community Group, a W3C community group, announced the first stable version of the Design Tokens Specification (2025.10). It was written by more than 20 editors and authors and is backed by reference implementations in tools such as Style Dictionary, Tokens Studio, and Terrazzo. The announcement highlights support for theming, multi-file setups, and modern color, including Display P3 and OKLCH, as covered in the group's mailing-list announcement.</p>
+            <p><strong>The standard is deliberately about meaning, not syntax.</strong> The group's FAQ says JSON is just the syntax and the spec defines the semantics, so tools can exchange tokens reliably. That is the part I care about: a shared meaning layer between design tools and code.</p>
+            <p><strong>The reader of your design system is changing.</strong> Builder.io argues that the primary consumer of design systems is about to be an AI agent, which means documentation has to become structured and machine-legible instead of friendly prose. A separate overview of generative UI makes a similar point: adaptive, component-based design systems are the prerequisite because a model can only compose well from parts that were designed to be recombined.</p>
+            <p>Put those together and tokens stop being a theming convenience. They are the vocabulary a model uses to talk about your product.</p>
+            <h2 id="the-three-layers-and-who-should-see-which">The three layers, and who should see which</h2>
+            <p>The usual structure is primitive tokens (raw values like a specific blue), semantic tokens (purpose, like <code>action-primary</code>), and component tokens (like <code>button-bg</code>). Humans move between all three. A model probably shouldn't.</p>
+            <figure class="mm" data-x><svg viewBox="0 0 640 399" role="img" aria-label="Tokens mindmap"><circle class="mm__orb" cx="320" cy="199.5" r="88"/><path class="mm__w" d="M258 199.5C187.6 199.5 200.4 105.5 130 105.5"/><circle class="mm__end" cx="130" cy="105.5" r="4"/><path class="mm__w" d="M258 199.5C177.7 199.5 192.3 229.5 112 229.5"/><circle class="mm__end" cx="112" cy="229.5" r="4"/><path class="mm__w" d="M382 199.5C413.9 199.5 408.1 57 440 57"/><circle class="mm__end" cx="440" cy="57" r="4"/><path class="mm__w" d="M382 199.5C413.9 199.5 408.1 181 440 181"/><circle class="mm__end" cx="440" cy="181" r="4"/><path class="mm__w" d="M382 199.5C413.9 199.5 408.1 278 440 278"/><circle class="mm__end" cx="440" cy="278" r="4"/><rect class="mm__b" x="24" y="88.5" width="106" height="34" rx="17"/><text class="mm__bt" x="77" y="111" text-anchor="middle">Semantic</text><path class="mm__g" d="M44 126.5V169.5"/><path class="mm__g" d="M44 141.5h9"/><text class="mm__t" x="60" y="146.5">purpose</text><path class="mm__g" d="M44 168.5h9"/><text class="mm__t" x="60" y="173.5">what models see</text><rect class="mm__b" x="24" y="212.5" width="88" height="34" rx="17"/><text class="mm__bt" x="68" y="235" text-anchor="middle">Naming</text><path class="mm__g" d="M44 250.5V293.5"/><path class="mm__g" d="M44 265.5h9"/><text class="mm__t" x="60" y="270.5">safety feature</text><path class="mm__g" d="M44 292.5h9"/><text class="mm__t" x="60" y="297.5">intent notes</text><rect class="mm__b" x="440" y="40" width="115" height="34" rx="17"/><text class="mm__bt" x="497.5" y="62.5" text-anchor="middle">Primitive</text><path class="mm__g" d="M460 78V121"/><path class="mm__g" d="M460 93h9"/><text class="mm__t" x="476" y="98">raw values</text><path class="mm__g" d="M460 120h9"/><text class="mm__t" x="476" y="125">keep private</text><rect class="mm__b" x="440" y="164" width="115" height="34" rx="17"/><text class="mm__bt" x="497.5" y="186.5" text-anchor="middle">Component</text><path class="mm__g" d="M460 202V218"/><path class="mm__g" d="M460 217h9"/><text class="mm__t" x="476" y="222">button-bg</text><rect class="mm__b" x="440" y="261" width="86" height="34" rx="17"/><text class="mm__bt" x="483" y="283.5" text-anchor="middle">Test</text><path class="mm__g" d="M460 299V342"/><path class="mm__g" d="M460 314h9"/><text class="mm__t" x="476" y="319">20 screens twice</text><path class="mm__g" d="M460 341h9"/><text class="mm__t" x="476" y="346">count off-system</text><rect class="mm__c" x="258" y="176.5" width="124" height="46" rx="23"/><text class="mm__ct" x="320" y="205.5" text-anchor="middle">Tokens</text></svg><figcaption>Token layers and the one a model should be allowed to see.</figcaption></figure>
+            <figure class="demo" data-demo="tokens" data-url="app.local/delete-dialog"><figcaption>The same dialog from two vocabularies. Click a token to see what its name tells a model.</figcaption></figure>
+            <h2 id="a-worked-example-of-naming-by-purpose" data-x>A worked example of naming by purpose</h2>
+            <p class="essay__flag" data-x>Illustrative: my own sketch, not a sourced fact.</p>
+            <p data-x><strong>Same screen, two vocabularies.</strong> Suppose a model is asked to add a delete confirmation. Given <code>red-500</code> and <code>gray-100</code>, it has to guess what each is for, and a guess that looks fine will pass review. Given <code>text-danger</code> and <code>surface-raised</code>, the choice is mostly made by the names. The model is selecting a purpose, not inventing a style.</p>
+            <p data-x><strong>The error changes shape.</strong> With primitives, a wrong pick is a wrong color, which is hard to spot and hard to grep for. With semantic names, a wrong pick is a wrong purpose, such as using a danger token for a warning. That is still a mistake, but it is the kind a reviewer can read in the code and reason about in one pass.</p>
+            <h2 id="my-hypothesis">My hypothesis</h2>
+            <p class="essay__flag">This section is my opinion, not a sourced fact.</p>
+            <p><strong>Generative systems should only ever see the semantic layer. Primitives should be private.</strong></p>
+            <p>My reasoning: if a model can reach <code>blue-500</code> directly, sooner or later it will use it somewhere the semantic layer would have forbidden, because nothing in the name says not to. If it can only reach <code>action-primary</code>, <code>surface-raised</code>, and <code>text-danger</code>, the worst thing it can do is pick the wrong purpose, which is a far easier error to catch and a far smaller blast radius than an off-brand color. Naming becomes a safety feature, not just a convention.</p>
+            <p>I also expect semantic tokens to grow short intent notes (when to use, when not to) that are written for models as much as for humans. That is a bet, not something the spec requires.</p>
+            <h2 id="what-i-would-do-first-on-a-real-product" data-x>What I would do first on a real product</h2>
+            <p class="essay__flag" data-x>My opinion, based on the tradeoffs above.</p>
+            <p data-x><strong>Audit the names before the values.</strong> I would list every token a generator could reach and ask of each one whether its name says when to use it. Anything named after how it looks, not what it does, is a candidate for renaming or hiding. This costs an afternoon and needs no new tooling.</p>
+            <p data-x><strong>Hide primitives last, not first.</strong> Removing access in one step could break existing flows that quietly depend on raw values. I would first make the semantic layer complete enough that nothing needs the primitives, then close the door. If a flow still reaches for one, that gap in the vocabulary is useful information about what is missing.</p>
+            <h2 id="how-i-d-test-it">How I'd test it</h2>
+            <p>Generate the same 20 screens twice, once with the full token set exposed and once with only semantic tokens. Count off-system values (colors, spacings, radii) in each batch. If I'm right, the semantic-only batch has near zero.</p>
+            <h2 id="what-would-change-my-mind">What would change my mind</h2>
+            <p>If models become reliable enough at inferring intent from raw values and context, hiding primitives adds friction without adding safety. Today I don't see that.</p>
+
+            <h2 id="where-i-would-not-trust-this-yet" data-x>Where I would not trust this yet</h2>
+            <p class="essay__flag" data-x>My opinion, based on the tradeoffs above.</p>
+            <p data-x><strong>A thin semantic layer pushes people back.</strong> If the vocabulary is missing a purpose someone really needs, they will find a way around it, and the model will too. Hiding primitives only works if the semantic set is generous enough to cover real work. I would not claim the safety benefit without checking that.</p>
+            <p data-x><strong>Names can drift.</strong> A token called <code>action-primary</code> that is used for three unrelated things has the same problem as <code>blue-500</code>, just better dressed. I would treat the intent notes as part of the token, reviewed when the token changes, not as optional documentation.</p>
+            <section class="essay__sources" aria-labelledby="sources-title">
+              <h2 id="sources-title">References</h2>
+              <ol>
+                <li id="source-1">W3C Design Tokens Community Group, <a href="https://www.w3.org/community/design-tokens/2025/10/28/design-tokens-specification-reaches-first-stable-version/" target="_blank" rel="noopener">Design Tokens specification reaches first stable version</a></li>
+                <li id="source-2">Design Tokens Community Group mailing list, <a href="https://lists.w3.org/Archives/Public/public-design-tokens/2025Oct/0003.html" target="_blank" rel="noopener">announcement of the stable version</a></li>
+                <li id="source-3">designtokens.org, <a href="https://www.designtokens.org/faq/" target="_blank" rel="noopener">FAQ</a></li>
+                <li id="source-4">Builder.io, <a href="https://www.builder.io/blog/designing-generative-ui-in-an-agent-native-world" target="_blank" rel="noopener">Designing Generative UI in an Agent-Native World</a></li>
+                <li id="source-5">Lazarev.agency, <a href="https://www.lazarev.agency/articles/generative-ui-design" target="_blank" rel="noopener">6 generative UI design patterns behind real products</a></li>
+              </ol>
+            </section>
+
+            <div class="essay__foot">
+              <nav class="cs__next" aria-label="More writing">
+                <a href="/writing"><small>Index</small><strong>All writing</strong></a>
+                <a href="/writing/oklch"><small>Next</small><strong>OKLCH</strong></a>
+              </nav>
+            </div>
+          
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer data-footer></footer>
+  <script src="/js/analytics.js"></script>
+  <script src="/js/site.js"></script>
+  <script src="/js/writing-demos.js" defer></script>
+</body>
+</html>

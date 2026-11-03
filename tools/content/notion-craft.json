@@ -1,0 +1,107 @@
+{
+  "sections": [
+    {
+      "before": "My hypothesis",
+      "h": "What a ranking exercise might look like",
+      "flag": "Illustrative: my own sketch, not a sourced fact.",
+      "p": [
+        "<strong>Twelve versions, one screen.</strong> Picture a settings screen generated twelve ways. Some are denser, some friendlier, some hide the main action. The exercise is not to pick the prettiest. It is to find the one closest to the golden path and say what each of the others gives up to get there. If the answers are muddled, that is information too: it means the options differ less than they look, or the goal was never clear.",
+        "<strong>The reason is the answer.</strong> A bare ranking tells me little. \"This one, because the main flow takes one fewer step\" tells me the person understands the product. That sentence is also the part a teammate can disagree with, which is what makes taste something a team can work on. That makes the reasoning the skill worth practising, and it is also what could be taught to someone newer to the team."
+      ]
+    },
+    {
+      "before": "How I'd test it",
+      "h": "Where I would not trust this framing",
+      "flag": "My opinion, based on the tradeoffs above.",
+      "p": [
+        "<strong>Selection can hide a narrow search.</strong> If all two hundred variants come from the same prompt, choosing among them is choosing within one idea. Exploration by hand, copying a UI many ways, probably pushes you into odd corners. I would not assume cheap generation gives the same range. A fix might be to seed the batch on purpose with a few odd directions, so the selecting step has real choices to make.",
+        "<strong>Making still teaches.</strong> Some of what a designer learns comes from building the thing. If selection becomes the whole job, I worry the judgment gets thinner over time. I do not know the answer. It is the first thing I would watch in a team that leans on generation. The risk is not that selection is bad, but that it quietly replaces the slower practice that built the judgment in the first place."
+      ]
+    },
+    {
+      "h": "How I would train the selecting skill",
+      "flag": "Illustrative: my own sketch, not a sourced fact.",
+      "p": [
+        "<strong>Rank, then compare.</strong> I would have designers rank a batch alone, then compare rankings in a group and talk only about the reasons. The goal is a shared vocabulary for why one option wins, so the criteria become visible instead of living in one senior person's head. Over time the group would start to predict each other's picks, and the places where they cannot are where the standard is still unclear.",
+        "<strong>Keep the golden path as the anchor.</strong> Because Zhao pushes the team to strip things down, I would use that as the first test for every option: does it make the main flow clearer or does it decorate? It is a plain question, and it can be asked of two hundred options as easily as of two. It keeps the conversation about the user and not about taste in the abstract, which is where such debates tend to drift."
+      ]
+    }
+  ],
+  "maps": [
+    {
+      "after": "What's true right now",
+      "caption": "What is documented about craft at Notion.",
+      "center": "Notion craft",
+      "branches": [
+        {
+          "label": "Culture",
+          "children": [
+            "craft in one word",
+            "workshops, handovers"
+          ]
+        },
+        {
+          "label": "Founder",
+          "children": [
+            "strip things down",
+            "the golden path"
+          ]
+        },
+        {
+          "label": "Process",
+          "children": [
+            "explore over polish",
+            "copy a UI many ways"
+          ]
+        },
+        {
+          "label": "Hiring",
+          "children": [
+            "creative toolmakers",
+            "designers who code"
+          ]
+        },
+        {
+          "label": "Hold loosely",
+          "children": [
+            "third-party interview guide"
+          ]
+        }
+      ]
+    },
+    {
+      "after": "What a ranking exercise might look like",
+      "caption": "My bet: craft moves from making to selecting.",
+      "center": "Selecting",
+      "branches": [
+        {
+          "label": "Variations",
+          "children": [
+            "nearly free",
+            "two hundred, not twenty"
+          ]
+        },
+        {
+          "label": "Scarce skill",
+          "children": [
+            "recognize the right one",
+            "say why"
+          ]
+        },
+        {
+          "label": "Interview",
+          "children": [
+            "rank and defend"
+          ]
+        },
+        {
+          "label": "Risk",
+          "children": [
+            "narrow search",
+            "thinner judgment"
+          ]
+        }
+      ]
+    }
+  ]
+}

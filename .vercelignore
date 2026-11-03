@@ -1,8 +1,16 @@
-docs/DESIGN.md
-docs/design.md
-.DS_Store
-.git
-docs/PAYMAN-DESIGN.md
-docs/payman-design.md
-docs/CODEX-IMAGE-PROMPTS.md
-tools/
+# not served by the site: build tooling, tests, the React demo source, and heavy assets nothing references
+node_modules
+stageshow-app
+tools
+tests
+test-results
+docs
+.agents
+.claude
+assets/images/payman/footer-coral.png
+assets/images/payman/botanical-halftone.png
+assets/images/playground/editorial-tree-v1.jpg
+assets/images/playground/veyra-poster.jpg
+assets/images/playground/veyra-hero.jpg
+assets/images/trailhead/trailhead-user-journey.png
+assets/images/arcade/video-arcade-promo.mp4

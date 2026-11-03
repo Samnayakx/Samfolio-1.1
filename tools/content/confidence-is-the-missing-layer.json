@@ -1,0 +1,26 @@
+{
+  "sections": [
+    { "before": "What deployed systems reveal", "h": "A worked example of the four states", "flag": "Illustrative: my own sketch, not a sourced fact.", "p": [
+      "<strong>One agent, four moments.</strong> Imagine an agent helping with a small product team's inbox and files. Renaming a local draft after a clear instruction is Act: strong evidence, trivial impact, easy undo, so it happens and leaves a line in the activity record. Choosing between two plausible reply drafts is Propose: it recommends one and names the signal that decided it, instead of dropping both on the user.",
+      "<strong>The last two are different in kind.</strong> If the agent cannot tell which of two contacts a message is meant for, that is Ask, and one targeted question is enough. If the next step is sending a message to a customer on inferred consent, that is Stop, whatever the model feels about it. The same agent lands in all four states in one afternoon, which is the point of having a layer instead of a setting."
+    ]},
+    { "before": "Measure the policy, not the prompt", "h": "What I would do first on a real product", "flag": "My opinion, based on the tradeoffs above.", "p": [
+      "<strong>List the actions before tuning anything.</strong> I would start by writing down every action the agent can take and sorting each one by impact and reversibility, before touching a model or a prompt. That list is the product decision. Most teams I can imagine skip it and go straight to thresholds, which means the thresholds have nothing to be about.",
+      "<strong>Start strict, then loosen with evidence.</strong> I would ship with most actions in Propose or Ask and only move an action class to Act once its record shows it deserves it. Loosening is a visible, reviewable change. Tightening after a bad incident is the expensive way to learn the same lesson, and it tends to happen in public."
+    ]},
+    { "h": "Where I would not trust this yet", "flag": "My opinion, based on the tradeoffs above.", "p": [
+      "<strong>Reversibility is easy to overrate.</strong> An action can be technically undoable and still cause harm in the gap before anyone notices. I would not let the word undo carry too much weight, and I would want recovery cost, not just a yes or no, to feed the decision. Whether a good enough number for that exists is an open question for me.",
+      "<strong>Four states can become theatre.</strong> If Propose turns into a menu nobody reads, we have rebuilt the original loop with better labels. The test I would apply is whether people actually change what they do because of the state shown. If they do not, the layer is decoration and I would say so."
+    ]}
+  ],
+  "maps": [
+    { "after": "A four-state confidence layer", "caption": "The confidence layer: signals in, interaction mode out.", "center": "Confidence", "branches": [
+      { "label": "Evidence", "children": ["grounded in sources", "not verbal confidence"] },
+      { "label": "Ambiguity", "children": ["is intent specific"] },
+      { "label": "Impact", "children": ["cost of being wrong"] },
+      { "label": "Reversible", "children": ["inspect and undo"] },
+      { "label": "Modes", "children": ["act, propose, ask", "stop is a boundary"] },
+      { "label": "Measure", "children": ["calibration, coverage", "critical miss rate"] }
+    ]}
+  ]
+}

@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Design the Worst of Ten: Designing for Non-Deterministic Systems | Sambit Nayak</title>
+  <meta name="description" content="What the AI guidebooks say, what changes when the same input gives different outputs, and a review habit I want to adopt." />
+  <link rel="canonical" href="https://www.sambitnayak.com/writing/non-deterministic-systems" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Sambit Nayak" />
+  <meta property="og:title" content="Design the Worst of Ten: Designing for Non-Deterministic Systems | Sambit Nayak" />
+  <meta property="og:description" content="What the AI guidebooks say, what changes when the same input gives different outputs, and a review habit I want to adopt." />
+  <meta property="og:url" content="https://www.sambitnayak.com/writing/non-deterministic-systems" />
+  <meta property="og:image" content="https://www.sambitnayak.com/assets/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@sambit_nayak_" />
+  <meta name="twitter:title" content="Design the Worst of Ten: Designing for Non-Deterministic Systems | Sambit Nayak" />
+  <meta name="twitter:description" content="What the AI guidebooks say, what changes when the same input gives different outputs, and a review habit I want to adopt." />
+  <meta name="twitter:image" content="https://www.sambitnayak.com/assets/og-image.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;700&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;700&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" /></noscript>
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+  <link rel="stylesheet" href="/css/site.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.sambitnayak.com/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://www.sambitnayak.com/writing"},{"@type":"ListItem","position":3,"name":"Design the Worst of Ten: Designing for Non-Deterministic Systems","item":"https://www.sambitnayak.com/writing/non-deterministic-systems"}]}</script>
+</head>
+<body data-page="essay">
+  <div class="loader" id="loader" aria-hidden="true"><div class="loader__bg"></div><svg></svg></div>
+  <noscript><style>.loader{display:none}</style></noscript>
+  <script src="/js/loader.js"></script>
+  <header class="header">
+    <div class="navgroup" data-nav="work">
+      <nav class="seg" aria-label="Primary">
+        <a class="seg__item seg__brand" href="/" aria-label="Sambit Nayak, home"><svg class="logo" aria-hidden="true"></svg></a>
+        <button class="seg__item only-desktop" type="button" id="work-tab" aria-expanded="false" aria-controls="work-panel">Work <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <a class="seg__item only-desktop" href="/about">About</a>
+        <a class="seg__item only-desktop" href="/writing" aria-current="true">Writing</a>
+        <a class="seg__item only-desktop" href="/playground">Playground</a>
+        <button class="seg__item only-mobile" type="button" id="menu-tab" aria-expanded="false" aria-controls="work-panel" aria-label="Menu">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <rect x="2" y="2" width="2" height="2"/><rect x="7" y="2" width="2" height="2"/><rect x="12" y="2" width="2" height="2"/>
+            <rect x="2" y="7" width="2" height="2"/><rect x="7" y="7" width="2" height="2"/><rect x="12" y="7" width="2" height="2"/>
+            <rect x="2" y="12" width="2" height="2"/><rect x="7" y="12" width="2" height="2"/><rect x="12" y="12" width="2" height="2"/>
+          </svg>
+        </button>
+      </nav>
+      <div class="panel" id="work-panel">
+        <div class="pcard only-mobile pcard--plain">
+          <div class="pcard__main">
+            <p class="pcard__label">Navigate</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/#work">Work</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/writing">Writing</a></li>
+              <li><a href="/playground">Playground</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pcard is-active">
+          <div class="pcard__main">
+            <p class="pcard__label">Case studies ( <span data-work-count>04</span> )</p>
+            <ul class="pcard__list" role="list" id="nav-projects"></ul>
+          </div>
+          <div class="pcard__thumb" id="nav-thumb" aria-hidden="true"></div>
+        </div>
+        <div class="pcard pcard--plain pcard--more">
+          <div class="pcard__main">
+            <p class="pcard__label">More</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/playground">Playground</a></li>
+              <li><a href="/writing">Writing</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="navgroup" data-nav="contact">
+      <div class="seg">
+        <span class="seg__item seg__time" title="Local time in San Francisco, California">San Francisco <time id="nav-clock" data-clock>--:--</time></span>
+        <button class="seg__item" type="button" id="contact-tab" aria-expanded="false" aria-controls="contact-panel">Contact <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <button class="icon-btn" type="button" id="theme" aria-label="Switch to dark mode">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+      <div class="panel panel--right" id="contact-panel"></div>
+    </div>
+  </header>
+
+  <main id="top">
+    <article class="sheet sheet--first">
+      <div class="work__inner">
+        <div class="rd" data-reader>
+          <aside class="rd__side">
+            <a class="rd__back" href="/writing"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" aria-hidden="true"><path d="M7 4L3 8l4 4M3 8h9a1 1 0 0 1 1 1v2" stroke="currentColor" stroke-width="1.4"/></svg>Writing</a>
+            <nav class="rd__toc" aria-label="On this page">
+              <p class="rd__doc">On this page</p>
+              <a href="#why-this-is-on-my-mind">Why this is on my mind</a>
+              <a href="#what-s-true-right-now">What's true right now</a>
+              <a href="#what-changes">What changes</a>
+              <a href="#a-worked-example-of-reviewing-a-distribution">A worked example of reviewing a distribution</a>
+              <a href="#the-trade-off-underneath">The trade-off underneath</a>
+              <a href="#my-hypothesis">My hypothesis</a>
+              <a href="#how-i-d-test-it">How I'd test it</a>
+              <a href="#what-would-change-my-mind">What would change my mind</a>
+              <a href="#what-i-would-do-first-on-a-real-product">What I would do first on a real product</a>
+              <a href="#sources-title">References</a>
+            </nav>
+            
+          </aside>
+          <div class="rd__main essay__body">
+            <header class="rd__head">
+              <div class="rd__top"><h1 class="rd__title" id="essay-title">Design the Worst of Ten: Designing for Non-Deterministic Systems</h1><span class="rd__date">Nov 2026</span></div>
+              <p class="rd__meta">6 min read · AI interfaces · Craft</p>
+              <p class="rd__lede">What the AI guidebooks say, what changes when the same input gives different outputs, and a review habit I want to adopt.</p>
+            </header>
+
+            <figure class="essay__map">
+              <img src="/assets/images/writing/craft/non-deterministic-systems.webp" alt="Hand-drawn mindmap of designing for non-deterministic systems" width="1500" height="1060" loading="eager">
+            </figure>
+
+            <h2 id="why-this-is-on-my-mind">Why this is on my mind</h2>
+            <p>I'm building an AI workflow product for fashion and creative commerce. The first time I ran the same request five times and got five different results, I realized my design reviews were broken. I'd been reviewing a single output, as if it were a mockup.</p>
+            <h2 id="what-s-true-right-now">What's true right now</h2>
+            <p><strong>Serious guidance exists.</strong> Microsoft Research published 18 guidelines for human-AI interaction in 2019, later turned into the HAX Toolkit with a workbook, design patterns, and a playbook for generating failure scenarios. Google's People + AI Guidebook, from the PAIR team, is organized around six chapters: user needs and defining success, data collection and evaluation, mental models, explainability and trust, feedback and control, and errors and graceful failure.</p>
+            <p><strong>The unit of design is shifting.</strong> An overview of generative UI says the unit of design moves from the screen to the rule set: designers define components, data, and constraints, and the model decides what to render per request. A studio write-up makes the same point from the failure side: fallback design is where products fail, because teams ship generation before they build what happens when the output can't be acted on.</p>
+            <p><strong>Tail behavior matters more than the average.</strong> In writing about latency, one engineer advises tracking p50, p95, and p99 separately and says to alert on p95 and design for p99, because the worst case is the user's impression. The same logic applies to output quality.</p>
+            <h2 id="what-changes">What changes</h2>
+            <p>A deterministic feature has one behavior, so you design that behavior. A non-deterministic feature has a distribution of behaviors, so you design the shape of the distribution: the median, and especially the bad tail. Regenerate buttons, side-by-side variations, undo, and version history aren't extras. They're how users sample from the distribution and pick a point they like.</p>
+            <figure class="mm" data-x><svg viewBox="0 0 640 426" role="img" aria-label="Distribution mindmap"><circle class="mm__orb" cx="320" cy="213" r="108"/><path class="mm__w" d="M238 213C178.6 213 189.4 70.5 130 70.5"/><circle class="mm__end" cx="130" cy="70.5" r="4"/><path class="mm__w" d="M238 213C178.6 213 189.4 194.5 130 194.5"/><circle class="mm__end" cx="130" cy="194.5" r="4"/><path class="mm__w" d="M238 213C178.6 213 189.4 318.5 130 318.5"/><circle class="mm__end" cx="130" cy="318.5" r="4"/><path class="mm__w" d="M402 213C422.9 213 419.1 57 440 57"/><circle class="mm__end" cx="440" cy="57" r="4"/><path class="mm__w" d="M402 213C422.9 213 419.1 181 440 181"/><circle class="mm__end" cx="440" cy="181" r="4"/><path class="mm__w" d="M402 213C422.9 213 419.1 305 440 305"/><circle class="mm__end" cx="440" cy="305" r="4"/><rect class="mm__b" x="24" y="53.5" width="106" height="34" rx="17"/><text class="mm__bt" x="77" y="76" text-anchor="middle">Bad tail</text><path class="mm__g" d="M44 91.5V134.5"/><path class="mm__g" d="M44 106.5h9"/><text class="mm__t" x="60" y="111.5">worst of ten</text><path class="mm__g" d="M44 133.5h9"/><text class="mm__t" x="60" y="138.5">p10 quality bar</text><rect class="mm__b" x="24" y="177.5" width="106" height="34" rx="17"/><text class="mm__bt" x="77" y="200" text-anchor="middle">Recovery</text><path class="mm__g" d="M44 215.5V258.5"/><path class="mm__g" d="M44 230.5h9"/><text class="mm__t" x="60" y="235.5">undo</text><path class="mm__g" d="M44 257.5h9"/><text class="mm__t" x="60" y="262.5">version history</text><rect class="mm__b" x="24" y="301.5" width="106" height="34" rx="17"/><text class="mm__bt" x="77" y="324" text-anchor="middle">Fallback</text><path class="mm__g" d="M44 339.5V355.5"/><path class="mm__g" d="M44 354.5h9"/><text class="mm__t" x="60" y="359.5">unusable output</text><rect class="mm__b" x="440" y="40" width="88" height="34" rx="17"/><text class="mm__bt" x="484" y="62.5" text-anchor="middle">Median</text><path class="mm__g" d="M460 78V121"/><path class="mm__g" d="M460 93h9"/><text class="mm__t" x="476" y="98">the typical result</text><path class="mm__g" d="M460 120h9"/><text class="mm__t" x="476" y="125">what demos show</text><rect class="mm__b" x="440" y="164" width="106" height="34" rx="17"/><text class="mm__bt" x="493" y="186.5" text-anchor="middle">Sampling</text><path class="mm__g" d="M460 202V245"/><path class="mm__g" d="M460 217h9"/><text class="mm__t" x="476" y="222">regenerate</text><path class="mm__g" d="M460 244h9"/><text class="mm__t" x="476" y="249">side-by-side options</text><rect class="mm__b" x="440" y="288" width="88" height="34" rx="17"/><text class="mm__bt" x="484" y="310.5" text-anchor="middle">Review</text><path class="mm__g" d="M460 326V369"/><path class="mm__g" d="M460 341h9"/><text class="mm__t" x="476" y="346">adversarial inputs</text><path class="mm__g" d="M460 368h9"/><text class="mm__t" x="476" y="373">not just happy path</text><rect class="mm__c" x="238" y="190" width="164" height="46" rx="23"/><text class="mm__ct" x="320" y="219" text-anchor="middle">Distribution</text></svg><figcaption>Designing the distribution, not the single output.</figcaption></figure>
+            <h2 id="a-worked-example-of-reviewing-a-distribution" data-x>A worked example of reviewing a distribution</h2>
+            <p class="essay__flag" data-x>Illustrative: my own sketch, not a sourced fact.</p>
+            <p data-x><strong>Imagine a generate-an-outfit feature.</strong> You run one request ten times. Three results are great, five are fine, and two are strange: wrong occasion, clashing pieces, or something that cannot be acted on. A single-mockup review would have shown you one of the great ones and signed it off. The point is not the exact split. It is that a distribution has a shape, and the shape only shows up when you look at many outputs side by side instead of one at a time.</p>
+            <p data-x><strong>Review the strange two.</strong> The useful questions are about those outputs. Can the user see quickly that something is off? Can they regenerate, undo, or step back in one move? If yes, the feature may be shippable. If the strange outputs leave the user stuck, the great ones do not matter, because users will eventually meet a strange one. This is also why the worst of ten is such a useful lens. It does not require a metric or a dashboard, only a willingness to look at the ones nobody put in the demo.</p>
+            <h2 id="the-trade-off-underneath" data-x>The trade-off underneath</h2>
+            <p class="essay__flag" data-x>My opinion, based on the tradeoffs above.</p>
+            <p data-x><strong>Variety and control pull against each other.</strong> Regenerate buttons and side-by-side variations give users a lot of choice, but they also hand users the work of sampling. A tighter system hides the spread, but then the user cannot steer it. I do not think there is a right answer, only a deliberate one for each feature. The right setting depends on the feature. A creative tool might want a wide spread because exploring is the whole point, while a task that touches money may want it very narrow.</p>
+            <p data-x><strong>Spread is a design material.</strong> Once you accept the output is a distribution, spread stops being a bug to remove and becomes something you shape. How wide should it be here? Where is narrow better? Those are design questions, and they only appear once you stop reviewing one output at a time. Treating it that way also changes the conversation with engineers. Instead of asking for the model to be better, you can ask for a narrower spread here and a wider one there.</p>
+            <h2 id="my-hypothesis">My hypothesis</h2>
+            <p class="essay__flag">This section is my opinion, not a sourced fact.</p>
+            <p><strong>The right design review for an AI feature is to look at the worst of ten outputs, not the best one.</strong></p>
+            <p>Demos show the best sample. Users experience all of them. If the worst of ten generations is acceptable (or at least safely recoverable), the feature is shippable. If it isn't, no amount of polish on the best case will save it. I'd go further and say that &quot;the p10 output&quot; should be a named quality bar in the design spec, with a defined floor: what must be true of even the worst result.</p>
+            <p>This also changes who needs to be in the room. The review needs someone to pick adversarial inputs, not just happy-path ones.</p>
+            <h2 id="how-i-d-test-it">How I'd test it</h2>
+            <p>For one feature, generate 10 outputs on each of 10 inputs. Rank each set. Review only the worst from each. Decide whether you'd ship with that. Track how many iterations it takes before the worst-of-ten is acceptable.</p>
+            <h2 id="what-would-change-my-mind">What would change my mind</h2>
+            <p>If a good selection layer (ranking or filtering outputs before the user sees them) makes the visible output consistently strong, then the right bar is what survives the filter, not the raw worst case.</p>
+
+            <h2 id="what-i-would-do-first-on-a-real-product" data-x>What I would do first on a real product</h2>
+            <p class="essay__flag" data-x>My opinion, a suggested starting order.</p>
+            <p data-x><strong>Pick the riskiest input.</strong> I would not begin with the typical request. I would begin with the input I am most afraid of, the one a user might type on a bad day, and run it ten times. What comes back tells me more about the feature than a hundred happy-path runs. That is a deliberately small first step. It needs no new tooling, only a handful of awkward inputs, a few minutes of patience, and someone willing to look at what comes back without flinching.</p>
+            <p data-x><strong>Write down the floor.</strong> Next, I would put a sentence in the spec for what must be true of even the worst result. It does not need to be fancy. Once it is written down, designers, engineers, and anyone reviewing have the same bar to argue about, and the argument becomes concrete. It also gives the team something to improve against. If the floor changes, you can see it change, and you can tell the difference between polishing the best case and actually raising the worst one.</p>
+            <section class="essay__sources" aria-labelledby="sources-title">
+              <h2 id="sources-title">References</h2>
+              <ol>
+                <li id="source-1">Microsoft, <a href="https://www.microsoft.com/en-us/haxtoolkit/about/" target="_blank" rel="noopener">HAX Toolkit: about</a></li>
+                <li id="source-2">Microsoft Research, <a href="https://www.microsoft.com/en-us/research/publication/guidelines-for-human-ai-interaction/" target="_blank" rel="noopener">Guidelines for Human-AI Interaction</a></li>
+                <li id="source-3">Google PAIR, <a href="https://www.exploreaiethics.com/tools/people-ai-guidebook/" target="_blank" rel="noopener">People + AI Guidebook (overview)</a></li>
+                <li id="source-4">Lazarev.agency, <a href="https://www.lazarev.agency/articles/generative-ui-design" target="_blank" rel="noopener">6 generative UI design patterns behind real products</a></li>
+                <li id="source-5">Fuselab Creative, <a href="https://fuselabcreative.com/services/generative-ai-design/" target="_blank" rel="noopener">Generative UI design</a></li>
+                <li id="source-6">Tian Pan, <a href="https://tianpan.co/blog/2026-04-16-streaming-ttft-latency-perception" target="_blank" rel="noopener">TTFT Is the Only Latency Metric Your Users Actually Feel</a></li>
+              </ol>
+            </section>
+
+            <div class="essay__foot">
+              <nav class="cs__next" aria-label="More writing">
+                <a href="/writing"><small>Index</small><strong>All writing</strong></a>
+                <a href="/writing/trust-and-error-states"><small>Next</small><strong>Trust Is Recoverability</strong></a>
+              </nav>
+            </div>
+          
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer data-footer></footer>
+  <script src="/js/analytics.js"></script>
+  <script src="/js/site.js"></script>
+</body>
+</html>

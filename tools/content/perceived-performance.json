@@ -1,0 +1,115 @@
+{
+  "sections": [
+    {
+      "before": "My hypothesis",
+      "h": "A match check you could run today",
+      "flag": "Illustrative: my own sketch, not a sourced fact.",
+      "p": [
+        "<strong>Overlay the two states.</strong> Take the waiting state and the arrived state of one screen and lay them over each other. Where the blocks line up, the wait was telling the truth. Where they do not, the wait promised something that was not delivered. It is a crude check, but it takes minutes and needs no participants. It is a blunt tool, and a screen can pass it and still feel slow for other reasons. I like it because it turns a vague argument into something you can point at.",
+        "<strong>Count the surprises.</strong> Each place where content jumps, resizes or appears where no placeholder was is a small broken promise. I would rather fix three of those than argue about whether to use a skeleton at all, because the argument tends to treat the technique as the variable. I would add one caution. Fixing the jumps by padding the skeleton with extra blocks can make it match worse, so the aim is accuracy, not more shapes."
+      ]
+    },
+    {
+      "before": "My hypothesis",
+      "h": "Where I would not trust this reading",
+      "flag": "My opinion, based on the tradeoffs above.",
+      "p": [
+        "<strong>It is a guess built on two studies.</strong> The match idea fits the conflicting results neatly, which is exactly why I am cautious. A story that explains everything after the fact has not yet been tested, and the studies may differ in ways I cannot see from their summaries. The research I read is a handful of studies with different setups, so I would treat my reading as a way to organise the questions, not as an answer.",
+        "<strong>Honesty may not be the only driver.</strong> Plain visual preference, the length of the wait, and what people were doing before could all matter. I would hold the honesty reading loosely until the three-way test is run, and I would be fine if it turned out to be one factor among several. If the three-way test turned out ambiguous, I would not be surprised. Real products mix all of these factors, and a clean result in one narrow task may not carry over."
+      ]
+    },
+    {
+      "h": "What I would do for AI outputs",
+      "flag": "My opinion, a sketch of an approach rather than a tested method.",
+      "p": [
+        "<strong>If the shape is unknown, say so.</strong> When the interface cannot predict what the result will look like, a skeleton is a guess. A plain, honest state that says work is happening, and perhaps what kind, avoids promising a layout that may not arrive. That also means being willing to show less. A modest, truthful indicator may beat an impressive one that implies more knowledge than the system has.",
+        "<strong>Commit as soon as the shape is known.</strong> If the first part of a response reveals its structure, that is the moment to show the real layout, not before. The waiting state then moves from a general signal to an accurate one, and the user is never asked to trust a prediction the system could not make. It is the same logic as the rest of the post. The waiting state is a small promise, and the interface should only make the ones it can keep."
+      ]
+    }
+  ],
+  "maps": [
+    {
+      "after": "What the mixed results suggest",
+      "caption": "Why waiting states may be an honesty problem rather than a speed problem.",
+      "center": "Felt speed",
+      "branches": [
+        {
+          "label": "Time limits",
+          "children": [
+            "0.1 s instant",
+            "1 s flow, 10 s edge"
+          ]
+        },
+        {
+          "label": "Skeletons",
+          "children": [
+            "one study hurt",
+            "another study helped"
+          ]
+        },
+        {
+          "label": "Variable",
+          "children": [
+            "does it match",
+            "shape of the result"
+          ]
+        },
+        {
+          "label": "Honest wait",
+          "children": [
+            "predicts the result",
+            "no fake progress"
+          ]
+        },
+        {
+          "label": "AI outputs",
+          "children": [
+            "shape unpredictable",
+            "skeleton is a guess"
+          ]
+        },
+        {
+          "label": "The test",
+          "children": [
+            "accurate, mismatched",
+            "spinner"
+          ]
+        }
+      ]
+    },
+    {
+      "after": "What I would do for AI outputs",
+      "caption": "A match check, and how I would handle outputs whose shape is unknown.",
+      "center": "Match check",
+      "branches": [
+        {
+          "label": "Overlay",
+          "children": [
+            "waiting vs arrived",
+            "where blocks line up"
+          ]
+        },
+        {
+          "label": "Surprises",
+          "children": [
+            "content jumps",
+            "each breaks a promise"
+          ]
+        },
+        {
+          "label": "Unknown",
+          "children": [
+            "say work is happening",
+            "do not fake layout"
+          ]
+        },
+        {
+          "label": "Caution",
+          "children": [
+            "two studies only"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "sections": [
+    {
+      "before": "My hypothesis",
+      "h": "A worked example of a three-part stall",
+      "flag": "Illustrative: my own sketch, not a sourced fact.",
+      "p": [
+        "<strong>Take an agent that pauses on a tool.</strong> Today the screen shows a pulsing dot. A three-part status might read: \"Searching your catalog\" (what), \"the supplier lookup is slow right now\" (why), and a cancel button with the partial results still readable (options). Same wait, but the user knows where they stand. It is also a good test of the design. If a status line cannot answer all three questions, it probably means the team does not yet know what the system is doing during that wait.",
+        "<strong>The words matter less than the structure.</strong> I would not obsess over the exact copy. What matters is that every long stall answers the same three questions in the same order, so people learn the pattern once and stop worrying each time the agent goes quiet. A consistent pattern is easier to build, too. Engineers know what to emit, designers know what to show, and the user stops reading each new message as if it were a surprise."
+      ]
+    },
+    {
+      "before": "My hypothesis",
+      "h": "What I would not trust",
+      "flag": "My opinion, based on the tradeoffs above.",
+      "p": [
+        "<strong>Status that lies.</strong> A progress message that does not match what the system is really doing is worse than a dot. If the status says \"reading\" while the agent is stuck, the user will notice, and then they stop trusting every future message. Honest and vague beats specific and wrong. And an unhelpful status is not harmless. It uses attention, which is exactly the thing a long wait is already draining, so every line on screen should earn its place or be left out.",
+        "<strong>Status as a cover for slowness.</strong> Good status makes a wait feel shorter, but it does not make the system faster. I would keep an eye on the real numbers, including the p99 case, so the design work does not become a way to avoid fixing a genuine problem. So I would pair any status redesign with a plain measurement of the underlying time. If the perceived speed improves and the real speed does not, that is fine, as long as everyone knows which is which."
+      ]
+    },
+    {
+      "h": "How I would explain latency budgets to a teammate",
+      "flag": "My opinion, written as a plain-language pitch.",
+      "p": [
+        "<strong>Think of it as a design system for time.</strong> We already agree on spacing and color tokens so nobody reinvents them. A latency budget works the same way: a named class such as instant, first content, or background task, each with an agreed behavior. When someone builds a new feature, they pick a class instead of inventing a loading state. The same naming trick works for the handoffs between teams. When someone says a feature needs to feel instant, everyone can point to the same class instead of imagining their own number.",
+        "<strong>What the budget buys you.</strong> It turns arguments about whether a wait is acceptable into a shared reference. A feature either fits its class or it does not. If it does not, the team has a clear choice: make it faster, change the class, or design a better stall state. That is a much easier conversation. It also gives you a way to say no. A new feature that cannot meet its class is not automatically blocked, but it has to come with an explicit plan, and that plan is easier to review than a vague hope."
+      ]
+    }
+  ],
+  "maps": [
+    {
+      "after": "What I notice",
+      "caption": "Where the wait goes, and what to design for each part.",
+      "center": "Waiting",
+      "branches": [
+        {
+          "label": "TTFT",
+          "children": [
+            "blank screen first",
+            "perceived is shapeable"
+          ]
+        },
+        {
+          "label": "Streaming",
+          "children": [
+            "cadence and jitter",
+            "render as it arrives"
+          ]
+        },
+        {
+          "label": "Structure",
+          "children": [
+            "headings first",
+            "navigational frame"
+          ]
+        },
+        {
+          "label": "Tool stalls",
+          "children": [
+            "agent waiting",
+            "measure stall time"
+          ]
+        },
+        {
+          "label": "Status",
+          "children": [
+            "doing, why, options",
+            "short status lines"
+          ]
+        },
+        {
+          "label": "Budgets",
+          "children": [
+            "named and shared",
+            "design for p99"
+          ]
+        }
+      ]
+    }
+  ]
+}

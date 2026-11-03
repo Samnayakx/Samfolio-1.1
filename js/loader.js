@@ -10,7 +10,7 @@
   window.setThemeColor = (t) => {
     let m = document.querySelector('meta[name="theme-color"]');
     if (!m) { m = document.createElement("meta"); m.name = "theme-color"; document.head.appendChild(m); }
-    m.content = t === "light" ? "#FFFEF2" : "#040404";
+    m.content = t === "light" ? "#FFFEF2" : "#111010";
   };
   try {
     const saved = localStorage.getItem("theme");

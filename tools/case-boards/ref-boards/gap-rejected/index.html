@@ -1,0 +1,192 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8" /><title>Gap rejected variations</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=block" rel="stylesheet" />
+<style>
+/* Rejected-design boards, one per decision. Read left to right: the version we tried (on the real QuickFit Finder, web),
+   what testing changed (as a diff), and what shipped. 1080x608, rendered at 2x. */
+* { box-sizing: border-box; }
+body { margin: 0; background: #F3F3F1; color: #222; -webkit-font-smoothing: antialiased; }
+.board { position: relative; width: 1080px; height: 608px; margin: 0 0 24px; overflow: hidden; background: #F3F3F1; font: 400 13px/1.3 "Inter", sans-serif; }
+.mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+.hd { position: absolute; left: 40px; top: 30px; right: 40px; }
+.hd .k { font: 400 13px/1 "JetBrains Mono", monospace; color: #8B8B86; }
+.hd h2 { margin: 10px 0 6px; font: 600 26px/1.1 "Inter"; letter-spacing: -.02em; }
+.hd p { margin: 0; font-size: 14px; color: #6B6B66; }
+.lab { position: absolute; top: 132px; font: 400 14px/1 "JetBrains Mono", monospace; color: #8B8B86; }
+.pane { position: absolute; top: 158px; height: 410px; border: 1.5px dashed #BDBDB7; border-radius: 6px; overflow: hidden;
+  background-color: #F7F7F5; background-image: linear-gradient(#E7E7E2 1px, transparent 1px), linear-gradient(90deg, #E7E7E2 1px, transparent 1px); background-size: 32px 32px; background-position: -1px -1px; }
+.pane.plain { background-image: none; }
+.p1 { left: 40px; width: 410px; } .p2 { left: 482px; width: 296px; } .p3 { left: 806px; width: 234px; }
+.chev { position: absolute; left: 455px; top: 350px; width: 22px; height: 22px; color: #A9A9A4; }
+.wire { position: absolute; left: 778px; top: 362px; width: 28px; height: 2px; background: #B9B9B4; }
+.wire::after { content: ""; position: absolute; right: -4px; top: -4px; width: 10px; height: 10px; border-radius: 50%; background: #B9B9B4; }
+
+/* the QuickFit Finder, web: pale blue-grey, a navy frame, a spaced header */
+.qf { position: absolute; background: #EEF2F7; border: 2px solid #1F3A6E; border-radius: 14px; color: #1B2B4A; box-shadow: 0 12px 30px -16px rgba(20,40,80,.35); overflow: hidden; }
+.qf .ttl { position: absolute; left: 0; right: 0; top: 10px; text-align: center; font: 600 9px/1 "Inter"; letter-spacing: .18em; color: #1F3A6E; }
+.qf .q { font: 600 13px/1.2 "Inter"; color: #1B2B4A; }
+.qf .s { font: 400 10px/1.3 "Inter"; color: #5E6B82; }
+.in { height: 26px; border-radius: 6px; background: #fff; border: 1px solid #C9D3E1; display: flex; align-items: center; justify-content: space-between; padding: 0 8px; font: 400 10px/1 "Inter"; color: #5E6B82; }
+.in b { font-weight: 400; color: #A8B2C2; }
+.btn { display: grid; place-items: center; height: 28px; border-radius: 4px; background: #1F3A6E; color: #fff; font: 600 9.5px/1 "Inter"; letter-spacing: .12em; }
+.chip { display: inline-grid; place-items: center; min-width: 38px; height: 24px; padding: 0 8px; border-radius: 999px; border: 1px solid #B9C4D6; background: #fff; font: 500 10px/1 "Inter"; color: #1B2B4A; }
+.chip.on { background: #1F3A6E; border-color: #1F3A6E; color: #fff; }
+.ln { height: 6px; border-radius: 3px; background: #D4DBE6; margin: 0 0 7px; }
+.av { position: absolute; border-radius: 40px 40px 10px 10px; background: linear-gradient(180deg, #E4E9F0, #DCE3EC); }
+.av::before { content: ""; position: absolute; left: 50%; top: -30px; width: 30px; height: 34px; margin-left: -15px; border-radius: 50%; background: #E4E9F0; }
+.jean { position: absolute; background: url(jeans.webp) center 46% / cover no-repeat; }
+.desc { background: #fff; border: 1.5px solid #1F3A6E; border-radius: 6px; padding: 8px 10px; font: 400 10.5px/1.6 "Inter"; color: #1B2B4A; }
+.desc h5 { margin: 0 0 4px; font: 600 11px/1.2 "Inter"; text-align: center; }
+.desc .t { color: #D23B3B; font-weight: 600; } .desc b { font-weight: 600; }
+
+/* the critique: one blue pin, one handwritten note, and a dashed outline on the thing */
+.pin { position: absolute; width: 26px; height: 26px; border-radius: 50%; background: #4A7FE0; color: #fff; font: 600 13px/26px "Inter"; text-align: center; box-shadow: 0 0 0 3px #fff, 0 4px 10px rgba(30,60,140,.3); z-index: 5; }
+.note { position: absolute; font: 600 24px/1 "Caveat", cursive; color: #3A66D6; z-index: 5; white-space: nowrap; }
+.mark { position: absolute; border: 1.6px dashed #D23B3B; border-radius: 4px; z-index: 4; }
+
+/* the diff */
+.diff { position: absolute; inset: 0; padding-top: 18px; font: 400 13px/1 "JetBrains Mono", monospace; color: #5A5A56; }
+.diff::before { content: ""; position: absolute; left: 62px; top: 0; bottom: 0; width: 1px; background: #DCDCD7; }
+.row { position: relative; display: grid; grid-template-columns: 62px 1fr; align-items: center; min-height: 36px; padding-right: 12px; }
+.row > i { font-style: normal; text-align: center; color: #BDBDB7; font-size: 13px; }
+.row > span { padding-left: 16px; line-height: 1.35; }
+.row.h > span { color: #222; }
+.row.add { background: #E3EAF6; } .row.add > i, .row.add > span { color: #3D6BD6; }
+.row.del { background: #F5E4E1; } .row.del > i, .row.del > span { color: #B5463F; }
+.row.del > span { text-decoration: line-through; text-decoration-thickness: 1px; }
+.row.sp { min-height: 18px; }
+</style></head><body>
+
+<!-- ───────── A · Decision 1: accuracy vs completion ───────── -->
+<div class="board" id="rejected-form">
+  <div class="hd"><span class="k">rejected A · decision 1 · accuracy vs completion</span><h2>Every measurement, upfront</h2><p>More inputs meant a sharper model and fewer shoppers reaching a size.</p></div>
+  <span class="lab" style="left:40px">tried</span><span class="lab" style="left:482px">fit-notes.md</span><span class="lab" style="left:806px">shipped</span>
+  <div class="pane p1">
+    <div class="qf" style="left:28px;top:30px;width:352px;height:290px">
+      <div class="ttl">QUICKFIT FINDER</div>
+      <div style="position:absolute;left:22px;top:34px"><p class="s" style="margin:0 0 3px">(1 of 3)</p><p class="q" style="margin:0">Enter your measurements</p></div>
+      <div style="position:absolute;left:22px;right:22px;top:80px;display:grid;grid-template-columns:1fr 1fr;gap:8px 12px">
+        <div class="in">Height<b>—</b></div><div class="in">Weight<b>—</b></div><div class="in">Waist<b>—</b></div><div class="in">Hips<b>—</b></div>
+        <div class="in">Thigh<b>—</b></div><div class="in">Calf<b>—</b></div><div class="in">Inseam<b>—</b></div><div class="in">Rise<b>—</b></div>
+      </div>
+      <div class="btn" style="position:absolute;right:22px;bottom:18px;width:110px">NEXT</div>
+      <p class="s" style="position:absolute;left:22px;bottom:24px;margin:0">Your size appears in step 3</p>
+    </div>
+    <div class="mark" style="left:44px;top:104px;width:320px;height:148px"></div>
+    <div class="pin" style="left:352px;top:92px">1</div>
+    <div class="note" style="left:40px;top:340px">8 inputs before any size</div>
+  </div>
+  <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg>
+  <div class="pane p2 plain"><div class="diff">
+    <div class="row h"><i>12</i><span>## Inputs</span></div>
+    <div class="row del"><i>−</i><span>Ask for every measurement</span></div>
+    <div class="row del"><i>−</i><span>Size at step 3</span></div>
+    <div class="row add"><i>+</i><span>Height first</span></div>
+    <div class="row add"><i>+</i><span>Tuning is optional</span></div>
+    <div class="row"><i>17</i><span>Show a size at once.</span></div>
+    <div class="row"><i>18</i><span>Keep size numbers beside each measure.</span></div>
+  </div></div>
+  <div class="wire"></div>
+  <div class="pane p3">
+    <div class="qf" style="left:14px;top:120px;width:202px;height:150px">
+      <div class="ttl">QUICKFIT FINDER</div>
+      <p class="s" style="position:absolute;left:0;right:0;top:44px;text-align:center;margin:0">(1 of 3)</p>
+      <p class="q" style="position:absolute;left:0;right:0;top:58px;text-align:center;margin:0">How tall are you?</p>
+      <div style="position:absolute;left:10px;right:10px;top:92px;display:flex;gap:4px;justify-content:center"><span class="chip">5′4″</span><span class="chip">5′5″</span><span class="chip on">5′6″</span><span class="chip">5′7″</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ───────── B · Decision 2: explainability vs purchase velocity ───────── -->
+<div class="board" id="rejected-reason">
+  <div class="hd"><span class="k">rejected B · decision 2 · explainability vs velocity</span><h2>The full reasoning, always open</h2><p>The reason sat between the shopper and the decision.</p></div>
+  <span class="lab" style="left:40px">tried</span><span class="lab" style="left:482px">fit-notes.md</span><span class="lab" style="left:806px">shipped</span>
+  <div class="pane p1">
+    <div class="qf" style="left:28px;top:30px;width:352px;height:330px">
+      <div class="ttl">QUICKFIT FINDER</div>
+      <div class="av" style="left:30px;top:76px;width:96px;height:230px"></div>
+      <div class="jean" style="left:36px;top:150px;width:84px;height:156px"></div>
+      <div style="position:absolute;left:150px;right:20px;top:38px">
+        <p class="s" style="margin:0">On your avatar</p><p class="q" style="margin:2px 0 10px;font-size:15px">28W 32L</p>
+        <div class="desc" style="padding:10px">
+          <h5 style="text-align:left">Why this recommendation ▴</h5>
+          <div class="ln"></div><div class="ln"></div><div class="ln" style="width:80%"></div>
+          <p class="s" style="margin:8px 0 6px">If it feels too small…</p><div class="ln"></div><div class="ln" style="width:70%"></div>
+          <p class="s" style="margin:8px 0 6px">If it feels too large…</p><div class="ln"></div><div class="ln" style="width:60%"></div>
+          <div class="ln" style="width:90%"></div><div class="ln" style="width:75%"></div>
+        </div>
+      </div>
+      <div class="btn" style="position:absolute;left:150px;right:20px;bottom:-10px;opacity:.55">ADD TO BAG</div>
+    </div>
+    <div class="mark" style="left:172px;top:344px;width:196px;height:30px"></div>
+    <div class="pin" style="left:356px;top:330px">1</div>
+    <div class="note" style="left:40px;top:372px">add to bag pushed out of view</div>
+  </div>
+  <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg>
+  <div class="pane p2 plain"><div class="diff">
+    <div class="row h"><i>21</i><span>## Reason</span></div>
+    <div class="row del"><i>−</i><span>Always show the full reason</span></div>
+    <div class="row add"><i>+</i><span>One tap away</span></div>
+    <div class="row add"><i>+</i><span>Say more when the size is unusual</span></div>
+    <div class="row"><i>25</i><span>Add to bag stays in view.</span></div>
+    <div class="row"><i>26</i><span>Most opened it anyway, out of curiosity.</span></div>
+  </div></div>
+  <div class="wire"></div>
+  <div class="pane p3">
+    <div class="qf" style="left:14px;top:110px;width:202px;height:170px">
+      <div class="ttl">QUICKFIT FINDER</div>
+      <div style="position:absolute;left:16px;right:16px;top:36px">
+        <p class="s" style="margin:0">Size</p>
+        <div style="display:flex;gap:4px;margin:4px 0 10px"><span class="chip">27W</span><span class="chip on">28W</span><span class="chip">29W</span></div>
+        <p class="s" style="margin:0 0 12px;color:#1F3A6E;text-decoration:underline;text-underline-offset:2px">Why this recommendation?</p>
+        <div class="btn">ADD TO BAG</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───────── C · Decision 3: fit fidelity vs performance ───────── -->
+<div class="board" id="rejected-3d">
+  <div class="hd"><span class="k">rejected C · decision 3 · fidelity vs performance</span><h2>Full-fidelity 3D in the browser</h2><p>Heavy to load on mobile browsers, and it still didn't say what fit felt like.</p></div>
+  <span class="lab" style="left:40px">tried</span><span class="lab" style="left:482px">fit-notes.md</span><span class="lab" style="left:806px">shipped</span>
+  <div class="pane p1">
+    <div class="qf" style="left:28px;top:30px;width:352px;height:300px">
+      <div class="ttl">QUICKFIT FINDER</div>
+      <div style="position:absolute;left:20px;top:34px;width:170px;height:230px;border-radius:8px;background:#E2E7EE;overflow:hidden">
+        <div class="jean" style="left:0;top:0;width:170px;height:230px;background-size:120% auto;filter:grayscale(.15) contrast(.92) brightness(1.05);opacity:.6"></div>
+        <div style="position:absolute;left:20px;right:20px;top:104px;height:22px;border-radius:999px;background:#fff;display:flex;align-items:center;gap:8px;padding:0 10px;font:500 10px/1 Inter;color:#1B2B4A"><span style="flex:1;height:4px;border-radius:2px;background:linear-gradient(90deg,#1F3A6E 38%,#D4DBE6 38%)"></span>Loading 3D</div>
+        <span style="position:absolute;right:8px;top:8px;font:500 9px/1 Inter;color:#5E6B82">360°</span>
+      </div>
+      <div style="position:absolute;left:206px;right:20px;top:40px">
+        <p class="s" style="margin:0 0 6px">Fabric stretch</p><div class="ln" style="background:linear-gradient(90deg,#1F3A6E 55%,#D4DBE6 55%)"></div>
+        <p class="s" style="margin:10px 0 6px">Lighting</p><div class="ln" style="background:linear-gradient(90deg,#1F3A6E 30%,#D4DBE6 30%)"></div>
+        <p class="s" style="margin:10px 0 6px">Drape</p><div class="ln" style="background:linear-gradient(90deg,#1F3A6E 70%,#D4DBE6 70%)"></div>
+        <p class="s" style="margin:10px 0 6px">Size</p>
+        <div style="display:flex;gap:4px"><span class="chip" style="min-width:30px">27</span><span class="chip on" style="min-width:30px">28</span><span class="chip" style="min-width:30px">29</span></div>
+      </div>
+      <div class="btn" style="position:absolute;left:206px;right:20px;bottom:18px">ADD TO BAG</div>
+    </div>
+    <div class="mark" style="left:44px;top:60px;width:176px;height:240px"></div>
+    <div class="pin" style="left:206px;top:76px">1</div>
+    <div class="note" style="left:40px;top:350px">loads slow, still no "how it feels"</div>
+  </div>
+  <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg>
+  <div class="pane p2 plain"><div class="diff">
+    <div class="row h"><i>31</i><span>## Fidelity</span></div>
+    <div class="row del"><i>−</i><span>Render fabric in full 3D</span></div>
+    <div class="row del"><i>−</i><span>Stretch and light controls</span></div>
+    <div class="row add"><i>+</i><span>A lighter avatar</span></div>
+    <div class="row add"><i>+</i><span>Say what tight, fitted and loose feel like</span></div>
+    <div class="row"><i>36</i><span>Clear words beat realism.</span></div>
+  </div></div>
+  <div class="wire"></div>
+  <div class="pane p3">
+    <div class="desc" style="position:absolute;left:24px;top:116px;width:186px;box-shadow:0 12px 30px -16px rgba(20,40,80,.35)">
+      <h5>Waist</h5>
+      <div><span class="t">Tight:</span> Unlikely to fit</div>
+      <div><b>Fitted:</b> Desired fit</div>
+      <div><b>Loose:</b> May require a belt</div>
+    </div>
+  </div>
+</div>
+
+</body></html>

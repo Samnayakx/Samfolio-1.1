@@ -1,0 +1,97 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8" /><title>Trailhead rejected variations</title>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@500;700&family=Inter:wght@400;500;600;700&display=block" rel="stylesheet" />
+<style>
+/* Rejected-design boards: lo-fi sketches on dotted paper, red pins on the wireframe, the reasons in a column on the right. 1080x608, rendered at 2x. */
+* { box-sizing: border-box; }
+body { margin: 0; background: #fff; color: #1a1a1a; -webkit-font-smoothing: antialiased; }
+.board { position: relative; width: 1080px; height: 608px; margin: 0 0 24px; overflow: hidden; background: #FAFAF7 radial-gradient(#D6D6CF 1px, transparent 1.2px) 0 0 / 18px 18px; font: 400 13px/1.3 "Architects Daughter", cursive; }
+.a { position: absolute; left: calc(var(--x) * 1px); top: calc(var(--y) * 1px); width: calc(var(--w) * 1px); height: calc(var(--h) * 1px); }
+.hd { position: absolute; left: 34px; top: 22px; display: flex; align-items: center; gap: 12px; }
+.stamp { padding: 3px 9px; border: 2px solid #E5484D; border-radius: 4px; color: #E5484D; font: 700 11px/1.2 "Inter"; letter-spacing: .08em; text-transform: uppercase; transform: rotate(-2deg); }
+.hd h2 { margin: 0; font: 700 30px/1 "Caveat", cursive; }
+/* wireframe pieces */
+.frame { background: #fff; border: 2px solid #1a1a1a; border-radius: 4px; }
+.box { border: 1.6px solid #1a1a1a; border-radius: 4px; background: #fff; }
+.soft { border-color: #9a9a94; }
+.ln { height: 7px; border: 1.4px solid #1a1a1a; border-radius: 4px; background: #fff; margin: 0 0 7px; }
+.ln.g { border-color: #b9b9b2; }
+.lbl { font-size: 12px; }
+.btn { display: inline-block; padding: 2px 9px; border: 1.6px solid #1a1a1a; border-radius: 4px; font-size: 11px; background: #fff; }
+.btn.pk { background: #2F7DC4; border-color: #2F7DC4; color: #fff; }
+.dot { width: 18px; height: 18px; border: 1.6px solid #1a1a1a; border-radius: 50%; display: inline-block; }
+.hatch { border: 1.4px solid #E2A27E; background: repeating-linear-gradient(-45deg, #FBE3D3 0 6px, #F6D2BC 6px 7px); }
+.hatch.g { border-color: #A7CF8E; background: repeating-linear-gradient(-45deg, #E6F4DA 0 6px, #D3EAC2 6px 7px); }
+.pct { font: 500 12px/1 "Inter"; letter-spacing: .1em; color: #8a6a55; text-align: center; }
+/* pins and reasons */
+.pin { position: absolute; left: calc(var(--x) * 1px); top: calc(var(--y) * 1px); width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 50%; background: #E5484D; color: #fff; font: 700 13px/26px "Inter"; text-align: center; box-shadow: 0 0 0 3px #fff; z-index: 3; }
+.ring { position: absolute; left: calc(var(--x) * 1px); top: calc(var(--y) * 1px); width: calc(var(--w) * 1px); height: calc(var(--h) * 1px); border: 2.2px solid #E5484D; border-radius: 40% 46% 42% 48%; transform: rotate(-1.5deg); z-index: 2; }
+.why { position: absolute; left: 726px; top: 82px; width: 322px; }
+.why h4 { margin: 0 0 12px; font: 600 11px/1.2 "Inter"; letter-spacing: .1em; text-transform: uppercase; color: #E5484D; }
+.r { display: grid; grid-template-columns: 26px 1fr; gap: 0 12px; margin: 0 0 16px; }
+.r .n { width: 26px; height: 26px; border-radius: 50%; background: #E5484D; color: #fff; font: 700 13px/26px "Inter"; text-align: center; }
+.r b { display: block; font: 700 22px/1.05 "Caveat", cursive; margin: 1px 0 3px; }
+.r p { margin: 0; font: 400 12.5px/1.45 "Inter"; color: #4a4a46; }
+.kept { position: absolute; left: 726px; bottom: 26px; width: 322px; padding: 11px 14px; border-left: 3px solid #1a1a1a; background: #fff; font: 400 12.5px/1.45 "Inter"; color: #2b2b28; }
+.kept b { font-weight: 600; }
+</style></head><body>
+</head><body>
+
+<!-- A: an AI version of themselves -->
+<div class="board" id="rejected-ai-twin">
+  <div class="hd"><span class="stamp">Rejected · A</span><h2>An AI version of themselves</h2></div>
+  <div class="frame a" style="--x:34;--y:78;--w:660;--h:500">
+    <div class="a" style="--x:0;--y:0;--w:656;--h:36;border-bottom:1.6px solid #1a1a1a;display:flex;align-items:center;gap:10px;padding:0 12px"><span class="dot"></span><span class="lbl">Trailblazer Community</span><span class="lbl" style="color:#777">/ Flow Builders group</span><span style="flex:1"></span><span class="btn">Ask</span></div>
+    <div class="box a" style="--x:20;--y:52;--w:616;--h:46;display:flex;align-items:center;gap:10px;padding:0 14px"><span class="lbl">★ Alex leads this group</span><span style="flex:1"></span><span class="btn btn pk">Join group</span></div>
+    <div class="box a" style="--x:20;--y:114;--w:400;--h:92;padding:12px 14px"><div class="lbl" style="margin:0 0 7px">Q · Why does my record-triggered flow run twice?</div><div class="ln g"></div><div class="ln g" style="width:70%;margin:0"></div></div>
+    <div class="box a" style="--x:60;--y:222;--w:360;--h:120;padding:12px 14px"><div style="display:flex;align-items:center;gap:8px;margin:0 0 8px"><span class="dot"></span><span class="lbl">Alex · Architect</span><span class="lbl" style="color:#999">· answered in 4s</span></div><div class="ln"></div><div class="ln"></div><div class="ln" style="width:55%;margin:0"></div></div>
+    <div class="box a" style="--x:440;--y:114;--w:196;--h:362;padding:12px 12px"><div class="lbl" style="margin:0 0 4px">My AI replies</div><div class="lbl" style="color:#777;margin:0 0 10px">Approve before posting</div>
+      <div class="box soft" style="padding:8px;margin:0 0 8px"><div class="ln g"></div><span class="btn" style="font-size:9px">Approve</span></div>
+      <div class="box soft" style="padding:8px;margin:0 0 8px"><div class="ln g"></div><span class="btn" style="font-size:9px">Approve</span></div>
+      <div class="box soft" style="padding:8px;margin:0 0 8px"><div class="ln g"></div><span class="btn" style="font-size:9px">Approve</span></div>
+      <div class="box soft" style="padding:8px;margin:0"><div class="ln g"></div><span class="btn" style="font-size:9px">Approve</span></div>
+    </div>
+    <div class="box a" style="--x:60;--y:358;--w:360;--h:40;display:flex;align-items:center;padding:0 12px;color:#999"><span class="lbl">Reply…</span></div>
+  </div>
+  <div class="ring" style="--x:82;--y:290;--w:376;--h:140"></div>
+  <div class="pin" style="--x:96;--y:300">1</div>
+  <div class="ring" style="--x:466;--y:184;--w:212;--h:384"></div>
+  <div class="pin" style="--x:672;--y:194">2</div>
+  <div class="ring" style="--x:46;--y:124;--w:636;--h:58"></div>
+  <div class="pin" style="--x:46;--y:132">3</div>
+  <div class="why"><h4>Why it failed</h4>
+    <div class="r"><span class="n">1</span><div><b>An AI speaking as a real person</b><p>Fully automated, undisclosed replies in someone's name damage trust.</p></div></div>
+    <div class="r"><span class="n">2</span><div><b>Approving every reply saved no time</b><p>Disclosed or approve-first versions clashed with Trailhead's warm, human brand.</p></div></div>
+    <div class="r"><span class="n">3</span><div><b>They didn't want the community</b><p>Research was clear: these users didn't want to lead groups in the first place.</p></div></div>
+  </div>
+  <div class="kept"><b>What survived:</b> when Solve can't help, it drafts a community post, and the person posts it themselves.</div>
+</div>
+
+<!-- B: a public skill profile -->
+<div class="board" id="rejected-skill-profile">
+  <div class="hd"><span class="stamp">Rejected · B</span><h2>A public skill profile</h2></div>
+  <div class="frame a" style="--x:34;--y:78;--w:660;--h:500">
+    <div class="a" style="--x:0;--y:0;--w:656;--h:36;border-bottom:1.6px solid #1a1a1a;display:flex;align-items:center;gap:10px;padding:0 12px"><span class="dot"></span><span class="lbl">trailhead.com/alex</span><span style="flex:1"></span><span class="lbl" style="color:#777">Public ●</span><span class="btn btn pk">Share profile</span></div>
+    <div class="a" style="--x:24;--y:56;--w:608;--h:80;display:flex;align-items:center;gap:16px"><span class="dot" style="width:60px;height:60px"></span><div><div style="font-size:18px">Alex, Architect</div><div class="lbl" style="color:#777">Skill currency 82% · 14 certifications</div></div></div>
+    <div class="a lbl" style="--x:24;--y:150;--w:300;--h:20">Skill currency, last 12 months</div>
+    <div class="a" id="graph" style="--x:24;--y:174;--w:608;--h:120;display:grid;grid-template-columns:repeat(26,1fr);gap:4px"></div>
+    <div class="a lbl" style="--x:24;--y:318;--w:300;--h:20">Badges</div>
+    <div class="a" style="--x:24;--y:344;--w:608;--h:60;display:flex;gap:12px"><span class="dot" style="width:46px;height:46px"></span><span class="dot" style="width:46px;height:46px"></span><span class="dot" style="width:46px;height:46px"></span><span class="dot" style="width:46px;height:46px"></span><span class="dot" style="width:46px;height:46px"></span><span class="dot" style="width:46px;height:46px"></span></div>
+    <div class="box soft a" style="--x:24;--y:420;--w:608;--h:52;display:flex;align-items:center;padding:0 14px;color:#999"><span class="lbl">Employers who viewed your profile</span></div>
+  </div>
+  <div class="ring" style="--x:520;--y:82;--w:180;--h:40"></div>
+  <div class="pin" style="--x:520;--y:84">1</div>
+  <div class="ring" style="--x:44;--y:234;--w:644;--h:164"></div>
+  <div class="pin" style="--x:52;--y:250">2</div>
+  <div class="why"><h4>Why it failed</h4>
+    <div class="r"><span class="n">1</span><div><b>Adoption was out of our hands</b><p>It only works if employers treat the profile as a credential.</p></div></div>
+    <div class="r"><span class="n">2</span><div><b>Engagement for its own sake</b><p>A streak to protect is not a reason to return. Even if it caught on, nothing lasting brought experts back.</p></div></div>
+  </div>
+  <div class="kept"><b>What survived:</b> skills measured against what the market is hiring for, turned into proactive prompts with a trailmix for each gap.</div>
+</div>
+
+<script>
+// contribution graph: deterministic shading, no randomness
+const g = document.getElementById("graph"), shades = ["#fff", "#D6E6F4", "#9CC3E6", "#5A9BD5", "#2F7DC4"];
+for (let i = 0; i < 26 * 5; i++) { const c = document.createElement("span"); c.style.cssText = `border:1.2px solid #1a1a1a;border-radius:2px;background:${shades[(i * 7 + (i >> 3)) % 5]}`; g.appendChild(c); }
+</script>
+</body></html>

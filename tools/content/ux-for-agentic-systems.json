@@ -1,0 +1,32 @@
+{
+  "sections": [
+    { "before": "Compression needs a contract", "h": "A worked example of the four memories", "flag": "Illustrative: my own sketch, not a sourced fact.", "p": [
+      "<strong>One task, four stores.</strong> Picture an agent helping someone plan a launch. Working memory holds this week's goal and the two open decisions. Episodic memory holds that last time a draft was rejected, and why. Semantic memory holds that the person prefers short briefs, with a source and a date. Procedural memory holds the rule that anything external needs sign-off.",
+      "<strong>Why the split matters.</strong> If all of that sits in one transcript, a stale preference and a current constraint look identical to the model. Separated, each store can have its own lifespan, its own owner and its own correction path. That is the design work: deciding which store a fact belongs in before deciding how to retrieve it."
+    ]},
+    { "before": "Design the memory controls", "h": "What I would do first on a real product", "flag": "My opinion, based on the tradeoffs above.", "p": [
+      "<strong>Start with the smallest memory that helps.</strong> I would begin with working memory only and prove it helps on real tasks before adding anything that persists. Persistence is where provenance, staleness and deletion all become obligations. It is cheaper to add a store later than to explain to a user why the product remembered something it should not have.",
+      "<strong>Build the correction path first.</strong> Before the agent saves a single durable fact, I would want the user able to see it and fix it. A memory nobody can inspect is a liability that grows with use. I would treat the controls as part of the memory feature itself, not a settings page added once complaints arrive."
+    ]},
+    { "h": "How I would explain this to a teammate", "flag": "My opinion, based on the tradeoffs above.", "p": [
+      "<strong>Memory is a filter, not a bucket.</strong> The line I would use is that we are not building a bigger bucket, we are building a better filter. The question is never how much can it hold. It is what does this decision need, and who confirmed it. That reframing moves the conversation from model capacity to product behavior, which is where designers can actually help.",
+      "<strong>Quiet is not the goal.</strong> A teammate may hear selective memory and picture a hidden one. I would push back: the agent should filter hard and still show its working, the inferred goal, the evidence, the change. Simple on the surface is fine. Simple because uncertainty was hidden is the version I would argue against."
+    ]}
+  ],
+  "maps": [
+    { "after": "Four kinds of memory", "caption": "Memory split by purpose, with what each store needs.", "center": "Agent memory", "branches": [
+      { "label": "Working", "children": ["current goal", "expires with task"] },
+      { "label": "Episodic", "children": ["events, outcomes", "not raw logs"] },
+      { "label": "Semantic", "children": ["stable facts", "provenance, recency"] },
+      { "label": "Procedural", "children": ["rules, workflows", "governed, not guessed"] },
+      { "label": "Controls", "children": ["see, fix, delete"] }
+    ]},
+    { "after": "Measure usefulness, not volume", "caption": "Useful memory is measured by decisions, not by capacity.", "center": "Usefulness", "branches": [
+      { "label": "Precision", "children": ["selected is relevant"] },
+      { "label": "Recall", "children": ["essentials available"] },
+      { "label": "Corrections", "children": ["fixes survive sessions"] },
+      { "label": "Staleness", "children": ["old facts misleading"] },
+      { "label": "Lift", "children": ["beats no memory"] }
+    ]}
+  ]
+}

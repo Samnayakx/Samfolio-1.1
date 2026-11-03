@@ -1,0 +1,114 @@
+{
+  "sections": [
+    {
+      "before": "My hypothesis",
+      "h": "A day with ten agents",
+      "flag": "Illustrative: my own sketch, not a sourced fact.",
+      "p": [
+        "<strong>Imagine the morning.</strong> Ten agents have been working. Six finished cleanly, two are blocked waiting on me, one looks odd, and one is about to do something I cannot undo. In a chat window those are ten transcripts of equal weight. In a review queue they are four different kinds of attention. The difference is not speed alone. It is that the attention goes where it is needed first, instead of wherever the latest message arrived.",
+        "<strong>The queue answers one question.</strong> Which of these needs me right now? Everything else on the screen exists to make that answer fast and trustworthy: a one-line summary of what changed, a diff I can read at a glance, and a single motion to accept, redirect or stop. That is a small amount of text carrying a lot of weight, and it is a design problem as much as a language one."
+      ]
+    },
+    {
+      "before": "How I'd test it",
+      "h": "Where the queue could fail",
+      "flag": "My opinion, based on the tradeoffs above.",
+      "p": [
+        "<strong>Ranking can be wrong.</strong> A queue sorted by stakes is only as good as its idea of stakes. If a risky change is ranked low, the interface has taught me to look away from exactly the wrong thing. I would want the ranking to be explainable, not just a number. I would want to see the ranking logic in plain words, so a person can disagree with it before it costs them something.",
+        "<strong>Summaries can flatter.</strong> A one-line summary of what changed is useful and also a place where mistakes hide. If I accept work because the summary sounds fine, I have moved the trust from the work to the sentence. I would keep the path from summary to real diff very short. The safeguard I would try is a visible link from each summary to the evidence beneath it, one tap away and never buried."
+      ]
+    },
+    {
+      "h": "What I would design first",
+      "flag": "Illustrative: my own sketch, not a sourced fact.",
+      "p": [
+        "<strong>The accept and stop actions.</strong> Before any dashboard, I would get the smallest actions right: accept, redirect, stop. They have to be fast, reversible where possible, and clear about what they affect. If those three feel solid, the rest of the queue has something to stand on. A slow or ambiguous accept would push people to approve in batches without looking, which defeats the point of having a queue.",
+        "<strong>Then the triage states.</strong> I would name the states plainly: safe to accept, blocked on me, looks wrong, about to be irreversible. Four states are easier to learn than a score. I would test whether people can sort a mixed batch correctly in seconds before adding any polish. If testers hesitate on a state, the label is wrong, and that is cheaper to fix on a prototype than in a shipped product."
+      ]
+    }
+  ],
+  "maps": [
+    {
+      "after": "What's true right now",
+      "caption": "What Boris Cherny has said about working with agents.",
+      "center": "Cherny",
+      "branches": [
+        {
+          "label": "Role",
+          "children": [
+            "creator of Claude Code",
+            "head of the product"
+          ]
+        },
+        {
+          "label": "Design stance",
+          "children": [
+            "minimal UI",
+            "simplest design"
+          ]
+        },
+        {
+          "label": "Process",
+          "children": [
+            "three prototypes",
+            "less design doc"
+          ]
+        },
+        {
+          "label": "Team shape",
+          "children": [
+            "engineers scope, design",
+            "designers ship code"
+          ]
+        },
+        {
+          "label": "Hiring",
+          "children": [
+            "generalists",
+            "low-ego people"
+          ]
+        }
+      ]
+    },
+    {
+      "after": "A day with ten agents",
+      "caption": "My bet: the queue, not the chat, is the interface.",
+      "center": "Review queue",
+      "branches": [
+        {
+          "label": "Triage",
+          "children": [
+            "safe to accept",
+            "blocked on me"
+          ]
+        },
+        {
+          "label": "Risk",
+          "children": [
+            "looks wrong",
+            "irreversible next step"
+          ]
+        },
+        {
+          "label": "Summaries",
+          "children": [
+            "what changed, one line"
+          ]
+        },
+        {
+          "label": "Diffs",
+          "children": [
+            "trust at a glance"
+          ]
+        },
+        {
+          "label": "Actions",
+          "children": [
+            "accept",
+            "redirect or stop"
+          ]
+        }
+      ]
+    }
+  ]
+}

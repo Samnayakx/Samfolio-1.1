@@ -386,8 +386,9 @@ The chart is the level. The 24-hour profile repeats as day after day, with ±8% 
 | **Pixel artifacts** | Fixed warm palette | Up to 30×17 | Hero decoration (California motifs) | §8.4 |
 | **Pixel illustrations** | Fixed palette | 9×9 to 14×8 | Capabilities tiles (bell, bouquet) | §8.5 |
 | **Game sprites** | Fixed palette | 12×8, 7×6 | Footer runner | §8.6 |
+| **Thumbnail glyphs** | White, single stroke | 48×48, 1.5px stroke | One per writing post, on a frosted plate | §8.8 |
 
-What they share: **square cells, no round dots, no grey plate behind them, no shadows and no outlines.** Monochrome families follow the text colour. Coloured families (artifacts, illustrations, sprites) keep their own palette in both themes.
+What the pixel families share: **square cells, no round dots, no grey plate behind them, no shadows and no outlines.** (The thumbnail glyphs in §8.8 are the one deliberate exception: line icons on a frosted plate, because they sit on busy artwork.) Monochrome families follow the text colour. Coloured families (artifacts, illustrations, sprites) keep their own palette in both themes.
 
 ### 8.1 Pixel icons (signature)
 
@@ -532,6 +533,72 @@ Sprites are drawn with `fillRect` on a canvas at integer positions, with `image-
 | Move pixel art in steps | Smooth-rotate or scale-blur pixel art |
 | Give decorative icons `aria-hidden="true"` and icon-only buttons an `aria-label` | Rely on an icon alone to carry meaning |
 
+### 8.8 Thumbnail glyphs (writing)
+
+Every writing post has a thumbnail: **one minimal glyph that stands for the post's idea, on a frosted plate, over abstract artwork.** It is abstract on purpose. It says what the post is about without literal illustration, and it never imitates a product page.
+
+```
+ ┌──────────── tile, 3:2 ────────────┐
+ │   abstract artwork, cover-fit     │
+ │         ┌──────────┐              │
+ │         │  glyph   │  ← frosted plate, 30% of the tile width
+ │         └──────────┘              │
+ └───────────────────────────────────┘
+```
+
+**Ground (the artwork).** One of five abstract images (`assets/images/writing/abstract/1–5.webp`, 960 × 640), assigned to posts in rotation so neighbours differ. Set through `--bg` on the tile with `center / cover`. The tile falls back to `#ecebe7` while it loads. Never overlay text on it.
+
+**Plate.**
+
+| Property | Value |
+|---|---|
+| Size | `30cqw` square (the tile is a size container, so the plate scales with it) |
+| Radius | `7cqw` |
+| Fill | `rgba(255,255,255,.16)` |
+| Backdrop | `blur(14px) saturate(1.2)` |
+| Edge | inset 1px `rgba(255,255,255,.38)` |
+| Hover | `scale(1.06)`, `.35s` on `--ease-out` |
+
+**Glyph.** A single-stroke SVG on a **48 × 48** grid: `fill: none`, `stroke: currentColor` (white, set on the plate), **1.5px**, round caps and joins. It fills **56%** of the plate and carries a `drop-shadow(0 1px 6px rgba(0,0,0,.25))` so it stays legible on any part of the artwork. Solid shapes are allowed for a single accent mark (the dot of a node, the point of a triangle), never for the whole drawing.
+
+**Drawing rules**
+- **One idea per glyph.** Five or fewer elements. If it needs a caption it is too complicated.
+- **Draw the post's tension, not its topic.** Confidence is a dot field that thins out. Optical alignment is a triangle nudged off a square's centre. Debt is blocks stacking. Recoverability is a loop back.
+- **Use opacity for hierarchy,** at most three levels: `1`, `.6` and `.3`. No colour.
+- **Keep clear of the edge:** leave at least 6 units of margin inside the 48-unit box.
+- **No text, no letters and no logos.**
+
+**Current set**
+
+| Post | Glyph |
+|---|---|
+| Confidence is the missing layer | Dot field fading to the edge |
+| UX for agentic systems | Linked nodes, one faint |
+| Semantic tokens | One dot fanning to three |
+| OKLCH | Three circles stepping in lightness |
+| Optical alignment | Triangle nudged inside a square |
+| Component API design | Boxes nested in a box |
+| Design debt | Stacking blocks |
+| Dieter Rams | One circle on one line |
+| Susan Kare | Pixel smile |
+| Progressive disclosure | Growing rings |
+| Perceived performance | Easing curve |
+| Motion choreography | Dots trailing along an arc |
+| Emil Kowalski | A distribution curve |
+| Non-deterministic systems | Ten attempts, one marked |
+| Trust and error states | An undo loop |
+| Model latency | Bars of uneven length, one running |
+| Generative UI | A grid of parts with one open slot |
+| Jobs to be done | Two overlapping circles |
+| Linear and design engineering | A lever on a fulcrum |
+| Notion craft | A grid with one selected |
+| Boris Cherny | A queue of rows, the first approved |
+| Jordan Singer | A play button in an outline |
+
+New posts without an entry fall back to a plain circle. **To add one**, draw it in `tools/thumbs.cjs` (`G`, keyed by the post's slug) and add its two tags to `TAGS`, then run `node tools/apply-pdp-thumbs.cjs`.
+
+**Accessibility.** The tile is `aria-hidden="true"`. The post title and excerpt carry the meaning.
+
 ---
 
 ## 9. Components
@@ -621,6 +688,27 @@ CLIENT NAME         │        ┌── image, inset ──┐          │
 - **Rhythm:** each row has `--space-6` above and `--space-9` below the hairline-to-hairline block (`--space-8` on mobile). No card border, no fill behind the text.
 - **Section head** uses the same two columns: eyebrow and a one-line description on the left, the large title on the right, so the label column lines up through the whole section.
 
+### 9.5c Writing post card
+
+Posts are listed in a **three-column board** with the same `--space-5` gap across and `--space-9` between rows. Two columns below 1024px, one below 640px. The home page's Work section uses the same card, so the two lists read as one system.
+
+```
+[ TAG ] [ TAG ]                  two topic tags, mono 11px, outlined pills
+┌──────── tile, 3:2 ────────┐    abstract artwork + glyph (§8.8)
+└───────────────────────────┘
+CATEGORY · CATEGORY               mono 11px, muted
+The post title                    NType 22–28px, up to 3 lines
+A short excerpt, three lines…     Geist 14px, muted, line-clamped to 3
+READ POST ›                       mono 12px, underlined
+MAR 7, 2026        7 MIN READ     mono 12px, date left, read time muted
+```
+
+- **Tags** are two short topic words in `post__tags`: mono 11px uppercase, `5px 8px` padding, a **999px radius**, 1px inset ring in `--sec-line`, muted text. They sit **above** the tile with `6px` between.
+- **Order inside a card:** tags, tile, category line, title, excerpt, link, then the date and read time. The date row is last.
+- **The whole card is one link.** Hover dims the title, scales the glyph plate by 1.06 and nudges the chevron 3px.
+- **The first post is not larger.** All cards are equal so the grid stays even.
+- The tile and plate are specified in §8.8.
+
 ### 9.6 Full-bleed hero
 
 - 16:9 or `100svh` media, black background (`#040404`).
@@ -668,7 +756,7 @@ Three page templates share one skeleton, so a new page only needs content: **Pla
 
 **Playground**: a 3-column grid of square tiles with the 8px grid gap; some tiles span two columns (`aspect` stays one row tall). Each tile is a soft gradient with film grain, a mono tag (top left) and year (top right), a coloured pixel artifact or the ring as its subject, and the title bottom left in NType 22–28px. Hover: the artifact hops in steps, and the artwork drifts against the pointer by up to 12px. A final "Next experiment" tile shows a small spinning ring. Tiles fade up with a 60ms stagger on first view. 2 columns below 1024px, 1 column below 768px.
 
-**Writing**: rows of `label | content`. The label holds the date and read time. The content holds a mono tag, the title (NType 26–40px, `ch` limit 22), an excerpt (Geist 15px, muted, ≤52ch) and an underlined "Read article ›" link. The first post is a **feature**: a 21:9 gradient tile with a pixel artifact and a larger title (up to 52px). Hover dims the title and nudges the chevron. A newsletter block closes the page, with an email input (48px, outlined, mono caps, yellow focus ring) and a primary button. The form validates locally and confirms in a mono caption line.
+**Writing**: a three-column board of post cards (§9.5c). Each card has two topic tags above a 3:2 thumbnail (an abstract artwork with a glyph on a frosted plate, §8.8), a category line, the title, a short excerpt and an underlined "Read post ›" link, with the date and read time last. Posts open in a reader layout (a sticky left index with a back link, a narrow reading column, flat small type). Hover dims the title and nudges the chevron. A newsletter block closes the page, with an email input (48px, outlined, mono caps, yellow focus ring) and a primary button.
 
 **Case study**: the same head, a meta strip of up to five items (Role, Timeline, Scope, Team, Platform; any that apply) between hairlines, and a sequence of sections rendered from the project's `cs.sections` data. Every case study has the same seven sections, in this order, and the mono eyebrow above each statement carries its number in the accent colour (`01 OVERVIEW / BACKGROUND`); the contents rail repeats the numbers:
 

@@ -1,0 +1,124 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8" /><title>Payman rejected variations</title>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@500;700&family=Inter:wght@400;500;600;700&display=block" rel="stylesheet" />
+<style>
+/* Rejected-design boards: lo-fi sketches on dotted paper, red pins on the wireframe, the reasons in a column on the right. 1080x608, rendered at 2x. */
+* { box-sizing: border-box; }
+body { margin: 0; background: #fff; color: #1a1a1a; -webkit-font-smoothing: antialiased; }
+.board { position: relative; width: 1080px; height: 608px; margin: 0 0 24px; overflow: hidden; background: #FAFAF7 radial-gradient(#D6D6CF 1px, transparent 1.2px) 0 0 / 18px 18px; font: 400 13px/1.3 "Architects Daughter", cursive; }
+.a { position: absolute; left: calc(var(--x) * 1px); top: calc(var(--y) * 1px); width: calc(var(--w) * 1px); height: calc(var(--h) * 1px); }
+.hd { position: absolute; left: 34px; top: 22px; display: flex; align-items: center; gap: 12px; }
+.stamp { padding: 3px 9px; border: 2px solid #E5484D; border-radius: 4px; color: #E5484D; font: 700 11px/1.2 "Inter"; letter-spacing: .08em; text-transform: uppercase; transform: rotate(-2deg); }
+.hd h2 { margin: 0; font: 700 30px/1 "Caveat", cursive; }
+/* wireframe pieces */
+.frame { background: #fff; border: 2px solid #1a1a1a; border-radius: 4px; }
+.box { border: 1.6px solid #1a1a1a; border-radius: 4px; background: #fff; }
+.soft { border-color: #9a9a94; }
+.ln { height: 7px; border: 1.4px solid #1a1a1a; border-radius: 4px; background: #fff; margin: 0 0 7px; }
+.ln.g { border-color: #b9b9b2; }
+.lbl { font-size: 12px; }
+.btn { display: inline-block; padding: 2px 9px; border: 1.6px solid #1a1a1a; border-radius: 4px; font-size: 11px; background: #fff; }
+.btn.pk { background: #3C9A98; border-color: #3C9A98; color: #fff; }
+.dot { width: 18px; height: 18px; border: 1.6px solid #1a1a1a; border-radius: 50%; display: inline-block; }
+.hatch { border: 1.4px solid #E2A27E; background: repeating-linear-gradient(-45deg, #FBE3D3 0 6px, #F6D2BC 6px 7px); }
+.hatch.g { border-color: #A7CF8E; background: repeating-linear-gradient(-45deg, #E6F4DA 0 6px, #D3EAC2 6px 7px); }
+.pct { font: 500 12px/1 "Inter"; letter-spacing: .1em; color: #8a6a55; text-align: center; }
+/* pins and reasons */
+.pin { position: absolute; left: calc(var(--x) * 1px); top: calc(var(--y) * 1px); width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 50%; background: #E5484D; color: #fff; font: 700 13px/26px "Inter"; text-align: center; box-shadow: 0 0 0 3px #fff; z-index: 3; }
+.ring { position: absolute; left: calc(var(--x) * 1px); top: calc(var(--y) * 1px); width: calc(var(--w) * 1px); height: calc(var(--h) * 1px); border: 2.2px solid #E5484D; border-radius: 40% 46% 42% 48%; transform: rotate(-1.5deg); z-index: 2; }
+.why { position: absolute; left: 726px; top: 82px; width: 322px; }
+.why h4 { margin: 0 0 12px; font: 600 11px/1.2 "Inter"; letter-spacing: .1em; text-transform: uppercase; color: #E5484D; }
+.r { display: grid; grid-template-columns: 26px 1fr; gap: 0 12px; margin: 0 0 16px; }
+.r .n { width: 26px; height: 26px; border-radius: 50%; background: #E5484D; color: #fff; font: 700 13px/26px "Inter"; text-align: center; }
+.r b { display: block; font: 700 22px/1.05 "Caveat", cursive; margin: 1px 0 3px; }
+.r p { margin: 0; font: 400 12.5px/1.45 "Inter"; color: #4a4a46; }
+.kept { position: absolute; left: 726px; bottom: 26px; width: 322px; padding: 11px 14px; border-left: 3px solid #1a1a1a; background: #fff; font: 400 12.5px/1.45 "Inter"; color: #2b2b28; }
+.kept b { font-weight: 600; }
+</style></head><body>
+</head><body>
+
+<!-- A: control steps below the fold -->
+<div class="board" id="rejected-fold">
+  <div class="hd"><span class="stamp">Rejected · A</span><h2>Control steps below the fold</h2></div>
+  <div class="frame a" style="--x:34;--y:78;--w:660;--h:500">
+    <div class="a" style="--x:0;--y:0;--w:656;--h:36;border-bottom:1.6px solid #1a1a1a;display:flex;align-items:center;gap:16px;padding:0 12px"><span class="dot"></span><span class="lbl">payman</span><span style="flex:1"></span><span class="lbl" style="color:#777">Product</span><span class="lbl" style="color:#777">Company</span><span class="lbl" style="color:#777">Blog</span></div>
+    <div class="a" style="--x:30;--y:62;--w:370;--h:90;font-size:25px;line-height:1.2">We deploy AI agents<br>that handle money</div>
+    <div class="a" style="--x:30;--y:160;--w:330;--h:20"><div class="ln g"></div></div>
+    <div class="a" style="--x:30;--y:190;--w:260;--h:34;display:flex;gap:10px"><span class="btn" style="padding:5px 14px;font-size:13px">Banks</span><span class="btn" style="padding:5px 14px;font-size:13px">Credit Unions</span></div>
+    <svg class="a" style="--x:420;--y:60;--w:210;--h:220" viewBox="0 0 210 220" fill="none" stroke="#1a1a1a" stroke-width="1.6"><rect x="1" y="1" width="208" height="218" rx="4"/><path d="M10 190L70 90L110 150L140 110L200 190Z"/><circle cx="160" cy="50" r="16"/></svg>
+    <div class="a" style="--x:0;--y:318;--w:656;--h:2;border-top:2px dashed #9a9a94"></div>
+    <div class="a lbl" style="--x:560;--y:296;--w:90;--h:20;color:#999;text-align:right">fold</div>
+    <div class="a" style="--x:30;--y:350;--w:300;--h:20;font-size:16px">How it works</div>
+    <div class="box a" style="--x:30;--y:384;--w:130;--h:52;display:grid;place-items:center">Request</div>
+    <div class="box a" style="--x:185;--y:384;--w:130;--h:52;display:grid;place-items:center">Policy check</div>
+    <div class="box a" style="--x:340;--y:384;--w:130;--h:52;display:grid;place-items:center">Approval</div>
+    <div class="box a" style="--x:495;--y:384;--w:130;--h:52;display:grid;place-items:center">Audit log</div>
+    <svg class="a" style="--x:0;--y:0;--w:656;--h:496" viewBox="0 0 656 496" fill="none" stroke="#1a1a1a" stroke-width="1.6"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#1a1a1a" stroke-width="1.6"/></marker></defs><path d="M162 410H181" marker-end="url(#ah)"/><path d="M317 410H336" marker-end="url(#ah)"/><path d="M472 410H491" marker-end="url(#ah)"/></svg>
+  </div>
+  <div class="ring" style="--x:52;--y:132;--w:384;--h:100"></div>
+  <div class="pin" style="--x:60;--y:140">1</div>
+  <div class="ring" style="--x:52;--y:258;--w:250;--h:56"></div>
+  <div class="pin" style="--x:310;--y:266">2</div>
+  <div class="ring" style="--x:50;--y:450;--w:640;--h:80"></div>
+  <div class="pin" style="--x:58;--y:456">3</div>
+  <div class="why"><h4>Why it failed</h4>
+    <div class="r"><span class="n">1</span><div><b>Capability before control</b><p>A bank buyer met "agents that handle money" with nothing on how they're held back.</p></div></div>
+    <div class="r"><span class="n">2</span><div><b>Two first actions, no primary one</b><p>The segment picker split the first click in two.</p></div></div>
+    <div class="r"><span class="n">3</span><div><b>The proof sat under the fold</b><p>Request, check, approve, log only appeared after a scroll.</p></div></div>
+  </div>
+  <div class="kept"><b>What shipped:</b> the four control steps in the hero, with one primary action.</div>
+</div>
+
+<!-- B: magic and warmth -->
+<div class="board" id="rejected-magic">
+  <div class="hd"><span class="stamp">Rejected · B</span><h2>A hero that sells the magic</h2></div>
+  <div class="frame a" style="--x:34;--y:78;--w:660;--h:500;background:#FFF6EC">
+    <div class="a" style="--x:0;--y:0;--w:656;--h:36;border-bottom:1.6px solid #1a1a1a;display:flex;align-items:center;gap:16px;padding:0 12px"><span class="dot"></span><span class="lbl">payman</span><span style="flex:1"></span><span class="lbl" style="color:#777">Product</span><span class="lbl" style="color:#777">Pricing</span></div>
+    <div class="a" style="--x:40;--y:70;--w:360;--h:100;font-size:27px;line-height:1.2">Banking that feels<br>like magic ✦</div>
+    <div class="a" style="--x:44;--y:40;--w:30;--h:30;font-size:20px">✧</div>
+    <div class="a" style="--x:330;--y:140;--w:30;--h:30;font-size:22px">✦</div>
+    <div class="a" style="--x:40;--y:178;--w:300;--h:20"><div class="ln g"></div></div>
+    <div class="a" style="--x:40;--y:212;--w:200;--h:40"><span class="btn pk" style="padding:7px 18px;font-size:14px;border-radius:20px">Try it free ✨</span></div>
+    <div class="a" style="--x:400;--y:110;--w:60;--h:60;border:1.6px solid #1a1a1a;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:24px">☺</div>
+    <div class="box a" style="--x:440;--y:180;--w:190;--h:84;padding:10px 12px;border-radius:14px 14px 14px 2px"><div class="lbl">Hi! I can move money for you 👋</div><div class="ln g" style="margin-top:8px;width:70%"></div></div>
+    <svg class="a" style="--x:20;--y:300;--w:620;--h:180" viewBox="0 0 620 180" fill="none" stroke="#c9a98a" stroke-width="1.6"><path d="M0 120C80 60 160 160 240 100S400 40 480 110 600 70 620 90"/><path d="M0 160C100 110 180 180 280 140S440 100 520 150 600 130 620 140"/></svg>
+  </div>
+  <div class="ring" style="--x:58;--y:132;--w:360;--h:120"></div>
+  <div class="pin" style="--x:58;--y:150">1</div>
+  <div class="ring" style="--x:422;--y:178;--w:254;--h:178"></div>
+  <div class="pin" style="--x:672;--y:186">2</div>
+  <div class="ring" style="--x:62;--y:280;--w:170;--h:58"></div>
+  <div class="pin" style="--x:240;--y:290">3</div>
+  <div class="why"><h4>Why it failed</h4>
+    <div class="r"><span class="n">1</span><div><b>The category's vocabulary of magic</b><p>It sold the trick to a reader who has to sign off on the risk.</p></div></div>
+    <div class="r"><span class="n">2</span><div><b>Warmth where proof should be</b><p>A friendly mascot, and no audit trail, rules or kill switch.</p></div></div>
+    <div class="r"><span class="n">3</span><div><b>A consumer call to action</b><p>"Try it free" reads like a friendly startup, not bank infrastructure.</p></div></div>
+  </div>
+  <div class="kept"><b>What shipped:</b> paper, ink and deep teal. Yellow only as a signal, never a fill.</div>
+</div>
+
+<!-- C: control last in the page order -->
+<div class="board" id="rejected-order">
+  <div class="hd"><span class="stamp">Rejected · C</span><h2>Control features at the bottom of the page</h2></div>
+  <div class="frame a" style="--x:34;--y:78;--w:660;--h:500;padding:18px 24px">
+    <div class="box" style="height:66px;padding:10px 14px;margin:0 0 9px"><div class="lbl">1 · Hero: what agents can do</div><div class="ln g" style="width:55%;margin-top:8px"></div></div>
+    <div class="box" style="height:60px;padding:10px 14px;margin:0 0 9px;display:flex;gap:14px;align-items:center"><span class="lbl" style="width:120px">2 · Stats</span><span style="font-size:20px">55%</span><span style="font-size:20px">200M+</span></div>
+    <div class="box" style="height:60px;padding:10px 14px;margin:0 0 9px;display:flex;gap:12px;align-items:center"><span class="lbl" style="width:120px">3 · Customers</span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+    <div class="box" style="height:60px;padding:10px 14px;margin:0 0 9px"><div class="lbl">4 · Integrations</div><div class="ln g" style="width:40%;margin-top:8px"></div></div>
+    <div class="box" style="height:60px;padding:10px 14px;margin:0 0 9px"><div class="lbl">5 · Security</div><div class="ln g" style="width:45%;margin-top:8px"></div></div>
+    <div class="box" style="height:76px;padding:10px 14px;display:flex;align-items:center;gap:14px"><span class="lbl" style="flex:1">6 · Rules · Audit trail · Kill switch</span><span style="display:inline-block;width:26px;height:14px;border:1.4px solid #1a1a1a;border-radius:8px;position:relative"><span style="position:absolute;left:2px;top:1.5px;width:8px;height:8px;border-radius:50%;background:#1a1a1a"></span></span></div>
+  </div>
+  <div class="ring" style="--x:46;--y:440;--w:644;--h:94"></div>
+  <div class="pin" style="--x:52;--y:452">1</div>
+  <div class="ring" style="--x:50;--y:170;--w:632;--h:146;border-style:dashed"></div>
+  <div class="pin" style="--x:58;--y:176">2</div>
+  <div class="ring" style="--x:616;--y:470;--w:50;--h:32"></div>
+  <div class="pin" style="--x:672;--y:470">3</div>
+  <div class="why"><h4>Why it failed</h4>
+    <div class="r"><span class="n">1</span><div><b>Control came last</b><p>Rules, audit trail and kill switch waited at the end of a long scroll.</p></div></div>
+    <div class="r"><span class="n">2</span><div><b>Proof before the problem</b><p>Stats and logos arrived before the risk they were meant to answer.</p></div></div>
+    <div class="r"><span class="n">3</span><div><b>The kill switch was a footnote</b><p>The one control a compliance lead looks for was the easiest to miss.</p></div></div>
+  </div>
+  <div class="kept"><b>What shipped:</b> one question per section, in the order a buyer worries. Controls moved up to section four.</div>
+</div>
+
+</body></html>

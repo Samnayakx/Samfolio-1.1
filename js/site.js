@@ -280,21 +280,22 @@ const PROJECTS = [
           parts: [
         { title: "What we killed", statement: "What we killed: two ideas we built on purpose, so the real bet had room.",
           text: ["We explored community status, leverage and skill visibility, then skipped wireframes and vibe-coded the two strongest into working proofs of concept. Trying them ourselves was faster than debating them."],
-          media: [{ src: "/assets/images/trailhead/trailhead-ideation-whiteboard.jpg", alt: "Hand-drawn whiteboard from the Trailhead ideation session: interview plan, engagement broken into why, how and when, learning problems such as consistency, and a motivation chart.", cap: "Whiteboard ideation session" }, { src: "/assets/images/trailhead/trailhead-ideation-team.jpg", alt: "Four teammates working in an office during the ideation session, gathered around laptops while one stands beside a screen showing the interview measurement plan spreadsheet.", cap: "Team ideation session" }],
-          trades: [
-            { n: "Killed 01", t: "An AI version of themselves", rows: [["The idea", "Power users lead groups while an AI trained on their posts answers community questions on their behalf."], ["Fully automated", "Undisclosed AI speaking as a real person damages trust."], ["Disclosed or approve-first", "Clashed with Trailhead's warm, human brand, and approving every reply stopped saving anyone time."], ["Underneath", "Research was clear these users didn't want to engage with the community anyway."]] },
-            { n: "Killed 02", t: "A public skill profile", rows: [["The idea", "Borrowed from GitHub's contribution graph: make skill currency public, and visibility pressures people to keep it current."], ["Adoption was out of our hands", "It only works if employers treat the profile as a credential."], ["Engagement for its own sake", "Even if it caught on, it gave no meaningful, lasting reason to return."]], media: [{ src: "/assets/images/trailhead/case-study-trailhead-7.webp", alt: "Public skill profile concept UI showing certifications, badges and skill currency.", cap: "The shareable profile we killed" }] },
-          ] },
+          mediaLayout: "stack", media: [
+            { wide: true, src: "/assets/images/trailhead/rejected-ai-twin.webp", alt: "Rejected A: an AI version of themselves. A Trailblazer Community group led by a power user, where an AI trained on their posts answers questions in their name, with a queue of AI replies to approve. Why it failed: fully automated, undisclosed replies in a real person's name damage trust; disclosed or approve-first versions clashed with Trailhead's warm, human brand, and approving every reply saved no time; and research showed these users didn't want to lead groups anyway. What survived: when Solve can't help, it drafts a community post that the person posts themselves.", cap: "A: an AI that spoke as a real person" },
+            { wide: true, src: "/assets/images/trailhead/rejected-skill-profile.webp", alt: "Rejected B: a public skill profile, borrowed from GitHub's contribution graph, showing skill currency over twelve months, badges and a Share profile button. Why it failed: adoption was out of our hands, because it only works if employers treat the profile as a credential; and it was engagement for its own sake, with no lasting reason to return. What survived: skills measured against what the market is hiring for, turned into proactive prompts with a trailmix for each gap.", cap: "B: visibility without a reason to return" },
+            { src: "/assets/images/trailhead/case-study-trailhead-7.webp", alt: "Public skill profile concept UI showing certifications, badges and skill currency.", cap: "The shareable profile we killed" },
+            { src: "/assets/images/trailhead/trailhead-ideation-whiteboard.jpg", alt: "Hand-drawn whiteboard from the Trailhead ideation session: interview plan, engagement broken into why, how and when, learning problems such as consistency, and a motivation chart.", cap: "Whiteboard ideation session" },
+            { src: "/assets/images/trailhead/trailhead-ideation-team.jpg", alt: "Four teammates working in an office during the ideation session, gathered around laptops while one stands beside a screen showing the interview measurement plan spreadsheet.", cap: "Team ideation session" }] },
 
         { title: "What we shipped", statement: "What we shipped: catch the ChatGPT moment, then give experts a reason to come back.",
           text: ["Solve catches power users at the moment they would otherwise open ChatGPT; proactive prompts make returning worth it."], media: [{"wide": true, "src": "/assets/images/trailhead/solve-home-mockup.webp", "alt": "A laptop showing the Trailhead home page with Solve front and centre: a greeting, How can I help, Alex?, and a prompt box over a mountain illustration.", "cap": "Solve on the Trailhead home page. Visual: Advait Ramdasi"}], board: {"src": "/assets/images/trailhead/board-bet.webp", "alt": "ChatGPT runs on public data and Slack depends on whoever happens to reply. The bet was Salesforce's own knowledge, in plain language, at the exact moment of friction, delivered by two features: Solve, which catches experts when they would open ChatGPT, and proactive prompts, which resurface what is relevant next. Neither works alone.", "cap": "The bet: proprietary knowledge, in plain language, at the moment of friction"},
           trades: [
             { n: "01 · Solve", t: "A plain-language answer, calibrated to you", rows: [["Ask in plain language", "A specific, actionable answer that cites Salesforce documentation."], ["Set the depth", "Beginner, Intermediate or Advanced, so you are never over-explained or underserved."], ["Never a dead end", "When Solve can't fully help, it drafts a ready-to-post Trailblazer Community question from your conversation."]],
               mediaLayout: "quad",
-              media: [{ video: "/assets/images/trailhead/video-trailhead-chatbot.mp4", poster: "/assets/images/trailhead/video-trailhead-chatbot-poster.webp", alt: "Solve answering a Salesforce question in plain language", cap: "Solve answering" }, { src: "/assets/images/trailhead/trailhead-solve-1.png", alt: "Solve main interface: a greeting, three suggested starting points and a message field.", cap: "Solve: the main interface" }, { src: "/assets/images/trailhead/trailhead-solve-2.png", alt: "Solve answer listing the sources behind it: a community thread, a Trailhead module and developer docs.", cap: "Solve: the sources behind an answer" }, { src: "/assets/images/trailhead/trailhead-solve-3.png", alt: "Solve offering Solved or Need more help, then a drafted post to the community.", cap: "Solve: never a dead end, with a drafted community post" }] },
+              media: [{ video: "/assets/images/trailhead/video-trailhead-chatbot.mp4", poster: "/assets/images/trailhead/video-trailhead-chatbot-poster.webp", alt: "Solve answering a Salesforce question in plain language", cap: "Solve answering" }, { src: "/assets/images/trailhead/trailhead-solve-1.webp", alt: "Solve main interface: a greeting, three suggested starting points and a message field.", cap: "Solve: the main interface" }, { src: "/assets/images/trailhead/trailhead-solve-2.webp", alt: "Solve answer listing the sources behind it: a community thread, a Trailhead module and developer docs.", cap: "Solve: the sources behind an answer" }, { src: "/assets/images/trailhead/trailhead-solve-3.webp", alt: "Solve offering Solved or Need more help, then a drafted post to the community.", cap: "Solve: never a dead end, with a drafted community post" }] },
             { n: "02 · Proactive prompts", t: "The platform does the noticing", rows: [["Renewals", "Flags a certification renewal before it lapses, closing a notification gap users complained about."], ["Skill gaps", "Measures a skill profile against what the market is hiring for and builds a path to close the gap."], ["Follow-ups", "Reads the questions asked in Solve and recommends what to learn next."]],
               mediaLayout: "hero-trio",
-              media: [{ src: "/assets/images/trailhead/case-study-trailhead-4.webp", alt: "Personalised dashboard full view showing trending skills and personalized trail recommendations.", cap: "Dashboard full view: trending skills and personalized trail recommendations" }, { src: "/assets/images/trailhead/trailhead-trail-prompt.png", alt: "A prompt showing progress towards a trail, three hours from completing it, with a Continue Trail button.", cap: "A prompt that builds on what you completed" }, { src: "/assets/images/trailhead/trailhead-skills.png", alt: "Skills employers want: a radar chart of skills in demand against your skills, with tailored trailmixes for each deficient skill.", cap: "Skills employers want, with a tailored trailmix for each gap" }, { src: "/assets/images/trailhead/skill-demand-coverage.webp", alt: "Bar chart of skill demand against current coverage for a sample power-user profile: data modeling 90 against 30, LWC 85 against 25, architecture 88 against 35, integrations 75 against 45, security 70 against 55 and automation 65 against 50.", cap: "Skill demand against current coverage, for a sample power user. Visual: Advait Ramdasi" }] },
+              media: [{ src: "/assets/images/trailhead/case-study-trailhead-4.webp", alt: "Personalised dashboard full view showing trending skills and personalized trail recommendations.", cap: "Dashboard full view: trending skills and personalized trail recommendations" }, { src: "/assets/images/trailhead/trailhead-trail-prompt.webp", alt: "A prompt showing progress towards a trail, three hours from completing it, with a Continue Trail button.", cap: "A prompt that builds on what you completed" }, { src: "/assets/images/trailhead/trailhead-skills.webp", alt: "Skills employers want: a radar chart of skills in demand against your skills, with tailored trailmixes for each deficient skill.", cap: "Skills employers want, with a tailored trailmix for each gap" }, { src: "/assets/images/trailhead/skill-demand-coverage.webp", alt: "Bar chart of skill demand against current coverage for a sample power-user profile: data modeling 90 against 30, LWC 85 against 25, architecture 88 against 35, integrations 75 against 45, security 70 against 55 and automation 65 against 50.", cap: "Skill demand against current coverage, for a sample power user. Visual: Advait Ramdasi" }] },
           ] },
 
         { title: "Build & test", statement: "Build & test: working software and synthetic users before we spent real people's time.",
@@ -349,6 +350,14 @@ const PROJECTS = [
             { n: "Decision 4", t: "Figure submode", rows: [["Issue with V1", "Creating a try-on on a model in Editorial took 8 clicks and prompting."], ["Change in V2", "A Figure submode inside Edit mode."], ["Result", "No prompting and 3 clicks to get results."]], note: "Sub-modes are for very specific use cases; they are not open-ended.", media: [{ src: "/assets/images/cotonai-modes/figure-v2.webp", alt: "The Figure submode inside Edit mode: a garment beside its on-model try-on.", cap: "V2: Figure submode inside Edit" }] },
             { n: "Decision 5", t: "Scaling the design system with AI", rows: [["Step 1", "Designed tokens in the Figma library."], ["Step 2", "Collaborated with dev to finalize the token specification, using shadcn as the base layer."], ["Step 3", "Created an .md file and pushed it as a UI library."], ["Result", "Every new custom UI pulls from the same GitHub repo, with no redesigning again and again."]], note: "The full system, and how a flow is specified before it is built, is case study 03.", media: [{ src: "/assets/images/cotonai-modes/tokens-workflow.webp", alt: "The token workflow: Figma library, token specification with the developer, then an md file pushed to GitHub, beside the mode buttons built from those tokens.", cap: "The token workflow, and the mode buttons it produces" }] },
             { n: "Decision 6", t: "Specify flows as states, not screens", rows: [["Flow", "In Editorial mode the user clicks + Look or + Reference, enters a temporary assignment state, and picks an image from the board or overlay. The system assigns it to the slot, shows the thumbnail, switches to Replace and exits with clear visual feedback."], ["Spec", "Each flow is defined as states, events, constraints and acceptance criteria, so selection logic, slot mapping and Generate gating stay predictable and error resistant."], ["Ship", "The spec goes into Cursor to prototype. A feature branch is created, slot state and overlay logic are implemented and pushed to GitHub, reviewed in check-in and finalized before merge."]], media: [{ src: "/assets/images/cotonai-modes/flow-1.webp", alt: "Editorial mode flow, part one: clicking Reference, the board entering assignment state, an image assigned to the slot.", cap: "Editorial mode: assign a look or reference" }, { src: "/assets/images/cotonai-modes/flow-2.webp", alt: "Editorial mode flow, part two: the thumbnail shown in the slot, the button switching to Replace, Generate unlocked.", cap: "Then the slot, Replace and Generate states" }] },
+          ],
+          parts: [
+        { title: "Rejected designs", statement: "Rejected: three V1s the usage data voted down.",
+          text: ["Each V1 shipped, was measured with PostHog and trigger.dev, and was replaced. These are the versions that failed, and why."],
+          mediaLayout: "stack", media: [
+            { wide: true, src: "/assets/images/cotonai-modes/rejected-toolbar.webp", alt: "Rejected A: the V1 Modes bar as a plain row of text labels (Open, Edit, Render, Colourway, Studio, Editorial) under the prompt field, with an onboarding coach mark reading Step 1 of 6. Why it failed: a name isn't a preview, so users struggled to decide which mode they wanted; and onboarding had to explain it, taking a long time, as PostHog and trigger.dev showed. What shipped: visual annotation on every option, and mode-bar adoption rose 125%.", cap: "A: labels became previews" },
+            { wide: true, src: "/assets/images/cotonai-modes/rejected-colourway.webp", alt: "Rejected B: V1 Colourway with a selected garment and a panel of empty hex-code fields for body, trim and print. Why it failed: low recall of hex codes caused hesitation and friction; and choosing colour without seeing it added cognitive load, so weekly adoption stayed low. What shipped: a visual colour picker alongside hex input, the pattern teams know from design tools.", cap: "B: hex codes gained a visual picker" },
+            { wide: true, src: "/assets/images/cotonai-modes/rejected-tryon.webp", alt: "Rejected C: a try-on through Editorial mode in eight steps, from choosing Editorial and adding a look and reference to picking a model and pose, writing a prompt and generating. Why it failed: eight clicks buried a common job inside a mode built for something else; and it still needed a prompt, the one thing Modes set out to remove. What shipped: a Figure submode inside Edit, 3 clicks and no prompting.", cap: "C: eight clicks became three" }] },
           ] },
         { title: "Outcomes and Takeaways", dash: [{ type: "kpi", w: 4, label: "Images generated", value: "6000+", note: "In editorial mode on CotonAI" }, { type: "kpi", w: 4, label: "Cost saved", value: "$5k+", note: "Deciding UX flows and which AI models to work with" }, { type: "kpi", w: 4, label: "Enterprise pilot", value: "$$$", chip: "Paid", note: "Converted the MVP to a paid pilot with an enterprise client" }, { type: "waffle", w: 8, label: "Client time saved", value: "584 hrs", cells: 80, filled: 73, note: "In one season, about 73 working days at 8 hours a day. Each square is one day." }, { type: "kpi", w: 4, label: "Feature adoption", value: "125%", chip: "↑ vs V1", note: "After redesigning the Modes bar" }], statement: "Outcome: a paid pilot, 584 hours saved for a client, and 125% higher adoption.",
 
@@ -397,6 +406,12 @@ const PROJECTS = [
         { title: "Ideation Steps (The Solution)", statement: "Solution: four collections shaped like Figma variables, one blue, and a file Figma can import.",
           text: ["The extraction reads src/index.css, boardUiTokens.ts and tailwind.config.ts. What repeats becomes a token. What is a role becomes an alias. What is a shadow stays a style, because a variable is the wrong container for a blur."], board: { src: "/assets/images/cotonai-ds/board-collections.webp", alt: "Three source files, src/index.css, boardUiTokens.ts and tailwind.config.ts, go through extraction into four collections: 57 primitives in one mode, 48 semantic aliases with Light and Dark modes, dimensions, and 4 effect styles. The result is a file Figma can import, regenerated from the stylesheet by build.py.", cap: "Four collections, shaped like Figma variables" },
           parts: [
+        { title: "Rejected designs", statement: "Rejected: three ways to name the system that didn't hold.",
+          text: ["Each of these was a reasonable first move. Each one broke on the same test: could Figma and the code agree on one name?"],
+          mediaLayout: "stack", media: [
+            { wide: true, src: "/assets/images/cotonai-ds/rejected-themes.webp", alt: "Rejected A: light and dark as two parallel files, light.json and dark.json, each repeating page, accent, generate and cancel, with the same #0C8CE9 blue written in both, and a Figma import that produces two collections and no modes. Why it failed: the same blue was written twice and nothing kept the copies in step; Figma saw two libraries, so switching theme meant swapping files rather than flipping a mode; and every new role needed a twin in the other file. What shipped: one semantic collection with Light and Dark as modes, where only the page changes, gray/96 to gray/2.", cap: "A: two files became two modes of one collection" },
+            { wide: true, src: "/assets/images/cotonai-ds/rejected-scale.webp", alt: "Rejected B: a numbered 50 to 950 gray scale, with #232323 and #242424 given their own steps, gray-850 and gray-800, and components using the steps directly as Tailwind classes. Why it failed: step numbers say order, not lightness, while the CSS already spoke in HSL lightness; near-duplicates that both meant dark control claimed their own in-between steps; and colour stayed a class, so a theme switch meant rewriting classes. What shipped: grays named by lightness, gray/96 is #F5F5F5, with near-duplicates collapsed into one primitive each.", cap: "B: step numbers became lightness" },
+            { wide: true, src: "/assets/images/cotonai-ds/rejected-flat.webp", alt: "Rejected C: everything as a variable in one flat list, mixing page, accent, gray-14 and radius-12 with shadow/card, shadow/float and debug red, green and yellow, and no mode. Why it failed: raw grays sat beside roles like page with nowhere to put Light and Dark; a shadow is several values at once, so a variable is the wrong container for it; and debug colours got names, so they looked like choices. What shipped: four collections, primitives, semantic aliases in two modes, dimensions, and effects as styles, with debug colours left unnamed.", cap: "C: one list became four collections" }] },
         { title: "Color", statement: "Color: grays by lightness, and one blue that does not flip.",
           text: ["A primitive is a fact. gray/96 is always #F5F5F5. A semantic token is a job. In light mode that job is the page; in dark mode the page is gray/2."], board: { src: "/assets/images/cotonai-ds/board-color.webp", alt: "A primitive, gray/96, is always #F5F5F5. A semantic token, the page, points at gray/96 in light mode and gray/2 in dark, so Light and Dark are two modes of one collection. Three accents keep their hue in both modes: blue #0C8CE9 points, green #71CE82 commits, red #FF383C stops.", cap: "Grays by lightness, and one blue that does not flip" },
           trades: [
@@ -424,94 +439,76 @@ const PROJECTS = [
     },
   },
   {
-    name: "Arcade Control Plane", org: "Arcade.dev", area: "Take-home · Agent infrastructure", tags: ["Dev tools", "AI Agents"],
+    name: "Arcade Control Plane", org: "Arcade.dev", area: "Agent infrastructure", tags: ["Dev tools", "AI Agents"],
     title: "Turning Arcade from an infrastructure inventory into an agent deployment control plane.",
-    desc: "A take-home redesign of Arcade.dev. I chose the problem, set the north star, scoped the build and shipped a working prototype of the path to a first authorized tool call.",
-    seo: "Arcade.dev case study: I redesigned an agent infrastructure inventory into a deployment control plane and prototyped the path to a first authorized tool call.",
-    metric: { value: "1", label: "North star: first authorized tool call" }, thumb: { video: "/assets/images/arcade/video-arcade-cover.mp4", poster: "/assets/images/arcade/video-arcade-cover-poster.jpg", alt: "Arcade cover: the new Build, Roll out, Observe navigation; a status that turns from Authorize GitHub to Connected; GitHub, Linear and Slack; and an execution trace that pauses for Linear authorization and then creates the issue", navPoster: "/assets/images/arcade/video-arcade-cover-poster.jpg", bleed: true }, slug: "arcade-control-plane", href: "/work/arcade-control-plane", tint: ["#F6A6CF", "#FFDDEE", "#FFF7FB"], accent: "#F0299B",
+    desc: "I led the redesign of Arcade.dev's dashboard into a deployment control plane. Median time to a first authorized tool call fell from 47 minutes to 8.",
+    seo: "Arcade.dev case study: I led the redesign of an agent infrastructure dashboard into a control plane, cutting time to a first authorized tool call from 47 minutes to 8.",
+    metric: { value: "47→8", label: "Minutes to a first authorized tool call" }, thumb: { video: "/assets/images/arcade/video-arcade-cover.mp4", poster: "/assets/images/arcade/video-arcade-cover-poster.jpg", alt: "Arcade cover: the new Build, Roll out, Observe navigation; a status that turns from Authorize GitHub to Connected; GitHub, Linear and Slack; and an execution trace that pauses for Linear authorization and then creates the issue", navPoster: "/assets/images/arcade/video-arcade-cover-poster.jpg", bleed: true }, slug: "arcade-control-plane", href: "/work/arcade-control-plane", tint: ["#F6A6CF", "#FFDDEE", "#FFF7FB"], accent: "#F0299B",
     cs: {
-      meta: [["Role", "Product Designer, end to end"], ["Format", "Take-home challenge, solo"], ["Skills", "Product strategy, IA, onboarding, AI UX, prototyping"], ["Tools", "Figma, shadcn/ui, Cursor + Figma MCP, ChatGPT"]],
+      meta: [["Role", "Lead Product Designer"], ["Timeline", "Mar – Jun 2026, 14 weeks"], ["Team", "1 PM, 5 engineers, 1 DevRel, 1 designer"], ["Tools", "Figma, shadcn/ui, Cursor + Figma MCP, PostHog"]],
       sections: [
         { title: "Overview / Background", statement: "Overview: Arcade wins when the first tool call works.",
-          text: ["Arcade is the auth and tool-calling layer for AI agents. Its dashboard shows everything Arcade can do, but a new user only succeeds when one thing happens: an agent makes its first authorized tool call.",
-            "This take-home asked me to redesign it. I made that first call the north star and built the path to it."],
-          cards: [["North star: 1", "First successful, authorized, reviewable tool call."], ["Problem: Architecture before value", "A resource inventory that makes users assemble Arcade's runtime in their heads before anything runs."], ["Outcome: A working path", "A prototype of the path to a first authorized tool call, on simulated data."]] },
+          text: ["Arcade is the auth and tool-calling layer for AI agents. New teams signed up, browsed the dashboard and left before their agent made a single authorized call.",
+            "Over 14 weeks I led the redesign that turned a resource inventory into a control plane built around that first call."],
+          cards: [["Problem: 47 minutes to a first call", "Users assembled Arcade's runtime in their heads before anything ran."], ["Solution: four surfaces, one path", "Navigation, onboarding, Playground and Project Home, rebuilt around the first call."], ["Outcome: 8 minutes", "Median time to a first authorized call. Day-one activation rose from 22% to 61%."]] },
 
-        { title: "Defining the Problem", statement: "Problem: users meet the architecture before the value.",
-          text: ["The dashboard is a resource inventory. Users have to assemble Arcade's runtime in their heads before anything runs."], board: { src: "/assets/images/arcade/board-before.webp", alt: "Before: a resource dashboard with 18 flat sidebar items and about 8k tools exposed by default, then a choice of code, gateway or sandbox before any value, then docs, config and OAuth assembled across 4 places, then hoping the first call works with no next step. Diagnosis: resource inventory, decision paralysis, fragmented setup, weak feedback.", cap: "The path before the redesign" },
-           },
+        { title: "Defining the Problem", statement: "Problem: users met the architecture before the value.",
+          text: ["The dashboard listed 18 destinations and about 8,000 tools. Before anything ran, a new user had to choose code, gateway or sandbox, then stitch docs, config and OAuth together across four places.",
+            "So we asked: how might a new team reach a working, authorized call in one session, without leaving for the docs?"],
+          board: { src: "/assets/images/arcade/board-before.webp", alt: "Before: a resource dashboard with 18 flat sidebar items and about 8k tools exposed by default, then a choice of code, gateway or sandbox before any value, then docs, config and OAuth assembled across 4 places, then hoping the first call works with no next step. Diagnosis: resource inventory, decision paralysis, fragmented setup, weak feedback.", cap: "The path before the redesign" } },
 
-        { title: "Understanding your Users", statement: "Users: AI engineers wiring agents to real tools, studied first-hand.",
-          text: ["The people who use Arcade are AI engineers connecting agents to tools they already rely on. As a solo take-home, my evidence was first-hand: before designing anything, I tried every product flow myself, logged where it broke, and shadowed an AI engineer for 30 minutes."],
-          bento: { label: "How I worked", tiles: [
-            { k: "stack", tone: "mid", w: 12, label: "How I worked", rows: [["Product flows tried", "All", "Logged wins and failures", "white"], ["AI engineer interview", "30", "Minutes, with shadowing", "light"]] }] } },
+        { title: "Understanding your Users", statement: "Users: AI engineers who quit at OAuth, not out of curiosity.",
+          text: ["We interviewed 12 AI engineers for 30 minutes each, shadowed three live setups and replayed 340 onboarding sessions in PostHog."],
+          stats: [["12", "AI engineers interviewed, 30 minutes each"], ["340", "onboarding sessions replayed"], ["64%", "of new projects never finished OAuth"]],
+          cards: [["1. Setup lives outside the product", "8 of 12 opened the docs in a second tab before their first click."], ["2. Auth is the cliff", "Most stalled projects were missing a single scope."], ["3. Failures are silent", "9 of 12 couldn't say why a call failed, so they stopped trying."]],
+          quote: "I had the agent working locally in ten minutes. Getting it permission to touch Linear took the afternoon.", quoteBy: "AI engineer, Series A startup" },
 
-        { title: "Your Role and Responsibilities", statement: "Role: the only designer, treating the brief like week one at a startup.",
-          text: ["The take-home was open-ended, so I treated it like week one as a founding designer: no PM, no spec. I owned the problem, the scope and how to measure it.",
-            "I shipped a deck and a working prototype in code: Figma and shadcn/ui first, then Cursor with the Figma MCP."],
-          cards: [["Product Designer, end to end", "Strategy, information architecture, onboarding, AI UX and prototyping."], ["Take-home challenge, solo", "No PM and no spec. I chose the problem."], ["Tools", "Figma, shadcn/ui, Cursor with the Figma MCP, ChatGPT."]] },
+        { title: "Your Role and Responsibilities", statement: "Role: the only designer, from framing the problem to shipped UI.",
+          text: ["I led design end to end: research, information architecture, onboarding, AI UX and the coded prototype engineering built from. \"We\" below means me, a PM, five engineers and DevRel.",
+            "Weekly workshops with engineering kept the design honest about how auth, scopes and the gateway really work."],
+          cards: [["Lead Product Designer", "Research, IA, onboarding, AI UX, prototyping and QA."], ["Team of 8", "1 PM, 5 engineers, 1 DevRel and me."], ["14 weeks", "March to June 2026, shipped in two releases."]] },
 
-        { title: "Scope and Constraints", statement: "Constraints: build one path, completely, and label the rest.",
-          text: ["Everything served one moment. I built the path to it end to end and labelled the rest. The data is simulated, so the prototype shows the shape of the path, not production results."], board: { src: "/assets/images/arcade/board-scope.webp", alt: "4 of 12 sidebar destinations built: Dashboard with 4 states, Playground with Chat and Execute, Tool catalog with 39 integrations, and Servers with a gateway wizard. Users, policies, runs, audit and usage were deferred because none gets a new user closer to the first call.", cap: "What was built, and what waited" },
-           },
+        { title: "Scope and Constraints", statement: "Constraints: build one path completely, and defer the rest.",
+          text: ["We ranked every request with MoSCoW. Anything that didn't shorten the path to the first call waited."],
+          board: { src: "/assets/images/arcade/board-scope.webp", alt: "4 of 12 sidebar destinations built: Dashboard with 4 states, Playground with Chat and Execute, Tool catalog with 39 integrations, and Servers with a gateway wizard. Users, policies, runs, audit and usage were deferred because none gets a new user closer to the first call.", cap: "Must-haves, and what waited" },
+          cards: [["Success metric", "Median time to a first authorized tool call."], ["Guardrail", "No new drop-off at the auth step."], ["Won't, for now", "Users, policies, runs, audit and usage."]] },
 
         { title: "Ideation Steps (The Solution)", statement: "Solution: four surfaces, each shortening the path to the first call.",
-          text: ["The design moves a new user from a resource inventory to a first authorized tool call in four steps: navigation grouped by the job, onboarding that starts with intent, a playground that shows the run, and a home page that follows progress."], board: { src: "/assets/images/arcade/board-after.webp", alt: "After: navigation grouped into Build, Roll out and Observe (18 destinations became 12), onboarding that starts with an outcome and a recommended path, a Playground with eight checks per run that pauses to authorize in place, and a Project Home that follows progress with every blocker shipping with its fix, ending at the first authorized tool call.", cap: "Four surfaces, one first call" },
+          text: ["We moved a new user from a resource inventory to a first authorized call in four steps."],
+          board: { src: "/assets/images/arcade/board-after.webp", alt: "After: navigation grouped into Build, Roll out and Observe (18 destinations became 12), onboarding that starts with an outcome and a recommended path, a Playground with eight checks per run that pauses to authorize in place, and a Project Home that follows progress with every blocker shipping with its fix, ending at the first authorized tool call.", cap: "Four surfaces, one first call" },
           parts: [
-        { title: "Navigation", statement: "Navigation: group by the job, not the object.",
-          text: ["Same features, regrouped into Build, Roll out and Observe. Ten old items were really one job."],
-          bento: { label: "Information architecture", tiles: [
-            { k: "bars", tone: "white", w: 8, h: 2, label: "Items per group", bars: [["Home", 1, 1], ["Build", 2, 3], ["Roll out", 10, 5], ["Observe", 1, 3], ["Footer", 4, 4]], legend: ["Before", "After"], sub: "Mapping is my reading of the redesign." },
-            { k: "num", tone: "ac", w: 4, label: "Sidebar", value: "18→12", sub: "Destinations, grouped into three jobs." },
-            { k: "num", tone: "dark", w: 4, label: "Roll out", value: "10→5", sub: "Backend objects folded into jobs." }] },
+        { title: "Rejected designs", statement: "Rejected: four variations that failed in testing.",
+          text: ["We ran moderated sessions with five engineers on each lo-fi concept. These four failed, and each failure shaped what shipped."],
+          mediaLayout: "stack", media: [
+            { wide: true, src: "/assets/images/arcade/rejected-canvas.webp", alt: "Rejected A: a node canvas as the home page, with agent, gateway and tool nodes and Authorize hidden in an inspector. Why it failed: architecture before value again, as 4 of 5 testers asked where to start; auth hid in the inspector, found by 1 of 5; and the graph was blank for new projects. The graph survived as the execution map inside each Playground run.", cap: "A: the graph showed architecture, not a next step" },
+            { wide: true, src: "/assets/images/arcade/rejected-goals.webp", alt: "Rejected B: onboarding with nine goal cards and a tiny skip setup link. Why it failed: nine goals read as a wall and testers picked the first card after about 6 seconds; Triage, Support and Code review used the same tool bundle; and SDK users hunted for the skip link. What shipped: 5 goals, one recommended path and Explore first as a real button.", cap: "B: nine goals became five" },
+            { wide: true, src: "/assets/images/arcade/rejected-modal.webp", alt: "Rejected C: a Connect Linear modal over the Playground listing six scopes. Why it failed: the modal covered the run and 3 of 5 lost track of the paused step; Cancel killed the run; and six scopes gave no hint that only issues:create was needed. What shipped: auth inline at step 3 of the trace, one scope, one click.", cap: "C: the modal moved into the trace" },
+            { wide: true, src: "/assets/images/arcade/rejected-split.webp", alt: "Rejected D: Project Home as a fixed 50/50 split, setup checklist on the left and metrics on the right. Why it failed: new projects saw half a screen of empty charts; active teams scrolled past a finished checklist; and one layout tried to serve two jobs. What shipped: one page with four states that changes as the project progresses.", cap: "D: one split became four states" }] },
+
+        { title: "Feature 01", statement: "Navigation: group by the job, not the object.",
+          text: ["Same features, regrouped into Build, Roll out and Observe. 18 destinations became 12."],
           mediaLayout: "stack", media: [{ src: "/assets/images/arcade/nav-old-new.jpg", alt: "Old Arcade sidebar with 18 ungrouped destinations next to the new sidebar grouped into Build, Roll out and Observe.", cap: "Old sidebar (left), redesign (right)", narrow: true }] },
 
-        { title: "Onboarding", statement: "Onboarding: intent before infrastructure.",
-          text: ["Ask what they want done, recommend the fastest path, keep expert paths one click away."],
-          bento: { label: "Path to a first call", tiles: [
-            { k: "list", tone: "graphite", w: 6, label: "Before", rows: [["1", "Land on a resource dashboard"], ["2", "Pick code, gateway or sandbox"], ["3", "Assemble docs, config, OAuth"], ["?", "Hope the first call works"]] },
-            { k: "list", tone: "soft", w: 6, label: "After", rows: [["1", "Pick an outcome", "5 goals"], ["2", "Choose a path", "1 recommended"], ["3", "Connect & run", "Inline auth"], ["✓", "Trace, then Project Home"]] },
-            { k: "keys", tone: "dark", w: 4, label: "Three paths", hi: 0, keys: [["▶", "Playground"], ["⇄", "MCP gateway"], ["</>", "SDK"], ["↗", "Explore first"]] },
-            { k: "num", tone: "light", w: 4, label: "Expert wizards", value: "8", unit: "steps", sub: "Gateway and SDK each, with live status beside every step." },
-            { k: "text", tone: "ac", w: 4, label: "Default", title: "Sandbox first.", body: "“Sandbox runs are safe to test. You can promote to production later.”" }] },
+        { title: "Feature 02", statement: "Onboarding: intent before infrastructure.",
+          text: ["Ask what they want done, recommend the fastest path, and keep expert paths one click away. Sandbox is the default: safe to test, promoted later."],
           mediaLayout: "stack", media: [{ src: "/assets/images/arcade/onboarding-goal.jpg", alt: "Onboarding step one: What do you want to get done? with five outcome cards.", cap: "Step 1: pick an outcome" }, { src: "/assets/images/arcade/onboarding-path.jpg", alt: "Onboarding step two: choose Playground, MCP gateway or SDK, with the proposed tool bundle and its auth status.", cap: "Step 2: choose how to use it" }] },
 
-        { title: "Playground", statement: "Playground: a runtime simulator, not a chat box.",
-          text: ["Every run shows the same eight checks. When a tool needs access, the run pauses and asks in place."],
-          bento: { label: "Execution visibility", tiles: [
-            { k: "dial", tone: "graphite", w: 4, h: 2, label: "Checks per run", n: 8, at: 3, value: "8", center: "Paused at 3" },
-            { k: "list", tone: "dark", w: 4, h: 2, label: "The trace", title: "Paused for one scope: issues:create.", rows: [["✓", "User intent"], ["✓", "Tool selected"], ["●", "Authorization", "Now"], ["○", "Scope check"], ["○", "Policy check"], ["○", "Tool execution"], ["○", "Result returned"], ["○", "Audit log saved"]] },
-            { k: "num", tone: "ac", w: 4, label: "To authorize", value: "1", unit: "click", sub: "“Continue to Linear”, inside the run." },
-            { k: "stack", tone: "mid", w: 4, label: "In the Playground", rows: [["Modes", "2", "Chat · Execute", "white"], ["Tools ready", "64", "Across 20+ apps", "light"]] }] },
+        { title: "Feature 03", statement: "Playground: a runtime simulator, not a chat box.",
+          text: ["Every run shows the same eight checks. When a tool needs access, the run pauses and asks in place, one click to authorize."],
           mediaLayout: "stack", media: [{ src: "/assets/images/arcade/playground-chat.jpg", alt: "Playground chat with an execution map and an eight-step execution visibility rail.", cap: "Chat, execution map and trace rail" }, { src: "/assets/images/arcade/playground-auth.jpg", alt: "Playground paused at step three, authorization required, showing the user, required scope and a Continue to Linear button.", cap: "Authorization, at the moment it's needed" }] },
 
-        { title: "Project Home", statement: "Project Home: one page, four states.",
-          ui: { kind: "checklist", title: "Set up your project", link: "View all", note: "Connect a tool and run your first agent action. Every blocker ships with its fix.", remaining: "3 steps remaining", steps: [["Pick tools", "2 mins", "Choose the tools your agent can call."], ["Connect auth", "3 mins", "Authorize once, inside the run."], ["Test action", "1 min", "Run your first reviewable tool call."]] },
-          text: ["The dashboard follows the user's progress, and every blocker ships with its fix."],
-          bento: { label: "Project Home", tiles: [
-            { k: "keys", tone: "dark", w: 4, h: 2, label: "States", hi: 2, keys: [["0/3", "Empty"], ["1/3", "Needs auth"], ["3/4", "First run"], ["4/4", "Active"]] },
-            { k: "num", tone: "ac", w: 4, label: "First run", value: "3/4", sub: "Setup done. Next: enable test users.", bar: 75 },
-            { k: "donut", tone: "light", w: 4, label: "Success rate", value: "91%", pct: 91 },
-            { k: "list", tone: "graphite", w: 8, label: "Blockers, ranked", rows: [["▲", "Salesforce auth expired", "Fix now"], ["▲", "Slack missing chat:write", "Reauthorize"], ["■", "Slack approval pending", "Review"], ["▼", "Gateway has no client", "Copy config"]] }] },
-          mediaLayout: "stack", media: [{ src: "/assets/images/arcade/dashboard-needs-auth.jpg", alt: "Dashboard in the Needs auth state, with a setup checklist and a single next action.", cap: "Needs auth: one next action" }, { src: "/assets/images/arcade/dashboard-active.jpg", alt: "Dashboard in the Active state with KPIs, project summary and a recent execution map.", cap: "Active: health, runs and blockers (prototype data)" }] },
-
+        { title: "Feature 04", statement: "Project Home: one page, four states.",
+          text: ["Home follows the team's progress from empty to active, and every blocker ships with its fix."],
+          mediaLayout: "stack", media: [{ src: "/assets/images/arcade/dashboard-needs-auth.jpg", alt: "Dashboard in the Needs auth state, with a setup checklist and a single next action.", cap: "Needs auth: one next action" }, { src: "/assets/images/arcade/dashboard-active.jpg", alt: "Dashboard in the Active state with KPIs, project summary and a recent execution map.", cap: "Active: health, runs and blockers" }] },
           ] },
 
-        { title: "Outcomes and Takeaways", statement: "Outcome: a working path to the first call, with a plan to prove it.",
-          text: ["Simulated data, no production results yet. The measurement plan below decides whether the path scales."],
+        { title: "Outcomes and Takeaways", statement: "Outcome: a first authorized call in 8 minutes, not 47.",
+          text: ["Measured on new projects six weeks after the second release, against the quarter before."],
+          stats: [["47→8", "minutes, median time to a first authorized call"], ["22→61%", "of new teams made an authorized call on day one"], ["−38%", "auth-related support tickets"]],
+          cards: [["Guardrail held", "Drop-off at the auth step fell from 64% to 29%."], ["3.4× traces opened", "Users read the run instead of retrying blind."], ["Now the default", "The trace pattern now carries into Runs and Audit."]],
           parts: [
-        { title: "Measurement", statement: "Measurement: time to a safe agent in production.",
-          text: ["Scale it if time to first call drops without new auth drop-off. Rethink it if users run but never open a trace.", "Prototype target: a new user reaches a first authorized, reviewable tool call in a single session, without leaving the product for docs."],
-          bento: { label: "Metrics and rollout", tiles: [
-            { k: "bars", tone: "soft", w: 6, h: 2, label: "Activation funnel", bars: [["Start", 100], ["M2", 84], ["Auth", 68], ["M1", 54], ["M3", 42], ["M4", 30], ["M5", 20]], sub: "Illustrative shape. No data until it's instrumented." },
-            { k: "list", tone: "dark", w: 6, h: 2, label: "Five metrics", title: "Measured by safe production use, not time in the dashboard.", rows: [["M1", "Time to first authorized call", "Activation"], ["M2", "Setup completion by path", "Onboarding"], ["M3", "First trace opened", "Understanding"], ["M4", "Repeat call in week 1", "Retention"], ["M5", "Invited user activation", "Rollout"]] },
-            { k: "timeline", tone: "white", w: 12, label: "Same design, three levels of build", phases: [["2 weeks", "Validate", "Built", 2, "Prototype, tested with 5–10 agent builders."], ["4 weeks", "Beta", "Next", 2, "Onboarding and Playground MVP, instrumented."], ["8 weeks", "Production", "Later", 4, "Live node canvas, real-time runs, readiness score."]] }] } },
-
-        { title: "Takeaway", statement: "Takeaway: pick the moment that matters, build the path to it, be honest about what waits.",
-          bento: { label: "Risks", tiles: [
-            { k: "text", tone: "dark", w: 4, label: "Risk", title: "The guided path hides power.", body: "Mitigation: “Explore dashboard first” stays one click away." },
-            { k: "text", tone: "graphite", w: 4, label: "Risk", title: "Sandbox success doesn't transfer.", body: "Mitigation: First run ends in “Enable test users”." },
-            { k: "text", tone: "light", w: 4, label: "Risk", title: "Simulated data.", body: "Mitigation: the 2-week plan tests with real agent builders." }] },
+        { title: "Takeaway", statement: "Takeaway: pick the moment that matters, and build the path to it.",
+          text: ["The biggest gain came from what we deferred, not what we added. The honest limit: teams with an existing gateway barely moved, and they are the next study."],
           cta: { label: "View the prototype", href: "https://arcadedevv.vercel.app/" } },
           ] },
       ],
@@ -560,10 +557,17 @@ const PROJECTS = [
               note: "Fit copy became interface logic: short, local, decision-tied." },
           ],
           parts: [
+        { title: "Rejected designs", statement: "Rejected: three variations that lost the trade-offs.",
+          text: ["One per decision above. Each board reads left to right: what we tried in the QuickFit Finder, what testing changed, and what shipped."],
+          mediaLayout: "stack", media: [
+            { wide: true, src: "/assets/images/gap/rejected-form.webp", alt: "Rejected A, for decision 1, accuracy versus completion. Tried: the QuickFit Finder asking for eight measurements (height, weight, waist, hips, thigh, calf, inseam and rise) with the size only at step 3; annotated: 8 inputs before any size. Fit notes: removed, ask for every measurement and size at step 3; added, height first and tuning optional; show a size at once and keep size numbers beside each measure. Shipped: (1 of 3) How tall are you, with height chips.", cap: "A · Decision 1: accuracy that cost completion" },
+            { wide: true, src: "/assets/images/gap/rejected-reason.webp", alt: "Rejected B, for decision 2, explainability versus velocity. Tried: the size on the avatar with the full Why this recommendation panel always open, pushing Add to bag out of view. Fit notes: removed, always show the full reason; added, one tap away, and say more when the size is unusual; Add to bag stays in view; most opened it anyway, out of curiosity. Shipped: size chips, a Why this recommendation link and Add to bag.", cap: "B · Decision 2: explanation that cost velocity" },
+            { wide: true, src: "/assets/images/gap/rejected-3d.webp", alt: "Rejected C, for decision 3, fidelity versus performance. Tried: a full-fidelity 3D jean loading in the browser, with fabric stretch, lighting and drape sliders; annotated: loads slow, still no how it feels. Fit notes: removed, render fabric in full 3D and stretch and light controls; added, a lighter avatar and saying what tight, fitted and loose feel like; clear words beat realism. Shipped: the Waist descriptor, Tight: unlikely to fit, Fitted: desired fit, Loose: may require a belt.", cap: "C · Decision 3: fidelity that cost performance" }] },
+
         { title: "Solution", statement: "Solution: the final flow made fit easier to trust without adding friction.",
           text: ["Each step either improved the model or helped shoppers verify the recommendation."],
           mediaLayout: "stack",
-          media: [{ wide: true, src: "/assets/images/gap/solution-flow.webp", alt: "The final flow in the QuickFit Finder: how tall are you, optional avatar customization, and a size shown on the avatar with Waist, Hips and Calf fit descriptors.", cap: "The final flow in the QuickFit Finder" }],
+          media: [{ demo: "gapQuickFit", alt: "The QuickFit Finder on the web, played: the shopper picks 5 feet 6 from the height chips, sees 28W 32L on the avatar with Waist Fitted, Hips Fitted and Calf Loose, opens the Hips descriptor (tight, fitted, loose), opens Why this recommendation, and adds to bag.", cap: "The final flow, played: all three decisions in one pass" }, { wide: true, src: "/assets/images/gap/solution-flow.webp", alt: "The final flow in the QuickFit Finder: how tall are you, optional avatar customization, and a size shown on the avatar with Waist, Hips and Calf fit descriptors.", cap: "The final flow in the QuickFit Finder" }],
           steps: [["Baseline input", "How tall are you?"], ["Fit calibration"], ["Optional tuning", "Further customize your avatar"], ["Explainable fit", "Why this recommendation, and what tight, fitted and loose feel like"]] },
           ] },
 
@@ -609,6 +613,13 @@ const PROJECTS = [
           text: ["We started CotonAI as a collaborative visual workspace where designers could sketch, generate, edit, explore colorways and review work together on a shared canvas. The bigger opportunity emerged from those workflows: the canvas shouldn't just hold the work. It should become the context through which an agent understands the work."],
           media: [{ diagram: { kind: "flow", title: "One shared canvas", nodes: ["Sketch", "Generate", "Edit", "Colourway", "Review"] } }, { diagram: { kind: "merge", title: "Canvas as context", inputs: ["Selected region", "Annotation", "Reference"], output: "Agent", note: "An image, sketch, annotation or selected region communicates intent." } }],
           parts: [
+        { title: "Rejected designs", statement: "Rejected: three directions we didn't ship.",
+          text: ["Each of these was a simpler way to put AI in the workflow. Each lost the context, the continuity or the control that the shipped agent keeps."],
+          mediaLayout: "stack", media: [
+            { wide: true, src: "/assets/images/cotonai/rejected-prompt.webp", alt: "Rejected A: a prompt-only chat where the designer types a long description of a linen midi dress, gets four images, then has to correct it with \"No, the sage from the March board\". Why it failed: intent had to be typed out instead of shown with a sketch or reference; every prompt started over, so the AI forgot which colour was rejected and which silhouette was approved; and outputs sat in a chat log away from the board the team reviewed. What shipped: context before conversation, where a selected region, sketch or reference carries the intent.", cap: "A: describing everything in a prompt" },
+            { wide: true, src: "/assets/images/cotonai/rejected-oneshot.webp", alt: "Rejected B: a generator that returns a grid of 20 variations with only Download and Regenerate buttons and a done label. Why it failed: twenty images with no plan tying them to the brief or the collection; download and regenerate pushed work back into scattered tools; and the tool ended at one batch although a creative task rarely ends with one image. What shipped: execution, not just generation, where the agent plans steps and returns outputs to the canvas.", cap: "B: a generator that stops at one batch" },
+            { wide: true, src: "/assets/images/cotonai/rejected-autopilot.webp", alt: "Rejected C: an agent panel that takes \"Refresh the spring line in the new palette\", shows only working, then reports Done, applied 9 changes to the board. Why it failed: one wrong creative decision hit the whole board; progress was a spinner, so designers could not see or stop the work; and changes landed with no version comparison or approval point. What shipped: visible progress, version comparison and approval checkpoints, so designers stay creative directors.", cap: "C: an agent on autopilot" }] },
+
         { title: "Solution", statement: "Solution: three product decisions for the agent experience.",
           ui: { kind: "trio", cards: [{ t: "Show the agent what you're working on", chips: ["Sketch", "Annotation", "Canvas region"], hi: 2, d: "An image, sketch, annotation or selected region communicates intent, so you don't have to describe it." }, { t: "Execution, not just generation", chips: ["Plan", "Execute", "Review"], hi: 1, d: "The agent plans steps, selects tools, generates alternatives and returns outputs to the canvas." }, { t: "Humans stay creative directors", chips: ["Compare versions", "Approve"], hi: 1, d: "Visible progress, contextual feedback and approval checkpoints keep creative judgment with the designer." }] },
           media: [{ video: "/assets/images/cotonai/video-cotonai-agent.mp4", poster: "/assets/images/cotonai/video-cotonai-agent-poster.jpg", alt: "The same walkthrough in context: the agent panel beside the canvas, answering with the board, the selection, brand and memory as context", cap: "The agent panel beside the canvas, using board, selection, brand and memory context." }],
@@ -665,6 +676,13 @@ const PROJECTS = [
           mediaLayout: "stack",
           media: [{ diagram: { kind: "flow", title: "The control process, shown in the hero", hi: 1, nodes: ["Request", "Policy check", "Approval required", "Audit log"], note: "Requested, checked, approved, logged. The same four steps return in the explainer and in the audit log." } }, { wide: true, src: "/assets/images/payman-case/layout-exploration.webp", alt: "A two-by-two grid of wireframes comparing control steps below the fold or in the hero, with a segment picker or one primary action; the hero with one action is chosen and leads to the final hero.", cap: "Layout exploration: control steps in the hero, one primary action" }, { wide: true, src: "/assets/images/payman-case/redesign-control.webp", alt: "The redesigned control section on a deep teal stage: Your rules, Full audit trail and Kill switch, with stepped bars above a governed agent layer between cores and anything that moves money.", cap: "Rules, audit trail and kill switch, moved up to the fourth section" }, { wide: true, src: "/assets/images/payman-case/redesign-how-logged.webp", alt: "The four-step section: a live chat in a bank app where Payman lists five vendor payments, asks for a phone code, and confirms five payments sent.", cap: "Four steps as a live chat: ask, check, approve, log" }, { diagram: { kind: "audit", title: "Audit: what I found, what I did", rows: [["One friendly voice for everything", "Two voices: a serif for the signed statement, a mono for the system record"], ["Decorative mountain art on the first screen", "The control process is the hero image: request, policy check, approval, audit log"], ["Rules, audit trail and kill switch in the last third", "Moved up to the fourth section, on their own teal stage"], ["Announcement bar, pop-up and cookie banner before the headline", "Nothing between the visitor and the headline; the pop-up is dropped"], ["A segment choice instead of an action", "One primary action, “Meet your agent”, in the header and the hero"], ["Pop-up clips the email field on phones", "One column on phones, form fields at least 44px tall, no overlays"]] } }],
           parts: [
+        { title: "Rejected designs", statement: "Rejected: three directions the audit ruled out.",
+          text: ["Each one answered a question the buyer wasn't asking yet. Reading them as a bank buyer would is what pointed to selling the control."],
+          mediaLayout: "stack", media: [
+            { wide: true, src: "/assets/images/payman-case/rejected-fold.webp", alt: "Rejected A: a hero with the headline We deploy AI agents that handle money, a Banks or Credit Unions segment picker and an illustration, with the Request, Policy check, Approval and Audit log steps below the fold. Why it failed: capability came before control; the segment picker split the first click in two with no primary action; and the control proof only appeared after a scroll. What shipped: the four control steps in the hero, with one primary action.", cap: "A: the control steps moved above the fold" },
+            { wide: true, src: "/assets/images/payman-case/rejected-magic.webp", alt: "Rejected B: a warm hero reading Banking that feels like magic, with sparkles, a smiling mascot saying Hi! I can move money for you, and a Try it free button. Why it failed: it used the category's vocabulary of magic for a reader who has to sign off on the risk; it offered warmth where proof should be, with no audit trail, rules or kill switch; and the call to action read like a consumer startup. What shipped: paper, ink and deep teal, with yellow only as a signal, never a fill.", cap: "B: control replaced the magic" },
+            { wide: true, src: "/assets/images/payman-case/rejected-order.webp", alt: "Rejected C: a page outline in six sections, hero, stats, customers, integrations, security, and finally rules, audit trail and kill switch. Why it failed: control came last, after a long scroll; stats and logos arrived before the risk they answer; and the kill switch was a footnote. What shipped: one question per section, in the order a buyer worries, with controls moved up to section four.", cap: "C: the controls moved up to section four" }] },
+
         { title: "The System", statement: "System: an identity derived from the position, not from taste.",
           mediaLayout: "stack",
           media: [{ wide: true, src: "/assets/images/payman-case/design-system.webp", alt: "Design system preview: typography, colour tokens and icons; buttons in active, hovered and disabled states; form inputs, checkboxes and radios; and components such as status tags, the kill switch and audit rows.", cap: "The design system behind the page" }, { diagram: { kind: "swatches", title: "Palette", chips: [["#F3F3F0", "Paper", "Page"], ["#171717", "Ink", "Text"], ["#0E3D42", "Teal", "Trust"], ["#2F8A8C", "Mid teal", "Focus"], ["#D4B3CA", "Mauve", "Warmth"], ["#F4FF45", "Signal yellow", "Signal only"]], note: "Yellow is a bar, a digit or a strip. Never a fill." } }, { diagram: { kind: "specimen", title: "Type: three voices, one job each", lines: [["Display · Newsreader", "'Newsreader', 'Times New Roman', serif", 46, "We deploy AI agents that handle money."], ["Body · Geist", "'Geist', sans-serif", 17, "Agents that carry out real banking transactions for your customers, under policies, approvals and audit trails you control."], ["Record · Geist Mono", "'Geist Mono', monospace", 12, "PM-2026-001 // VERSION 1.0 · REQUESTED → CHECKED → APPROVED → LOGGED"]] } }] },
@@ -747,6 +765,16 @@ const WORK_META = {
   "CotonAI Agent": { sectors: ["Fashion & retail", "AI agents"], featured: true, date: "2026-10" },
   "Payman AI": { sectors: ["Fintech", "AI agents"], featured: false, date: "2026-10" },
 };
+// The caption under every tile, in the style of rachelchen.tech: project name / category and year
+const makeCap = (p) => {
+  const c = document.createElement("p"), m = WORK_META[p.name];
+  c.className = "case__cap";
+  const n = document.createElement("strong"), s = document.createElement("i"), t = document.createElement("span");
+  n.textContent = p.name; s.textContent = "/"; s.setAttribute("aria-hidden", "true");
+  t.textContent = [p.area.split(" · ")[0], m && m.date.slice(0, 4)].filter(Boolean).join(" ");
+  c.append(n, s, t);
+  return c;
+};
 const units = [];
 if (list) PROJECTS.forEach((p, i) => {
   if (p.org === "CotonAI") {
@@ -760,7 +788,7 @@ if (list) PROJECTS.forEach((p, i) => {
     }
     let open = false; try { open = sessionStorage.getItem("samfolio-unlocked") === "1"; } catch {}
     const item = document.createElement("li");
-    item.innerHTML = `<a class="lockcard${open ? " is-open" : ""}"><div class="case__tile lockcard__tile"><img class="lockcard__img" alt="" loading="lazy" decoding="async"><span class="lockcard__badge">${LOCK_SVG}</span></div><span class="card__index">Case study ( ${pad(i + 1)} )</span><h3 class="lockcard__title"></h3><p class="lockcard__area"></p><span class="case__cta">${open ? "View case study" : "Enter passcode"} <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5"/></svg></span></a>`;
+    item.innerHTML = `<a class="lockcard${open ? " is-open" : ""}"><ul class="case__tags" role="list"></ul><div class="case__tile lockcard__tile"><img class="lockcard__img" alt="" loading="lazy" decoding="async"><span class="lockcard__badge">${LOCK_SVG}</span></div><span class="card__index">Case study ( ${pad(i + 1)} )</span><span class="case__kind lockcard__kind"></span><h3 class="lockcard__title"></h3><p class="card__desc lockcard__desc"></p><span class="case__cta">${open ? "View case study" : "Enter passcode"} <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5"/></svg></span></a>`;
     const a = item.querySelector("a"), tile = item.querySelector(".case__tile"), img = tile.querySelector("img");
     if (p.thumb && p.thumb.video) {
       const v = document.createElement("video");
@@ -772,10 +800,13 @@ if (list) PROJECTS.forEach((p, i) => {
     } else {
       const th = p.thumbnail ? p.thumbnail.src : p.thumb && p.thumb.poster; if (th) { img.src = th; if (p.thumbnail && p.thumbnail.fit === "contain") tile.classList.add("lockcard__tile--contain"); } else { img.remove(); if (p.photo) tile.style.background = `url("${p.photo.src}") ${p.photo.pos} / cover`; }
     }
+    a.appendChild(makeCap(p));
     a.href = p.href; p.tint.forEach((c, k) => tile.style.setProperty(`--t${k + 1}`, c));
     a.setAttribute("aria-label", `${p.name}, passcode protected case study`);
     item.querySelector(".lockcard__title").textContent = p.name;
-    item.querySelector(".lockcard__area").textContent = p.area;
+    item.querySelector(".lockcard__kind").textContent = `${p.org} · ${p.area}`;
+    item.querySelector(".lockcard__desc").textContent = p.desc;
+    p.tags.forEach((t) => { const tag = document.createElement("li"); tag.textContent = t; item.querySelector(".case__tags").appendChild(tag); });
     lockGroup.querySelector(".lockgrid").appendChild(item);
     units.find((u) => u.group).members.push({ p, i, item });
     return;
@@ -789,20 +820,23 @@ if (list) PROJECTS.forEach((p, i) => {
       <span class="case__year"></span>
     </div>
     <a class="case__link">
+      <ul class="case__tags" role="list"></ul>
       <div class="case__tile"></div>
       <div class="case__text">
+        <span class="case__kind"></span>
         <h3 class="card__title"></h3>
         <p class="card__desc"></p>
-        <ul class="case__tags" role="list"></ul>
         <span class="case__cta">View case study <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5"/></svg></span>
       </div>
     </a>`;
   metricTile(p, li.querySelector(".case__tile"));
+  li.querySelector(".case__link").appendChild(makeCap(p));
   li.querySelector(".case__link").href = p.href;
   li.querySelector(".card__title").textContent = p.title;
   li.querySelector(".card__desc").textContent = p.desc;
   li.querySelector(".case__client").textContent = p.org;
   li.querySelector(".case__year").textContent = p.area;
+  li.querySelector(".case__kind").textContent = `${p.org} · ${p.area}`;
   p.tags.forEach((t) => { const tag = document.createElement("li"); tag.textContent = t; li.querySelector(".case__tags").appendChild(tag); });
   list.appendChild(li);
   units.push({ li, members: [{ p, i }] });
@@ -904,19 +938,173 @@ if (field) {
   setInterval(() => { if (fieldVisible && !document.hidden && !motionReduced()) lightRandom(); }, 1400);
 }
 
-// ── Theme toggle ──
+// ── Hero globe: a horn torus of 48 wireframe loops on a 1440×509 artboard, turning one loop every 3.2s, ──
+(function () {
+  const cv = document.querySelector(".hero__globe");
+  if (!cv) return;
+  const ctx = cv.getContext("2d");
+  const AW = 1440, AH = 509, LOOPS = 48, STEP = 3.2, SAMPLES = 160;
+  // Camera fitted to the reference: eye height, distance, pitch, focal length (artboard px), horizon
+  const EH = 1.5453, ED = 1.4286, PITCH = -0.7672, F = 580.32, CY = 515.45;
+  const cp = Math.cos(PITCH), sp = Math.sin(PITCH);
+  // loop index (fractional) + angle along the loop → artboard point; every loop meets the axis at phi = π
+  const at = (index, phi) => {
+    const th = (2 * Math.PI * index) / LOOPS, r = 1 + Math.cos(phi);
+    const x = r * Math.cos(th), y = Math.sin(phi) - EH, z = r * Math.sin(th) - ED;
+    const d = -(-y * sp + z * cp);
+    return [AW / 2 + (F * x) / d, CY - (F * (y * cp + z * sp)) / d];
+  };
+  let W = 0, scale = 1, theme = "dark", t = 0, last = 0, lastDraw = -Infinity, scrollAt = -Infinity, raf = 0, visible = true;
+
+  const size = () => {
+    const r = cv.getBoundingClientRect();
+    if (!r.width) return;
+    const dpr = innerWidth < 768 ? 1 : Math.min(2, devicePixelRatio || 1);
+    W = r.width; scale = (W / AW) * dpr;
+    cv.width = Math.round(r.width * dpr); cv.height = Math.round(r.height * dpr);
+  };
+  const draw = (sec) => {
+    if (!W) return;
+    const light = document.documentElement.dataset.theme === "light";
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ctx.setTransform(scale, 0, 0, scale, 0, 0);
+    // The wire: one path, so crossings never double up
+    const wire = new Path2D(), shift = sec / STEP;
+    for (let k = 0; k < LOOPS; k++) {
+      for (let j = 0; j < SAMPLES; j++) {
+        const [x, y] = at(k - shift, Math.PI + (2 * Math.PI * j) / SAMPLES);
+        j ? wire.lineTo(x, y) : wire.moveTo(x, y);
+      }
+      wire.closePath();
+    }
+    ctx.lineWidth = 2; ctx.lineJoin = "round";
+    ctx.strokeStyle = light ? "#e6e4d8" : "#2e2825";
+    ctx.stroke(wire);
+  };
+  addEventListener("scroll", () => { scrollAt = performance.now(); }, { passive: true });
+  const tick = (now) => {
+    raf = requestAnimationFrame(tick);
+    t += Math.min(now - last, 100) / 1000; last = now;
+    // Phones: hold still while scrolling and cap at 30fps
+    if ((matchMedia("(pointer: coarse)").matches || innerWidth < 768) && (now - scrollAt < 150 || now - lastDraw < 1000 / 30 - 1)) return;
+    lastDraw = now; draw(t);
+  };
+  const sync = () => {
+    cancelAnimationFrame(raf); raf = 0;
+    if (motionReduced()) { t = 0; draw(0); return; }
+    if (visible && !document.hidden) { last = performance.now(); raf = requestAnimationFrame(tick); }
+  };
+  size(); draw(0); cv.classList.add("is-on");
+  new ResizeObserver(() => { size(); draw(t); }).observe(cv);
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; sync(); }, { threshold: 0 }).observe(cv);
+  document.addEventListener("visibilitychange", sync);
+  addEventListener("motionchange", sync);
+  matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change", sync);
+  new MutationObserver(() => draw(t)).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  sync();
+})();
+
+// ── Theme tuner: a crossfader between dark (0) and light (1) ──
 const root = document.documentElement;
 const themeBtn = document.getElementById("theme");
-const setTheme = (t) => {
+const TUNE = {   // token: [dark, light]
+  "--bg-page": ["rgb(17 16 16)", "rgb(255 254 242)"],
+  "--surface-card": ["rgb(255 255 255 / .05)", "rgb(209 208 198 / .4)"],
+  "--frost-nav": ["rgb(255 255 255 / .12)", "rgb(243 242 231 / .94)"],
+  "--btn-bg": ["rgb(234 234 230)", "rgb(252 170 45)"],
+  "--btn-fg": ["rgb(17 16 16)", "rgb(25 25 24)"],
+  "--seg-hover": ["rgb(255 255 255 / .07)", "rgb(209 208 198 / .35)"],
+  "--seg-active": ["rgb(255 255 255 / .14)", "rgb(209 208 198 / .6)"],
+  "--pcard": ["rgb(28 27 27 / .94)", "rgb(243 242 231 / .94)"],
+  "--pcard-active": ["rgb(46 45 45 / .92)", "rgb(227 226 216 / .95)"],
+  "--thumb-bg": ["rgb(17 16 16)", "rgb(255 254 242)"],
+  "--sec-bg": ["rgb(17 16 16)", "rgb(255 254 242)"],
+  "--sec-line": ["rgb(255 255 255 / .12)", "rgb(227 226 216)"],
+  "--sec-guide": ["rgb(255 255 255 / .45)", "rgb(25 25 24 / .4)"],
+  "--sec-card": ["rgb(28 27 27)", "rgb(243 242 231)"],
+  "--sec-card-hover": ["rgb(46 45 45 / .6)", "rgb(209 208 198 / .4)"],
+  "--sec-tip": ["rgb(28 27 27 / .9)", "rgb(255 254 242 / .94)"],
+};
+// Backgrounds blend linearly. Text never blends: it switches at the lightness where white and ink read equally well on the mixed page (about 45%), and secondary text is strengthened near that point.
+const FLIP = 0.45;
+let level = 0, ownChange = false;
+const applyLevel = (v) => {
+  level = Math.max(0, Math.min(1, v));
+  const t = level >= FLIP ? "light" : "dark";
+  ownChange = true;
   root.dataset.theme = t;
   window.setThemeColor?.(t);
-  themeBtn.setAttribute("aria-label", t === "dark" ? "Switch to light mode" : "Switch to dark mode");
-  try { localStorage.setItem("theme", t); } catch (e) {}
+  ownChange = false;
+  const style = root.style;
+  if (level === 0 || level === 1) {
+    root.classList.remove("tuned");
+    Object.keys(TUNE).concat(["--text-primary", "--sec-fg", "--text-secondary", "--sec-muted", "--sec-faint"]).forEach((k) => style.removeProperty(k));
+  } else {
+    root.classList.add("tuned");
+    const p = (level * 100).toFixed(1);
+    const near = Math.max(0, 1 - Math.abs(level - FLIP) / 0.55);         // 1 at the flip, 0 at the ends
+    const boost = (base, top) => (base + (top - base) * near).toFixed(3);
+    const ink = t === "light" ? [25, 25, 24].map((v) => Math.round(v * (1 - near))).join(" ") : "255 255 255";   // ink deepens to black at the flip
+    const sec = `rgb(${ink} / ${boost(t === "light" ? 0.6 : 0.69, 0.97)})`;
+    const faint = `rgb(${ink} / ${boost(t === "light" ? 0.5 : 0.43, 0.9)})`;
+    style.setProperty("--text-primary", `rgb(${ink})`); style.setProperty("--sec-fg", `rgb(${ink})`);
+    style.setProperty("--text-secondary", sec); style.setProperty("--sec-muted", sec);
+    style.setProperty("--sec-faint", faint);
+    Object.entries(TUNE).forEach(([k, [d, l]]) => style.setProperty(k, `color-mix(in srgb, ${l} ${p}%, ${d})`));
+  }
+  themeBtn.style.setProperty("--lv", level.toFixed(3));
+  themeBtn.setAttribute("aria-valuenow", Math.round(level * 100));
+  themeBtn.setAttribute("aria-valuetext", level === 0 ? "Dark" : level === 1 ? "Light" : `${Math.round(level * 100)}% light`);
+  try { localStorage.setItem("theme", t); localStorage.setItem("themeLevel", level.toFixed(3)); } catch (e) {}
 };
-let saved = null;
-try { saved = localStorage.getItem("theme"); } catch (e) {}
-setTheme(saved || "dark");
-themeBtn.addEventListener("click", () => setTheme(root.dataset.theme === "dark" ? "light" : "dark"));
+(function () {
+  themeBtn.innerHTML = '<span class="tuner__ticks" aria-hidden="true">' + "<i></i>".repeat(11) + '</span><span class="tuner__rail" aria-hidden="true"></span><span class="tuner__cap" aria-hidden="true"></span>';
+  themeBtn.classList.add("tuner");
+  themeBtn.setAttribute("role", "slider");
+  themeBtn.setAttribute("aria-label", "Theme: dark to light");
+  themeBtn.setAttribute("aria-valuemin", "0");
+  themeBtn.setAttribute("aria-valuemax", "100");
+  let saved = null, savedLevel = null;
+  try { saved = localStorage.getItem("theme"); savedLevel = parseFloat(localStorage.getItem("themeLevel")); } catch (e) {}
+  const start = Number.isFinite(savedLevel) && ((savedLevel >= FLIP) === (saved === "light")) ? savedLevel : (saved === "light" ? 1 : 0);
+  applyLevel(start);
+
+  const fromPointer = (e) => {
+    const r = themeBtn.getBoundingClientRect(), left = 14, right = 14;
+    return (e.clientX - r.left - left) / (r.width - left - right);
+  };
+  let drag = false;
+  themeBtn.addEventListener("pointerdown", (e) => {
+    drag = true; themeBtn.setPointerCapture(e.pointerId); root.classList.add("tuning");
+    const v = fromPointer(e);
+    applyLevel(v < 0.04 ? 0 : v > 0.96 ? 1 : v);
+  });
+  themeBtn.addEventListener("pointermove", (e) => {
+    if (!drag) return;
+    const v = fromPointer(e);
+    applyLevel(v < 0.04 ? 0 : v > 0.96 ? 1 : v);
+  });
+  const end = () => { drag = false; root.classList.remove("tuning"); };
+  themeBtn.addEventListener("pointerup", end);
+  themeBtn.addEventListener("pointercancel", end);
+  themeBtn.addEventListener("keydown", (e) => {
+    const step = e.shiftKey ? 0.25 : 0.05;
+    const k = e.key;
+    if (k === "ArrowRight" || k === "ArrowUp") applyLevel(level + step);
+    else if (k === "ArrowLeft" || k === "ArrowDown") applyLevel(level - step);
+    else if (k === "Home") applyLevel(0);
+    else if (k === "End") applyLevel(1);
+    else return;
+    e.preventDefault();
+  });
+  // Another control (the Playground's own switch) flipped the theme: snap the fader to that end
+  new MutationObserver(() => {
+    if (ownChange) return;
+    const t = root.dataset.theme;
+    if ((level >= FLIP) !== (t === "light")) applyLevel(t === "light" ? 1 : 0);
+  }).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+})();
 
 
 // ── Contact details (replace the placeholders with your own) ──
@@ -1138,11 +1326,33 @@ if (weatherEl) fetch("https://api.open-meteo.com/v1/forecast?latitude=37.3382&lo
       </div>
     </div>
     <div class="sf__axis" aria-hidden="true">${Array.from({ length: 24 }, (_, i) => `<span>${i + 1}</span>`).join("")}</div>
-    <a class="sf__mark" href="/" aria-label="Sam.design, home">${[..."Sam.design"].map((ch) => `<span>${ch}</span>`).join("")}</a>
-    <div class="sf__legal">
-      <span>© 2026 Sambit Nayak — San Francisco, California · <time data-clock>--:--</time></span>
-      <span><a href="/#work">Work</a> · <a href="/about">About</a> · <a href="https://www.linkedin.com/in/sambitnayakux/" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://github.com/Samnayakx" target="_blank" rel="noopener">GitHub</a> · <a href="https://x.com/sambit_nayak_" target="_blank" rel="noopener">X</a> · <a href="https://sambitnayak2.substack.com/" target="_blank" rel="noopener">Substack</a> · <a href="#top">Back to top ↑</a></span>
+    <div class="sf__sign">
+      <a class="sf__mark" href="#top" aria-label="Sam.design, back to top"><span>Sam.design</span></a>
+      <div class="sf__cols">
+        <nav aria-label="Sitemap"><h3>Sitemap</h3><ul role="list"><li><a href="/">Home</a></li><li><a href="/#work">Work</a></li><li><a href="/about">About</a></li><li><a href="/writing">Writing</a></li><li><a href="/playground">Playground</a></li></ul></nav>
+        <nav aria-label="Social"><h3>Social</h3><ul role="list"><li><a href="${CONTACT.linkedin}" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="${CONTACT.github}" target="_blank" rel="noopener">GitHub</a></li><li><a href="${CONTACT.x}" target="_blank" rel="noopener">X</a></li><li><a href="${CONTACT.substack}" target="_blank" rel="noopener">Substack</a></li></ul></nav>
+        <div><h3>Contact</h3><ul role="list"><li><a href="mailto:${CONTACT.email}">${CONTACT.email}</a></li><li>San Francisco, California</li></ul></div>
+        <div><h3>Work with me</h3><ul role="list"><li><a href="${CONTACT.book}" target="_blank" rel="noopener">Book a call</a></li><li><a href="${CONTACT.resume}" target="_blank" rel="noopener">Résumé (PDF)</a></li></ul></div>
+      </div>
+      <div class="sf__legal">
+        <span>© 2026 Sambit Nayak</span>
+        <span>San Francisco · <time data-clock>--:--</time></span>
+        <a href="#top">Back to top ↑</a>
+      </div>
     </div>`;
+
+  // The wordmark is sized to fill the row exactly, and re-fitted when the width or the web font changes
+  const mark = host.querySelector(".sf__mark"), markText = mark.firstElementChild;
+  const fitMark = () => {
+    const box = host.querySelector(".sf__sign").clientWidth;
+    if (!box) return;
+    mark.style.fontSize = "100px";
+    const w = markText.getBoundingClientRect().width;
+    if (w) mark.style.fontSize = `${(100 * box) / w}px`;
+  };
+  new ResizeObserver(fitMark).observe(host);
+  if (document.fonts) document.fonts.ready.then(fitMark);
+  fitMark();
 
   const nowTime = new Date().toLocaleTimeString("en-US", { timeZone: TZ, hour: "2-digit", minute: "2-digit", hour12: false });
   host.querySelector("[data-clock]").textContent = nowTime;
@@ -1222,20 +1432,6 @@ if (weatherEl) fetch("https://api.open-meteo.com/v1/forecast?latitude=37.3382&lo
     else if (e.key === "Escape") hide();
   });
 
-  // ── Wordmark: scale the type so "Sam.design" spans the footer's full content width ──
-  const mark = host.querySelector(".sf__mark");
-  const fitMark = () => {
-    const cs = getComputedStyle(host);
-    const avail = host.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-    mark.style.fontSize = "100px";
-    const w = mark.getBoundingClientRect().width;
-    if (w) mark.style.fontSize = `${(100 * avail) / w}px`;
-  };
-  fitMark();
-  document.fonts?.ready.then(fitMark);
-  document.fonts?.addEventListener("loadingdone", fitMark);   // the stylesheet is non-blocking, so faces can arrive after fonts.ready
-  new ResizeObserver(fitMark).observe(host);
-
   // ── Game: Claude mascot endless runner. The 24-hour chart is the level and repeats day after day. ──
   const U_SPRITE = {
     mascot: [
@@ -1259,6 +1455,49 @@ if (weatherEl) fetch("https://api.open-meteo.com/v1/forecast?latitude=37.3382&lo
     ],
     batUp: ["#.......#", "##.###.##", "#########", ".#######.", "..#...#.."],
     batDown: ["..#...#..", ".#######.", "#########", "##.###.##", "#.......#"],
+  };
+  // San Francisco skyline, in the same row-string format as the sprites: # is silhouette, o is the bridge's international orange.
+  // Built from landmarks (Salesforce Tower, Transamerica Pyramid, Coit Tower, Sutro Tower, Golden Gate) between low filler blocks, and it tiles sideways.
+  const SKYLINE = (() => {
+    const W = 250, H = 46, g = Array.from({ length: H }, () => Array(W).fill("."));
+    const put = (x, k, ch = "#") => { const y = H - 1 - k; if (x >= 0 && x < W && y >= 0 && y < H) g[y][x] = ch; };
+    const col = (x, k0, k1, ch = "#") => { for (let k = k0; k < k1; k++) put(x, k, ch); };
+    const box = (x0, w, k0, k1, ch = "#") => { for (let x = x0; x < x0 + w; x++) col(x, k0, k1, ch); };
+    let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    for (let x = 0; x < 172;) { const w = 3 + Math.floor(rnd() * 5); box(x, w, 0, 8 + Math.floor(rnd() * 14)); x += w + (rnd() < 0.3 ? 1 : 0); }
+    const hill = (cx, r, h) => { for (let d = -r; d <= r; d++) col(cx + d, 0, Math.round(h * (1 - (d / r) ** 2)) + 1); };
+    // Salesforce Tower: a tall shaft that rounds off at the top
+    { const cx = 58, h = 43; for (let k = 0; k < h; k++) { const t = k / h, w = t < 0.86 ? 9 : Math.max(1, Math.round(9 * (1 - (t - 0.86) / 0.14))); box(cx - (w >> 1), w, k, k + 1); } }
+    // Transamerica Pyramid: a spire, a taper, and the two wings
+    { const cx = 98, h = 41; for (let k = 0; k < h; k++) { const w = k >= h - 7 ? 1 : 3 + Math.round(((h - 8 - k) * 10) / (h - 8)); box(cx - (w >> 1), w, k, k + 1); }
+      col(cx - 5, 0, 29); col(cx - 4, 0, 29); col(cx + 4, 0, 29); col(cx + 5, 0, 29); }
+    // Coit Tower on Telegraph Hill
+    { const cx = 128; hill(cx, 14, 11); box(cx - 1, 3, 0, 29); box(cx - 2, 5, 25, 28); }
+    // Sutro Tower: three legs and two crossbars on its hill
+    { const cx = 176; hill(cx, 16, 9); for (let k = 9; k < 44; k++) { const sp = Math.round(3 * (1 - (k - 9) / 35) + 0.4); put(cx - sp, k); put(cx + sp, k); put(cx, k); }
+      box(cx - 4, 9, 40, 41); box(cx - 3, 7, 34, 35); col(cx, 44, 46); }
+    // Golden Gate Bridge: two towers, the deck, the main cable and its hangers
+    { const t1 = 203, t2 = 237, mid = (t1 + t2) / 2 + 1.5, half = (t2 - t1) / 2;
+      for (const t of [t1, t2]) { col(t, 0, 35, "o"); col(t + 3, 0, 35, "o"); box(t, 4, 22, 23, "o"); box(t, 4, 27, 28, "o"); box(t, 4, 32, 33, "o"); }
+      box(188, 62, 7, 9, "o");
+      for (let x = t1 + 1; x <= t2 + 2; x++) { const h = Math.round(11 + 24 * ((x - mid) / half) ** 2); put(x, Math.min(h, 34), "o"); if ((x - t1) % 4 === 0) col(x, 9, Math.min(h, 34), "o"); }
+      for (let x = 188; x < t1; x++) put(x, Math.round(9 + 25 * ((x - 188) / (t1 - 188)) ** 1.6), "o");
+      for (let x = t2 + 4; x < W; x++) put(x, Math.round(9 + 25 * ((W - 1 - x) / (W - 1 - t2 - 4)) ** 1.6), "o"); }
+    return g.map((r) => r.join(""));
+  })();
+  const skyArt = { key: "", city: null, bridge: null };
+  // The skyline is painted once per size and colour into two small canvases, then tiled
+  const skyTiles = (s, fg) => {
+    const key = `${s}|${fg}`;
+    if (skyArt.key === key) return skyArt;
+    const mk = (want) => {
+      const c = document.createElement("canvas"); c.width = SKYLINE[0].length * s; c.height = SKYLINE.length * s;
+      const x = c.getContext("2d"); x.fillStyle = want === "o" ? "#C0362C" : fg;
+      SKYLINE.forEach((row, r) => { for (let i = 0; i < row.length; i++) if (row[i] === want) x.fillRect(i * s, r * s, s, s); });
+      return c;
+    };
+    Object.assign(skyArt, { key, city: mk("#"), bridge: mk("o") });
+    return skyArt;
   };
   // Obstacle kinds. Sizes and hitboxes are in sprite units (u); fy is the float height above the ground.
   const OBS = {
@@ -1442,6 +1681,17 @@ if (weatherEl) fetch("https://api.open-meteo.com/v1/forecast?latitude=37.3382&lo
     ctx.clearRect(0, 0, g.W, ctxH);
     const toY = (h) => Math.round(ctxH - h);
     if (g.state !== "idle") {
+      // backdrop: the SF skyline drifting at a fraction of the speed, behind the terrain. It stands on a raised horizon
+      // and is filled in solid below it, so it reads as a distant city that the terrain rolls in front of.
+      const ss = u, art = skyTiles(ss, themeFg), tw = art.city.width, sx0 = -((g.cam * 0.22) % tw), hz = Math.round(ctxH - g.H * 0.4);
+      for (let x = sx0; x < g.W; x += tw) {
+        const dx = Math.round(x);
+        ctx.globalAlpha = 0.16; ctx.fillStyle = themeFg;
+        ctx.drawImage(art.city, dx, hz - art.city.height);
+        ctx.fillRect(dx, hz, tw, ctxH - hz);
+        ctx.globalAlpha = 0.55; ctx.drawImage(art.bridge, dx, hz - art.bridge.height);
+      }
+      ctx.globalAlpha = 1;
       // terrain: the chart's bars, scrolling and repeating
       const c0 = Math.floor(g.cam / g.pitch), c1 = Math.floor((g.cam + g.W) / g.pitch) + 1;
       for (let c = c0; c <= c1; c++) {
@@ -1511,102 +1761,6 @@ document.querySelectorAll(".logo").forEach((svg) => {
   link.addEventListener("focus", () => ring.spin(180));
   link.addEventListener("blur", () => ring.settle(null, 30));
 });
-
-
-// ── Capabilities tiles: pixel art, toggle, parallax, reveal ──
-(function () {
-  const tiles = document.querySelector(".tiles");
-  if (!tiles) return;
-  tiles.closest(".caps").style.containerType = "inline-size";
-
-  const ART = {
-    cursor: {
-      u: 2, gap: 0,
-      pal: { k: "#1D1D1B", w: "#FFFFFF" },
-      rows: [
-        "k.........", "kk........", "kwk.......", "kwwk......", "kwwwk.....", "kwwwwk....", "kwwwwwk...",
-        "kwwwwwwk..", "kwwwwwwwk.", "kwwwwkkkkk", "kwwkwk....", "kwk.kwk...", "kk..kwk...", "k....kk...",
-      ],
-    },
-    flower: {
-      u: 8,
-      pal: { p: "#EE7C9C", o: "#F29A4B", y: "#F6D45A", g: "#4E9E6B", b: "#6FB3E8", k: "#2f6f9a" },
-      rows: [
-        "..p.p......o..",
-        ".ppypp....oyo.",
-        "..ppp.....ooo.",
-        "...g.......g..",
-        "...g...g...g..",
-        "..gg...g..gg..",
-        "..kkkkkkkkkk..",
-        "...kkkkkkkk...",
-      ],
-    },
-  };
-  document.querySelectorAll("svg[data-pixel]").forEach((svg) => {
-    const a = ART[svg.dataset.pixel];
-    svg.setAttribute("viewBox", `0 0 ${a.rows[0].length * a.u} ${a.rows.length * a.u}`);
-    svg.setAttribute("shape-rendering", "crispEdges");
-    a.rows.forEach((row, y) => [...row].forEach((ch, x) => {
-      if (ch === ".") return;
-      const r = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-      const gap = a.gap ?? 1;
-      r.setAttribute("x", x * a.u + gap / 2); r.setAttribute("y", y * a.u + gap / 2);
-      r.setAttribute("width", a.u - gap); r.setAttribute("height", a.u - gap);
-      r.setAttribute("fill", a.pal[ch]);
-      svg.appendChild(r);
-    }));
-  });
-
-  // Interaction tile: the brand ring, spinning slowly (faster on hover)
-  const ringSvg = document.querySelector(".ring-art");
-  if (ringSvg) {
-    const ring = Ring.mount(ringSvg);
-    ring.grow(700, 60);
-    if (!motionReduced()) {
-      ring.spin(40);
-      const t = ringSvg.closest(".tile");
-      t.addEventListener("pointerenter", () => ring.spin(160));
-      t.addEventListener("pointerleave", () => ring.spin(40));
-      addEventListener("motionchange", () => ring.spin(motionReduced() ? 0 : 40));
-    }
-  }
-
-  // Strategy / Craft toggle
-  const modeTile = document.querySelector("[data-mode-tile]");
-  const text = modeTile.querySelector("[data-mode-text]");
-  const COPY = {
-    research: "Qual + eval loops that stress-test model behavior in context.",
-    strategy: "Roadmaps that connect AI capability to shipped outcomes.",
-  };
-  modeTile.querySelectorAll("[data-mode]").forEach((btn) => btn.addEventListener("click", () => {
-    modeTile.dataset.mode = btn.dataset.mode;
-    modeTile.querySelectorAll("[data-mode]").forEach((b) => b.setAttribute("aria-pressed", b === btn));
-    text.classList.add("swap");
-    setTimeout(() => { text.textContent = COPY[btn.dataset.mode]; text.classList.remove("swap"); }, 220);
-  }));
-
-  // Pointer parallax: only the System tile reads --mx/--my, and the write is batched to one per frame
-  const sys = tiles.querySelector(".tile--sys");
-  if (sys && !motionReduced()) {
-    let raf = 0, px = 0, py = 0;
-    sys.addEventListener("pointermove", (e) => {
-      if (e.pointerType === "touch") return;
-      px = e.clientX; py = e.clientY;
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        raf = 0;
-        const r = sys.getBoundingClientRect();
-        sys.style.setProperty("--mx", ((px - r.left) / r.width - 0.5).toFixed(3));
-        sys.style.setProperty("--my", ((py - r.top) / r.height - 0.5).toFixed(3));
-      });
-    });
-  }
-
-  // Reveal on scroll
-  new IntersectionObserver(([e], io) => { if (e.isIntersecting) { tiles.classList.add("in"); io.disconnect(); } }, { threshold: 0.12 }).observe(tiles);
-})();
-
 
 // ── Hero artifacts: San Francisco / California pixel motifs ──
 (function () {
@@ -2126,9 +2280,30 @@ function openLightbox(src, alt, opener) {
   if (page === "playground") {
     // Only finished pieces go on the board. Interaction studies run live (js/playground.js); every tile opens the overlay.
     const LAB = [
+      { code: "INT-25", title: "Fold Cards", status: "Interaction · Layout", area: "Cards · Planning", tag: "interaction", demo: "foldCards", bg: "#EBEBEB", ptr: "hover", bare: true, bleed: true,
+        scope: "A row of dark cards that each fold down into a single pill and open back up. The header stays put, the plus and minus morph into each other, the body fades out and the card slides to the top. The middle card is a load dial you can drag.",
+        hint: "Press the minus on any card to fold it into a pill, and the plus to open it again. Drag the ring in the middle card to change the load.", tags: ["Cards", "Collapse", "Dial", "Photos"] },
       { code: "INT-07", title: "Market Select", status: "Interaction · Flow", area: "DeFi · Yield", tag: "interaction", demo: "marketSelect", bg: "#2B3150", dark: true, bleed: true, wide: true, ptr: "none",
         scope: "Pick where your money earns. Choose markets or let AI pick, review a split weighted by APR, hold to deposit, and the whole card folds down to a single summary. The more you touch it, the smaller it gets.",
         hint: "Tap markets to toggle them, then Next. Or try Auto Select or the sparkle. On the review step, press and hold to deposit. Tap the summary to start again.", tags: ["Flow", "Motion", "Hold to confirm", "AI"] },
+      { code: "INT-24", title: "Story Reactions", status: "Interaction · Social", area: "Stories · Commerce", tag: "interaction", demo: "storyReactions", bg: "#F9DCE4", ptr: "hover", bare: true, bleed: true,
+        scope: "A stack of stories with live progress. Tap the right of a story to move on and the left to go back; hold to pause. Double-tap or press the heart for a burst of hearts and a comment arriving; tap the reply bar and pick an emoji, and it flies up into the reaction bubble. On the board a scripted cursor shows it all; your pointer takes over.",
+        hint: "Tap left or right on the front story, double-tap it, press the heart, tap the reply bar and choose an emoji. Hold to pause.", tags: ["GSAP", "Stories", "Reactions", "Stageshow"] },
+      { code: "INT-23", title: "Archive Search", status: "Interaction · Search", area: "Gallery · Discovery", tag: "interaction", demo: "archiveSearch", bg: "#F3F2EE", ptr: "hover", bare: true, bleed: true,
+        scope: "A globe of image tiles with a frosted search bar. Type a word and the tiles that match stay lit while the rest fall back, and the globe turns to bring the first match to the front. Drag the globe to spin it, tap a small tile to search its tag, and press the dots to give it a full turn.",
+        hint: "Click the bar and type leather, bag, knit, coat, loafer, bomber, navy, orange or purple. Drag the globe. Tap one of the small tiles around it.", tags: ["GSAP", "3D", "Search", "Gallery"] },
+      { code: "INT-21", title: "Media Tray", status: "Interaction · Component", area: "Mobile · Media", tag: "interaction", demo: "mediaTray", bg: "linear-gradient(180deg, #2A0A4A 0%, #14125E 30%, #3B4DFF 58%, #A9B8FF 76%, #F3D3C8 92%, #FDE7B8 100%)", ptr: "hover", bare: true, bleed: true,
+        scope: "A tray of recent items. The stack fans open under your pointer, a tapped card lifts to the front, the voice memo plays with a moving waveform and progress, and + sends a new card flying in from the button. When the tray is full the oldest card leaves.",
+        hint: "Hover the stack to open it. Tap a card to lift it, tap the voice memo to play it, and press + to add a card.", tags: ["GSAP", "Stack", "Audio", "Component"] },
+      { code: "INT-22", title: "Word Wheel", status: "Interaction · Picker", area: "Type · Status", tag: "interaction", demo: "wordWheel", bg: "#AFC9E6", ptr: "hover", bare: true, bleed: true,
+        scope: "A vertical picker for what the product is doing: the centre card is large and in focus, the rest recede and fade. It ticks along by itself; drag it and let go to throw it with momentum, or tap any card to bring it to the centre.",
+        hint: "Drag up or down, or tap a card. In this view the mouse wheel and the arrow keys also work.", tags: ["GSAP", "Picker", "Momentum", "Type"] },
+      { code: "INT-20", title: "Armillary Sphere", status: "Interaction · Motion", area: "Brand · Landing", tag: "interaction", demo: "armillary", bg: "#FFFFFF", ptr: "hover", bare: true, bleed: true,
+        scope: "A wireframe globe that turns on its own. Drag it to spin it and let go: it keeps its momentum, then settles back to the slow turn. Dots and ticks under the pointer darken and grow, and the line on the card changes every few seconds.",
+        hint: "Drag the sphere, let go, and move the pointer across it. In this view, click the card to change its line.", tags: ["Canvas", "3D", "Drag", "Momentum"] },
+      { code: "INT-18", title: "The Box", status: "Interaction · Motion", area: "Brand · Launch", tag: "interaction", demo: "theBox", bg: "#000", dark: true, bleed: true, ptr: "none",
+        scope: "A title card where image tiles shoot in from outside the frame and then settle: very fast at the start, suddenly slow at the end. Built with GSAP, using one expo ease and a random stagger.",
+        hint: "Watch the loop, or click to replay it.", tags: ["GSAP", "Easing", "Launch film"] },
       { code: "INT-02", title: "Segmented Navigation", status: "Interaction", area: "Navigation · Component", tag: "interaction", demo: "segmentedNav", bg: "#000", dark: true, ptr: "hover",
         scope: "Ten links in a compact bar. Ticks magnify under the cursor, and the one you're on opens into a labelled pill.",
         hint: "Move across the bar. Keyboard: Tab through the links.", tags: ["Navigation", "Magnify", "Component"],
@@ -2180,6 +2355,7 @@ function openLightbox(src, alt, opener) {
         li.classList.add("lab__tile--ix", it.ptr === "hover" ? "lab__tile--hover" : "lab__tile--noptr");
         if (it.dark) li.classList.add("lab__tile--dark");
         if (it.bleed) li.classList.add("lab__tile--bleed");
+        if (it.bare) li.classList.add("lab__tile--bare");
         li.style.setProperty("--ix-bg", it.bg);
         const stage = el("div", "lab__stage"); li.appendChild(stage);
         if (it.ptr !== "hover") stage.inert = true;   // the cover button owns the tile; controls inside the loop must not be tabbable or announced twice
@@ -2357,6 +2533,11 @@ function openLightbox(src, alt, opener) {
     };
     const mediaEl = (m, tag, k) => {
       if (m.diagram) return diagramEl(m.diagram);
+      if (m.demo) { // an authored product animation, mounted by js/case-demos.js
+        const f = el("figure", "shot shot--wide shot--demo"), d = el("div", "cs-demo");
+        d.dataset.caseDemo = m.demo; d.setAttribute("role", "img"); d.setAttribute("aria-label", m.alt || m.cap || "Product demo");
+        f.appendChild(d); if (m.cap) f.appendChild(el("figcaption", "", m.cap)); return f;
+      }
       if (typeof m === "string" || m.ph) return placeholder(typeof m === "string" ? m : m.ph, (typeof m === "object" && m.ratio) || "16:10", phId(tag, k));
       if (m.video) {
         const f = el("figure", "shot shot--video"), tile = el("div", "shot__tile"), v = el("video");
@@ -2629,4 +2810,18 @@ function openLightbox(src, alt, opener) {
   const ready = Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise((r) => setTimeout(r, 200))]);
   if (document.getElementById("loader")) addEventListener("loader:done", () => ready.then(start), { once: true });
   else ready.then(start);
+})();
+
+// ── Writing reader: highlight the section in view in the left index ──
+(() => {
+  const toc = document.querySelector("[data-reader] .rd__toc");
+  if (!toc || !("IntersectionObserver" in window)) return;
+  const links = new Map([...toc.querySelectorAll("a")].map((a) => [a.getAttribute("href").slice(1), a]));
+  const heads = [...links.keys()].map((id) => document.getElementById(id)).filter(Boolean);
+  const set = (id) => links.forEach((a, k) => a.classList.toggle("is-active", k === id));
+  const io = new IntersectionObserver((es) => {
+    const seen = es.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+    if (seen) set(seen.target.id);
+  }, { rootMargin: "-10% 0px -75% 0px" });
+  heads.forEach((h) => io.observe(h));
 })();

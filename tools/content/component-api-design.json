@@ -1,0 +1,26 @@
+{
+  "sections": [
+    { "before": "My hypothesis", "h": "A worked example of a boolean pile-up", "flag": "Illustrative: my own sketch, not a sourced fact.", "p": [
+      "<strong>How it usually starts.</strong> A button begins with one prop. Then a loading state arrives and someone adds a boolean. Then a destructive style, then a ghost style, each reasonable alone. Each addition roughly doubles the possible states, as the composition guidance describes, and nobody ever decided that loading and ghost and destructive together should be allowed.",
+      "<strong>What the structural version looks like.</strong> Replace the booleans with a short, named set of variants, and treat loading as a state of the parts, not a switch on the whole. Now the question a model faces is which variant fits, a finite choice, not which of many flags to combine. The impossible combinations are not discouraged. They simply cannot be written."
+    ]},
+    { "before": "How I'd test it", "h": "What I would do first on a real product", "flag": "My opinion, based on the tradeoffs above.", "p": [
+      "<strong>Pick the component that hurts.</strong> I would not start with a full API audit. I would pick the one component that engineers complain about most and read its props aloud as a sentence. Wherever the sentence stops making sense, there is probably a combination that should not exist, and that is where I would begin.",
+      "<strong>Ask for the stranger's worst case.</strong> For each prop, I would ask what the worst thing a confident stranger could build with it is. If the answer is uncomfortable, the prop either needs to go, be narrowed to named choices, or move into a part that only fits where it should. Flexibility has to justify itself against that answer."
+    ]},
+    { "h": "What this costs", "flag": "My opinion, based on the tradeoffs above.", "p": [
+      "<strong>Rigid APIs push work onto the system team.</strong> Every legitimate edge case that the variants do not cover becomes a request, and someone has to say yes or no. That friction is real. I think it is the right place for the friction to live, because the alternative is that the friction lands on users as broken screens.",
+      "<strong>Some flexibility is worth keeping.</strong> Composition is not a ban on freedom, and a heavily constrained component that cannot serve real needs will just be bypassed with custom code. The goal is that the flexible parts are the safe ones. I do not have a clean rule for where that line sits, and I suspect it differs by component."
+    ]}
+  ],
+  "maps": [
+    { "after": "Why this is on my mind", "caption": "Why props are a grammar with two readers.", "center": "Component API", "branches": [
+      { "label": "Two readers", "children": ["developer", "model"] },
+      { "label": "Booleans", "children": ["double the states", "hidden conditionals"] },
+      { "label": "Composition", "children": ["compound parts", "explicit variants"] },
+      { "label": "Borrow", "children": ["reuse known vocabulary"] },
+      { "label": "Impossible", "children": ["make them unwritable"] },
+      { "label": "Defaults", "children": ["strong and sensible"] }
+    ]}
+  ]
+}

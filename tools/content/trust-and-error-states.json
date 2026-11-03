@@ -1,0 +1,81 @@
+{
+  "sections": [
+    {
+      "before": "My hypothesis",
+      "h": "A worked example of a receipt state",
+      "flag": "Illustrative: my own sketch, not a sourced fact.",
+      "p": [
+        "<strong>Picture an agent that changes a batch of product listings.</strong> Today it says \"Done\" and the user hopes for the best. A receipt state would instead say what changed, how many items it touched, and why it chose them, in plain language. It would also show an undo that stays available for a limited time. Imagine the same product with a bare \"Done\" message after every action. The user has to trust the system blindly, and any later surprise lands on the whole product, not on one step.",
+        "<strong>Why this is the trust artifact.</strong> The receipt does two jobs. It lets the user check the work without redoing it, and it makes a mistake cheap to reverse. Neither job requires the model to be more accurate. That is the point of my hypothesis: recovery is something a designer can ship now. I would also want to test whether people actually read it. A receipt nobody opens is just decoration, so the first version should be short enough to take in at a glance."
+      ]
+    },
+    {
+      "before": "My hypothesis",
+      "h": "Where I would not trust this",
+      "flag": "My opinion, based on the tradeoffs above.",
+      "p": [
+        "<strong>Undo that arrives too late.</strong> A time-limited undo only helps if the user notices the mistake inside the window. In a flow where errors look exactly like right answers, they may not. So the receipt has to make errors easier to spot, not only easier to reverse. It also means the receipt and the undo should sit close together. A user who spots a problem should not have to hunt for the way back while the window is closing.",
+        "<strong>Actions that cannot be undone.</strong> Some actions have no way back. For those, I would not lean on recovery at all. This is where the shift toward a compliance-officer mode matters: preview first, confirm clearly, and slow the interface down on purpose. Recovery-first thinking is for the reversible majority, not for everything. That is why I treat this as a boundary on my own hypothesis. It holds well for the common case of small, reversible changes, and less well where one mistake carries real consequences for someone."
+      ]
+    },
+    {
+      "h": "What I would do first on a real product",
+      "flag": "My opinion, a suggested starting order.",
+      "p": [
+        "<strong>List every action by reversibility.</strong> I would walk through the product and sort each action into two piles: can be undone and cannot. It is an afternoon of work, and it usually shows how many actions are quietly irreversible. That list decides where previews and receipts go first. It is an unglamorous exercise, but it changes the roadmap. Teams often discover that the actions they thought were safe are the ones with no way back, and those are the ones that need attention first.",
+        "<strong>Then ship the cheapest recovery.</strong> For the reversible pile, I would add undo and visible change history before touching accuracy. For the irreversible pile, I would add a preview and a plain confirmation. Only after that would I ask the model team what accuracy improvements are possible, because the safety net will already be in place. The order matters because it protects users while the model is still improving. If accuracy rises later, the product is better still, and if it does not, people are not left exposed in the meantime."
+      ]
+    }
+  ],
+  "maps": [
+    {
+      "after": "What I notice",
+      "caption": "Errors, failures, and the recovery layer around them.",
+      "center": "Error states",
+      "branches": [
+        {
+          "label": "Error",
+          "children": [
+            "something went wrong",
+            "a learning chance"
+          ]
+        },
+        {
+          "label": "Failure",
+          "children": [
+            "higher severity",
+            "needs another UI"
+          ]
+        },
+        {
+          "label": "Fail state",
+          "children": [
+            "no good answer",
+            "plan it up front"
+          ]
+        },
+        {
+          "label": "Recovery",
+          "children": [
+            "undo and preview",
+            "change history"
+          ]
+        },
+        {
+          "label": "Receipt",
+          "children": [
+            "what and why",
+            "time-limited undo"
+          ]
+        },
+        {
+          "label": "High stakes",
+          "children": [
+            "mode shift",
+            "compliance officer"
+          ]
+        }
+      ]
+    }
+  ]
+}

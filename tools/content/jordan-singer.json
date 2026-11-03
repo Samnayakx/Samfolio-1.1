@@ -1,0 +1,111 @@
+{
+  "sections": [
+    {
+      "before": "My hypothesis",
+      "h": "A contract for one affordance",
+      "flag": "Illustrative: my own sketch, not a sourced fact.",
+      "p": [
+        "<strong>Take a dismiss chip.</strong> A user closes a suggested chip. The contract has to say what that means: not interested, not now, or just in the way. Each reading tells the model something different, and the interface alone cannot tell them apart. Someone has to decide, and write it down. That is the kind of detail that gets decided by accident when nobody owns it, and then shows up as odd product behaviour later.",
+        "<strong>Three questions per affordance.</strong> What does this action tell the model? How strongly should it count? For how long? A chip dismissed once might fade in an hour, while an explicit setting might hold until changed. The answers can be simple, as long as they are chosen on purpose. I would start with defaults that are easy to explain to a user, since a contract I cannot explain is not one I can trust."
+      ]
+    },
+    {
+      "before": "How I'd test it",
+      "h": "Where I would not trust this",
+      "flag": "My opinion, based on the tradeoffs above.",
+      "p": [
+        "<strong>Too many contracts is its own cost.</strong> If every click needs a written meaning, the design work could grow past what a team can keep up with. I would probably start with the few affordances that most change what the model does next, and leave the rest alone. Starting small keeps the practice honest: a few contracts that are tested are worth more than many that are assumed.",
+        "<strong>Users may not share my reading.</strong> I can write a clean contract, and people may still think the button means something else. That is why the test asks users what they thought each action meant. A contract nobody understands is a spec, not a design. I would treat each mismatch as a bug in the interface wording or the signal, not as a failure of the user to understand."
+      ]
+    },
+    {
+      "h": "Why the demo habit fits this",
+      "flag": "My opinion, based on the tradeoffs above.",
+      "p": [
+        "<strong>Contracts are easy to argue about and hard to feel.</strong> A small working prototype lets me see what the model does after a click, which a document cannot show. That connects back to Singer's habit of building something small and showing it early. The demo is where a vague idea about signals becomes something a teammate can poke at and push back on.",
+        "<strong>The expensive part is choosing.</strong> Building a demo is cheap now. Knowing which affordance deserves one is not. I would pick the interaction where a wrong lesson would hurt most, prototype that, and let the result decide what gets a written contract. The prototype also gives me something to show the team, which makes the case for writing the contract far easier than arguing it in the abstract."
+      ]
+    }
+  ],
+  "maps": [
+    {
+      "after": "What's true right now",
+      "caption": "Jordan Singer's path as documented.",
+      "center": "Singer",
+      "branches": [
+        {
+          "label": "Early work",
+          "children": [
+            "GPT-3 Figma plugin",
+            "built in public"
+          ]
+        },
+        {
+          "label": "Diagram",
+          "children": [
+            "founded it",
+            "Figma acquired it"
+          ]
+        },
+        {
+          "label": "Background",
+          "children": [
+            "self-taught",
+            "product designer"
+          ]
+        },
+        {
+          "label": "Role",
+          "children": [
+            "AI at Figma",
+            "AI systems designer"
+          ]
+        },
+        {
+          "label": "Principle",
+          "children": [
+            "feels like one team"
+          ]
+        }
+      ]
+    },
+    {
+      "after": "A contract for one affordance",
+      "caption": "My bet: every affordance has a contract with the model.",
+      "center": "Contract",
+      "branches": [
+        {
+          "label": "Signal",
+          "children": [
+            "what it tells the model"
+          ]
+        },
+        {
+          "label": "Strength",
+          "children": [
+            "how much it counts"
+          ]
+        },
+        {
+          "label": "Duration",
+          "children": [
+            "how long it lasts"
+          ]
+        },
+        {
+          "label": "Failure",
+          "children": [
+            "learns wrong lessons"
+          ]
+        },
+        {
+          "label": "Check",
+          "children": [
+            "ask users the meaning",
+            "mismatches are bugs"
+          ]
+        }
+      ]
+    }
+  ]
+}

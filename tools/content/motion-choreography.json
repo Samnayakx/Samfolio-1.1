@@ -1,0 +1,115 @@
+{
+  "sections": [
+    {
+      "before": "My hypothesis",
+      "h": "A small vocabulary, sketched",
+      "flag": "Illustrative: my own sketch, not a sourced fact.",
+      "p": [
+        "<strong>Names before numbers.</strong> A closed set could begin with a few durations, a few easings and one stagger, each with a plain name. Components and generated screens would reference the names only. If someone wants to change how the product feels, they change one value in one place, and everything follows. The first pass can be rough. What matters is that there is a list at all, because a list can be edited and a pile of habits cannot.",
+        "<strong>Rules for when, not just what.</strong> The words matter less than the guidance on using them. Which one is for small components, which one is for large surfaces, and when does a moment earn expressive motion at all? Without that, the model has a vocabulary but no grammar, and will still produce screens that move oddly. Writing the grammar down also helps the humans. A designer reviewing generated output has something concrete to check it against, instead of a feeling that it looks off."
+      ]
+    },
+    {
+      "before": "My hypothesis",
+      "h": "Where a closed set can fail",
+      "flag": "My opinion, based on the tradeoffs above.",
+      "p": [
+        "<strong>Too small, and it gets bypassed.</strong> A vocabulary that cannot express a real product moment will be worked around, and every workaround is a new undocumented value. That is the failure I described in what would change my mind, and the fix is to grow the set deliberately. The answer is not to loosen the rules but to be thoughtful about the set, and to review it as the product grows so it does not drift or bloat.",
+        "<strong>Consistency can become flat.</strong> If everything moves the same way, nothing stands out. This is why the split between productive and expressive motion matters. The closed set should include a small, rarely used expressive tier so that the moments with weight can still feel different. I would keep that tier small and write down what earns it. If every screen finds a reason to use it, the earlier warning about users learning to ignore it comes true."
+      ]
+    },
+    {
+      "h": "What I would do first on a real product",
+      "flag": "My opinion, a sketch of a first step rather than a method I have run.",
+      "p": [
+        "<strong>Inventory what already exists.</strong> I would collect every duration and easing already in the product and see how many distinct values there really are. My guess is far more than anyone intended, and the clusters in that list suggest what the first tokens should be. It feels tedious, but it is the cheapest step. Most of the value comes from seeing the real spread of values, which usually surprises everyone on the team.",
+        "<strong>Merge, name, then restrict.</strong> I would fold near-duplicates into a short named list, move components onto it, and only then let a generator near it. Handing a model an unrestricted pile of timings would simply teach it the existing inconsistency, at a much higher speed. Once the list is short and named, the generator has far less room to go wrong, and the review gets simpler too, since there are fewer ways for a screen to differ."
+      ]
+    }
+  ],
+  "maps": [
+    {
+      "after": "What's true right now",
+      "caption": "How motion gets written down as tokens, and what that means for generated UI.",
+      "center": "Motion tokens",
+      "branches": [
+        {
+          "label": "Two roles",
+          "children": [
+            "productive by default",
+            "expressive is earned"
+          ]
+        },
+        {
+          "label": "Duration",
+          "children": [
+            "small is shorter",
+            "large surfaces longer"
+          ]
+        },
+        {
+          "label": "Choreography",
+          "children": [
+            "primary moves first",
+            "small stagger follows"
+          ]
+        },
+        {
+          "label": "Details",
+          "children": [
+            "press state scale",
+            "interruptible motion"
+          ]
+        },
+        {
+          "label": "Closed set",
+          "children": [
+            "model picks names",
+            "cannot invent values"
+          ]
+        },
+        {
+          "label": "Risk",
+          "children": [
+            "bypassed if too small"
+          ]
+        }
+      ]
+    },
+    {
+      "after": "What I would do first on a real product",
+      "caption": "Building the vocabulary: names, rules, and where it can fail.",
+      "center": "Vocabulary",
+      "branches": [
+        {
+          "label": "Inventory",
+          "children": [
+            "collect every timing",
+            "find the clusters"
+          ]
+        },
+        {
+          "label": "Name",
+          "children": [
+            "names before numbers",
+            "one place to change"
+          ]
+        },
+        {
+          "label": "Rules",
+          "children": [
+            "which word when",
+            "expressive is rare"
+          ]
+        },
+        {
+          "label": "Failure",
+          "children": [
+            "too small, bypassed",
+            "too uniform, flat"
+          ]
+        }
+      ]
+    }
+  ]
+}

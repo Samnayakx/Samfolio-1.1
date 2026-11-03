@@ -1,0 +1,80 @@
+{
+  "sections": [
+    {
+      "before": "My hypothesis",
+      "h": "Turning a rule into a check",
+      "flag": "Illustrative: my own sketch, not a sourced fact.",
+      "p": [
+        "<strong>Start with the rule that can be measured.</strong> Take the Sonner rule that a toast moves by its own height using percentages. That is easy to check, because you can read the code and see whether it holds. A rule like \"ease-out for responsive feel\" is harder, because it needs someone to look at the motion and judge it. The first kind can be automated. The second kind needs graded examples. That split also tells you who does the checking: a script for the first pile, and a person with a good eye for the second. Mixing them up wastes time on both sides.",
+        "<strong>Sort rules before you write evals.</strong> I would split a skill into rules a linter could catch and rules that need human taste. Only the second pile needs the ten pass/fail examples I describe below. That keeps the effort honest: you spend judgment where judgment is actually required, and you do not pretend taste can be reduced to a regex. The goal is not to automate taste, only to be clear about which parts of it can be written down and which parts still need someone who has seen a lot of good work."
+      ]
+    },
+    {
+      "before": "My hypothesis",
+      "h": "What I would not trust a skill to do",
+      "flag": "My opinion, based on the progression above.",
+      "p": [
+        "<strong>Applying a rule in the wrong place.</strong> A skill packages how one craftsperson thinks. An agent that follows it will apply it everywhere, including places where the author would have broken the rule on purpose. The knowledge is explicit now, but the judgment about when not to use it is still mostly tacit. An agent has no way to feel that a rule does not fit this screen. It will follow the text, which is exactly what makes a skill useful and exactly what makes it risky when the context shifts.",
+        "<strong>Confident sameness.</strong> If many teams install the same skill, their interfaces may start to feel alike. I do not know how big that effect would be. It is one more reason I would want published checks that tell you where the output is wrong, not only where it follows the style. That is a guess, not a finding. But it is the kind of risk I would want a team to name early, before every product in a category quietly ends up moving the same way."
+      ]
+    },
+    {
+      "h": "How I would explain this to a teammate",
+      "flag": "My opinion, written as a plain-language pitch.",
+      "p": [
+        "<strong>The short version.</strong> Components let you copy someone's taste. Essays let you understand it. Skills let a machine apply it. Evals would let you check that the machine did it right. Each step makes the knowledge more portable, and each one asks the author to be more explicit about what \"good\" means. It is a short chain, and I find it easier to explain than any single piece of it. Most people already know the first step; it is the last step that is still missing.",
+        "<strong>The ask.</strong> Before a team adopts a skill for its agents, I would ask one question: how will we know when it was followed? If nobody has an answer, the skill is a hope, not a standard. Even three graded examples would be a start, and they would make design reviews about evidence instead of preference. That one question is cheap to ask and hard to dodge. It moves the conversation from whether the skill sounds good to whether we can show it working, which is where design reviews should have been heading anyway."
+      ]
+    }
+  ],
+  "maps": [
+    {
+      "after": "What I notice",
+      "caption": "How craft knowledge travels, and what each step demands.",
+      "center": "Taste spreads",
+      "branches": [
+        {
+          "label": "Components",
+          "children": [
+            "Sonner and Vaul",
+            "copy the thing"
+          ]
+        },
+        {
+          "label": "Essays",
+          "children": [
+            "explain the rules",
+            "understand the thing"
+          ]
+        },
+        {
+          "label": "Courses",
+          "children": [
+            "animations.dev",
+            "teaching at scale"
+          ]
+        },
+        {
+          "label": "Skills",
+          "children": [
+            "for coding agents",
+            "machine applies it"
+          ]
+        },
+        {
+          "label": "Evals",
+          "children": [
+            "graded examples",
+            "measure taste"
+          ]
+        },
+        {
+          "label": "Risk",
+          "children": [
+            "depends on context"
+          ]
+        }
+      ]
+    }
+  ]
+}

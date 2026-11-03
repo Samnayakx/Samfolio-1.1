@@ -5,7 +5,10 @@ const root = path.resolve(__dirname, "..");
 const types = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css", ".svg": "image/svg+xml", ".png": "image/png", ".jpg": "image/jpeg", ".webp": "image/webp", ".mp4": "video/mp4", ".pdf": "application/pdf", ".json": "application/json", ".xml": "application/xml", ".txt": "text/plain" };
 const send = (res, status, file) => {
   res.writeHead(status, { "content-type": types[path.extname(file)] || "application/octet-stream" });
-  fs.createReadStream(file).pipe(res);
+  const s = fs.createReadStream(file);
+  // A slow or failed read (e.g. an iCloud-evicted file) must not take the whole server down.
+  s.on("error", (e) => { console.error("read failed:", file, e.code); if (!res.headersSent) res.writeHead(500); res.end(); });
+  s.pipe(res);
 };
 http.createServer((req, res) => {
   let p = decodeURIComponent(req.url.split("?")[0]);

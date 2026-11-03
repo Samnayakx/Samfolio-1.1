@@ -1,0 +1,25 @@
+{
+  "sections": [
+    { "before": "My hypothesis", "h": "A worked example of naming by purpose", "flag": "Illustrative: my own sketch, not a sourced fact.", "p": [
+      "<strong>Same screen, two vocabularies.</strong> Suppose a model is asked to add a delete confirmation. Given <code>red-500</code> and <code>gray-100</code>, it has to guess what each is for, and a guess that looks fine will pass review. Given <code>text-danger</code> and <code>surface-raised</code>, the choice is mostly made by the names. The model is selecting a purpose, not inventing a style.",
+      "<strong>The error changes shape.</strong> With primitives, a wrong pick is a wrong color, which is hard to spot and hard to grep for. With semantic names, a wrong pick is a wrong purpose, such as using a danger token for a warning. That is still a mistake, but it is the kind a reviewer can read in the code and reason about in one pass."
+    ]},
+    { "before": "How I'd test it", "h": "What I would do first on a real product", "flag": "My opinion, based on the tradeoffs above.", "p": [
+      "<strong>Audit the names before the values.</strong> I would list every token a generator could reach and ask of each one whether its name says when to use it. Anything named after how it looks, not what it does, is a candidate for renaming or hiding. This costs an afternoon and needs no new tooling.",
+      "<strong>Hide primitives last, not first.</strong> Removing access in one step could break existing flows that quietly depend on raw values. I would first make the semantic layer complete enough that nothing needs the primitives, then close the door. If a flow still reaches for one, that gap in the vocabulary is useful information about what is missing."
+    ]},
+    { "h": "Where I would not trust this yet", "flag": "My opinion, based on the tradeoffs above.", "p": [
+      "<strong>A thin semantic layer pushes people back.</strong> If the vocabulary is missing a purpose someone really needs, they will find a way around it, and the model will too. Hiding primitives only works if the semantic set is generous enough to cover real work. I would not claim the safety benefit without checking that.",
+      "<strong>Names can drift.</strong> A token called <code>action-primary</code> that is used for three unrelated things has the same problem as <code>blue-500</code>, just better dressed. I would treat the intent notes as part of the token, reviewed when the token changes, not as optional documentation."
+    ]}
+  ],
+  "maps": [
+    { "after": "The three layers, and who should see which", "caption": "Token layers and the one a model should be allowed to see.", "center": "Tokens", "branches": [
+      { "label": "Primitive", "children": ["raw values", "keep private"] },
+      { "label": "Semantic", "children": ["purpose", "what models see"] },
+      { "label": "Component", "children": ["button-bg"] },
+      { "label": "Naming", "children": ["safety feature", "intent notes"] },
+      { "label": "Test", "children": ["20 screens twice", "count off-system"] }
+    ]}
+  ]
+}

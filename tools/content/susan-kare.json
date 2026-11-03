@@ -1,0 +1,115 @@
+{
+  "sections": [
+    {
+      "before": "My hypothesis",
+      "h": "A glyph set I would sketch first",
+      "flag": "Illustrative: my own sketch, not a sourced fact.",
+      "p": [
+        "<strong>Start from the questions, not the shapes.</strong> For each of the six states, I would write down the one question the user is silently asking. Working: is it doing something? Unsure: should I trust this? Needs your input: is it waiting on me? Only then would I draw anything. A glyph that cannot be tied to a question is decoration. It sounds slow, but it saves time, because the questions double as the brief for anyone who joins the work later and needs to know why a glyph exists.",
+        "<strong>Draw small on purpose.</strong> Following the constraint idea, I would draw at a tiny size first and only scale up if a shape survives. Color-free is the second filter. If two states look alike in a single tone, one of them needs a different silhouette, not a different hue. That discipline is the part I most want to borrow. The tiny grid was not a limitation she worked around, it was the thing that made each decision visible."
+      ]
+    },
+    {
+      "before": "My hypothesis",
+      "h": "Where a glyph is the wrong tool",
+      "flag": "My opinion, based on the tradeoffs above.",
+      "p": [
+        "<strong>Abstract states.</strong> The Happy Mac worked because its message was simple and universal. Some AI states are not. The difference between unsure and stuck can be subtle, and a glyph that tries to carry both may carry neither. If I cannot describe the difference in one short phrase, I doubt a picture will do better. I would not claim this settles it. It is a prompt to test, and the labelled-versus-unlabelled comparison in the test above is what should decide it.",
+        "<strong>Personality has a limit.</strong> A little warmth at boot is charming. Warmth next to a failure can read as the product not taking the problem seriously. I would give the failure-adjacent states the plainest drawing in the set and save the character for the states where nothing is wrong. It is a lesson I would apply to any new state, too. If a state cannot be told apart from its neighbour without a caption, the caption is probably doing the real work."
+      ]
+    },
+    {
+      "h": "How I would explain it to a teammate",
+      "flag": "My opinion, a way of pitching the idea rather than a sourced claim.",
+      "p": [
+        "<strong>Start with the spinner.</strong> I would ask them what a spinner actually says. Mostly it says only that something is happening, which is the least useful thing to know. Then I would ask what they would want to know instead, and let the list of states come from them. None of this is a ruling against glyphs. It is a reason to treat each state on its merits, and to be ready to write a phrase when a picture will not carry it.",
+        "<strong>Frame it as a small system.</strong> The pitch is not an icon pack. It is a short vocabulary with rules, the way a type scale is. If the team can agree that six states cover most moments, the drawing becomes the easy part, and the argument about words versus glyphs can be settled by the test above. It also gives the glyph set a clear job description. Reassure when things are fine, be plain when they are not, and never ask a small picture to explain a complicated failure."
+      ]
+    }
+  ],
+  "maps": [
+    {
+      "after": "What I take from it",
+      "caption": "The Happy Mac as a model for wordless status in AI products.",
+      "center": "Status glyphs",
+      "branches": [
+        {
+          "label": "Happy Mac",
+          "children": [
+            "one bit of reassurance",
+            "moment of anxiety"
+          ]
+        },
+        {
+          "label": "Constraint",
+          "children": [
+            "tiny grid",
+            "forces clarity"
+          ]
+        },
+        {
+          "label": "Today",
+          "children": [
+            "spinner or sentence",
+            "paragraph for a smile"
+          ]
+        },
+        {
+          "label": "Six states",
+          "children": [
+            "working, confident",
+            "unsure, stuck, done"
+          ]
+        },
+        {
+          "label": "Rules",
+          "children": [
+            "readable at 16 px",
+            "works without color"
+          ]
+        },
+        {
+          "label": "Test",
+          "children": [
+            "unlabeled glyphs",
+            "80% recognition"
+          ]
+        }
+      ]
+    },
+    {
+      "after": "How I would explain it to a teammate",
+      "caption": "How I would pick glyphs, and where I would not use them.",
+      "center": "Glyph or word",
+      "branches": [
+        {
+          "label": "Start with",
+          "children": [
+            "the silent question",
+            "then the shape"
+          ]
+        },
+        {
+          "label": "Filters",
+          "children": [
+            "small size first",
+            "single tone"
+          ]
+        },
+        {
+          "label": "Avoid when",
+          "children": [
+            "states too abstract",
+            "failure looks plain"
+          ]
+        },
+        {
+          "label": "Fallback",
+          "children": [
+            "phrase style guide"
+          ]
+        }
+      ]
+    }
+  ]
+}

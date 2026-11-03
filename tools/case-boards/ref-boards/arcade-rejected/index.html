@@ -1,0 +1,159 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8" /><title>Arcade rejected variations</title>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@500;700&family=Inter:wght@400;500;600;700&display=block" rel="stylesheet" />
+<style>
+/* Rejected-design boards: lo-fi sketches on dotted paper, red pins on the wireframe, the reasons in a column on the right. 1080x608, rendered at 2x. */
+* { box-sizing: border-box; }
+body { margin: 0; background: #fff; color: #1a1a1a; -webkit-font-smoothing: antialiased; }
+.board { position: relative; width: 1080px; height: 608px; margin: 0 0 24px; overflow: hidden; background: #FAFAF7 radial-gradient(#D6D6CF 1px, transparent 1.2px) 0 0 / 18px 18px; font: 400 13px/1.3 "Architects Daughter", cursive; }
+.a { position: absolute; left: calc(var(--x) * 1px); top: calc(var(--y) * 1px); width: calc(var(--w) * 1px); height: calc(var(--h) * 1px); }
+.hd { position: absolute; left: 34px; top: 22px; display: flex; align-items: center; gap: 12px; }
+.stamp { padding: 3px 9px; border: 2px solid #E5484D; border-radius: 4px; color: #E5484D; font: 700 11px/1.2 "Inter"; letter-spacing: .08em; text-transform: uppercase; transform: rotate(-2deg); }
+.hd h2 { margin: 0; font: 700 30px/1 "Caveat", cursive; }
+/* wireframe pieces */
+.frame { background: #fff; border: 2px solid #1a1a1a; border-radius: 4px; }
+.box { border: 1.6px solid #1a1a1a; border-radius: 4px; background: #fff; }
+.soft { border-color: #9a9a94; }
+.ln { height: 7px; border: 1.4px solid #1a1a1a; border-radius: 4px; background: #fff; margin: 0 0 7px; }
+.ln.g { border-color: #b9b9b2; }
+.lbl { font-size: 12px; }
+.btn { display: inline-block; padding: 2px 9px; border: 1.6px solid #1a1a1a; border-radius: 4px; font-size: 11px; background: #fff; }
+.btn.pk { background: #F0299B; border-color: #F0299B; color: #fff; }
+.dot { width: 18px; height: 18px; border: 1.6px solid #1a1a1a; border-radius: 50%; display: inline-block; }
+.hatch { border: 1.4px solid #E2A27E; background: repeating-linear-gradient(-45deg, #FBE3D3 0 6px, #F6D2BC 6px 7px); }
+.hatch.g { border-color: #A7CF8E; background: repeating-linear-gradient(-45deg, #E6F4DA 0 6px, #D3EAC2 6px 7px); }
+.pct { font: 500 12px/1 "Inter"; letter-spacing: .1em; color: #8a6a55; text-align: center; }
+/* pins and reasons */
+.pin { position: absolute; left: calc(var(--x) * 1px); top: calc(var(--y) * 1px); width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 50%; background: #E5484D; color: #fff; font: 700 13px/26px "Inter"; text-align: center; box-shadow: 0 0 0 3px #fff; z-index: 3; }
+.ring { position: absolute; left: calc(var(--x) * 1px); top: calc(var(--y) * 1px); width: calc(var(--w) * 1px); height: calc(var(--h) * 1px); border: 2.2px solid #E5484D; border-radius: 40% 46% 42% 48%; transform: rotate(-1.5deg); z-index: 2; }
+.why { position: absolute; left: 726px; top: 82px; width: 322px; }
+.why h4 { margin: 0 0 12px; font: 600 11px/1.2 "Inter"; letter-spacing: .1em; text-transform: uppercase; color: #E5484D; }
+.r { display: grid; grid-template-columns: 26px 1fr; gap: 0 12px; margin: 0 0 16px; }
+.r .n { width: 26px; height: 26px; border-radius: 50%; background: #E5484D; color: #fff; font: 700 13px/26px "Inter"; text-align: center; }
+.r b { display: block; font: 700 22px/1.05 "Caveat", cursive; margin: 1px 0 3px; }
+.r p { margin: 0; font: 400 12.5px/1.45 "Inter"; color: #4a4a46; }
+.kept { position: absolute; left: 726px; bottom: 26px; width: 322px; padding: 11px 14px; border-left: 3px solid #1a1a1a; background: #fff; font: 400 12.5px/1.45 "Inter"; color: #2b2b28; }
+.kept b { font-weight: 600; }
+</style></head><body>
+
+<!-- A: node canvas as the home page -->
+<div class="board" id="rejected-canvas">
+  <div class="hd"><span class="stamp">Rejected · A</span><h2>A node canvas as the home page</h2></div>
+  <div class="frame a" style="--x:34;--y:78;--w:660;--h:500">
+    <div class="a" style="--x:0;--y:0;--w:656;--h:36;border-bottom:1.6px solid #1a1a1a;display:flex;align-items:center;gap:10px;padding:0 12px"><span class="dot"></span><span class="lbl">arcade</span><span class="lbl" style="color:#777">/ my-agent</span><span style="flex:1"></span><span class="btn">Logs</span><span class="btn pk">Deploy</span></div>
+    <div class="a" style="--x:0;--y:36;--w:110;--h:460;border-right:1.6px solid #1a1a1a;padding:16px 12px"><div class="ln"></div><div class="ln g"></div><div class="ln g"></div><div class="ln g"></div><div class="ln g"></div><div class="ln g"></div></div>
+    <svg class="a" style="--x:0;--y:0;--w:656;--h:496" viewBox="0 0 656 496" fill="none" stroke="#1a1a1a" stroke-width="1.6"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#1a1a1a" stroke-width="1.6"/></marker></defs><path d="M234 227H272" marker-end="url(#ah)"/><path d="M388 220L424 146" marker-end="url(#ah)"/><path d="M388 227H424" marker-end="url(#ah)"/><path d="M388 234L424 308" marker-end="url(#ah)"/></svg>
+    <div class="box a" style="--x:140;--y:200;--w:92;--h:54;display:grid;place-items:center">Agent</div>
+    <div class="box a" style="--x:276;--y:192;--w:110;--h:70;display:grid;place-items:center;text-align:center">MCP<br>Gateway</div>
+    <div class="box a" style="--x:428;--y:118;--w:92;--h:44;display:grid;place-items:center">GitHub ✓</div>
+    <div class="box a" style="--x:428;--y:205;--w:92;--h:44;display:grid;place-items:center">Linear ⚠</div>
+    <div class="box a" style="--x:428;--y:292;--w:92;--h:44;display:grid;place-items:center">Slack ⚠</div>
+    <div class="a" style="--x:540;--y:36;--w:116;--h:460;border-left:1.6px solid #1a1a1a;padding:14px 10px"><div class="lbl">Linear</div><div class="lbl" style="color:#777;margin:2px 0 10px">OAuth · scopes</div><div class="ln g"></div><div class="ln g"></div><div class="ln g"></div><div class="ln g"></div><div style="margin-top:300px"><span class="btn" style="font-size:9px">Authorize</span></div></div>
+  </div>
+  <div class="ring" style="--x:156;--y:140;--w:414;--h:290"></div>
+  <div class="pin" style="--x:168;--y:152">1</div>
+  <div class="ring" style="--x:578;--y:513;--w:78;--h:38"></div>
+  <div class="pin" style="--x:664;--y:514">2</div>
+  <div class="ring" style="--x:180;--y:448;--w:240;--h:110;border-style:dashed"></div>
+  <div class="pin" style="--x:186;--y:456">3</div>
+  <div class="why"><h4>Why it failed</h4>
+    <div class="r"><span class="n">1</span><div><b>Architecture before value, again</b><p>4 of 5 testers asked "where do I start?" in the first minute.</p></div></div>
+    <div class="r"><span class="n">2</span><div><b>Auth hid in the inspector</b><p>Only 1 of 5 found Authorize without help.</p></div></div>
+    <div class="r"><span class="n">3</span><div><b>A blank graph for new projects</b><p>With nothing connected yet, the canvas had nothing to show.</p></div></div>
+  </div>
+  <div class="kept"><b>What survived:</b> the graph became the execution map inside each Playground run.</div>
+</div>
+
+<!-- B: nine-goal onboarding -->
+<div class="board" id="rejected-goals">
+  <div class="hd"><span class="stamp">Rejected · B</span><h2>Nine goals on the first screen</h2></div>
+  <div class="frame a" style="--x:34;--y:78;--w:660;--h:500;padding:26px 30px">
+    <div style="font-size:19px;margin:0 0 4px">What do you want to build?</div>
+    <div class="ln g" style="width:300px"></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px">
+      <div class="box" style="height:92px;padding:10px"><span class="dot"></span><div class="lbl" style="margin:6px 0 5px">Triage issues</div><div class="ln g"></div></div>
+      <div class="box" style="height:92px;padding:10px"><span class="dot"></span><div class="lbl" style="margin:6px 0 5px">Inbox zero</div><div class="ln g"></div></div>
+      <div class="box" style="height:92px;padding:10px"><span class="dot"></span><div class="lbl" style="margin:6px 0 5px">Daily brief</div><div class="ln g"></div></div>
+      <div class="box" style="height:92px;padding:10px"><span class="dot"></span><div class="lbl" style="margin:6px 0 5px">Sales follow-up</div><div class="ln g"></div></div>
+      <div class="box" style="height:92px;padding:10px"><span class="dot"></span><div class="lbl" style="margin:6px 0 5px">Code review bot</div><div class="ln g"></div></div>
+      <div class="box" style="height:92px;padding:10px"><span class="dot"></span><div class="lbl" style="margin:6px 0 5px">Support agent</div><div class="ln g"></div></div>
+      <div class="box" style="height:92px;padding:10px"><span class="dot"></span><div class="lbl" style="margin:6px 0 5px">CRM sync</div><div class="ln g"></div></div>
+      <div class="box" style="height:92px;padding:10px"><span class="dot"></span><div class="lbl" style="margin:6px 0 5px">Custom agent</div><div class="ln g"></div></div>
+      <div class="box" style="height:92px;padding:10px"><span class="dot"></span><div class="lbl" style="margin:6px 0 5px">Start from code</div><div class="ln g"></div></div>
+    </div>
+    <div style="text-align:right;margin-top:14px;font-size:10px;color:#999">skip setup ›</div>
+  </div>
+  <div class="ring" style="--x:56;--y:150;--w:618;--h:340"></div>
+  <div class="pin" style="--x:60;--y:156">1</div>
+  <div class="ring" style="--x:62;--y:162;--w:204;--h:110;border-style:dashed"></div>
+  <div class="ring" style="--x:470;--y:266;--w:204;--h:108;border-style:dashed"></div>
+  <div class="pin" style="--x:476;--y:270">2</div>
+  <div class="ring" style="--x:594;--y:463;--w:82;--h:30"></div>
+  <div class="pin" style="--x:588;--y:466">3</div>
+  <div class="why"><h4>Why it failed</h4>
+    <div class="r"><span class="n">1</span><div><b>Nine goals read as a wall</b><p>Testers spent about 6 seconds here, then picked the first card.</p></div></div>
+    <div class="r"><span class="n">2</span><div><b>The goals overlapped</b><p>Triage, Support and Code review used the same tool bundle.</p></div></div>
+    <div class="r"><span class="n">3</span><div><b>Experts had no way out</b><p>SDK users hunted for a tiny "skip setup" link.</p></div></div>
+  </div>
+  <div class="kept"><b>What shipped:</b> 5 goals, one recommended path, and "Explore first" as a real button.</div>
+</div>
+
+<!-- C: OAuth in a modal -->
+<div class="board" id="rejected-modal">
+  <div class="hd"><span class="stamp">Rejected · C</span><h2>Authorization in a modal</h2></div>
+  <div class="frame a" style="--x:34;--y:78;--w:660;--h:500">
+    <div class="a" style="--x:20;--y:20;--w:400;--h:460">
+      <div class="box soft" style="width:260px;padding:9px;margin:0 0 12px auto"><div class="ln g"></div><div class="ln g" style="width:60%;margin:0"></div></div>
+      <div class="box soft" style="width:300px;padding:9px;margin:0 0 12px"><div class="ln g"></div><div class="ln g"></div><div class="ln g" style="width:40%;margin:0"></div></div>
+      <div class="box soft" style="width:220px;padding:9px;margin:0 0 12px auto"><div class="ln g" style="margin:0"></div></div>
+      <div class="box soft a" style="--x:0;--y:420;--w:400;--h:38"></div>
+    </div>
+    <div class="a" style="--x:446;--y:20;--w:194;--h:460;border-left:1.6px solid #b9b9b2;padding:4px 0 0 16px;color:#777">
+      <div class="lbl" style="margin:0 0 10px;color:#1a1a1a">Trace</div>
+      <div class="lbl" style="margin:0 0 9px">✓ User intent</div><div class="lbl" style="margin:0 0 9px">✓ Tool selected</div><div class="lbl" style="margin:0 0 9px;color:#1a1a1a">● Authorization</div><div class="lbl" style="margin:0 0 9px">○ Scope check</div><div class="lbl" style="margin:0 0 9px">○ Policy check</div><div class="lbl" style="margin:0 0 9px">○ Execution</div><div class="lbl" style="margin:0 0 9px">○ Result</div><div class="lbl">○ Audit log</div>
+    </div>
+    <div class="a" style="--x:0;--y:0;--w:656;--h:496;background:rgba(40,40,36,.38)"></div>
+    <div class="box a" style="--x:190;--y:110;--w:290;--h:280;padding:18px 20px;border-width:2px">
+      <div style="font-size:17px;margin:0 0 4px">Connect Linear</div>
+      <div class="lbl" style="color:#777;margin:0 0 12px">This app requests access to:</div>
+      <div class="lbl" style="margin:0 0 6px">☐ read</div><div class="lbl" style="margin:0 0 6px">☐ write</div><div class="lbl" style="margin:0 0 6px">☐ issues:create</div><div class="lbl" style="margin:0 0 6px">☐ comments:create</div><div class="lbl" style="margin:0 0 6px">☐ admin</div><div class="lbl" style="margin:0 0 14px">☐ teams:read</div>
+      <div style="display:flex;gap:8px;justify-content:flex-end"><span class="btn">Cancel</span><span class="btn pk">Authorize</span></div>
+    </div>
+  </div>
+  <div class="ring" style="--x:470;--y:90;--w:220;--h:380"></div>
+  <div class="pin" style="--x:680;--y:100">1</div>
+  <div class="ring" style="--x:356;--y:393;--w:72;--h:34"></div>
+  <div class="pin" style="--x:350;--y:398">2</div>
+  <div class="ring" style="--x:236;--y:236;--w:150;--h:150"></div>
+  <div class="pin" style="--x:226;--y:322">3</div>
+  <div class="why"><h4>Why it failed</h4>
+    <div class="r"><span class="n">1</span><div><b>The modal covered the run</b><p>3 of 5 lost track of which step had paused.</p></div></div>
+    <div class="r"><span class="n">2</span><div><b>Cancel killed the run</b><p>Closing it to check something meant starting over.</p></div></div>
+    <div class="r"><span class="n">3</span><div><b>Scopes without a reason</b><p>Six scopes, and no hint that the agent only needed issues:create.</p></div></div>
+  </div>
+  <div class="kept"><b>What shipped:</b> auth inline at step 3 of the trace. One scope, one click.</div>
+</div>
+
+<!-- D: Project Home as a fixed 50/50 split -->
+<div class="board" id="rejected-split">
+  <div class="hd"><span class="stamp">Rejected · D</span><h2>Project Home as a fixed 50 / 50 split</h2></div>
+  <div class="frame a" style="--x:34;--y:78;--w:660;--h:500">
+    <div class="a" style="--x:0;--y:0;--w:656;--h:36;border-bottom:1.6px solid #1a1a1a;display:flex;align-items:center;gap:16px;padding:0 12px"><span class="dot"></span><span class="lbl">Home</span><span class="lbl" style="color:#777">Build</span><span class="lbl" style="color:#777">Roll out</span><span class="lbl" style="color:#777">Observe</span></div>
+    <div class="hatch a" style="--x:24;--y:60;--w:296;--h:414;padding:12px"><div class="pct">50% · SETUP CHECKLIST</div>
+      <div class="box soft" style="margin-top:16px;padding:10px"><div class="lbl">✓ Pick tools</div></div><div class="box soft" style="margin-top:10px;padding:10px"><div class="lbl">✓ Connect auth</div></div><div class="box soft" style="margin-top:10px;padding:10px"><div class="lbl">✓ Test action</div></div></div>
+    <div class="hatch g a" style="--x:336;--y:60;--w:296;--h:414;padding:12px"><div class="pct" style="color:#5b7a48">50% · METRICS</div>
+      <div class="box soft" style="margin-top:16px;height:110px;display:grid;place-items:center;color:#999" ><span class="lbl">No runs yet</span></div><div class="box soft" style="margin-top:10px;height:110px;display:grid;place-items:center;color:#999"><span class="lbl">No data</span></div></div>
+  </div>
+  <div class="ring" style="--x:362;--y:166;--w:250;--h:250"></div>
+  <div class="pin" style="--x:612;--y:172">1</div>
+  <div class="ring" style="--x:50;--y:166;--w:250;--h:200"></div>
+  <div class="pin" style="--x:56;--y:172">2</div>
+  <div class="pin" style="--x:362;--y:520">3</div>
+  <div class="why"><h4>Why it failed</h4>
+    <div class="r"><span class="n">1</span><div><b>Half a screen of empty charts</b><p>New projects saw "no data" before they had run anything.</p></div></div>
+    <div class="r"><span class="n">2</span><div><b>A finished checklist that never left</b><p>Active teams scrolled past setup they had completed weeks ago.</p></div></div>
+    <div class="r"><span class="n">3</span><div><b>One layout for two jobs</b><p>Setting up and monitoring need different pages, not different halves.</p></div></div>
+  </div>
+  <div class="kept"><b>What shipped:</b> one page, four states. The layout changes as the project progresses.</div>
+</div>
+
+</body></html>

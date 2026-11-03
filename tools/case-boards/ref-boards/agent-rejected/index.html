@@ -1,0 +1,123 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8" /><title>CotonAI Agent rejected variations</title>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@500;700&family=Inter:wght@400;500;600;700&display=block" rel="stylesheet" />
+<style>
+/* Rejected-design boards: lo-fi sketches on dotted paper, red pins on the wireframe, the reasons in a column on the right. 1080x608, rendered at 2x. */
+* { box-sizing: border-box; }
+body { margin: 0; background: #fff; color: #1a1a1a; -webkit-font-smoothing: antialiased; }
+.board { position: relative; width: 1080px; height: 608px; margin: 0 0 24px; overflow: hidden; background: #FAFAF7 radial-gradient(#D6D6CF 1px, transparent 1.2px) 0 0 / 18px 18px; font: 400 13px/1.3 "Architects Daughter", cursive; }
+.a { position: absolute; left: calc(var(--x) * 1px); top: calc(var(--y) * 1px); width: calc(var(--w) * 1px); height: calc(var(--h) * 1px); }
+.hd { position: absolute; left: 34px; top: 22px; display: flex; align-items: center; gap: 12px; }
+.stamp { padding: 3px 9px; border: 2px solid #E5484D; border-radius: 4px; color: #E5484D; font: 700 11px/1.2 "Inter"; letter-spacing: .08em; text-transform: uppercase; transform: rotate(-2deg); }
+.hd h2 { margin: 0; font: 700 30px/1 "Caveat", cursive; }
+/* wireframe pieces */
+.frame { background: #fff; border: 2px solid #1a1a1a; border-radius: 4px; }
+.box { border: 1.6px solid #1a1a1a; border-radius: 4px; background: #fff; }
+.soft { border-color: #9a9a94; }
+.ln { height: 7px; border: 1.4px solid #1a1a1a; border-radius: 4px; background: #fff; margin: 0 0 7px; }
+.ln.g { border-color: #b9b9b2; }
+.lbl { font-size: 12px; }
+.btn { display: inline-block; padding: 2px 9px; border: 1.6px solid #1a1a1a; border-radius: 4px; font-size: 11px; background: #fff; }
+.btn.pk { background: #5F7F63; border-color: #5F7F63; color: #fff; }
+.dot { width: 18px; height: 18px; border: 1.6px solid #1a1a1a; border-radius: 50%; display: inline-block; }
+.hatch { border: 1.4px solid #E2A27E; background: repeating-linear-gradient(-45deg, #FBE3D3 0 6px, #F6D2BC 6px 7px); }
+.hatch.g { border-color: #A7CF8E; background: repeating-linear-gradient(-45deg, #E6F4DA 0 6px, #D3EAC2 6px 7px); }
+.pct { font: 500 12px/1 "Inter"; letter-spacing: .1em; color: #8a6a55; text-align: center; }
+/* pins and reasons */
+.pin { position: absolute; left: calc(var(--x) * 1px); top: calc(var(--y) * 1px); width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 50%; background: #E5484D; color: #fff; font: 700 13px/26px "Inter"; text-align: center; box-shadow: 0 0 0 3px #fff; z-index: 3; }
+.ring { position: absolute; left: calc(var(--x) * 1px); top: calc(var(--y) * 1px); width: calc(var(--w) * 1px); height: calc(var(--h) * 1px); border: 2.2px solid #E5484D; border-radius: 40% 46% 42% 48%; transform: rotate(-1.5deg); z-index: 2; }
+.why { position: absolute; left: 726px; top: 82px; width: 322px; }
+.why h4 { margin: 0 0 12px; font: 600 11px/1.2 "Inter"; letter-spacing: .1em; text-transform: uppercase; color: #E5484D; }
+.r { display: grid; grid-template-columns: 26px 1fr; gap: 0 12px; margin: 0 0 16px; }
+.r .n { width: 26px; height: 26px; border-radius: 50%; background: #E5484D; color: #fff; font: 700 13px/26px "Inter"; text-align: center; }
+.r b { display: block; font: 700 22px/1.05 "Caveat", cursive; margin: 1px 0 3px; }
+.r p { margin: 0; font: 400 12.5px/1.45 "Inter"; color: #4a4a46; }
+.kept { position: absolute; left: 726px; bottom: 26px; width: 322px; padding: 11px 14px; border-left: 3px solid #1a1a1a; background: #fff; font: 400 12.5px/1.45 "Inter"; color: #2b2b28; }
+.kept b { font-weight: 600; }
+</style></head><body>
+</head><body>
+
+<!-- A: prompt-only chat -->
+<div class="board" id="rejected-prompt">
+  <div class="hd"><span class="stamp">Rejected · A</span><h2>Describe everything in a prompt</h2></div>
+  <div class="frame a" style="--x:34;--y:78;--w:660;--h:500">
+    <div class="a" style="--x:0;--y:0;--w:656;--h:36;border-bottom:1.6px solid #1a1a1a;display:flex;align-items:center;gap:10px;padding:0 12px"><span class="dot"></span><span class="lbl">cotonai</span><span class="lbl" style="color:#777">/ new chat</span></div>
+    <div class="a" style="--x:24;--y:56;--w:608;--h:330">
+      <div class="box soft" style="width:420px;padding:10px;margin:0 0 12px auto"><div class="lbl" style="margin:0 0 6px">"Linen midi dress, sage, no ruffles, like the one we approved last week but with a wider sleeve..."</div><div class="ln g" style="width:70%;margin:0"></div></div>
+      <div style="display:flex;gap:10px;margin:0 0 12px"><div class="box soft" style="width:96px;height:110px"></div><div class="box soft" style="width:96px;height:110px"></div><div class="box soft" style="width:96px;height:110px"></div><div class="box soft" style="width:96px;height:110px"></div></div>
+      <div class="box soft" style="width:340px;padding:10px;margin:0 0 0 auto"><div class="lbl">"No, the sage from the March board..."</div></div>
+    </div>
+    <div class="box a" style="--x:24;--y:430;--w:608;--h:44;display:flex;align-items:center;padding:0 12px;gap:10px"><span class="lbl" style="color:#999;flex:1">Describe exactly what you want...</span><span class="btn pk">Generate</span></div>
+  </div>
+  <div class="ring" style="--x:238;--y:126;--w:440;--h:86"></div>
+  <div class="pin" style="--x:240;--y:134">1</div>
+  <div class="ring" style="--x:318;--y:326;--w:362;--h:58"></div>
+  <div class="pin" style="--x:314;--y:352">2</div>
+  <div class="ring" style="--x:48;--y:204;--w:436;--h:130;border-style:dashed"></div>
+  <div class="pin" style="--x:52;--y:212">3</div>
+  <div class="why"><h4>Why it failed</h4>
+    <div class="r"><span class="n">1</span><div><b>Intent had to be typed out</b><p>Designers explained in words what a sketch or a reference already showed.</p></div></div>
+    <div class="r"><span class="n">2</span><div><b>Every prompt started over</b><p>The AI forgot which colour was rejected and which silhouette was approved.</p></div></div>
+    <div class="r"><span class="n">3</span><div><b>Outputs lived outside the work</b><p>Results sat in a chat log, away from the board the team reviewed.</p></div></div>
+  </div>
+  <div class="kept"><b>What shipped:</b> context before conversation. A selected region, sketch or reference carries the intent.</div>
+</div>
+
+<!-- B: one-shot generator -->
+<div class="board" id="rejected-oneshot">
+  <div class="hd"><span class="stamp">Rejected · B</span><h2>A generator that stops at one batch</h2></div>
+  <div class="frame a" style="--x:34;--y:78;--w:660;--h:500">
+    <div class="a" style="--x:0;--y:0;--w:656;--h:36;border-bottom:1.6px solid #1a1a1a;display:flex;align-items:center;gap:10px;padding:0 12px"><span class="dot"></span><span class="lbl">cotonai</span><span class="lbl" style="color:#777">/ generate</span><span style="flex:1"></span><span class="lbl" style="color:#777">20 variations</span></div>
+    <div class="a" style="--x:24;--y:56;--w:608;--h:330;display:grid;grid-template-columns:repeat(5,1fr);gap:10px">
+      <div class="box soft"></div><div class="box soft"></div><div class="box soft"></div><div class="box soft"></div><div class="box soft"></div>
+      <div class="box soft"></div><div class="box soft"></div><div class="box soft"></div><div class="box soft"></div><div class="box soft"></div>
+      <div class="box soft"></div><div class="box soft"></div><div class="box soft"></div><div class="box soft"></div><div class="box soft"></div>
+      <div class="box soft"></div><div class="box soft"></div><div class="box soft"></div><div class="box soft"></div><div class="box soft"></div>
+    </div>
+    <div class="a" style="--x:24;--y:420;--w:608;--h:50;display:flex;align-items:center;gap:10px"><span class="btn">Download</span><span class="btn">Regenerate</span><span style="flex:1"></span><span class="lbl" style="color:#999">done.</span></div>
+  </div>
+  <div class="ring" style="--x:48;--y:124;--w:624;--h:350"></div>
+  <div class="pin" style="--x:56;--y:132">1</div>
+  <div class="ring" style="--x:50;--y:492;--w:200;--h:46"></div>
+  <div class="pin" style="--x:48;--y:498">2</div>
+  <div class="ring" style="--x:610;--y:496;--w:72;--h:38"></div>
+  <div class="pin" style="--x:686;--y:500">3</div>
+  <div class="why"><h4>Why it failed</h4>
+    <div class="r"><span class="n">1</span><div><b>Twenty images, no plan</b><p>Variations came fast, but nothing tied them to the brief or the collection.</p></div></div>
+    <div class="r"><span class="n">2</span><div><b>Work left the canvas</b><p>Download and regenerate pushed results back into scattered tools.</p></div></div>
+    <div class="r"><span class="n">3</span><div><b>It ended at one batch</b><p>A creative task rarely ends with one image, but the tool did.</p></div></div>
+  </div>
+  <div class="kept"><b>What shipped:</b> execution, not just generation. The agent plans steps and returns outputs to the canvas.</div>
+</div>
+
+<!-- C: autopilot agent -->
+<div class="board" id="rejected-autopilot">
+  <div class="hd"><span class="stamp">Rejected · C</span><h2>An agent on autopilot</h2></div>
+  <div class="frame a" style="--x:34;--y:78;--w:660;--h:500">
+    <div class="a" style="--x:0;--y:0;--w:656;--h:36;border-bottom:1.6px solid #1a1a1a;display:flex;align-items:center;gap:10px;padding:0 12px"><span class="dot"></span><span class="lbl">cotonai</span><span class="lbl" style="color:#777">/ spring board</span></div>
+    <div class="a" style="--x:20;--y:56;--w:400;--h:420;display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+      <div class="box soft" style="height:126px"></div><div class="box soft" style="height:126px"></div><div class="box soft" style="height:126px"></div>
+      <div class="box soft" style="height:126px"></div><div class="box soft" style="height:126px"></div><div class="box soft" style="height:126px"></div>
+      <div class="box soft" style="height:126px"></div><div class="box soft" style="height:126px"></div><div class="box soft" style="height:126px"></div>
+    </div>
+    <div class="a" style="--x:440;--y:36;--w:216;--h:460;border-left:1.6px solid #1a1a1a;padding:14px 12px">
+      <div class="lbl" style="margin:0 0 10px">Agent</div>
+      <div class="box soft" style="padding:8px;margin:0 0 10px"><div class="lbl">"Refresh the spring line in the new palette"</div></div>
+      <div class="lbl" style="color:#777;margin:0 0 6px">working...</div>
+      <div class="box" style="padding:10px;margin:14px 0 0"><div class="lbl">✓ Done. Applied 9 changes to the board.</div></div>
+    </div>
+  </div>
+  <div class="ring" style="--x:44;--y:126;--w:412;--h:420"></div>
+  <div class="pin" style="--x:52;--y:134">1</div>
+  <div class="ring" style="--x:478;--y:207;--w:84;--h:30"></div>
+  <div class="pin" style="--x:472;--y:222">2</div>
+  <div class="ring" style="--x:480;--y:236;--w:208;--h:70"></div>
+  <div class="pin" style="--x:690;--y:244">3</div>
+  <div class="why"><h4>Why it failed</h4>
+    <div class="r"><span class="n">1</span><div><b>One wrong call hit the whole board</b><p>Autonomy is useful until an agent makes the wrong creative decision.</p></div></div>
+    <div class="r"><span class="n">2</span><div><b>Progress was a spinner</b><p>Designers couldn't see what the agent was doing, or stop it midway.</p></div></div>
+    <div class="r"><span class="n">3</span><div><b>No before and after</b><p>Changes landed without version comparison or a point to approve.</p></div></div>
+  </div>
+  <div class="kept"><b>What shipped:</b> visible progress, version comparison and approval checkpoints. Designers stay creative directors.</div>
+</div>
+
+</body></html>

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>OKLCH: The First Color Space Designers and Machines Agree On | Sambit Nayak</title>
+  <meta name="description" content="Perceptual color, Tailwind v4, and why I think brand palettes are about to be computed instead of picked." />
+  <link rel="canonical" href="https://www.sambitnayak.com/writing/oklch" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Sambit Nayak" />
+  <meta property="og:title" content="OKLCH: The First Color Space Designers and Machines Agree On | Sambit Nayak" />
+  <meta property="og:description" content="Perceptual color, Tailwind v4, and why I think brand palettes are about to be computed instead of picked." />
+  <meta property="og:url" content="https://www.sambitnayak.com/writing/oklch" />
+  <meta property="og:image" content="https://www.sambitnayak.com/assets/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@sambit_nayak_" />
+  <meta name="twitter:title" content="OKLCH: The First Color Space Designers and Machines Agree On | Sambit Nayak" />
+  <meta name="twitter:description" content="Perceptual color, Tailwind v4, and why I think brand palettes are about to be computed instead of picked." />
+  <meta name="twitter:image" content="https://www.sambitnayak.com/assets/og-image.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;700&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;700&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" /></noscript>
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+  <link rel="stylesheet" href="/css/site.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.sambitnayak.com/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://www.sambitnayak.com/writing"},{"@type":"ListItem","position":3,"name":"OKLCH: The First Color Space Designers and Machines Agree On","item":"https://www.sambitnayak.com/writing/oklch"}]}</script>
+</head>
+<body data-page="essay">
+  <div class="loader" id="loader" aria-hidden="true"><div class="loader__bg"></div><svg></svg></div>
+  <noscript><style>.loader{display:none}</style></noscript>
+  <script src="/js/loader.js"></script>
+  <header class="header">
+    <div class="navgroup" data-nav="work">
+      <nav class="seg" aria-label="Primary">
+        <a class="seg__item seg__brand" href="/" aria-label="Sambit Nayak, home"><svg class="logo" aria-hidden="true"></svg></a>
+        <button class="seg__item only-desktop" type="button" id="work-tab" aria-expanded="false" aria-controls="work-panel">Work <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <a class="seg__item only-desktop" href="/about">About</a>
+        <a class="seg__item only-desktop" href="/writing" aria-current="true">Writing</a>
+        <a class="seg__item only-desktop" href="/playground">Playground</a>
+        <button class="seg__item only-mobile" type="button" id="menu-tab" aria-expanded="false" aria-controls="work-panel" aria-label="Menu">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <rect x="2" y="2" width="2" height="2"/><rect x="7" y="2" width="2" height="2"/><rect x="12" y="2" width="2" height="2"/>
+            <rect x="2" y="7" width="2" height="2"/><rect x="7" y="7" width="2" height="2"/><rect x="12" y="7" width="2" height="2"/>
+            <rect x="2" y="12" width="2" height="2"/><rect x="7" y="12" width="2" height="2"/><rect x="12" y="12" width="2" height="2"/>
+          </svg>
+        </button>
+      </nav>
+      <div class="panel" id="work-panel">
+        <div class="pcard only-mobile pcard--plain">
+          <div class="pcard__main">
+            <p class="pcard__label">Navigate</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/#work">Work</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/writing">Writing</a></li>
+              <li><a href="/playground">Playground</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pcard is-active">
+          <div class="pcard__main">
+            <p class="pcard__label">Case studies ( <span data-work-count>04</span> )</p>
+            <ul class="pcard__list" role="list" id="nav-projects"></ul>
+          </div>
+          <div class="pcard__thumb" id="nav-thumb" aria-hidden="true"></div>
+        </div>
+        <div class="pcard pcard--plain pcard--more">
+          <div class="pcard__main">
+            <p class="pcard__label">More</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/playground">Playground</a></li>
+              <li><a href="/writing">Writing</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="navgroup" data-nav="contact">
+      <div class="seg">
+        <span class="seg__item seg__time" title="Local time in San Francisco, California">San Francisco <time id="nav-clock" data-clock>--:--</time></span>
+        <button class="seg__item" type="button" id="contact-tab" aria-expanded="false" aria-controls="contact-panel">Contact <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <button class="icon-btn" type="button" id="theme" aria-label="Switch to dark mode">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+      <div class="panel panel--right" id="contact-panel"></div>
+    </div>
+  </header>
+
+  <main id="top">
+    <article class="sheet sheet--first">
+      <div class="work__inner">
+        <div class="rd" data-reader>
+          <aside class="rd__side">
+            <a class="rd__back" href="/writing"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" aria-hidden="true"><path d="M7 4L3 8l4 4M3 8h9a1 1 0 0 1 1 1v2" stroke="currentColor" stroke-width="1.4"/></svg>Writing</a>
+            <nav class="rd__toc" aria-label="On this page">
+              <p class="rd__doc">On this page</p>
+              <a href="#why-this-is-on-my-mind">Why this is on my mind</a>
+              <a href="#what-s-true-right-now">What's true right now</a>
+              <a href="#what-a-ramp-rule-looks-like">What a ramp rule looks like</a>
+              <a href="#my-hypothesis">My hypothesis</a>
+              <a href="#how-i-d-test-it">How I'd test it</a>
+              <a href="#what-would-change-my-mind">What would change my mind</a>
+              <a href="#where-i-would-not-trust-it-yet">Where I would not trust it yet</a>
+              <a href="#sources-title">References</a>
+            </nav>
+            
+          </aside>
+          <div class="rd__main essay__body">
+            <header class="rd__head">
+              <div class="rd__top"><h1 class="rd__title" id="essay-title">OKLCH: The First Color Space Designers and Machines Agree On</h1><span class="rd__date">Nov 2026</span></div>
+              <p class="rd__meta">4 min read · Design systems · Craft</p>
+              <p class="rd__lede">Perceptual color, Tailwind v4, and why I think brand palettes are about to be computed instead of picked.</p>
+            </header>
+
+            <figure class="essay__map">
+              <img src="/assets/images/writing/craft/oklch.webp" alt="Hand-drawn mindmap of OKLCH" width="1500" height="1060" loading="eager">
+            </figure>
+
+            <h2 id="why-this-is-on-my-mind">Why this is on my mind</h2>
+            <p>In fashion and creative commerce, color is the product. A garment's color has to look right next to the page around it, in light mode and dark mode, on different screens. That is exactly the problem OKLCH was built to make less painful.</p>
+            <h2 id="what-s-true-right-now">What's true right now</h2>
+            <p><strong>It's a perceptual model.</strong> OKLCH describes color as lightness, chroma, and hue, and is part of CSS Color Level 4. Its practical promise is that the numbers behave the way your eye does: change hue and keep lightness, and the color stays about as bright. That is why contrast checks and palette ramps become predictable. A converter page notes it can represent colors outside the sRGB gamut, which get clamped for display.</p>
+            <p><strong>It's mainstream.</strong> Tailwind CSS v4 rebuilt its default palette in OKLCH. One side effect is that familiar swatches shifted: <code>red-500</code> moved from <code>#ef4444</code> to <code>#fb2c36</code> even though the name stayed the same. Jakub Krehel's OKLCH skill for coding agents describes the format as Baseline 2023 with roughly 96% global coverage. The token standard agrees: the W3C Design Tokens spec supports Display P3, OKLCH, and the other CSS Color 4 spaces.</p>
+            <p><strong>It's not free.</strong> A frontend checklist lists support as Chrome 111+, Firefox 113+, and Safari 15.4+, and recommends an HSL fallback for older browsers. A Hugo community thread shows the real-world version of that tradeoff: someone hit Tailwind v4's lack of an OKLCH fallback, checked analytics, found under 5% of their users were affected, and went ahead.</p>
+            <p><strong>Dark mode can be derived.</strong> The OKLCH skill suggests deriving a dark palette by reversing the lightness mapping from the light one instead of hand-picking colors. That only works because lightness is a trustworthy axis.</p>
+            <figure class="mm" data-x><svg viewBox="0 0 640 426" role="img" aria-label="OKLCH mindmap"><circle class="mm__orb" cx="320" cy="213" r="88"/><path class="mm__w" d="M258 213C177.7 213 192.3 57 112 57"/><circle class="mm__end" cx="112" cy="57" r="4"/><path class="mm__w" d="M258 213C187.6 213 200.4 181 130 181"/><circle class="mm__end" cx="130" cy="181" r="4"/><path class="mm__w" d="M258 213C187.6 213 200.4 305 130 305"/><circle class="mm__end" cx="130" cy="305" r="4"/><path class="mm__w" d="M382 213C413.9 213 408.1 70.5 440 70.5"/><circle class="mm__end" cx="440" cy="70.5" r="4"/><path class="mm__w" d="M382 213C413.9 213 408.1 194.5 440 194.5"/><circle class="mm__end" cx="440" cy="194.5" r="4"/><path class="mm__w" d="M382 213C413.9 213 408.1 318.5 440 318.5"/><circle class="mm__end" cx="440" cy="318.5" r="4"/><rect class="mm__b" x="24" y="40" width="88" height="34" rx="17"/><text class="mm__bt" x="68" y="62.5" text-anchor="middle">Chroma</text><path class="mm__g" d="M44 78V121"/><path class="mm__g" d="M44 93h9"/><text class="mm__t" x="60" y="98">colourfulness</text><path class="mm__g" d="M44 120h9"/><text class="mm__t" x="60" y="125">can exceed the screen</text><rect class="mm__b" x="24" y="164" width="106" height="34" rx="17"/><text class="mm__bt" x="77" y="186.5" text-anchor="middle">Adoption</text><path class="mm__g" d="M44 202V245"/><path class="mm__g" d="M44 217h9"/><text class="mm__t" x="60" y="222">Tailwind v4 palette</text><path class="mm__g" d="M44 244h9"/><text class="mm__t" x="60" y="249">CSS Color Level 4</text><rect class="mm__b" x="24" y="288" width="106" height="34" rx="17"/><text class="mm__bt" x="77" y="310.5" text-anchor="middle">AI angle</text><path class="mm__g" d="M44 326V369"/><path class="mm__g" d="M44 341h9"/><text class="mm__t" x="60" y="346">palettes get computed</text><path class="mm__g" d="M44 368h9"/><text class="mm__t" x="60" y="373">dark mode by flipping L</text><rect class="mm__b" x="440" y="53.5" width="115" height="34" rx="17"/><text class="mm__bt" x="497.5" y="76" text-anchor="middle">Lightness</text><path class="mm__g" d="M460 91.5V134.5"/><path class="mm__g" d="M460 106.5h9"/><text class="mm__t" x="476" y="111.5">steps feel even</text><path class="mm__g" d="M460 133.5h9"/><text class="mm__t" x="476" y="138.5">contrast is predicta…</text><rect class="mm__b" x="440" y="177.5" width="86" height="34" rx="17"/><text class="mm__bt" x="483" y="200" text-anchor="middle">Hue</text><path class="mm__g" d="M460 215.5V258.5"/><path class="mm__g" d="M460 230.5h9"/><text class="mm__t" x="476" y="235.5">angle on the wheel</text><path class="mm__g" d="M460 257.5h9"/><text class="mm__t" x="476" y="262.5">stays put in a ramp</text><rect class="mm__b" x="440" y="301.5" width="115" height="34" rx="17"/><text class="mm__bt" x="497.5" y="324" text-anchor="middle">Watch out</text><path class="mm__g" d="M460 339.5V355.5"/><path class="mm__g" d="M460 354.5h9"/><text class="mm__t" x="476" y="359.5">fallbacks for old br…</text><rect class="mm__c" x="258" y="190" width="124" height="46" rx="23"/><text class="mm__ct" x="320" y="219" text-anchor="middle">OKLCH</text></svg><figcaption>OKLCH at a glance: the three axes, why it spread, and what to watch.</figcaption></figure>
+            <figure class="demo" data-demo="oklch" data-url="palette.local/ramp"><figcaption>The same ramp rule in both spaces. The grey strips show which one the eye reads as even.</figcaption></figure>
+            <h2 id="what-a-ramp-rule-looks-like" data-x>What a ramp rule looks like</h2>
+            <p class="essay__flag" data-x>Illustrative: my own sketch, not a sourced fact.</p>
+            <p data-x><strong>One hero, one rule.</strong> Say the brand color is a mid-lightness green. The rule is a short list: step lightness by a fixed amount per stop, ease chroma down as colors get very light or very dark, and never move hue. Every tint, shade, hover and disabled state is then a calculation, not a decision someone has to remember to make.</p>
+            <p data-x><strong>Why a rule beats a palette.</strong> A hand-built ramp records the answers but not the reasoning. When the brand shifts, the whole ramp has to be redone by eye. A rule keeps the reasoning, so it can be rerun.</p>
+            <h2 id="my-hypothesis">My hypothesis</h2>
+            <p class="essay__flag">This section is my opinion, not a sourced fact.</p>
+            <p><strong>Within two years, a brand color will be specified as an OKLCH value plus a lightness-ramp rule, not as a hand-built hex palette, and AI theming tools will converge on that.</strong></p>
+            <p>Why: models are good at arithmetic and bad at &quot;that blue feels right.&quot; OKLCH turns taste into numbers a model can manipulate without ruining the color. Give it one hero color and a rule for how lightness steps across a scale, and it can generate light mode, dark mode, hover states, and disabled states that all stay on-brand.</p>
+            <p>The catch is that brand teams will need to own the rule, not just the color. The hero shade is a decision. The ramp is a policy. Whoever writes the policy controls every generated surface.</p>
+            <h2 id="how-i-d-test-it">How I'd test it</h2>
+            <p>Take one brand color. Build dark mode two ways: hand-picked, and derived by flipping the lightness ramp. Count contrast failures and &quot;this looks off&quot; flags from a second designer. If derived mode wins or ties, I'd move the whole system over.</p>
+            <h2 id="what-would-change-my-mind">What would change my mind</h2>
+            <p>If wide-gamut colors keep getting clamped in ways that visibly dull brand hues, a brand-critical palette may still need hand tuning per display class.</p>
+
+            <h2 id="where-i-would-not-trust-it-yet" data-x>Where I would not trust it yet</h2>
+            <p class="essay__flag" data-x>My opinion, based on the tradeoffs above.</p>
+            <p data-x><strong>Wide-gamut hues.</strong> A vivid brand color can fall outside what a display can show, and clamping can quietly dull it. For a brand-critical hero shade I would still check it by eye on a few real screens.</p>
+            <p data-x><strong>Old browsers.</strong> If a meaningful share of users cannot read OKLCH, the fallback is a second source of truth to keep in sync. That cost is real, and it is the first thing I would measure.</p>
+            <section class="essay__sources" aria-labelledby="sources-title">
+              <h2 id="sources-title">References</h2>
+              <ol>
+                <li id="source-1">ToolsBase, <a href="https://toolsbase.dev/en/developer/oklch-converter" target="_blank" rel="noopener">OKLCH Converter &amp; Accessible Palette Generator</a></li>
+                <li id="source-2">ColorKit, <a href="https://colorkit.co/tailwind-colors/" target="_blank" rel="noopener">Tailwind CSS Colors (what changed in v4)</a></li>
+                <li id="source-3">UI Skills, <a href="https://www.ui-skills.com/skills/jakubkrehel/better-colors/" target="_blank" rel="noopener">better-colors skill by Jakub Krehel</a></li>
+                <li id="source-4">Skillselion, <a href="https://skillselion.com/skills/jakubkrehel/oklch-skill" target="_blank" rel="noopener">oklch-skill</a></li>
+                <li id="source-5">W3C Design Tokens Community Group, <a href="https://lists.w3.org/Archives/Public/public-design-tokens/2025Oct/0003.html" target="_blank" rel="noopener">stable version announcement</a></li>
+                <li id="source-6">Frontend Checklist, <a href="https://frontendchecklist.io/rules/css/color-oklch" target="_blank" rel="noopener">Use OKLCH for color tokens</a></li>
+                <li id="source-7">Hugo Discourse, <a href="https://discourse.gohugo.io/t/should-a-warning-be-added-on-the-tailwind-docs-about-browser-support/53963" target="_blank" rel="noopener">Should a warning be added on the Tailwind docs about browser support?</a></li>
+              </ol>
+            </section>
+
+            <div class="essay__foot">
+              <nav class="cs__next" aria-label="More writing">
+                <a href="/writing"><small>Index</small><strong>All writing</strong></a>
+                <a href="/writing/optical-alignment"><small>Next</small><strong>Trust Your Eyes, Then Write It Down</strong></a>
+              </nav>
+            </div>
+          
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer data-footer></footer>
+  <script src="/js/analytics.js"></script>
+  <script src="/js/site.js"></script>
+  <script src="/js/writing-demos.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+{
+  "sections": [
+    {
+      "before": "My hypothesis",
+      "h": "Reading a request as a job",
+      "flag": "Illustrative: my own sketch, not a sourced fact.",
+      "p": [
+        "<strong>Take one request apart.</strong> Imagine a customer tells an agent, \"Pull together everything I need for the Tuesday meeting.\" Read it the way a switch interview would. The situation is a meeting coming up. The functional progress is having the right material in one place. The emotional part is not walking in unprepared, and the social part is looking organised in front of other people. I am not claiming the agent will get all of that right. I am saying the lens gives me a checklist for what a good answer should cover beyond the literal words.",
+        "<strong>Why the lens still helps.</strong> The agent only sees the sentence, but the job underneath is bigger than the sentence. A product that understands the emotional and social layers can serve the request better than one that only matches the words. That is the part I would not want to lose when requests become inputs. That is the same habit the interview method trains: keep asking until you reach the reason behind the request, not only the request itself."
+      ]
+    },
+    {
+      "before": "How I'd test it",
+      "h": "Where the agent lens could mislead me",
+      "flag": "My opinion, based on the tradeoffs above.",
+      "p": [
+        "<strong>Requests are not the whole job.</strong> People often cannot say what they want in a sentence, which is exactly why interviews exist. If I only cluster written requests, I may mistake the easy-to-type jobs for the important ones. The struggling moment that never turns into a request stays invisible. A good test is whether I can still describe the job without naming any product. If I cannot, I am probably describing a feature and not a job.",
+        "<strong>The two schools disagree here too.</strong> Jobs-as-progress and jobs-as-activities would read the same request differently. One hears a change in someone's life, the other hears a task to complete. I would not pretend an agent resolves that argument. I would pick a school on purpose and say which one I am using. Whichever school I pick, the point is consistency. Mixing the two quietly would make the clusters hard to compare and the conclusions harder to defend."
+      ]
+    },
+    {
+      "h": "How I would explain it to a teammate",
+      "flag": "Illustrative: my own sketch, not a sourced fact.",
+      "p": [
+        "<strong>Start with the sentence.</strong> I would say that customers do not want our product, they want progress, and from now on they may type that progress as an instruction. Then I would show one real request and ask the team to name the job, the situation and the alternative together, out loud, before anyone mentions a feature. I would keep it to one example and one sentence of theory. The framework sticks better when people see it work on something familiar than when they hear its history.",
+        "<strong>End with the uncomfortable question.</strong> If an agent did this job with no product at all, how would the customer notice the difference? If the honest answer is that they would not, that is useful. It tells us where our product is hired for a reason and where it is only hired out of habit. It is a question about value, asked honestly, and it works just as well in a research session as in a roadmap meeting."
+      ]
+    }
+  ],
+  "maps": [
+    {
+      "after": "What's true right now",
+      "caption": "Jobs to be done at a glance: what the framework says and where it splits.",
+      "center": "JTBD",
+      "branches": [
+        {
+          "label": "Core idea",
+          "children": [
+            "hire for progress",
+            "jobs outlast products"
+          ]
+        },
+        {
+          "label": "Progress",
+          "children": [
+            "functional",
+            "emotional and social"
+          ]
+        },
+        {
+          "label": "Two schools",
+          "children": [
+            "jobs as progress",
+            "jobs as activities"
+          ]
+        },
+        {
+          "label": "Method",
+          "children": [
+            "switch interviews",
+            "press for the real reason"
+          ]
+        },
+        {
+          "label": "AI today",
+          "children": [
+            "mine tickets, reviews",
+            "surface struggling moments"
+          ]
+        }
+      ]
+    },
+    {
+      "after": "Reading a request as a job",
+      "caption": "The agent-era shift: the job becomes the input.",
+      "center": "Agent jobs",
+      "branches": [
+        {
+          "label": "The request",
+          "children": [
+            "plain-language job spec",
+            "agent picks the product"
+          ]
+        },
+        {
+          "label": "Positioning",
+          "children": [
+            "describe jobs agents match"
+          ]
+        },
+        {
+          "label": "Competition",
+          "children": [
+            "another product",
+            "the agent itself"
+          ]
+        },
+        {
+          "label": "Exposure",
+          "children": [
+            "cluster real requests",
+            "the not-at-all share"
+          ]
+        }
+      ]
+    }
+  ]
+}

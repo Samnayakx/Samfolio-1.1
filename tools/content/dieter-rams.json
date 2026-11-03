@@ -1,0 +1,114 @@
+{
+  "sections": [
+    {
+      "before": "My hypothesis",
+      "h": "What honesty looks like on a screen",
+      "flag": "Illustrative: my own sketch, not a sourced fact.",
+      "p": [
+        "<strong>A hypothetical answer.</strong> Imagine an assistant that summarizes a long document. In one version, every sentence arrives in the same flat, certain voice. In another, the parts it is sure of read plainly, and the parts it inferred are marked as inferred. Both versions look equally tidy. Only one of them tells the user where to look twice, and that difference is what I mean by honest in Rams's sense. It is a small example, and I would not lean on it too hard. Its only job is to make the idea concrete enough to argue about with a teammate.",
+        "<strong>Why this is about the interface, not the model.</strong> The model may produce the same words either way. The honesty lives in what the screen does with them: phrasing, emphasis, a visible hedge, a prompt to check. That makes it a design decision, and it means a designer can improve it without touching the model at all. That is also why I find it a hopeful framing. A designer can act on it this week, with the tools already in hand, instead of waiting for a better model to arrive."
+      ]
+    },
+    {
+      "before": "My hypothesis",
+      "h": "Where this principle pulls against the others",
+      "flag": "My opinion, based on the principles as listed above.",
+      "p": [
+        "<strong>Honest versus unobtrusive.</strong> Principle five says good design is unobtrusive. Principle six says it is honest. An interface that flags every uncertain sentence is honest and also noisy. I do not think there is a clean answer here, only a trade-off: show uncertainty where it changes what the user will do, and stay quiet where it would not. I would still say out loud that this is a judgment call. The principles were criteria for weighing a design, and that is how I want to use this one too.",
+        "<strong>Honest versus understandable.</strong> Expressing confidence well also has to be readable. If the hedging vocabulary is too subtle, nobody notices it. If it is too elaborate, nobody learns it. I would rather start with two or three clearly different states than a continuous scale that looks precise and means nothing to the person reading it. If I am honest, I may be underrating how often the two pull together. A product that is truly honest about its limits tends to need less chrome, which helps both principles at once."
+      ]
+    },
+    {
+      "h": "What I would do first on a real product",
+      "flag": "My opinion, a sketch of a first step rather than a method I have run.",
+      "p": [
+        "<strong>Look for the uniform voice.</strong> Before redesigning anything, I would read a batch of real outputs and ask one question: does the interface sound any different when the system is guessing? If the answer is no, that is the first thing to fix, because everything else sits on top of it. The point of writing it down is that the first version of this trade-off will probably be wrong. I would rather have a stated rule I can revise than an unspoken habit nobody can question.",
+        "<strong>Then change one place, not all of them.</strong> I would pick the single screen where a wrong answer costs the user the most and make confidence visible there first. It is easier to defend a small change with a clear reason than a system-wide restyle, and it gives me something concrete to measure against the test described above. A narrow first step also keeps the work honest. If it does not help on one screen, I have learned something cheaply, and nothing else in the product has been disturbed."
+      ]
+    }
+  ],
+  "maps": [
+    {
+      "after": "The principle I'd pull forward",
+      "caption": "Honesty as the principle I would carry into AI interfaces.",
+      "center": "Honest design",
+      "branches": [
+        {
+          "label": "Principle 6",
+          "children": [
+            "not more than it is",
+            "the whole game for AI"
+          ]
+        },
+        {
+          "label": "Principle 10",
+          "children": [
+            "as little design",
+            "less decoration needed"
+          ]
+        },
+        {
+          "label": "The gap",
+          "children": [
+            "sounds equally sure",
+            "right or guessing"
+          ]
+        },
+        {
+          "label": "Hypothesis",
+          "children": [
+            "confidence vs accuracy",
+            "scored like an eval"
+          ]
+        },
+        {
+          "label": "The test",
+          "children": [
+            "100 outputs",
+            "plot the honesty debt"
+          ]
+        },
+        {
+          "label": "Could be off",
+          "children": [
+            "users prefer certainty"
+          ]
+        }
+      ]
+    },
+    {
+      "after": "What I would do first on a real product",
+      "caption": "Where honesty pulls against other principles, and what I would do first.",
+      "center": "Trade-offs",
+      "branches": [
+        {
+          "label": "Unobtrusive",
+          "children": [
+            "flag too much, noisy",
+            "flag where it matters"
+          ]
+        },
+        {
+          "label": "Readable",
+          "children": [
+            "few clear states",
+            "avoid fake precision"
+          ]
+        },
+        {
+          "label": "First step",
+          "children": [
+            "find the uniform voice",
+            "fix one costly screen"
+          ]
+        },
+        {
+          "label": "Measure",
+          "children": [
+            "confidence vs accuracy"
+          ]
+        }
+      ]
+    }
+  ]
+}

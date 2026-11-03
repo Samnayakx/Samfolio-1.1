@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Your Props Are a Prompt Surface: Component API Design in the AI Era | Sambit Nayak</title>
+  <meta name="description" content="Composition over configuration, and why I think the best component APIs make invalid states impossible." />
+  <link rel="canonical" href="https://www.sambitnayak.com/writing/component-api-design" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Sambit Nayak" />
+  <meta property="og:title" content="Your Props Are a Prompt Surface: Component API Design in the AI Era | Sambit Nayak" />
+  <meta property="og:description" content="Composition over configuration, and why I think the best component APIs make invalid states impossible." />
+  <meta property="og:url" content="https://www.sambitnayak.com/writing/component-api-design" />
+  <meta property="og:image" content="https://www.sambitnayak.com/assets/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@sambit_nayak_" />
+  <meta name="twitter:title" content="Your Props Are a Prompt Surface: Component API Design in the AI Era | Sambit Nayak" />
+  <meta name="twitter:description" content="Composition over configuration, and why I think the best component APIs make invalid states impossible." />
+  <meta name="twitter:image" content="https://www.sambitnayak.com/assets/og-image.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;700&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;700&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" /></noscript>
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+  <link rel="stylesheet" href="/css/site.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.sambitnayak.com/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://www.sambitnayak.com/writing"},{"@type":"ListItem","position":3,"name":"Your Props Are a Prompt Surface: Component API Design in the AI Era","item":"https://www.sambitnayak.com/writing/component-api-design"}]}</script>
+</head>
+<body data-page="essay">
+  <div class="loader" id="loader" aria-hidden="true"><div class="loader__bg"></div><svg></svg></div>
+  <noscript><style>.loader{display:none}</style></noscript>
+  <script src="/js/loader.js"></script>
+  <header class="header">
+    <div class="navgroup" data-nav="work">
+      <nav class="seg" aria-label="Primary">
+        <a class="seg__item seg__brand" href="/" aria-label="Sambit Nayak, home"><svg class="logo" aria-hidden="true"></svg></a>
+        <button class="seg__item only-desktop" type="button" id="work-tab" aria-expanded="false" aria-controls="work-panel">Work <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <a class="seg__item only-desktop" href="/about">About</a>
+        <a class="seg__item only-desktop" href="/writing" aria-current="true">Writing</a>
+        <a class="seg__item only-desktop" href="/playground">Playground</a>
+        <button class="seg__item only-mobile" type="button" id="menu-tab" aria-expanded="false" aria-controls="work-panel" aria-label="Menu">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <rect x="2" y="2" width="2" height="2"/><rect x="7" y="2" width="2" height="2"/><rect x="12" y="2" width="2" height="2"/>
+            <rect x="2" y="7" width="2" height="2"/><rect x="7" y="7" width="2" height="2"/><rect x="12" y="7" width="2" height="2"/>
+            <rect x="2" y="12" width="2" height="2"/><rect x="7" y="12" width="2" height="2"/><rect x="12" y="12" width="2" height="2"/>
+          </svg>
+        </button>
+      </nav>
+      <div class="panel" id="work-panel">
+        <div class="pcard only-mobile pcard--plain">
+          <div class="pcard__main">
+            <p class="pcard__label">Navigate</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/#work">Work</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/writing">Writing</a></li>
+              <li><a href="/playground">Playground</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pcard is-active">
+          <div class="pcard__main">
+            <p class="pcard__label">Case studies ( <span data-work-count>04</span> )</p>
+            <ul class="pcard__list" role="list" id="nav-projects"></ul>
+          </div>
+          <div class="pcard__thumb" id="nav-thumb" aria-hidden="true"></div>
+        </div>
+        <div class="pcard pcard--plain pcard--more">
+          <div class="pcard__main">
+            <p class="pcard__label">More</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/playground">Playground</a></li>
+              <li><a href="/writing">Writing</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="navgroup" data-nav="contact">
+      <div class="seg">
+        <span class="seg__item seg__time" title="Local time in San Francisco, California">San Francisco <time id="nav-clock" data-clock>--:--</time></span>
+        <button class="seg__item" type="button" id="contact-tab" aria-expanded="false" aria-controls="contact-panel">Contact <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <button class="icon-btn" type="button" id="theme" aria-label="Switch to dark mode">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+      <div class="panel panel--right" id="contact-panel"></div>
+    </div>
+  </header>
+
+  <main id="top">
+    <article class="sheet sheet--first">
+      <div class="work__inner">
+        <div class="rd" data-reader>
+          <aside class="rd__side">
+            <a class="rd__back" href="/writing"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" aria-hidden="true"><path d="M7 4L3 8l4 4M3 8h9a1 1 0 0 1 1 1v2" stroke="currentColor" stroke-width="1.4"/></svg>Writing</a>
+            <nav class="rd__toc" aria-label="On this page">
+              <p class="rd__doc">On this page</p>
+              <a href="#why-this-is-on-my-mind">Why this is on my mind</a>
+              <a href="#what-s-true-right-now">What's true right now</a>
+              <a href="#a-worked-example-of-a-boolean-pile-up">A worked example of a boolean pile-up</a>
+              <a href="#my-hypothesis">My hypothesis</a>
+              <a href="#what-i-would-do-first-on-a-real-product">What I would do first on a real product</a>
+              <a href="#how-i-d-test-it">How I'd test it</a>
+              <a href="#what-would-change-my-mind">What would change my mind</a>
+              <a href="#what-this-costs">What this costs</a>
+              <a href="#sources-title">References</a>
+            </nav>
+            
+          </aside>
+          <div class="rd__main essay__body">
+            <header class="rd__head">
+              <div class="rd__top"><h1 class="rd__title" id="essay-title">Your Props Are a Prompt Surface: Component API Design in the AI Era</h1><span class="rd__date">Nov 2026</span></div>
+              <p class="rd__meta">5 min read · Design systems · Craft</p>
+              <p class="rd__lede">Composition over configuration, and why I think the best component APIs make invalid states impossible.</p>
+            </header>
+
+            <figure class="essay__map">
+              <img src="/assets/images/writing/craft/component-api-design.webp" alt="Hand-drawn mindmap of component API design" width="1500" height="1060" loading="eager">
+            </figure>
+
+            <h2 id="why-this-is-on-my-mind">Why this is on my mind</h2>
+            <p>As a designer who works closely with code, I've started treating a component's props as the product's grammar. That grammar now has two readers: the developer and the model. A confusing API used to cost a developer an afternoon. Now it also causes a model to confidently generate a combination that was never meant to exist.</p>
+            <figure class="mm" data-x><svg viewBox="0 0 640 399" role="img" aria-label="Component API mindmap"><circle class="mm__orb" cx="320" cy="199.5" r="113"/><path class="mm__w" d="M233 199.5C176.35 199.5 186.65 70.5 130 70.5"/><circle class="mm__end" cx="130" cy="70.5" r="4"/><path class="mm__w" d="M233 199.5C166.45 199.5 178.55 194.5 112 194.5"/><circle class="mm__end" cx="112" cy="194.5" r="4"/><path class="mm__w" d="M233 199.5C176.35 199.5 186.65 291.5 130 291.5"/><circle class="mm__end" cx="130" cy="291.5" r="4"/><path class="mm__w" d="M407 199.5C425.15 199.5 421.85 57 440 57"/><circle class="mm__end" cx="440" cy="57" r="4"/><path class="mm__w" d="M407 199.5C425.15 199.5 421.85 181 440 181"/><circle class="mm__end" cx="440" cy="181" r="4"/><path class="mm__w" d="M407 199.5C425.15 199.5 421.85 305 440 305"/><circle class="mm__end" cx="440" cy="305" r="4"/><rect class="mm__b" x="24" y="53.5" width="106" height="34" rx="17"/><text class="mm__bt" x="77" y="76" text-anchor="middle">Booleans</text><path class="mm__g" d="M44 91.5V134.5"/><path class="mm__g" d="M44 106.5h9"/><text class="mm__t" x="60" y="111.5">double the states</text><path class="mm__g" d="M44 133.5h9"/><text class="mm__t" x="60" y="138.5">hidden conditionals</text><rect class="mm__b" x="24" y="177.5" width="88" height="34" rx="17"/><text class="mm__bt" x="68" y="200" text-anchor="middle">Borrow</text><path class="mm__g" d="M44 215.5V231.5"/><path class="mm__g" d="M44 230.5h9"/><text class="mm__t" x="60" y="235.5">reuse known vocabulary</text><rect class="mm__b" x="24" y="274.5" width="106" height="34" rx="17"/><text class="mm__bt" x="77" y="297" text-anchor="middle">Defaults</text><path class="mm__g" d="M44 312.5V328.5"/><path class="mm__g" d="M44 327.5h9"/><text class="mm__t" x="60" y="332.5">strong and sensible</text><rect class="mm__b" x="440" y="40" width="133" height="34" rx="17"/><text class="mm__bt" x="506.5" y="62.5" text-anchor="middle">Two readers</text><path class="mm__g" d="M460 78V121"/><path class="mm__g" d="M460 93h9"/><text class="mm__t" x="476" y="98">developer</text><path class="mm__g" d="M460 120h9"/><text class="mm__t" x="476" y="125">model</text><rect class="mm__b" x="440" y="164" width="133" height="34" rx="17"/><text class="mm__bt" x="506.5" y="186.5" text-anchor="middle">Composition</text><path class="mm__g" d="M460 202V245"/><path class="mm__g" d="M460 217h9"/><text class="mm__t" x="476" y="222">compound parts</text><path class="mm__g" d="M460 244h9"/><text class="mm__t" x="476" y="249">explicit variants</text><rect class="mm__b" x="440" y="288" width="124" height="34" rx="17"/><text class="mm__bt" x="502" y="310.5" text-anchor="middle">Impossible</text><path class="mm__g" d="M460 326V342"/><path class="mm__g" d="M460 341h9"/><text class="mm__t" x="476" y="346">make them unwritable</text><rect class="mm__c" x="233" y="176.5" width="174" height="46" rx="23"/><text class="mm__ct" x="320" y="205.5" text-anchor="middle">Component API</text></svg><figcaption>Why props are a grammar with two readers.</figcaption></figure>
+            <h2 id="what-s-true-right-now">What's true right now</h2>
+            <p><strong>The consensus is to prefer composition.</strong> A well-known guide to component APIs for design systems says to treat each component as an API, name boolean props as adjectives (like <code>disabled</code> or <code>compact</code>), avoid <code>is</code> and <code>has</code> prefixes, and prefer composition over piling on toggle props. It explains the usual failure: a new requirement arrives, someone adds a boolean to switch behavior, and past a certain complexity the component should have been split.</p>
+            <p><strong>The problem has a name now.</strong> Agent skills for React composition describe boolean prop proliferation in blunt terms: each extra boolean roughly doubles the possible states and creates conditional logic nobody wants to maintain. The suggested replacements are compound components, lifted state, and explicit variants. The fact that these now ship as installable skills for coding agents is telling: the audience for good API taste includes machines.</p>
+            <p><strong>Foundations matter.</strong> Emil Kowalski built his drawer component Vaul on Radix's Dialog primitive so accessibility and focus management come built in, and kept the API close to Radix's so it feels familiar. Good APIs borrow vocabulary instead of inventing it.</p>
+            <p><strong>Generated UI raises the bar on defaults.</strong> A developer who has shipped generative UI in production notes that a table rendered by an agent exists because the agent already filtered the data, so it needs strong defaults and sensible truncation rather than assuming the user will fix it.</p>
+            <h2 id="a-worked-example-of-a-boolean-pile-up" data-x>A worked example of a boolean pile-up</h2>
+            <p class="essay__flag" data-x>Illustrative: my own sketch, not a sourced fact.</p>
+            <p data-x><strong>How it usually starts.</strong> A button begins with one prop. Then a loading state arrives and someone adds a boolean. Then a destructive style, then a ghost style, each reasonable alone. Each addition roughly doubles the possible states, as the composition guidance describes, and nobody ever decided that loading and ghost and destructive together should be allowed.</p>
+            <p data-x><strong>What the structural version looks like.</strong> Replace the booleans with a short, named set of variants, and treat loading as a state of the parts, not a switch on the whole. Now the question a model faces is which variant fits, a finite choice, not which of many flags to combine. The impossible combinations are not discouraged. They simply cannot be written.</p>
+            <h2 id="my-hypothesis">My hypothesis</h2>
+            <p class="essay__flag">This section is my opinion, not a sourced fact.</p>
+            <p><strong>The best component API in the AI era is the one where an invalid combination cannot be expressed at all.</strong></p>
+            <p>When only people used components, invalid combinations were caught by code review and common sense. A model has neither. If <code>&lt;Button loading disabled destructive ghost&gt;</code> is a legal call, a model will eventually make it. The defense is structural: fewer props, finite named variants, and composition where the parts only fit together the right way.</p>
+            <p>That means the API review I want is not &quot;is this flexible?&quot; but &quot;what is the worst thing a confident stranger could build with this?&quot; Flexibility is a cost I only pay when it earns its keep.</p>
+            <h2 id="what-i-would-do-first-on-a-real-product" data-x>What I would do first on a real product</h2>
+            <p class="essay__flag" data-x>My opinion, based on the tradeoffs above.</p>
+            <p data-x><strong>Pick the component that hurts.</strong> I would not start with a full API audit. I would pick the one component that engineers complain about most and read its props aloud as a sentence. Wherever the sentence stops making sense, there is probably a combination that should not exist, and that is where I would begin.</p>
+            <p data-x><strong>Ask for the stranger's worst case.</strong> For each prop, I would ask what the worst thing a confident stranger could build with it is. If the answer is uncomfortable, the prop either needs to go, be narrowed to named choices, or move into a part that only fits where it should. Flexibility has to justify itself against that answer.</p>
+            <h2 id="how-i-d-test-it">How I'd test it</h2>
+            <p>Take one heavily used component. Count its legal prop combinations versus the number that make visual or product sense. Ask a model to generate 50 usages. Measure how many land in the nonsense set, then refactor to explicit variants and measure again.</p>
+            <h2 id="what-would-change-my-mind">What would change my mind</h2>
+            <p>If models get consistently good at reading prop documentation and refusing nonsense combinations, I could loosen the structure. I wouldn't bet my design system on that yet.</p>
+
+            <h2 id="what-this-costs" data-x>What this costs</h2>
+            <p class="essay__flag" data-x>My opinion, based on the tradeoffs above.</p>
+            <p data-x><strong>Rigid APIs push work onto the system team.</strong> Every legitimate edge case that the variants do not cover becomes a request, and someone has to say yes or no. That friction is real. I think it is the right place for the friction to live, because the alternative is that the friction lands on users as broken screens.</p>
+            <p data-x><strong>Some flexibility is worth keeping.</strong> Composition is not a ban on freedom, and a heavily constrained component that cannot serve real needs will just be bypassed with custom code. The goal is that the flexible parts are the safe ones. I do not have a clean rule for where that line sits, and I suspect it differs by component.</p>
+            <section class="essay__sources" aria-labelledby="sources-title">
+              <h2 id="sources-title">References</h2>
+              <ol>
+                <li id="source-1">Imply, <a href="https://imply.io/blog/an-opinionated-guide-to-component-apis/" target="_blank" rel="noopener">An Opinionated Guide to Component APIs</a></li>
+                <li id="source-2">Open Skill Index, <a href="https://openskillindex.com/skills/wpank-ai-react-composition" target="_blank" rel="noopener">react-composition skill</a></li>
+                <li id="source-3">Emil Kowalski, <a href="https://emilkowal.ski/ui/building-a-drawer-component" target="_blank" rel="noopener">Building a drawer component</a></li>
+                <li id="source-4">Alex Cloudstar, <a href="https://alexcloudstar.com/blog/generative-ui-developer-guide-2026/" target="_blank" rel="noopener">Generative UI in 2026: What Actually Works for Developers</a></li>
+              </ol>
+            </section>
+
+            <div class="essay__foot">
+              <nav class="cs__next" aria-label="More writing">
+                <a href="/writing"><small>Index</small><strong>All writing</strong></a>
+                <a href="/writing/design-debt"><small>Next</small><strong>Generated Screens Are Debt Until Proven Otherwise</strong></a>
+              </nav>
+            </div>
+          
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer data-footer></footer>
+  <script src="/js/analytics.js"></script>
+  <script src="/js/site.js"></script>
+</body>
+</html>

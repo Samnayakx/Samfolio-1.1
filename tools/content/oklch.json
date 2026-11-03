@@ -1,0 +1,22 @@
+{
+  "sections": [
+    { "before": "My hypothesis", "h": "What a ramp rule looks like", "flag": "Illustrative: my own sketch, not a sourced fact.", "p": [
+      "<strong>One hero, one rule.</strong> Say the brand color is a mid-lightness green. The rule is a short list: step lightness by a fixed amount per stop, ease chroma down as colors get very light or very dark, and never move hue. Every tint, shade, hover and disabled state is then a calculation, not a decision someone has to remember to make.",
+      "<strong>Why a rule beats a palette.</strong> A hand-built ramp records the answers but not the reasoning. When the brand shifts, the whole ramp has to be redone by eye. A rule keeps the reasoning, so it can be rerun."
+    ]},
+    { "h": "Where I would not trust it yet", "flag": "My opinion, based on the tradeoffs above.", "p": [
+      "<strong>Wide-gamut hues.</strong> A vivid brand color can fall outside what a display can show, and clamping can quietly dull it. For a brand-critical hero shade I would still check it by eye on a few real screens.",
+      "<strong>Old browsers.</strong> If a meaningful share of users cannot read OKLCH, the fallback is a second source of truth to keep in sync. That cost is real, and it is the first thing I would measure."
+    ]}
+  ],
+  "maps": [
+    { "after": "What's true right now", "caption": "OKLCH at a glance: the three axes, why it spread, and what to watch.", "center": "OKLCH", "branches": [
+      { "label": "Lightness", "children": ["steps feel even", "contrast is predictable"] },
+      { "label": "Chroma", "children": ["colourfulness", "can exceed the screen"] },
+      { "label": "Hue", "children": ["angle on the wheel", "stays put in a ramp"] },
+      { "label": "Adoption", "children": ["Tailwind v4 palette", "CSS Color Level 4"] },
+      { "label": "Watch out", "children": ["fallbacks for old browsers"] },
+      { "label": "AI angle", "children": ["palettes get computed", "dark mode by flipping L"] }
+    ]}
+  ]
+}
