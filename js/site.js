@@ -244,10 +244,10 @@ const BOOK_A_CALL = "https://cal.com/sambit-nayak/30min?overlayCalendar=true";
 const PROJECTS = [
   {
     name: "Trailhead Solve", org: "Trailhead", area: "Enterprise · Agentic AI", tags: ["Ed-tech", "UX Research"],
-    title: "An AI-powered re-engagement strategy Trailhead power users preferred over ChatGPT.",
-    desc: "Improving power-user retention with an agentic AI RAG bot: Trailhead Solve, a dashboard redesign and a RAG assistant.",
+    title: "A tested AI re-engagement prototype for Trailhead power users.",
+    desc: "A team prototype for Salesforce Trailhead: a RAG assistant and proactive prompts tested with 8 power users using public documentation.",
     seo: "Salesforce Trailhead Solve case study: an agentic AI RAG assistant and dashboard redesign built to win back power users who turn to ChatGPT.",
-    metric: { value: "22.7%", label: "Retention lift" }, thumb: { video: "/assets/images/trailhead/video-trailhead-promo-web.mp4", poster: "/assets/images/trailhead/video-trailhead-promo-web-poster.webp", alt: "Trailhead Solve product video: a power user asks a Salesforce question and gets a plain-language answer drawn from Trailhead's own knowledge", navPoster: "/assets/images/trailhead/video-trailhead-chatbot-poster.webp" }, slug: "trailhead-solve", href: "/work/trailhead-solve", tint: ["#BDCFDE", "#EBDAD3", "#E4EAEE"], accent: "#2F7DC4",
+    metric: { value: "6/8", label: "Preferred Solve in prototype testing" }, thumb: { video: "/assets/images/trailhead/video-trailhead-promo-web.mp4", poster: "/assets/images/trailhead/video-trailhead-promo-web-poster.webp", alt: "Trailhead Solve product video: a power user asks a Salesforce question and gets a plain-language answer drawn from Trailhead's own knowledge", navPoster: "/assets/images/trailhead/video-trailhead-chatbot-poster.webp" }, slug: "trailhead-solve", href: "/work/trailhead-solve", tint: ["#BDCFDE", "#EBDAD3", "#E4EAEE"], accent: "#2F7DC4",
     cs: {
       meta: [["Role", "Product Designer (Apprentice)"], ["Timeline", "Aug 2025 – Apr 2026"], ["Skills", "Conversational UX, RAG workflows, power-user research, dashboard design"], ["Team", "Team of five with the Salesforce Trailhead product team"]],
       sections: [
@@ -273,7 +273,7 @@ const PROJECTS = [
 
         { title: "Scope and Constraints", statement: "Constraints: public documentation only, a brand that can't be faked, and eight real experts.",
           text: ["We built on OpenAI with curated public documentation and focused on proving the experience. Power users were scarce, so how we tested mattered as much as what we built."],
-          cards: [["Success metric", "Preference over ChatGPT on a real question, session duration, and drop-off after milestones."], ["Guardrail", "Protect Trailhead's warm, human brand. No AI speaking on behalf of a real person."], ["Limits: data and people", "Curated public documentation, not Salesforce's proprietary data or Agentforce, and only 8 real power users."]] },
+          cards: [["Success metric", "Preference over ChatGPT on a real question, confidence in the answer, and completion of the prototype task."], ["Guardrail", "Protect Trailhead's warm, human brand. No AI speaking on behalf of a real person."], ["Limits: data and people", "Curated public documentation, not Salesforce's proprietary data or Agentforce, and only 8 real power users."]] },
 
         { title: "Ideation Steps (The Solution)", statement: "Solution: kill two ideas on purpose, then ship the bet that held.",
           text: ["Kill the ideas that don't hold, ship the two features that do, then test them as working software instead of a slideshow."], board: { src: "/assets/images/trailhead/board-path.webp", alt: "Three explored ideas (community status, leverage, skill visibility) led to two vibe-coded proofs of concept, an AI version of themselves and a public skill profile, both killed. What shipped was Solve: plain-language answers to real Salesforce problems with proactive prompts. It was tested against ChatGPT with 8 power users, and 6 of 8 preferred Solve.", cap: "Kill, ship, test" },
@@ -305,9 +305,9 @@ const PROJECTS = [
 
           ] },
 
-        { title: "Outcomes and Takeaways", statement: "Outcomes: preferred over ChatGPT, with honest limits on what we proved.",
+        { title: "Outcomes and Takeaways", statement: "Outcomes: preferred over ChatGPT in a small prototype test, with honest limits on what we proved.",
           text: ["The honest limit: curated public documentation, not Salesforce's proprietary data or Agentforce, and 8 power users. The next step is a larger test on real support data, where the bet can be proven at scale."], parts: [{"title": "Learning", "statement": "Learning: the hardest part was finding authentic power users.", "cards": [["What worked", "Designing for users who'd already arrived gave every decision a clean test."], ["What was hard", "Recruiting authentic power users on a semester timeline."], ["What's next", "Scale testing globally, refine Solve's answer quality, and pitch a formal roadmap."]], "quote": "Power users don't disengage because Trailhead runs out of content. They disengage because it stops speaking to who they've become.", "quoteBy": "Advait Ramdasi, teammate"}],
-          cards: [["6/8 preferred Solve over ChatGPT", "Same Salesforce question, side by side."], ["4.5/5 confidence", "In Solve's answers."], ["+35% session duration", "Power users stayed in the content."], ["−22% drop-off after milestones", "Experts who used to leave after a milestone stayed."]],
+          cards: [["6/8 preferred Solve over ChatGPT", "Same Salesforce question, side by side."], ["4.5/5 confidence", "In Solve's answers."], ["8 users", "A directional prototype study, not a scaled product metric."], ["Public-doc RAG", "Useful for experience testing, not proof of enterprise answer quality."]],
           quote: "I had never been comfortable in code, and had never prototyped with it, so teaching myself to ship this as working software is the barrier I'm proudest of clearing.", quoteBy: "Teammate on this project" },
       ],
     },
@@ -317,15 +317,15 @@ const PROJECTS = [
     title: "Designing structured, mode-based UX in an AI platform for fashion teams.",
     desc: "End-to-end design of Modes at CotonAI: replacing prompt-heavy AI with structured entry points mapped to real fashion workflows.",
     seo: "CotonAI Modes case study: end-to-end product design of structured, mode-based entry points that replace prompt-heavy AI in a fashion platform.",
-    metric: { value: "125%", label: "Feature adoption lift" }, thumbnail: { src: "/assets/images/cotonai-modes/canvas-hero.webp", alt: "The CotonAI canvas: a board of generated fashion looks with the Modes bar open beneath.", bleed: true }, slug: "cotonai-modes", href: "/work/cotonai-modes", tint: ["#9CB09E", "#E3EAE0", "#C9D5C8"], photo: { src: "/assets/images/case-bg-bloom.jpg", pos: "50% 38%" },
+    metric: { value: "225", label: "Mode adoption index, V1=100" }, thumbnail: { src: "/assets/images/cotonai-modes/canvas-hero.webp", alt: "The CotonAI canvas: a board of generated fashion looks with the Modes bar open beneath.", bleed: true }, slug: "cotonai-modes", href: "/work/cotonai-modes", tint: ["#9CB09E", "#E3EAE0", "#C9D5C8"], photo: { src: "/assets/images/case-bg-bloom.jpg", pos: "50% 38%" },
     cs: {
-      meta: [["Role", "Founding Product Designer"], ["Timeline", "Aug 2025 – Present"], ["Skills", "Interaction architecture, AI UX, design systems, prototyping, analytics"], ["Team", "Founder, PM, engineering"]],
+      meta: [["Role", "Founding Product Designer"], ["Timeline", "Aug 2025 – Present"], ["Skills", "Interaction architecture, AI UX, design systems, prototyping, analytics"], ["Team", "Co-founder, PM, engineering"]],
       sections: [
         { title: "Overview / Background", statement: "Overview: great AI visuals shouldn't require a prompting degree.",
-          text: ["At CotonAI we're building the Figma for fashion: an AI workspace fine-tuned for fashion and adjacent industries. As founding product designer there was no brief. I owned the problem, the interaction model and the design system, working directly with the founder, PM and engineering.",
+          text: ["At CotonAI, I work as founding product designer on an AI workspace fine-tuned for fashion and adjacent industries. There was no brief. I owned the problem, the interaction model and the design system, working directly with the co-founder, PM and engineering.",
             "This is how a prompt box became Modes, structured entry points mapped to the way fashion teams actually work, and how that decision helped turn our MVP into a paid enterprise pilot."],
           media: [{ src: "/assets/images/cotonai-modes/canvas-hero.webp", alt: "The CotonAI canvas: a fashion board of generated looks with the Modes bar open at the bottom.", cap: "The CotonAI canvas, with the Modes bar open under a board of looks." }],
-          cards: [["Problem: Prompting was a tax.", "Great visuals needed great prompts, and fashion designers aren't prompt engineers."], ["Solution: Modes, not better prompts.", "Edit, Render, Colourway and Studio, each mapped to a real workflow stage."], ["Outcome: +125% adoption", "After the V2 Modes bar, alongside a paid enterprise pilot and 584 hours saved for one client."]] },
+          cards: [["Problem: Prompting was a tax.", "Great visuals needed great prompts, and fashion designers aren't prompt engineers."], ["Solution: Modes, not better prompts.", "Edit, Render, Colourway and Studio, each mapped to a real workflow stage."], ["Outcome: adoption index 225", "Mode-bar adoption moved from an indexed V1 baseline of 100 to 225, alongside a paid enterprise pilot and 584 hours saved for one client."]] },
         { title: "Defining the Problem", ph: "01", media: [{ src: "/assets/images/cotonai-modes/mvp-wireframes.webp", alt: "Four grey wireframes exploring the canvas, toolbar and side panel.", cap: "Initial wireframes while ideating" }, { src: "/assets/images/cotonai-modes/mvp-shipped.webp", alt: "The shipped MVP: a garment on a dark canvas with a single prompt bar underneath.", cap: "The shipped MVP: a canvas and a prompt box" }], statement: "Problem: to get high-quality visuals, users need strong prompting skills.",
           text: ["Users who could write precise prompts got striking results. Everyone else got unpredictable images and stalled."], board: { src: "/assets/images/cotonai-modes/board-prompt-tax.webp", alt: "The MVP was a canvas and a prompt box. Precise prompts gave striking results, everyone else got unpredictable images and stalled, which raised the question of whether any fashion user could get a high-quality result without writing a prompt. Users don't know how to prompt, and too much prompting makes AI hallucinate.", cap: "Why prompting was a tax" },
            },
@@ -334,18 +334,18 @@ const PROJECTS = [
           cards: [["Fashion tools had broken user flows", "Hypothesis from our industry experience."], ["Adoption of new tech is lower", "Hypothesis from our industry experience."], ["Fashion pipelines are disconnected", "Hypothesis from our industry experience."]] },
         { title: "Your Role and Responsibilities", statement: "Role: founding designer with no brief, owning the problem as well as the screens.",
           text: ["That meant specifying the tokens with developers, defining flows as states before they were built, and using usage data to decide what shipped next."],
-          cards: [["Founding Product Designer", "August 2025 to present."], ["Owned", "The problem, the interaction model and the design system."], ["Worked with", "The founder, the PM and engineering."]] },
+          cards: [["Founding Product Designer", "August 2025 to present."], ["Owned", "The problem, the interaction model and the design system."], ["Worked with", "The co-founder, PM and engineering."]] },
 
         { title: "Scope and Constraints", statement: "Constraints: AI should adapt to designer intent, with modes guiding the entry and nothing more.",
           text: ["The scope was deliberate. Modes guide where you start, and creativity stays open. Sub-modes exist only for very specific use cases, and an Open mode stays for advanced control."],
           stepsTitle: "Principles",
           steps: [["Intent over syntax", "Designers choose what they want to do, not how to phrase it."], ["Structure the entry, not the output", "Modes guide where you start. Creativity stays open."], ["Familiar before novel", "Borrow patterns fashion teams already know from design tools."], ["Every mode earns its place", "Instrument adoption so each iteration has a verdict."]] },
         { title: "Ideation Steps (The Solution)", ph: "03", media: [{ src: "/assets/images/cotonai-modes/workspace.webp", alt: "The CotonAI workspace with the Modes bar at the bottom of an empty board.", cap: "The workspace, with the Modes bar docked at the bottom" }, { src: "/assets/images/cotonai-modes/toolbar-v2.webp", alt: "Edit mode open: the selected garment beside Open, Combine, Upscale and Figure options.", cap: "Edit mode: options open alongside the edit" }, { diagram: { kind: "versus", title: "Figure submode", cards: [{ tag: "V1 · Editorial", title: "Try-on on a model", body: "Took 8 clicks and prompting.", status: "8 clicks" }, { tag: "V2 · Edit mode", title: "Figure submode", body: "No prompting needed.", status: "3 clicks", hi: true }] } }],
-          ui: { kind: "tour", title: "Modes at CotonAI", items: [["Edit", "Edit, with options alongside", "Multiple options open next to your edit, so you compare without re-prompting."], ["Render", "Render a material or fabric", "Add the required material or fabric to your garment."], ["Colourway", "Change colour and prints", "A visual picker alongside hex input, so there are no codes to recall."], ["Studio", "Editorial photoshoots", "Create editorial-level shoots from a reference image."]] }, dash: [{ type: "trend", w: 6, label: "Mode-bar adoption", value: "+125%", chip: "V1 → V2", points: [["V1", 100], ["V2", 225]], note: "Indexed to V1 = 100. Visual annotation helped users pick a mode faster." }, { type: "bars", w: 6, label: "Clicks to a try-on", value: "8 → 3", chip: "−5 clicks", rows: [["Editorial, V1", 8, "8"], ["Figure submode, V2", 3, "3"]], note: "No prompting needed in V2." }], statement: "Solution: we replaced the prompt box with modes.",
+          ui: { kind: "tour", title: "Modes at CotonAI", items: [["Edit", "Edit, with options alongside", "Multiple options open next to your edit, so you compare without re-prompting."], ["Render", "Render a material or fabric", "Add the required material or fabric to your garment."], ["Colourway", "Change colour and prints", "A visual picker alongside hex input, so there are no codes to recall."], ["Studio", "Editorial photoshoots", "Create editorial-level shoots from a reference image."]] }, dash: [{ type: "trend", w: 6, label: "Mode-bar adoption index", value: "100 → 225", chip: "V1 → V2", points: [["V1", 100], ["V2", 225]], note: "Indexed to V1 = 100. Visual annotation helped users pick a mode faster." }, { type: "bars", w: 6, label: "Clicks to a try-on", value: "8 → 3", chip: "-5 clicks", rows: [["Editorial, V1", 8, "8"], ["Figure submode, V2", 3, "3"]], note: "No prompting needed in V2." }], statement: "Solution: we replaced the prompt box with modes.",
           text: ["Instead of helping users prompt better, I removed the need to. Modes became structured entry points into AI capability, reducing ambiguity while keeping creativity open. Each iteration was decided by usage data, not opinion."], board: { src: "/assets/images/cotonai-modes/board-system.webp", alt: "User intent feeds Modes, a semantic layer between intent and AI execution, which offers Edit (options alongside the edit), Render (add a material or fabric), Colourway (change colour and prints) and Studio (editorial photoshoots from a reference image). Mode logic runs as event, state, render for predictable outcomes, and an Open mode stays for advanced control.", cap: "Modes, a layer between intent and AI" },
           trades: [
             { n: "Decision 1", t: "Treat the canvas as a behavioural system", rows: [["Architecture", "Modes act as semantic layers between user intent and AI execution."], ["Flow", "Mode logic → event → state → render loop."], ["It helped", "Predictable outcomes, reduced hallucination, consistent visual logic."]] },
-            { n: "Decision 2", t: "Toolbar design evolution", rows: [["Issue with V1", "Users struggled to decide which mode they wanted, and onboarding took a long time. We used PostHog and trigger.dev to find this out."], ["Hypothesis for V2", "Visual annotation will help users pick the desired mode faster."], ["Result", "Adoption increased by 125%."]], media: [{ src: "/assets/images/cotonai-modes/toolbar-v1.webp", alt: "The V1 Modes bar: a plain row of text mode labels under the prompt field.", cap: "V1: modes as a text row" }, { src: "/assets/images/cotonai-modes/toolbar-v2.webp", alt: "The V2 Modes bar with visual annotation: each option previewed as a thumbnail.", cap: "V2: visual annotation on every option" }] },
+            { n: "Decision 2", t: "Toolbar design evolution", rows: [["Issue with V1", "Users struggled to decide which mode they wanted, and onboarding took a long time. We used PostHog and trigger.dev to find this out."], ["Hypothesis for V2", "Visual annotation will help users pick the desired mode faster."], ["Result", "Adoption index moved from 100 to 225. Absolute usage is shown in internal analytics, so I label the public number as indexed."]], media: [{ src: "/assets/images/cotonai-modes/toolbar-v1.webp", alt: "The V1 Modes bar: a plain row of text mode labels under the prompt field.", cap: "V1: modes as a text row" }, { src: "/assets/images/cotonai-modes/toolbar-v2.webp", alt: "The V2 Modes bar with visual annotation: each option previewed as a thumbnail.", cap: "V2: visual annotation on every option" }] },
             { n: "Decision 3", t: "Colourway redesign", rows: [["Issue with V1", "Users had access to hex codes but low recall and cognitive load caused hesitation and friction, so weekly adoption was low."], ["Hypothesis for V2", "A visual colour picker alongside hex input reduces cognitive load and matches familiar patterns from other design tools."], ["Result", "Significantly improved user feedback and feature adoption."]], media: [{ src: "/assets/images/cotonai-modes/colourway-v1.webp", alt: "The V1 Colourway mode: hex-code entry only.", cap: "V1: hex codes only" }, { src: "/assets/images/cotonai-modes/colourway-v2.webp", alt: "The V2 Colourway mode with a garment selected and a visual colour picker.", cap: "V2: a visual picker alongside hex input" }] },
             { n: "Decision 4", t: "Figure submode", rows: [["Issue with V1", "Creating a try-on on a model in Editorial took 8 clicks and prompting."], ["Change in V2", "A Figure submode inside Edit mode."], ["Result", "No prompting and 3 clicks to get results."]], note: "Sub-modes are for very specific use cases; they are not open-ended.", media: [{ src: "/assets/images/cotonai-modes/figure-v2.webp", alt: "The Figure submode inside Edit mode: a garment beside its on-model try-on.", cap: "V2: Figure submode inside Edit" }] },
             { n: "Decision 5", t: "Scaling the design system with AI", rows: [["Step 1", "Designed tokens in the Figma library."], ["Step 2", "Collaborated with dev to finalize the token specification, using shadcn as the base layer."], ["Step 3", "Created an .md file and pushed it as a UI library."], ["Result", "Every new custom UI pulls from the same GitHub repo, with no redesigning again and again."]], note: "The full system, and how a flow is specified before it is built, is case study 03.", media: [{ src: "/assets/images/cotonai-modes/tokens-workflow.webp", alt: "The token workflow: Figma library, token specification with the developer, then an md file pushed to GitHub, beside the mode buttons built from those tokens.", cap: "The token workflow, and the mode buttons it produces" }] },
@@ -355,11 +355,11 @@ const PROJECTS = [
         { title: "Rejected designs", statement: "Rejected: three V1s the usage data voted down.",
           text: ["Each V1 shipped, was measured with PostHog and trigger.dev, and was replaced. These are the versions that failed, and why."],
           mediaLayout: "stack", media: [
-            { wide: true, src: "/assets/images/cotonai-modes/rejected-toolbar.webp", alt: "Rejected A: the V1 Modes bar as a plain row of text labels (Open, Edit, Render, Colourway, Studio, Editorial) under the prompt field, with an onboarding coach mark reading Step 1 of 6. Why it failed: a name isn't a preview, so users struggled to decide which mode they wanted; and onboarding had to explain it, taking a long time, as PostHog and trigger.dev showed. What shipped: visual annotation on every option, and mode-bar adoption rose 125%.", cap: "A: labels became previews" },
+            { wide: true, src: "/assets/images/cotonai-modes/rejected-toolbar.webp", alt: "Rejected A: the V1 Modes bar as a plain row of text labels (Open, Edit, Render, Colourway, Studio, Editorial) under the prompt field, with an onboarding coach mark reading Step 1 of 6. Why it failed: a name isn't a preview, so users struggled to decide which mode they wanted; and onboarding had to explain it, taking a long time, as PostHog and trigger.dev showed. What shipped: visual annotation on every option, and the mode-bar adoption index moved from 100 to 225.", cap: "A: labels became previews" },
             { wide: true, src: "/assets/images/cotonai-modes/rejected-colourway.webp", alt: "Rejected B: V1 Colourway with a selected garment and a panel of empty hex-code fields for body, trim and print. Why it failed: low recall of hex codes caused hesitation and friction; and choosing colour without seeing it added cognitive load, so weekly adoption stayed low. What shipped: a visual colour picker alongside hex input, the pattern teams know from design tools.", cap: "B: hex codes gained a visual picker" },
             { wide: true, src: "/assets/images/cotonai-modes/rejected-tryon.webp", alt: "Rejected C: a try-on through Editorial mode in eight steps, from choosing Editorial and adding a look and reference to picking a model and pose, writing a prompt and generating. Why it failed: eight clicks buried a common job inside a mode built for something else; and it still needed a prompt, the one thing Modes set out to remove. What shipped: a Figure submode inside Edit, 3 clicks and no prompting.", cap: "C: eight clicks became three" }] },
           ] },
-        { title: "Outcomes and Takeaways", dash: [{ type: "kpi", w: 4, label: "Images generated", value: "6000+", note: "In editorial mode on CotonAI" }, { type: "kpi", w: 4, label: "Cost saved", value: "$5k+", note: "Deciding UX flows and which AI models to work with" }, { type: "kpi", w: 4, label: "Enterprise pilot", value: "$$$", chip: "Paid", note: "Converted the MVP to a paid pilot with an enterprise client" }, { type: "waffle", w: 8, label: "Client time saved", value: "584 hrs", cells: 80, filled: 73, note: "In one season, about 73 working days at 8 hours a day. Each square is one day." }, { type: "kpi", w: 4, label: "Feature adoption", value: "125%", chip: "↑ vs V1", note: "After redesigning the Modes bar" }], statement: "Outcome: a paid pilot, 584 hours saved for a client, and 125% higher adoption.",
+        { title: "Outcomes and Takeaways", dash: [{ type: "kpi", w: 4, label: "Images generated", value: "6000+", note: "In editorial mode on CotonAI" }, { type: "kpi", w: 4, label: "Cost saved", value: "$5k+", note: "Deciding UX flows and which AI models to work with" }, { type: "kpi", w: 4, label: "Enterprise pilot", value: "Paid", chip: "Pilot", note: "Converted the MVP to a paid enterprise pilot" }, { type: "waffle", w: 8, label: "Client time saved", value: "584 hrs", cells: 80, filled: 73, note: "In one season, about 73 working days at 8 hours a day. Each square is one day." }, { type: "kpi", w: 4, label: "Mode adoption index", value: "225", chip: "V1=100", note: "After redesigning the Modes bar" }], statement: "Outcome: a paid pilot, 584 hours saved for a client, and a mode adoption index of 225.",
 
           parts: [
         { title: "Learning", statement: "Learning: shape the interaction model, not more controls.",
@@ -372,68 +372,69 @@ const PROJECTS = [
   },
   {
     name: "CotonAI Design System", org: "CotonAI", area: "Design systems · AI product", tags: ["Design Systems", "AI UX"],
-    title: "The canvas stays quiet: a token system that names every gray and keeps one blue.",
-    desc: "CotonAI is a fashion board. The system under it names every gray by its lightness, keeps one blue in light and dark, and measures the chrome so it never competes with the work.",
-    seo: "CotonAI design system case study: a token system for an AI fashion canvas that names every gray by lightness and keeps one blue in light and dark.",
-    metric: { value: "57", label: "Primitives and 48 semantic aliases, in 2 modes" }, thumb: { video: "/assets/images/cotonai-ds/video-cotonai-ds-cover.mp4", poster: "/assets/images/cotonai-ds/video-cotonai-ds-cover-poster.jpg", alt: "CotonAI Design System cover: the CotonAI mark over soft, out-of-focus yellow and orange flowers, then the title typed out", navPoster: "/assets/images/cotonai-ds/video-cotonai-ds-cover-poster.jpg", bleed: true }, slug: "cotonai-design-system", href: "/work/cotonai-design-system", tint: ["#8AA3AE", "#E3ECEE", "#C5D5DA"],
+    title: "One token file that Paper, code and AI agents all build from, with gates that stop it drifting.",
+    desc: "CotonAI's UI took colour from two sources that disagreed. One token file now generates the code, Figma and Paper outputs, and a gate fails on low contrast.",
+    seo: "CotonAI design system case study: one W3C token file that generates CSS, Tailwind and Figma tokens, a Paper library of 35 components and 13 patterns, and a gate that checks 250 contrast pairs against WCAG AA.",
+    metric: { value: "250/250", label: "Contrast pairs meet WCAG AA in the token gate" }, thumb: { video: "/assets/images/cotonai-ds/video-cotonai-ds-cover.mp4", poster: "/assets/images/cotonai-ds/video-cotonai-ds-cover-poster.jpg", alt: "CotonAI Design System cover: the CotonAI mark over soft, out-of-focus yellow and orange flowers, then the title typed out", navPoster: "/assets/images/cotonai-ds/video-cotonai-ds-cover-poster.jpg", bleed: true }, slug: "cotonai-design-system", href: "/work/cotonai-design-system", tint: ["#8AA3AE", "#E3ECEE", "#C5D5DA"],
     cs: {
-      meta: [["Role", "Founding Product Designer"], ["Timeline", "Aug 2025 – Present"], ["Skills", "Design tokens, Figma variables, shadcn, AI-assisted UI"], ["Team", "Founder, PM, engineering"]],
+      meta: [["Role", "Founding Product Designer"], ["Timeline", "Aug 2025 – Present"], ["Owned", "Token source, Paper library, rules for agents"], ["Team", "Co-founder, PM, engineering"]],
+      // This study follows its own flow, from context to measured impact (declared here and in STRUCTURE_BY_PAGE in tools/check-seo.cjs)
+      structure: ["Context", "Diagnosis", "Design decisions", "System architecture", "Applied workflows", "Engineering validation", "Measured impact"],
       sections: [
-        { title: "Overview / Background", statement: "Overview: the canvas stays quiet.",
-          text: ["CotonAI is a fashion board. The work on it is the product, so the chrome around it has to stay out of the way. The system under it names every gray by its lightness, keeps one blue in both themes, and measures the chrome so it never competes with the work."],
-          cards: [["Problem: Color was a class, not a name.", "Hex strings in Tailwind classes, and HSL variables that only covered the shadcn layer."], ["Solution: Four collections, shaped like Figma variables.", "Primitives, semantic aliases, dimensions and effects, with Light and Dark as modes."], ["Outcome: A file Figma can import.", "57 primitives, 48 semantic aliases, 2 modes, regenerated from the stylesheet."]] },
+        { statement: "Context: a fashion canvas where the interface has to stay out of the work's way.",
+          text: ["CotonAI is an AI canvas for fashion teams. The work on the board is the product, so the interface around it has to stay quiet. I joined as founding product designer in August 2025 and took on the design system. Three groups build with it: designers in Paper, engineers in Tailwind, and AI agents that draft UI code."],
+          cards: [["Problem: Two token sources that disagreed.", "1,411 raw hex values on top of them."], ["Solution: One file generates the rest.", "CSS, Tailwind, Figma and Paper."], ["Outcome: A gate, not a guideline.", "250 contrast pairs pass AA."]] },
 
-        { title: "Defining the Problem", statement: "Problem: the board was designed. The names were not.",
-          text: ["The board was already a coherent picture: white surfaces, a soft gray page, a single blue for anything that means “this.” It was not a system. It lived as hex strings inside Tailwind classes and as HSL variables that only covered the shadcn layer. #232323 and #242424 both meant “dark control,” and Figma had nothing honest to import."],
-          cards: [["Color was a class", "Values lived inside Tailwind strings, not behind names."], ["Two themes, two strings", "Light and dark were parallel values, not modes of one token."], ["Nothing to import", "Figma had no honest source, because the code never agreed on a name."]] },
+        { statement: "Diagnosis: the interface was designed, but nothing enforced the design.",
+          text: ["An audit of src/ on 11 November 2026 found a missing source: colour, size and controls were decided again in every file."],
+          board: { src: "/assets/images/cotonai-ds/board-diagnosis.webp", alt: "What the audit of src/ found. 1,411 raw hex colours in 187 files, and the brand blue alone appears 269 times. 490 raw buttons, while only 5 files import the Button component. 669 arbitrary text sizes such as text-[13px]. 10 files build their own dialog, sheet or drawer. 7 shadcn components are imported nowhere, including select, tabs and switch. The old muted gray #888888 is 3.5:1 on white against the 4.5:1 AA needs. Root cause: two places defined colour and they disagreed, index.css with HSL variables for shadcn and boardUiTokens.ts with hex, imported by 106 files.", cap: "What the audit found in src/" } },
 
-        { title: "Understanding your Users", statement: "Users: designers in Figma and engineers in Tailwind, describing the same blue in two languages.",
-          text: ["There was no user study for this one. The evidence is the code and the board themselves."],
-          cards: [["Designers", "Need a Figma file with names they can import and trust."], ["Engineers", "Need tokens regenerated from the stylesheet, not a second copy to keep in sync."], ["The next surface", "Needs the measurements the board already uses, so it matches without guessing."]] },
-
-        { title: "Your Role and Responsibilities", statement: "Role: owning the system from the first extraction to the Figma handoff.",
-          text: ["I owned the design system as founding product designer, working with the founder, PM and engineering. That meant deciding what repeats and becomes a token, what is a role and becomes an alias, and what to leave unnamed."],
-          cards: [["Founding Product Designer", "August 2025 to present."], ["Owned", "The extraction, the names, the collections and the handoff into Figma."], ["Worked with", "The founder, the PM and engineering."]] },
-
-        { title: "Scope and Constraints", statement: "Constraints: the board already had its measurements, and some colors never earned a name.",
-          text: ["These sizes were not invented for a scale. They are the measurements the board already used, written down so the next surface can match them. The scope was what to name, and just as much what to leave out."],
-          dash: [{ type: "kpi", w: 4, label: "Inset", value: "17px", note: "Space between the board and the screen edge" }, { type: "kpi", w: 4, label: "Top bar", value: "45px", note: "Chrome buttons are 28px with a 12px radius" }, { type: "kpi", w: 4, label: "Inspector", value: "300px", note: "Panel width" }, { type: "kpi", w: 6, label: "Floating asset bar", value: "38px", note: "Buttons 26px, icons 14px, radius 10px" }, { type: "kpi", w: 6, label: "Default UI type", value: "12px", note: "Inter. Focus field is a 30% blue fill with a full blue stroke." }],
+        { statement: "Decisions: generate the palette, pin the brand, and let contrast choose the blue.",
+          text: ["Each decision is backed by a number a machine can check."],
+          board: { src: "/assets/images/cotonai-ds/board-decisions.webp", alt: "Six design decisions. 1, palette: one neutral ramp gray/0 to 1000 and five hues generated in OKLCH with a fixed lightness per stop, with blue/500 #0C8CE9, red/500 #FF383C and purple/600 #8A38F5 pinned. 2, one blue with two jobs: white on #0C8CE9 is 3.53 to 1 and on #0076C7 it is 4.76 to 1, so filled actions use blue/600 while focus and selection keep the brand blue. 3, muted text moves to gray/650 #636360 in light and gray/450 #9F9E9C in dark, 4.96 to 1 on the selected row. 4, three radii 6, 12 and full, two control heights 32 and 28, and a 12px text floor. 5, old names stay as aliases of the new ones. 6, where index.css and boardUiTokens.ts disagreed, the values on the live board won, and there is one accent colour.", cap: "Six decisions, each one checkable" },
           parts: [
-        { title: "Exclusions", statement: "Exclusions: near-duplicates collapsed, debug color stayed out.",
-          text: ["Two line heights, 14 for 10px type and 18 for 13px type, are proposed. The code never set them."], board: { src: "/assets/images/cotonai-ds/board-collapse.webp", alt: "Three pairs of near-duplicate dark grays collapse into one primitive each: #232323 and #242424 to gray/14, #1C1C1C and #1D1D1D to gray/11, #292929 and #2A2A2A to gray/16. Six debug colors stay unnamed: #FF0000, #00FF00, #3B82F6, #6366F1, #3B6BFF and #FFF44F. #8A38F5 is kept only as icon/layer-text, a job rather than a brand color.", cap: "What got a name, and what didn't" } },
+            { title: "What I replaced", statement: "Replaced: a token set that wrote the code down instead of correcting it.",
+              text: ["The first token set (57 primitives, 48 aliases) was extracted from the code and described it as it was. The current set is generated and checked against contrast, so it says what the code should be."] },
           ] },
 
-        { title: "Ideation Steps (The Solution)", statement: "Solution: four collections shaped like Figma variables, one blue, and a file Figma can import.",
-          text: ["The extraction reads src/index.css, boardUiTokens.ts and tailwind.config.ts. What repeats becomes a token. What is a role becomes an alias. What is a shadow stays a style, because a variable is the wrong container for a blur."], board: { src: "/assets/images/cotonai-ds/board-collections.webp", alt: "Three source files, src/index.css, boardUiTokens.ts and tailwind.config.ts, go through extraction into four collections: 57 primitives in one mode, 48 semantic aliases with Light and Dark modes, dimensions, and 4 effect styles. The result is a file Figma can import, regenerated from the stylesheet by build.py.", cap: "Four collections, shaped like Figma variables" },
+        { statement: "Architecture: one source, four layers, every output generated.",
+          text: ["cotonai.tokens.json is the only file edited by hand. npm run tokens generates the CSS variables, Tailwind theme, TypeScript module and Figma import files, and the Paper library is re-pushed from the same JSON. Components use semantic tokens. Primitives only define them."],
+          board: { src: "/assets/images/cotonai-ds/board-architecture.webp", alt: "cotonai.tokens.json, the single source of truth in W3C design-token format, feeds four layers: 97 primitives generated in OKLCH, 105 semantic tokens in two modes, component tokens, and 100 dimensions plus 7 effects. These generate tokens.css, tailwind-theme.ts, tokens.ts and one Figma tokens file per collection and mode. The Paper file has 7 Foundations boards, 35 component artboards, 13 pattern artboards and 1 Index page.", cap: "One file in, every output generated" },
+          media: [{ demo: "dsLive", alt: "Live CotonAI components running on the real design tokens, with a Light and Dark switch. A generation tile moves through queued, running and done with a progress bar, skeleton and status pill. Buttons, a switch and a segmented control respond to hover, press and selection. A tooltip, a menu and a delete dialog open and close with the system's fade and zoom. An agent shows thinking, a streamed answer and status pills.", cap: "Live: the real components on the real tokens. Flip Light and Dark, press Generate, open the menu" },
+            { wide: true, src: "/assets/images/cotonai-ds/paper-index.webp", alt: "The Index page of the CotonAI Paper file. It lists the pages in the file: Foundations with 7 boards, Components with 35 artboards and Patterns with 13 artboards. A table says which component to use for which job, across Controls, Display, Structure, Overlays and Canvas chrome. Three rules follow: Build, with tokens only and one accent colour. Check, with text at 4.5:1 and UI at 3:1 contrast and all states covered. Change, with one library owner who approves new tokens and components.", cap: "The Index page of the Paper file: which component for which job, and three rules" },
+            { wide: true, src: "/assets/images/cotonai-ds/paper-tokens-primitives.webp", alt: "The Colour / Primitives board in the Paper file. Raw palette ramps that product code never uses directly. A 22-step warm-neutral gray ramp from gray-0 #FFFFFF to gray-1000 #000000, five hue ramps from 50 to 950 for blue (accent, info, with 500 #0C8CE9 and 600 #0076C7), green (success), amber (warning), red (danger) and purple (layer text, spread), and translucent alpha tokens shown on white and on gray-950.", cap: "Foundations: colour primitives, 97 raw values" },
+            { wide: true, src: "/assets/images/cotonai-ds/paper-tokens-semantic.webp", alt: "The Colour / Semantic Light board in the Paper file. Role-based tokens used by product code in the light theme, each swatch showing the token name, the primitive it aliases and the resolved value. Groups are Background, Border, Text, Icon, Accent, Status for success, warning, danger and info, and component tokens for nav, tab, toggle, scrollbar, loader, media and canvas.", cap: "Foundations: semantic colour, light theme. Each role names the primitive it aliases" },
+            { wide: true, src: "/assets/images/cotonai-ds/paper-tokens-type.webp", alt: "The Typography board in the Paper file. Inter for UI and JetBrains Mono for code, three weights (regular 400, medium 500, semibold 600), and thirteen sizes from the 11px hint to the 56px display-lg, each with its line height and tracking, for example text-md at 13 over 20 with -0.01em. Tracking tightens as type grows, from +0.1em for eyebrows to -0.04em for display-lg. Rules: 12px is the floor for anything read, use the role and not a raw size, and line heights only grow with size.", cap: "Foundations: type, in Inter and JetBrains Mono" },
+            { wide: true, src: "/assets/images/cotonai-ds/paper-tokens-spacing.webp", alt: "The Spacing, Radius and Sizes board in the Paper file. A 2px-based spacing scale from 0 to 64. Radii: none 0, control 6px for buttons, fields and chips, panel 12px for panels, menus and dialogs, and full for pills and avatars. Control heights: xs and sm 28px, md and lg 32px, dense 28px for inspector fields, and a 32px icon square. Icon sizes from 12px to 24px. Panel and chrome measurements such as the 300px editor width and 45px top bar, and canvas measurements such as handle and hit sizes.", cap: "Foundations: spacing, radius and sizes" }],
+          mediaLayout: "stack",
           parts: [
-        { title: "Rejected designs", statement: "Rejected: three ways to name the system that didn't hold.",
-          text: ["Each of these was a reasonable first move. Each one broke on the same test: could Figma and the code agree on one name?"],
-          mediaLayout: "stack", media: [
-            { wide: true, src: "/assets/images/cotonai-ds/rejected-themes.webp", alt: "Rejected A: light and dark as two parallel files, light.json and dark.json, each repeating page, accent, generate and cancel, with the same #0C8CE9 blue written in both, and a Figma import that produces two collections and no modes. Why it failed: the same blue was written twice and nothing kept the copies in step; Figma saw two libraries, so switching theme meant swapping files rather than flipping a mode; and every new role needed a twin in the other file. What shipped: one semantic collection with Light and Dark as modes, where only the page changes, gray/96 to gray/2.", cap: "A: two files became two modes of one collection" },
-            { wide: true, src: "/assets/images/cotonai-ds/rejected-scale.webp", alt: "Rejected B: a numbered 50 to 950 gray scale, with #232323 and #242424 given their own steps, gray-850 and gray-800, and components using the steps directly as Tailwind classes. Why it failed: step numbers say order, not lightness, while the CSS already spoke in HSL lightness; near-duplicates that both meant dark control claimed their own in-between steps; and colour stayed a class, so a theme switch meant rewriting classes. What shipped: grays named by lightness, gray/96 is #F5F5F5, with near-duplicates collapsed into one primitive each.", cap: "B: step numbers became lightness" },
-            { wide: true, src: "/assets/images/cotonai-ds/rejected-flat.webp", alt: "Rejected C: everything as a variable in one flat list, mixing page, accent, gray-14 and radius-12 with shadow/card, shadow/float and debug red, green and yellow, and no mode. Why it failed: raw grays sat beside roles like page with nowhere to put Light and Dark; a shadow is several values at once, so a variable is the wrong container for it; and debug colours got names, so they looked like choices. What shipped: four collections, primitives, semantic aliases in two modes, dimensions, and effects as styles, with debug colours left unnamed.", cap: "C: one list became four collections" }] },
-        { title: "Color", statement: "Color: grays by lightness, and one blue that does not flip.",
-          text: ["A primitive is a fact. gray/96 is always #F5F5F5. A semantic token is a job. In light mode that job is the page; in dark mode the page is gray/2."], board: { src: "/assets/images/cotonai-ds/board-color.webp", alt: "A primitive, gray/96, is always #F5F5F5. A semantic token, the page, points at gray/96 in light mode and gray/2 in dark, so Light and Dark are two modes of one collection. Three accents keep their hue in both modes: blue #0C8CE9 points, green #71CE82 commits, red #FF383C stops.", cap: "Grays by lightness, and one blue that does not flip" },
-          trades: [
-            { n: "Decision 1", t: "Name grays by lightness", rows: [["Issue", "Hex values repeated across files with no shared name."], ["Change", "Primitives named by HSL lightness, as the CSS already did. gray/96 is #F5F5F5, gray/2 is #050505."], ["Result", "A primitive is a fact and a semantic token is a job, so Light and Dark become two modes of one collection."]] },
-            { n: "Decision 2", t: "One blue in both themes", rows: [["Issue", "Accent had to survive a switch from a white page to a near-black one."], ["Change", "#0C8CE9 stays in both modes. Generate and Cancel keep their hue too."], ["Result", "Only the paper changes, from gray/96 to gray/2. That is the whole semantic model."]] },
-            { n: "Decision 3", t: "Two layers, one blue and one gray page", rows: [["Board chrome", "boardUiTokens.ts: New project, Credits, Generate and Cancel."], ["App UI", "button.tsx: six shadcn variants, default, destructive, outline, secondary, ghost and link, with one radius."], ["Shared", "Both layers use the same blue and the same gray page. Control sizes are 40, 36, 44 and a 40px icon square."]] },
+            { title: "Components", statement: "Components: 35, grouped by the job they do.",
+              cards: [["Controls", "Button, Switch, Select, TextField and the rest. Never a bare button with color classes."], ["Overlays", "Dialog interrupts, Popover holds free content, Menu lists actions."], ["Canvas chrome", "Dock, ToolRail, PromptBar and UploadSlot for the board itself."]] },
+            { title: "Documentation", statement: "Documentation: one Paper artboard per component.",
+              cards: [["Variants, sizes, states", "Default, hover, pressed, focus and disabled are drawn, not described."], ["A one-line use for", "So the right component is a lookup, not a debate."], ["An AGENTS.md entry", "A component is not done until people and agents can both find it."]] },
           ] },
 
-        { title: "Handoff", media: [{ diagram: { kind: "merge", title: "From the stylesheet to Figma", inputs: ["src/index.css", "boardUiTokens.ts", "tailwind.config.ts"], output: "Figma-importable tokens", note: "design-tokens/build.py regenerates the files." } }],
-          statement: "Handoff: from the stylesheet to a file Figma can import.",
-          text: ["design-tokens/build.py regenerates the token files. The W3C files in design-tokens/figma are one collection per file. cotonai.tokens.json is the same system in a single file for Tokens Studio."],
-          stepsTitle: "Import order",
-          steps: [["primitives.tokens.json", "Imported first."], ["semantic.light and semantic.dark", "Imported as two modes of one collection."], ["dimensions and effects", "Dimensions as variables, effects as styles."]] },
+        { statement: "Workflows: a change goes through one owner, and an agent's draft goes through a person.",
+          text: ["A change starts as an issue naming the two screens that need it. One library owner approves it, the JSON and Paper artboard change together, and an engineer checks it. Agents follow the same rules: they read AGENTS.md, produce a proposal, and a person reviews it."],
+          board: { src: "/assets/images/cotonai-ds/board-workflow.webp", alt: "Two flows. A change to the system: 1, issue, with the problem, the two screens that need it and the nearest existing option; 2, owner approves or redirects; 3, the token JSON and the Paper artboard change together and AGENTS.md is updated; 4, an engineer checks tokens and all states. A change made with an agent: give it the rules and one artboard; get a proposal; a human decides; the fix becomes a new line in AGENTS.md. The agent rules are five lines: tokens never literals, semantic over primitive, reuse before you build, contrast is a gate, and agent output is a proposal.", cap: "How a change is made, by people and with an agent" },
+          parts: [
+            { title: "Challenge", statement: "Challenge: changing shapes touches about 106 files. Solution: stage it, and look after each stage.",
+              stepsTitle: "Stages",
+              steps: [["Stage 0, tooling: done", "Generator, token files, baseline."], ["Stage 1, colours: done", "124 raw hex gone from boardUiTokens.ts."], ["Stage 2, shapes and sizes", "Radii and control heights. Not started."], ["Stage 3, roles", "Credits to neutral, menu hover to grey. Not started."], ["Stage 4, the rest", "Sub-bars, then modals. Not started."]] },
           ] },
 
-        { title: "Outcomes and Takeaways", dash: [{ type: "kpi", w: 4, label: "Primitives", value: "57", note: "Named values, one mode" }, { type: "kpi", w: 4, label: "Semantic aliases", value: "48", note: "Light and Dark as modes of one collection" }, { type: "kpi", w: 4, label: "Accent", value: "1 blue", note: "#0C8CE9 in light and dark" }], statement: "Outcome: one named system, in two modes.",
-          text: ["The code and Figma now agree on a name for every color the board uses. The tokens are regenerated from the stylesheet, so a new surface matches the measurements the board already had."],
+        { statement: "Validation: the gates fail the build, so contrast and drift are not opinions.",
+          text: ["Run on 11 November 2026: the token build is current, every contrast pair passes, and raw colour sits on its baseline. Stage 1 also built with Vite."],
+          board: { src: "/assets/images/cotonai-ds/board-gates.webp", alt: "Gates run on 11 November 2026. npm run tokens:check: 250 of 250 contrast pairs meet WCAG 2.2 AA, and it also fails if a generated file is stale. npm run lint:colors: 1,202 raw colour literals in 167 files, down from 1,326 in 168, and the check fails if the number goes up. Gate history: 166 pairs grew to 250 as text tiers, canvas chrome and tinted fills were added. What the gate caught: warning and danger text fail 4.5 to 1 on their pressed fill, so interactive warning and danger pills hover with a border instead of a fill. Not yet verified: how stage 1 looks in a browser.", cap: "The gates, as run" } },
+
+        { dash: [{ type: "kpi", w: 4, label: "Raw colour", value: "−124", note: "1,326 to 1,202 literals, all from boardUiTokens.ts" }, { type: "kpi", w: 4, label: "Contrast gate", value: "250/250", note: "Pairs meet WCAG 2.2 AA, up from 166 checked" }, { type: "kpi", w: 4, label: "Colour source", value: "1 file", note: "Replaces two that disagreed" }],
+          statement: "Impact: raw colour is falling and contrast passes everywhere it is checked. The rest is not measured yet.",
+          text: ["Only stage 1 is applied, so these are stage 1 numbers."],
           parts: [
-        { title: "Learning", statement: "Learning: a variable is the wrong container for a blur.",
-          text: ["Naming the grays was the easy part. The work was deciding what not to name: three near-duplicate darks collapsed into one primitive each, and debug colors stayed out. A system is as much what it refuses as what it holds.",
-            "The limit: the line heights are proposed, not measured, and the tokens only stay honest while build.py keeps regenerating them from the stylesheet."],
-          quote: "The board was designed. The names were not.", quoteBy: "Sambit Nayak" },
+            { title: "Not measured yet", statement: "Not measured yet: adoption, time saved and the look in a browser.",
+              cards: [["Adoption", "490 raw buttons unchanged. Stages 2 to 4 not started."], ["Time saved", "No before and after yet."], ["In a browser", "Stage 1 not yet verified."]] },
+            { title: "Learning", statement: "Learning: a rule a machine can check outlasts a guideline.",
+              text: ["Once contrast became a failing check, two colours had to change: the filled blue and the muted gray. A system is useful in proportion to what it can refuse.", "Limits: the library owner is not yet named, and dark mode in Paper is a token prefix."] },
           ] },
       ],
     },
@@ -517,66 +518,58 @@ const PROJECTS = [
   {
     name: "Gap 3D Fit", org: "Gap", area: "E-commerce · 3D fit · Web and iOS", tags: ["E-comm", "UX Design"],
     title: "Turning sizing uncertainty into a 61% add-to-bag decision.",
-    desc: "Technical product designer on Drapr, a Y Combinator 3D-fit startup that Gap Inc. acquired. I led the redesign of the 3D Fit flow so shoppers could trust a size. An A/B test showed a 61% lift in add-to-bag.",
+    desc: "Gap Inc. acquired Drapr for its 3D fit. When the web launch moved up and testers ran out, I argued against waiting, rebuilt the flow from live session data and shipped on time. An A/B test showed +61% add-to-bag.",
     seo: "Gap 3D Fit case study: as technical product designer at Drapr, acquired by Gap Inc., I redesigned 3D fit for web and iOS. An A/B test showed +61% add-to-bag.",
-    metric: { value: "+61%", label: "Add-to-bag lift, A/B tested" }, thumb: { video: "/assets/images/gap/video-gap-cover.mp4", poster: "/assets/images/gap/video-gap-cover-poster.jpg", alt: "Gap 3D Fit cover: the real QuickFit Finder, with Waist, Hips and Calf fit descriptors, and the key numbers", navPoster: "/assets/images/gap/video-gap-cover-poster.jpg", bleed: true }, slug: "gap-3d-fit", href: "/work/gap-3d-fit", tint: ["#9096CA", "#FEFBF2", "#F45220"],
+    metric: { value: "+61%", label: "Add-to-bag lift, A/B tested" }, thumb: { video: "/assets/images/gap/video-gap-quickfit.mp4", poster: "/assets/images/gap/video-gap-quickfit-poster.jpg", navPoster: "/assets/images/gap/video-gap-quickfit-poster.jpg", alt: "Product demo of the Old Navy QuickFit Finder: the product page, three short questions, the 3D avatar turning with Waist, Hips and Calf fit, Why this recommendation, and Add to bag, closing on a 61% add-to-bag lift", bleed: true, full: true }, slug: "gap-3d-fit", href: "/work/gap-3d-fit", tint: ["#5D7A9C", "#FEFBF2", "#002B5C"],
     cs: {
-      meta: [["Role", "Technical Product Designer"], ["Timeline", "6 months"], ["Skills", "UX flow, fit logic, UI, testing, 3D optimization · Web, iOS"], ["Team", "2 PMs, 1 designer, 1 UXR"]],
+      meta: [["Role", "Technical Product Designer"], ["Timeline", "6 months"], ["Owned", "Flow, fit logic, 3D performance budget · Web, iOS"], ["Team", "Me, 2 PMs, 1 UXR"]],
+      structure: ["Final Designs", "Overview", "What Existed Today", "Understanding Users", "Design Process", "Outcomes and Reflection"],
       sections: [
-        { title: "Overview / Background", statement: "Overview: fit is the biggest friction in online denim. Showing it wasn't enough.",
-          text: ["Drapr built a 3D avatar that lets shoppers try on clothes. Gap Inc. acquired it in August 2021 to improve fit across its brands, and called fit “the number one point of friction for customers” (Gap Inc. press release, 26 August 2021).",
-            "My hypothesis: a 3D avatar shows fit, but shoppers buy on trust. So I designed the flow around what a shopper needs to believe a size, then tested it against the old one."],
-          cards: [["Drapr: 3D avatar try-on", "A Y Combinator startup. Gap acquired it in August 2021."], ["Hypothesis: ask less, prove more", "Little upfront. Explain the size when trust is at stake."], ["Result: +61% add-to-bag", "An A/B test of the new flow against the old one."]] },
-        { title: "Defining the Problem", statement: "Problem: the old flow showed fit. Shoppers still felt risk.",
-          text: ["Denim made sizing harder: one size had to explain multiple body zones without turning checkout into a long form."],
-          media: [{ src: "/assets/images/gap/problem-size-chart.webp", alt: "Gap size guide for women's jeans, with women's regular, petite and tall tabs and a table of waist and hip measurements in inches for each size from XXXS to S.", cap: "Charts were precise; comfort was not." }, { src: "/assets/images/gap/problem-denim-fit.webp", alt: "Model in a white top and mid-wash jeans, with five numbered measurement lines marked on her body: two across the torso, one at the hip, one running down the leg and one at the hem.", cap: "Fit was multi-zone: waist, hip, thigh, calf, and inseam all mattered." }, { src: "/assets/images/gap/problem-recommendations.webp", alt: "A \"Customers Also Purchased\" carousel on a Gap product page: wide-leg jeans at $44.99 and two pairs of denim shorts on sale, each with an add-to-bag button, plus previous and next arrows.", cap: "A size recommendation without evidence felt risky." }],
-          cards: [["Measurements were not enough", "Charts were precise; comfort was not."], ["Fit was multi-zone", "Waist, hip, thigh, calf, and inseam all mattered."], ["The answer needed a reason", "A size recommendation without evidence felt risky."], ["Every extra input had a cost", "More personalization could also mean more drop-off."]] },
-        { title: "Understanding your Users", statement: "Users: online denim shoppers who needed a reason to believe a size.",
-          text: ["I designed for shoppers choosing denim online, where one size has to explain several body zones. I tested each call with participants before it shipped, and what they said sits under each decision below."],
-          cards: [["Credible sizing", "A size they could believe, not just a number."], ["Evidence behind the size", "A recommendation needed a reason."], ["Little effort", "Every extra input cost completion."]] },
-
-        { title: "Your Role and Responsibilities", statement: "Role: technical product designer, leading the 3D Fit redesign across four disciplines.",
-          text: ["Over six months I led the redesign of the 3D Fit flow for web and iOS, working with two PMs and a UX researcher."], board: { src: "/assets/images/gap/board-hub.webp", alt: "The Gap 3D Fit redesign, for web and iOS over 6 months with 2 PMs and a UX researcher, kept four disciplines on one definition of success: Product connected confidence to commerce signals, Research mapped trust breakdowns, Engineering balanced 3D assets with mobile performance, and Fit language aligned product, research and merchandising terms.", cap: "Four disciplines, one definition of success" },
-           },
-
-        { title: "Scope and Constraints", statement: "Constraints: too many inputs lost shoppers, too much rationale slowed them, and fidelity slowed phones.",
-          text: ["The flow had to earn trust without turning into a long form, without slowing the purchase, and without making 3D too heavy for mobile."], board: { src: "/assets/images/gap/board-limits.webp", alt: "Three limits fed one brief. Too many inputs caused drop-off, too much rationale slowed action, and too much fidelity slowed performance on mobile, so the flow had to earn trust without a long form, without slowing the purchase and without heavy 3D on mobile.", cap: "Three limits, one brief" },
-           },
-
-        { title: "Ideation Steps (The Solution)", statement: "Solution: I asked less upfront and showed more evidence when trust was at stake.",
-          text: ["The key move was sequencing: what to ask, what to defer, and when to explain. I tested each call with participants before it shipped."], board: { src: "/assets/images/gap/board-tradeoffs.webp", alt: "Three decisions and their compromises. Accuracy versus completion rate: baseline first, tuning optional. Explainability versus purchase velocity: a fast answer with an optional reason. Fit fidelity versus mobile performance: copy to support the visuals. Each lists the user need, the business need and the constraint.", cap: "Three trade-offs, three compromises" },
-          trades: [
-            { n: "Decision 1", t: "Accuracy vs completion rate", mediaLayout: "stack", media: [{ wide: true, src: "/assets/images/gap/decision-1.webp", alt: "Two versions of the Further customize your avatar screen, one showing size numbers beside each body measurement and one without.", cap: "The avatar customization screen, with and without size numbers" }],
-              find: [["What testing showed", "Participants said they felt more confident seeing the numbers when they entered their measurements, especially those who knew a few of them, than relying on a visual approximation."], ["What I did next", "Keep the dimensions visible by default. It is less ambiguous than showing no numbers at all."]],
-              note: "Complexity moved later, after the value was clear." },
-            { n: "Decision 2", t: "Explainability vs purchase velocity", mediaLayout: "stack", media: [{ wide: true, src: "/assets/images/gap/decision-2.webp", alt: "The QuickFit Finder with an open Why this recommendation panel that explains what to do if a size feels too small or too large.", cap: "A toggle-able Why this recommendation panel" }],
-              find: [["What testing showed", "Almost everyone opened it out of curiosity, even when the size matched what they usually wear."], ["What I did next", "Add a brief explanation of the recommendation, especially when it falls outside their usual range, to build trust in the tool."]],
-              note: "The recommendation became inspectable without becoming heavy." },
-            { n: "Decision 3", t: "Fit fidelity vs mobile performance", mediaLayout: "stack", media: [{ wide: true, src: "/assets/images/gap/decision-3.webp", alt: "The QuickFit Finder with Waist, Hips and Calf fit descriptors that explain what tight, fitted and loose feel like.", cap: "Toggle-based fit descriptors for waist, hips and calves" }],
-              find: [["What testing showed", "Participants knew to click the question mark for more information and valued the clarity of what fitted, loose and relaxed mean."], ["What I did next", "Add definitions for the fit descriptors, so shoppers know what each one feels like."]],
-              note: "Fit copy became interface logic: short, local, decision-tied." },
-          ],
-          parts: [
-        { title: "Rejected designs", statement: "Rejected: three variations that lost the trade-offs.",
-          text: ["One per decision above. Each board reads left to right: what we tried in the QuickFit Finder, what testing changed, and what shipped."],
-          mediaLayout: "stack", media: [
-            { wide: true, src: "/assets/images/gap/rejected-form.webp", alt: "Rejected A, for decision 1, accuracy versus completion. Tried: the QuickFit Finder asking for eight measurements (height, weight, waist, hips, thigh, calf, inseam and rise) with the size only at step 3; annotated: 8 inputs before any size. Fit notes: removed, ask for every measurement and size at step 3; added, height first and tuning optional; show a size at once and keep size numbers beside each measure. Shipped: (1 of 3) How tall are you, with height chips.", cap: "A · Decision 1: accuracy that cost completion" },
-            { wide: true, src: "/assets/images/gap/rejected-reason.webp", alt: "Rejected B, for decision 2, explainability versus velocity. Tried: the size on the avatar with the full Why this recommendation panel always open, pushing Add to bag out of view. Fit notes: removed, always show the full reason; added, one tap away, and say more when the size is unusual; Add to bag stays in view; most opened it anyway, out of curiosity. Shipped: size chips, a Why this recommendation link and Add to bag.", cap: "B · Decision 2: explanation that cost velocity" },
-            { wide: true, src: "/assets/images/gap/rejected-3d.webp", alt: "Rejected C, for decision 3, fidelity versus performance. Tried: a full-fidelity 3D jean loading in the browser, with fabric stretch, lighting and drape sliders; annotated: loads slow, still no how it feels. Fit notes: removed, render fabric in full 3D and stretch and light controls; added, a lighter avatar and saying what tight, fitted and loose feel like; clear words beat realism. Shipped: the Waist descriptor, Tight: unlikely to fit, Fitted: desired fit, Loose: may require a belt.", cap: "C · Decision 3: fidelity that cost performance" }] },
-
-        { title: "Solution", statement: "Solution: the final flow made fit easier to trust without adding friction.",
-          text: ["Each step either improved the model or helped shoppers verify the recommendation."],
+        { title: "Final Designs", statement: "Final design: ask little, then prove the size.",
+          text: ["Each step either sharpens the avatar or lets the shopper verify the size."],
           mediaLayout: "stack",
-          media: [{ demo: "gapQuickFit", alt: "The QuickFit Finder on the web, played: the shopper picks 5 feet 6 from the height chips, sees 28W 32L on the avatar with Waist Fitted, Hips Fitted and Calf Loose, opens the Hips descriptor (tight, fitted, loose), opens Why this recommendation, and adds to bag.", cap: "The final flow, played: all three decisions in one pass" }, { wide: true, src: "/assets/images/gap/solution-flow.webp", alt: "The final flow in the QuickFit Finder: how tall are you, optional avatar customization, and a size shown on the avatar with Waist, Hips and Calf fit descriptors.", cap: "The final flow in the QuickFit Finder" }],
-          steps: [["Baseline input", "How tall are you?"], ["Fit calibration"], ["Optional tuning", "Further customize your avatar"], ["Explainable fit", "Why this recommendation, and what tight, fitted and loose feel like"]] },
+          media: [{ demo: "gapQuickFit", alt: "Interactive prototype of the full flow. It starts on the Old Navy product page for High-Waisted Wow Wide-Leg Jeans, where a QuickFit Finder button opens the finder: (1 of 3) how tall are you, (2 of 3) what size do you usually wear, and (3 of 3) optional measurements with the numbers shown. The result shows a recommended size and length on a 3D avatar you can drag to rotate, with Waist, Hips and Calf fit descriptors, a Why this recommendation panel and Add to bag, which returns to the product page with that size selected.", cap: "Try it. The interactive prototype." }, { board: true, wide: true, src: "/assets/images/gap/board-decisions.webp", alt: "Annotated board of the final QuickFit flow in six numbered steps. 01 Entry where doubt peaks: QuickFit Finder sits just above Add to Bag on the product page and is optional. 02 Ask one thing first: height is the only upfront question and the avatar resizes when you pick one. 03 Start from a size they know: the usual size, from any brand, calibrates the body, and Next stays off until there is an answer. 04 Keep the numbers visible: measurements stay in inches beside each control. 05 Reasons on request: Why this recommendation is one tap and never forced open. 06 Say what fit feels like: Waist, Hips and Calf each get a plain word, and the question mark defines tight, fitted and loose.", cap: "Why each step is the way it is." }],
+          quotes: { title: "What testers said", items: [
+            { q: "Seeing the inches next to each control made me trust it more than guessing by eye.", tag: "Tested: numbers" },
+            { q: "I opened 'Why this recommendation' out of curiosity. The size felt less random after.", tag: "Tested: reasons" },
+            { q: "The ? told me what 'fitted' and 'loose' actually feel like.", tag: "Tested: fit words" },
+          ] },
+        },
+
+        { title: "Overview", statement: "Overview: what if a 3D avatar could make shoppers trust a size, not only see it?",
+          text: ["Gap Inc. acquired Drapr, a Y Combinator 3D-fit startup, in 2021 and called fit “the number one point of friction for customers.” I led the 3D Fit redesign over six months, with two PMs and a UX researcher."],
+          cards: [["Problem", "The avatar showed fit. Shoppers still didn't believe the size."], ["The bet", "Less 3D realism, more reasons."], ["Result", "+61% add-to-bag, shipped on the earlier date."]],
+          parts: [
+            { title: "Initial Observations", statement: "Observations: the old flow showed fit. Shoppers still felt risk.",
+              text: ["Denim made sizing harder: one size had to explain multiple body zones without turning checkout into a long form."],
+              insight: ["Working hypothesis", "A 3D avatar shows fit, but shoppers buy on trust."] },
+          ] },
+        { title: "What Existed Today", statement: "Existing tools: charts, diagrams and recommendations gave numbers, not confidence.",
+          mediaLayout: "ratio",
+          media: [{ ar: 1.16, src: "/assets/images/gap/problem-size-chart.webp", alt: "Gap size guide for women's jeans, with women's regular, petite and tall tabs and a table of waist and hip measurements in inches for each size from XXXS to S.", cap: "Size chart: precise, silent on comfort." }, { ar: 0.562, src: "/assets/images/gap/problem-denim-fit.webp", alt: "Model in a white top and mid-wash jeans, with five numbered measurement lines marked on her body: two across the torso, one at the hip, one running down the leg and one at the hem.", cap: "Denim fit: five body zones at once." }, { ar: 1.04, src: "/assets/images/gap/problem-recommendations.webp", alt: "A \"Customers Also Purchased\" carousel on a Gap product page: wide-leg jeans at $44.99 and two pairs of denim shorts on sale, each with an add-to-bag button, plus previous and next arrows.", cap: "Recommendations: a size with no evidence." }], },
+        { title: "Understanding Users", statement: "Users: online denim shoppers who needed a reason to believe a size.",
+          text: ["In month one I tested with 50 online denim shoppers, using our UX researcher's methods. Once recruiting stopped, I read live sessions in Microsoft Clarity."],
+          quotes: { title: "In their words", items: [
+            { q: "A chart gives me a number. I still can't tell if the jeans will fit me.", tag: "Need: credible sizing" },
+            { q: "If it just says size 8, I'm guessing. Tell me why it picked 8.", tag: "Need: evidence" },
+            { q: "Ten questions and I'm gone. I'll order the size I always wear.", tag: "Need: little effort" },
+          ] } },
+
+        { title: "Design Process", statement: "Process: the web launch moved up, and there were no testers left.",
+          text: ["Fifty tested users were all we had, and the new date left no time to recruit more. Management proposed holding the launch. I argued we could prove the design another way: sessions showed shoppers dropping off as the inputs piled up, before they saw any value."],
+          board: { src: "/assets/images/gap/board-timeline.webp", alt: "A timeline in two phases, relative and not to scale. Phase one, testing as planned: user testing with 50 users ran for the first month. Then management changes and the launch date moves up. More testing is struck through because there were no testers, and holding the launch was proposed but did not happen. Instead I reviewed Microsoft Clarity sessions, formed a hypothesis and redesigned, showed management the data, and tested with a few new users, ending at the web launch.", cap: "Constraint and timeline. Dashed bars were planned or proposed and did not happen." },
+          insight: ["The bet", "Live session data could stand in for the testers we did not have."],
+          parts: [
+            { title: "Design decisions", statement: "Decisions: four layouts, one 3D viewer, and why each lost.",
+              text: ["I held the 3D viewer constant and changed only how the flow asks for input. Each layout is scored against the three limits. Figures for the alternatives are illustrative; the 61% lift is measured."], board: { src: "/assets/images/gap/board-variations.webp", alt: "Five QuickFit layouts around the same 3D viewer, with illustrative figures. A, one long form: ten fields before any value; 38% completed, 94 seconds, size confidence 3.1 of 5; not selected. B, measurements first: most people do not know their waist or hips, so they guessed or stopped; 46% completed, 71 seconds, confidence 3.4; not selected. C, average body first: fastest at 82% completed and 18 seconds, but the body was not theirs and confidence was lowest at 2.6; not selected. D, a tight-to-loose slider on the 3D model: fit comes from the size, not a preference, so it promised looks the product cannot deliver; 58% completed, 63 seconds, confidence 3.5; not selected. E, three short steps, selected: 71% completed, 34 seconds, confidence 4.3, and a measured 61% lift in add-to-bag in the A/B test. Each layout is also scored against the three limits, too many inputs, too much rationale and too much fidelity (accuracy vs completion rate, explainability vs purchase velocity, fit fidelity vs mobile performance): A, B and D miss all three; C partly meets limits 1 and 3 and misses 2; E meets all three.", cap: "Four alternatives and the selected flow, each scored against the three limits. Dashed bars are illustrative, not measured." } },
           ] },
 
-        { title: "Outcomes and Takeaways", statement: "Outcome: an A/B test showed a 61% lift in add-to-bag.",
-          dash: [{ type: "kpi", w: 4, label: "Add-to-bag", value: "+61%", chip: "A/B test", note: "New flow against the old flow" }, { type: "trend", w: 8, label: "Add-to-bag, indexed", value: "100 → 161", chip: "Old → new flow", points: [["Old flow", 100], ["New flow", 161]], note: "Indexed to the old flow = 100. The same 61% lift, shown as a change, not a share." }],
-          text: ["The strongest signal was not more 3D realism. It was reducing sizing ambiguity at the moment shoppers decided whether to trust a size and add to bag."],
+        { title: "Outcomes and Reflection", statement: "Outcome: an A/B test showed a 61% lift in add-to-bag.",
+          dash: [{ type: "kpi", w: 12, label: "Add-to-bag", value: "+61%", chip: "A/B test", note: "New flow against the old flow" }],
+          text: ["Shipped on the earlier date. The lift came from less sizing ambiguity, not more 3D realism."],
           parts: [
         { title: "Reflection", statement: "Reflection: I changed my mind about the job of 3D.",
-          text: ["The visual was not the product. Confidence was what shoppers believed, understood, and felt ready to do next.", "I would cut more today: every control should earn its place at the moment of doubt."],
+          text: ["The visual was not the product. Confidence was.", "When testers run out, the product already holds the evidence."],
           cta: { label: "Book a call", href: BOOK_A_CALL } },
           ] },
       ],
@@ -585,14 +578,14 @@ const PROJECTS = [
   {
     name: "CotonAI Agent", org: "CotonAI", area: "Agent UX · Creative tools", tags: ["AI Agents", "0→1 Product"],
     title: "Designing an AI agent that understands how creative teams work.",
-    desc: "Co-founder and founding product designer at CotonAI: moving from an image generator to an agent that carries creative intent across the whole workflow.",
+    desc: "Founding product designer at CotonAI: moving from an image generator to an agent that carries creative intent across the whole workflow.",
     seo: "CotonAI Agent case study: as founding product designer, I moved an image generator to an AI agent that carries creative intent across the fashion workflow.",
     metric: { value: "71%", label: "First-pass acceptance in the Steele pilot" }, thumb: { video: "/assets/images/cotonai/video-cotonai-agent.mp4", poster: "/assets/images/cotonai/video-cotonai-agent-poster.jpg", alt: "CotonAI Agent walkthrough: asking the agent about a board, selection and brand memory", navPoster: "/assets/images/cotonai/video-cotonai-agent-poster.jpg", bleed: true }, slug: "cotonai-agent", href: "/work/cotonai-agent", tint: ["#9CB09E", "#E3EAE0", "#C9D5C8"],
     cs: {
-      meta: [["Role", "Co-founder & Founding Product Designer"], ["Timeline", "2025 – Present"], ["Scope", "Product strategy, user research, interaction design, agent UX, design systems"], ["Focus", "0→1 product design, human–AI interaction, creative tools"]],
+      meta: [["Role", "Founding Product Designer"], ["Timeline", "2025 – Present"], ["Scope", "Product strategy, user research, interaction design, agent UX, design systems"], ["Focus", "0→1 product design, human–AI interaction, creative tools"]],
       sections: [
         { title: "Overview / Background", statement: "Overview: from an image generator to an agent that remembers the brief.",
-          text: ["As co-founder and founding product designer at CotonAI, I owned product strategy as well as design. The question I kept bringing back to the team wasn't \u201chow do we generate better images?\u201d but \u201cwhy does every prompt start from zero?\u201d",
+          text: ["As founding product designer at CotonAI, I owned product strategy as well as design. The question I kept bringing back to the team wasn't \u201chow do we generate better images?\u201d but \u201cwhy does every prompt start from zero?\u201d",
             "This is how that question moved CotonAI from a visual workspace toward an agent that carries creative intent across a whole collection."],
           cards: [["Problem: Every prompt started over.", "The AI forgot why a colour was rejected or which silhouette was approved."], ["Solution: The canvas is the context.", "An agent that plans, executes and returns work to the canvas, with designers approving each step."], ["Outcome: 71% first-pass", "Designs accepted without a revision in the Steele pilot."]] },
         { title: "Defining the Problem", media: [{ diagram: { kind: "merge", title: "Before CotonAI", inputs: ["Moodboards", "Spreadsheets", "Image generators", "Review threads"], output: "One collection", note: "Designers spent hours moving between them." } }], statement: "Problem: we didn't need another AI image generator.",
@@ -601,9 +594,9 @@ const PROJECTS = [
         { title: "Understanding your Users", statement: "Users: fashion teams ran on invisible context that no prompt could carry.",
           text: ["Working with fashion brands and production teams, we saw how much creative work depended on invisible context that no prompt could carry."], board: { src: "/assets/images/cotonai/board-context.webp", alt: "Reference images, material constraints, brand identity, previous decisions and feedback all feed one idea: the canvas becomes the context, so an agent works from the board, the selection, brand and memory and remembers the brief, including why a color was rejected and which silhouette was approved.", cap: "The invisible context behind a collection" } },
 
-        { title: "Your Role and Responsibilities", statement: "Role: co-founder, owning product strategy as well as design.",
-          text: ["As co-founder and founding product designer, I carried product strategy alongside design. The question I kept bringing back to the team was why every prompt starts from zero."],
-          cards: [["Co-founder & Founding Product Designer", "2025 to present."], ["Owned", "Product strategy as well as design."], ["Scope", "Product strategy, user research, interaction design, agent UX and design systems."]] },
+        { title: "Your Role and Responsibilities", statement: "Role: founding product designer, owning product strategy as well as design.",
+          text: ["As founding product designer, I carried product strategy alongside design. The question I kept bringing back to the team was why every prompt starts from zero."],
+          cards: [["Founding Product Designer", "2025 to present."], ["Owned", "Product strategy as well as design."], ["Scope", "Product strategy, user research, interaction design, agent UX and design systems."]] },
 
         { title: "Scope and Constraints", statement: "Constraints: the workspace is live, the agent is a proposal, and the designer stays in control.",
           text: ["The live workspace is the foundation. Persistent creative memory, multi-step orchestration and richer agent controls are the next product direction, so this study keeps what ran in the pilot apart from what is proposed."], board: { src: "/assets/images/cotonai/board-status.webp", alt: "Live: the collaborative workspace, where designers sketch, generate, edit, explore colorways and review together on a shared canvas, and where every pilot outcome comes from. Proposed: the agent architecture, with persistent creative memory, multi-step orchestration and richer agent controls. Designers stay creative directors, because autonomy is useful until an agent makes the wrong creative decision.", cap: "What is live, and what is proposed" },
@@ -720,6 +713,7 @@ function metricTile(p, el, small = false) {
   if (p.thumbnail) {
     el.classList.add("case__tile--media");
     if (p.thumbnail.bleed) el.classList.add("case__tile--bleed");
+    if (p.thumbnail.full) el.classList.add("case__tile--full");
     const img = document.createElement("img");
     img.className = "case__img";
     img.src = p.thumbnail.src;
@@ -733,6 +727,7 @@ function metricTile(p, el, small = false) {
     // Product media instead of the metric: the video plays while visible; the small nav preview shows its poster frame
     el.classList.add("case__tile--media");
     if (p.thumb.bleed) el.classList.add("case__tile--bleed");
+    if (p.thumb.full) el.classList.add("case__tile--full");
     if (small) { const img = document.createElement("img"); img.className = "case__img"; img.src = p.thumb.navPoster || p.thumb.poster; img.alt = p.thumb.alt; el.appendChild(img); return; }
     const v = document.createElement("video");
     v.className = "case__vid"; v.muted = true; v.loop = true; v.playsInline = true; v.preload = "none"; v.poster = p.thumb.poster; v.setAttribute("aria-label", p.thumb.alt);
@@ -749,7 +744,12 @@ function metricTile(p, el, small = false) {
 }
 
 const pad = (n) => String(n).padStart(2, "0");
-document.querySelectorAll("[data-work-count]").forEach((el) => (el.textContent = pad(PROJECTS.length)));
+const DISPLAY_ORDER = ["CotonAI Modes", "CotonAI Agent", "CotonAI Design System", "Gap 3D Fit", "Trailhead Solve"];
+const DISPLAY_PROJECTS = PROJECTS
+  .filter((p) => DISPLAY_ORDER.includes(p.name))
+  .sort((a, b) => DISPLAY_ORDER.indexOf(a.name) - DISPLAY_ORDER.indexOf(b.name));
+const displayIndexOf = (p) => PROJECTS.indexOf(p);
+document.querySelectorAll("[data-work-count]").forEach((el) => (el.textContent = pad(DISPLAY_PROJECTS.length)));
 
 const list = document.querySelector(".cards");
 // CotonAI's studies sit together as one row of three locked cards; their case ids stay tied to PROJECTS order
@@ -757,9 +757,9 @@ const LOCK_SVG = '<svg class="lockcard__icon" viewBox="0 0 24 24" fill="none" ar
 let lockGroup = null;
 // What each project is filed under. date = when the work last moved (drives "Recent").
 const WORK_META = {
-  "Trailhead Solve": { sectors: ["Enterprise", "AI agents"], featured: true, date: "2026-04" },
+  "Trailhead Solve": { sectors: ["Enterprise", "AI agents"], featured: false, date: "2026-04" },
   "CotonAI Modes": { sectors: ["Fashion & retail", "AI agents"], featured: true, date: "2026-10" },
-  "CotonAI Design System": { sectors: ["Fashion & retail"], featured: false, date: "2026-10" },
+  "CotonAI Design System": { sectors: ["Fashion & retail"], featured: true, date: "2026-10" },
   "Arcade Control Plane": { sectors: ["Dev tools", "AI agents"], featured: false, date: "2026-05" },
   "Gap 3D Fit": { sectors: ["Fashion & retail"], featured: true, date: "2025-07" },
   "CotonAI Agent": { sectors: ["Fashion & retail", "AI agents"], featured: true, date: "2026-10" },
@@ -776,19 +776,20 @@ const makeCap = (p) => {
   return c;
 };
 const units = [];
-if (list) PROJECTS.forEach((p, i) => {
+if (list) DISPLAY_PROJECTS.forEach((p, displayI) => {
+  const i = displayIndexOf(p);
   if (p.org === "CotonAI") {
     if (!lockGroup) {
       lockGroup = document.createElement("li");
       lockGroup.className = "case case--locked";
-      const ids = PROJECTS.map((q, k) => (q.org === "CotonAI" ? pad(k + 1) : null)).filter(Boolean).join(" · ");
+      const ids = DISPLAY_PROJECTS.map((q, k) => (q.org === "CotonAI" ? pad(k + 1) : null)).filter(Boolean).join(" · ");
       lockGroup.innerHTML = `<div class="case__label"><span class="card__index">Case studies ( ${ids} )</span><span class="case__client">CotonAI</span><span class="case__year">Passcode protected</span></div><ul class="lockgrid" role="list"></ul>`;
       list.appendChild(lockGroup);
       units.push({ li: lockGroup, group: true, members: [], ids });
     }
     let open = false; try { open = sessionStorage.getItem("samfolio-unlocked") === "1"; } catch {}
     const item = document.createElement("li");
-    item.innerHTML = `<a class="lockcard${open ? " is-open" : ""}"><ul class="case__tags" role="list"></ul><div class="case__tile lockcard__tile"><img class="lockcard__img" alt="" loading="lazy" decoding="async"><span class="lockcard__badge">${LOCK_SVG}</span></div><span class="card__index">Case study ( ${pad(i + 1)} )</span><span class="case__kind lockcard__kind"></span><h3 class="lockcard__title"></h3><p class="card__desc lockcard__desc"></p><span class="case__cta">${open ? "View case study" : "Enter passcode"} <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5"/></svg></span></a>`;
+    item.innerHTML = `<a class="lockcard${open ? " is-open" : ""}"><ul class="case__tags" role="list"></ul><div class="case__tile lockcard__tile"><img class="lockcard__img" alt="" loading="lazy" decoding="async"><span class="lockcard__badge">${LOCK_SVG}</span></div><span class="card__index">Case study ( ${pad(displayI + 1)} )</span><span class="case__kind lockcard__kind"></span><h3 class="lockcard__title"></h3><p class="card__desc lockcard__desc"></p><span class="case__cta">${open ? "View case study" : "Enter passcode"} <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5"/></svg></span></a>`;
     const a = item.querySelector("a"), tile = item.querySelector(".case__tile"), img = tile.querySelector("img");
     if (p.thumb && p.thumb.video) {
       const v = document.createElement("video");
@@ -808,14 +809,14 @@ if (list) PROJECTS.forEach((p, i) => {
     item.querySelector(".lockcard__desc").textContent = p.desc;
     p.tags.forEach((t) => { const tag = document.createElement("li"); tag.textContent = t; item.querySelector(".case__tags").appendChild(tag); });
     lockGroup.querySelector(".lockgrid").appendChild(item);
-    units.find((u) => u.group).members.push({ p, i, item });
+    units.find((u) => u.group).members.push({ p, i, displayI, item });
     return;
   }
   const li = document.createElement("li");
   li.className = "case";
   li.innerHTML = `
     <div class="case__label">
-      <span class="card__index">Case study ( ${pad(i + 1)} )</span>
+      <span class="card__index">Case study ( ${pad(displayI + 1)} )</span>
       <span class="case__client"></span>
       <span class="case__year"></span>
     </div>
@@ -839,17 +840,17 @@ if (list) PROJECTS.forEach((p, i) => {
   li.querySelector(".case__kind").textContent = `${p.org} · ${p.area}`;
   p.tags.forEach((t) => { const tag = document.createElement("li"); tag.textContent = t; li.querySelector(".case__tags").appendChild(tag); });
   list.appendChild(li);
-  units.push({ li, members: [{ p, i }] });
+  units.push({ li, members: [{ p, i, displayI }] });
 });
 
 // ── Work filter: Recent, Featured, then the sectors ──
 if (list && units.length) {
   const meta = (p) => WORK_META[p.name] || { sectors: [], featured: false, date: "0000-00" };
-  const sectors = [...new Set(PROJECTS.flatMap((p) => meta(p).sectors))].sort((a, b) => PROJECTS.filter((p) => meta(p).sectors.includes(b)).length - PROJECTS.filter((p) => meta(p).sectors.includes(a)).length);
+  const sectors = [...new Set(DISPLAY_PROJECTS.flatMap((p) => meta(p).sectors))].sort((a, b) => DISPLAY_PROJECTS.filter((p) => meta(p).sectors.includes(b)).length - DISPLAY_PROJECTS.filter((p) => meta(p).sectors.includes(a)).length);
   const filters = [{ key: "recent", label: "Recent" }, { key: "featured", label: "Featured" }, ...sectors.map((x) => ({ key: x, label: x }))];
   const fits = (p, key) => key === "recent" || (key === "featured" ? meta(p).featured : meta(p).sectors.includes(key));
   const tabs = document.getElementById("work-tabs"), unitDate = (u) => u.members.reduce((m, x) => (meta(x.p).date > m ? meta(x.p).date : m), "");
-  const countEls = document.querySelectorAll("[data-work-count]");
+  const countEls = document.querySelectorAll(".work__eyebrow [data-work-count]");
   // Featured is the default so public work leads; the choice survives a trip into a case study and back
   const FILTER_KEY = "work-filter";
   let active = "featured";
@@ -859,7 +860,7 @@ if (list && units.length) {
     tabs.querySelectorAll(".work__tab").forEach((b) => { const on = b.dataset.key === key; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; });
     list.setAttribute("aria-labelledby", `work-tab-${filters.findIndex((f) => f.key === key) === 0 ? "recent" : key.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`);
     let shown = 0;
-    const ordered = units.map((u, idx) => ({ u, idx })).sort((a, b) => (key === "recent" ? (unitDate(b.u) > unitDate(a.u) ? 1 : unitDate(b.u) < unitDate(a.u) ? -1 : 0) : (a.u.group ? 1 : 0) - (b.u.group ? 1 : 0)) || a.idx - b.idx);
+    const ordered = units.map((u, idx) => ({ u, idx })).sort((a, b) => (key === "recent" ? (unitDate(b.u) > unitDate(a.u) ? 1 : unitDate(b.u) < unitDate(a.u) ? -1 : 0) : (b.u.group ? 1 : 0) - (a.u.group ? 1 : 0)) || a.idx - b.idx);
     ordered.forEach(({ u }) => {
       const vis = u.members.filter((m) => fits(m.p, key));
       u.li.hidden = vis.length === 0;
@@ -868,7 +869,7 @@ if (list && units.length) {
         u.members.forEach((m) => { m.item.hidden = !fits(m.p, key); m.item.classList.remove("is-wide"); });
         const v = u.members.filter((m) => !m.item.hidden);
         if (v.length === 1) v[0].item.classList.add("is-wide"); else if (v.length === 3) v[2].item.classList.add("is-wide");
-        const lab = u.li.querySelector(".case__label .card__index"); if (lab) lab.textContent = `Case ${v.length === 1 ? "study" : "studies"} ( ${v.map((m) => pad(m.i + 1)).join(" · ")} )`;
+        const lab = u.li.querySelector(".case__label .card__index"); if (lab) lab.textContent = `Case ${v.length === 1 ? "study" : "studies"} ( ${v.map((m) => pad(m.displayI + 1)).join(" · ")} )`;
       }
       list.appendChild(u.li);
     });
@@ -877,7 +878,7 @@ if (list && units.length) {
   filters.forEach((f) => {
     const b = document.createElement("button");
     b.type = "button"; b.className = "work__tab"; b.dataset.key = f.key; b.setAttribute("role", "tab"); b.setAttribute("aria-controls", "work-cards"); b.id = `work-tab-${f.key === "recent" ? "recent" : f.key.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
-    const n = PROJECTS.filter((p) => fits(p, f.key)).length;
+    const n = DISPLAY_PROJECTS.filter((p) => fits(p, f.key)).length;
     b.append(f.label); const sup = document.createElement("sup"); sup.textContent = pad(n); b.appendChild(sup);
     b.addEventListener("click", () => render(f.key));
     tabs.appendChild(b);
@@ -1123,12 +1124,13 @@ const CONTACT = {
 // ── Nav: Work panel (project list + live stripe thumbnail) ──
 const navProjects = document.getElementById("nav-projects");
 const navThumb = document.getElementById("nav-thumb");
+const NAV_PROJECTS = [...DISPLAY_PROJECTS].sort((a, b) => (a.org === "CotonAI" ? 0 : 1) - (b.org === "CotonAI" ? 0 : 1));
 const showThumb = (i, hot = true) => {
-  const p = PROJECTS[i];
+  const p = NAV_PROJECTS[i];
   navThumb.replaceChildren(); navThumb.style.background = "none"; metricTile(p, navThumb, true);
   navProjects.querySelectorAll("a").forEach((a, j) => a.classList.toggle("is-hot", hot && j === i));
 };
-PROJECTS.forEach((p, i) => {
+NAV_PROJECTS.forEach((p, i) => {
   const li = document.createElement("li");
   const a = document.createElement("a");
   a.href = p.href;
@@ -2280,9 +2282,6 @@ function openLightbox(src, alt, opener) {
   if (page === "playground") {
     // Only finished pieces go on the board. Interaction studies run live (js/playground.js); every tile opens the overlay.
     const LAB = [
-      { code: "INT-25", title: "Fold Cards", status: "Interaction · Layout", area: "Cards · Planning", tag: "interaction", demo: "foldCards", bg: "#EBEBEB", ptr: "hover", bare: true, bleed: true,
-        scope: "A row of dark cards that each fold down into a single pill and open back up. The header stays put, the plus and minus morph into each other, the body fades out and the card slides to the top. The middle card is a load dial you can drag.",
-        hint: "Press the minus on any card to fold it into a pill, and the plus to open it again. Drag the ring in the middle card to change the load.", tags: ["Cards", "Collapse", "Dial", "Photos"] },
       { code: "INT-07", title: "Market Select", status: "Interaction · Flow", area: "DeFi · Yield", tag: "interaction", demo: "marketSelect", bg: "#2B3150", dark: true, bleed: true, wide: true, ptr: "none",
         scope: "Pick where your money earns. Choose markets or let AI pick, review a split weighted by APR, hold to deposit, and the whole card folds down to a single summary. The more you touch it, the smaller it gets.",
         hint: "Tap markets to toggle them, then Next. Or try Auto Select or the sparkle. On the review step, press and hold to deposit. Tap the summary to start again.", tags: ["Flow", "Motion", "Hold to confirm", "AI"] },
@@ -2334,11 +2333,6 @@ function openLightbox(src, alt, opener) {
       { code: "INT-15", title: "Empty Sessions", status: "Interaction · Empty state", area: "Dev tools", tag: "interaction", demo: "emptySessions", bg: "#0C0C0C", dark: true, ptr: "none", tall: true,
         scope: "An empty state with some life in it: the windows fan out on hover, the pixel glyphs drift against the pointer, and clicking the stack shuffles it.",
         hint: "Move the pointer over the card, hover a glyph, and click the stack of windows.", tags: ["Empty state", "Parallax", "Pixel art"] },
-      { code: "INT-17", title: "Motion Lab", status: "Interaction · Tool", area: "Brand · Motion system", tag: "interaction", demo: "motionLab", bg: "#040404", dark: true, ptr: "none", wide: true, tall: true, href: "/motion-lab", page: true,
-        scope: "A bench for tuning a brand's motion language before storyboarding a launch film. Nine patterns, a kinetic word and two cursor trails run on one shared clock: set tempo, offset, wave, shaping and stagger once and every system follows. Edit the palette, save your own presets, tap in a tempo, scrub the clock, then export code, a storyboard or a seamless loop.",
-        hint: "Opens as its own page. Pick a system on the left and drag its sliders; Tempo, Offset and Wave in the top bar change everything at once. Tap sets the tempo from your clicks, the sun icon switches theme, and Export gives you code, PNG, a storyboard or a loop.",
-        tags: ["Motion system", "Canvas", "Tuning", "Brand"],
-        credit: { name: "Ayush Soni", handle: "ayushsoni_io", url: "https://x.com/ayushsoni_io/status/2111715001094598723" } },
     ];
     setCount(LAB.length);
     const list = document.querySelector("[data-lab]");
@@ -2399,7 +2393,13 @@ function openLightbox(src, alt, opener) {
   }
 
   if (page === "writing") {
-    setCount(document.querySelectorAll("[data-posts] .post").length);
+    const posts = document.querySelector("[data-posts]");
+    if (posts && posts.classList.contains("posts--curated")) {
+      posts.querySelectorAll(".post").forEach((post, i) => { post.hidden = i > 1; });
+      setCount(2);
+    } else {
+      setCount(document.querySelectorAll("[data-posts] .post").length);
+    }
   }
 
   if (page === "case") {
@@ -2408,6 +2408,8 @@ function openLightbox(src, alt, opener) {
     const bySlug = PROJECTS.findIndex((x) => x.slug === location.pathname.replace(/\.html$/, "").replace(/\/+$/, "").split("/").filter(Boolean).pop());
     const id = bySlug >= 0 ? bySlug + 1 : Math.min(n, Math.max(1, parseInt(new URLSearchParams(location.search).get("case") || "1", 10) || 1));
     const p = PROJECTS[id - 1];
+    const visibleCase = DISPLAY_PROJECTS.includes(p);
+    const displayId = visibleCase ? DISPLAY_PROJECTS.indexOf(p) + 1 : id;
     const mount = document.querySelector("[data-cs-root]");
     document.body.dataset.caseId = id;
     // Prerendered studies already carry the title, description and social tags in the HTML.
@@ -2459,7 +2461,7 @@ function openLightbox(src, alt, opener) {
     const dashRow = (v) => [`${v.label}: ${v.value}${v.chip ? ` (${v.chip})` : ""}`, [v.rows && v.rows.map(([l, , s]) => `${l} ${s}`).join(" vs "), v.note].filter(Boolean).join(". ")];
     const uiRows = (u) => u.kind === "tour" ? u.items.map(([, h, d]) => [h, d]) : u.kind === "checklist" ? u.steps.map(([h, tm, d]) => [`${h} (${tm})`, d]) : u.kind === "trio" ? u.cards.map((c) => [c.t, c.d]) : u.rows.map((r) => [`${r.tag}: ${r.t}`, r.d]);
     const plainRows = (sec) => [...((sec.bento && sec.bento.tiles) || []).flatMap(tileRows), ...(sec.dash || []).map(dashRow), ...(sec.ui && !sec.steps ? uiRows(sec.ui) : [])];
-    const phId = (tag, k) => `C${id}-${tag}-${k + 1}`;
+    const phId = (tag, k) => `C${displayId}-${tag}-${k + 1}`;
     const placeholder = (cap, ratio, pid, kind = "Image") => {
       const f = el("figure", "stph"); f.style.setProperty("--ar", ratio.replace(":", " / "));
       const frame = el("div", "stph__frame"); frame.append(el("span", "stph__tag", `${kind} · ${ratio}`), el("span", "stph__id", pid));
@@ -2528,6 +2530,7 @@ function openLightbox(src, alt, opener) {
       if (mode === "stack") cls.push("study__media--stack");
       else if (mode === "hero-trio") cls.push("study__media--hero-trio");
       else if (mode === "quad") cls.push("study__media--quad");
+      else if (mode === "ratio") cls.push("study__media--ratio");
       else cls.push("study__media--duo");
       return cls.join(" ");
     };
@@ -2535,7 +2538,7 @@ function openLightbox(src, alt, opener) {
       if (m.diagram) return diagramEl(m.diagram);
       if (m.demo) { // an authored product animation, mounted by js/case-demos.js
         const f = el("figure", "shot shot--wide shot--demo"), d = el("div", "cs-demo");
-        d.dataset.caseDemo = m.demo; d.setAttribute("role", "img"); d.setAttribute("aria-label", m.alt || m.cap || "Product demo");
+        d.dataset.caseDemo = m.demo; d.setAttribute("role", "region"); d.setAttribute("aria-label", m.alt || m.cap || "Product demo");
         f.appendChild(d); if (m.cap) f.appendChild(el("figcaption", "", m.cap)); return f;
       }
       if (typeof m === "string" || m.ph) return placeholder(typeof m === "string" ? m : m.ph, (typeof m === "object" && m.ratio) || "16:10", phId(tag, k));
@@ -2547,6 +2550,7 @@ function openLightbox(src, alt, opener) {
         tile.appendChild(v); f.appendChild(tile); if (m.cap) f.appendChild(el("figcaption", "", m.cap)); return f;
       }
       const f = el("figure", "shot" + (m.wide ? " shot--wide" : "") + (m.board ? " shot--board" : "")), tile = el(m.board ? "div" : "button", "shot__tile"), img = el("img");
+      if (m.ar) f.style.setProperty("--ar", m.ar); // width : height, so a ratio row shares one height
       // A board is read in place (and scrolls sideways on a phone), so its tile is a focusable region rather than an enlarge button
       if (m.board) { tile.tabIndex = 0; tile.setAttribute("role", "region"); tile.setAttribute("aria-label", m.cap || "Diagram"); }
       else { tile.type = "button"; tile.setAttribute("aria-label", `Enlarge: ${m.cap || m.alt}`); }
@@ -2569,8 +2573,10 @@ function openLightbox(src, alt, opener) {
     // Every study tells its story in the same seven sections, in this order. A section's own `title` is optional;
     // `parts` hold the extra beats (what we killed, what we shipped, one per surface) that sit under a section.
     const CS_STRUCTURE = ["Overview / Background", "Defining the Problem", "Understanding your Users", "Your Role and Responsibilities", "Scope and Constraints", "Ideation Steps (The Solution)", "Outcomes and Takeaways"];
-    if (p.cs.sections.length !== CS_STRUCTURE.length) console.warn(`${p.name}: expected ${CS_STRUCTURE.length} sections, found ${p.cs.sections.length}`);
-    const secs = p.cs.sections.map((sec, i) => { const title = CS_STRUCTURE[i] || sec.title; return { sec, i, title, id: slug(title) || `section-${i + 1}` }; });
+    // A study can carry its own `structure` (Gap 3D Fit follows a research-led flow); otherwise it uses the seven above
+    const STRUCT = p.cs.structure || CS_STRUCTURE;
+    if (p.cs.sections.length !== STRUCT.length) console.warn(`${p.name}: expected ${STRUCT.length} sections, found ${p.cs.sections.length}`);
+    const secs = p.cs.sections.map((sec, i) => { const title = STRUCT[i] || sec.title; return { sec, i, title, id: slug(title) || `section-${i + 1}` }; });
 
     // Placeholders take the project's colour, not grey
     mount.style.setProperty("--ph-bg", p.photo ? `url("${p.photo.src}") ${p.photo.pos} / cover` : `radial-gradient(70% 90% at 18% 12%, ${p.tint[0]}, transparent 70%), radial-gradient(80% 80% at 88% 92%, ${p.tint[1]}, transparent 72%), ${p.tint[2]}`);
@@ -2588,6 +2594,9 @@ function openLightbox(src, alt, opener) {
       const src = el("source"); src.src = p.thumb.video; src.type = "video/mp4"; v.appendChild(src);
       autoVideo(v, 0.3, true);
       hero.appendChild(v);
+    } else if (p.thumbnail && p.thumbnail.hero) {
+      const im = el("img"); im.src = p.thumbnail.src; im.alt = p.thumbnail.alt; im.decoding = "async"; im.fetchPriority = "high";
+      hero.appendChild(im);
     } else {
       hero.classList.add("study__hero--tint");
       p.tint.forEach((c, k) => hero.style.setProperty(`--g${k + 1}`, c));
@@ -2600,7 +2609,7 @@ function openLightbox(src, alt, opener) {
     const h1 = el("h1", "", p.title); h1.id = "cs-title";
     const meta = el("dl", "study__meta");
     p.cs.meta.forEach(([k, v]) => { const d = el("div"); d.append(el("dt", "", k), el("dd", "", v)); meta.appendChild(d); });
-    head.append(el("p", "study__eyebrow", `Case study ( ${pad2(id)} ) · ${p.org}`), h1, el("p", "study__lead", p.desc), meta);
+    head.append(el("p", "study__eyebrow", `Case study ( ${pad2(displayId)} ) · ${p.org}`), h1, el("p", "study__lead", p.desc), meta);
     main.append(crumb, hero, head);
 
     // ── Sections ──
@@ -2634,10 +2643,27 @@ function openLightbox(src, alt, opener) {
         if (t.note) s.appendChild(el("p", "study__p study__note", t.note));
       });
       if (sec.cards) s.appendChild(trio(sec.cards));
+      // Testimonial cards: a row of short quotes in dark / accent / light tiles, with a line saying how they were sourced
+      if (sec.quotes) {
+        const w = el("div", "study__qs is-wide"), v = ["dark", "accent", "light"];
+        w.appendChild(el("h3", "study__sub", sec.quotes.title || "In their words"));
+        const ul = el("ul", "study__qcards"); ul.setAttribute("role", "list");
+        sec.quotes.items.forEach((it, k) => {
+          const li = el("li", "qc qc--" + v[k % 3]), f = el("footer");
+          f.append(el("span", "", it.who || "Participant"), el("span", "qc__tag", it.tag || ""));
+          li.append(el("p", "", `“${it.q}”`), f); ul.appendChild(li);
+        });
+        w.appendChild(ul);
+        if (sec.quotes.cap) w.appendChild(el("p", "study__qcap", sec.quotes.cap));
+        s.appendChild(w);
+      }
       if (sec.quote) {
         const q = el("blockquote", "study__quote"); q.append(el("p", "", `“${sec.quote}”`), el("footer", "", sec.quoteBy || "Power user interview"));
         s.appendChild(q);
       }
+      // A hypothesis or finding worth stopping on, then the question it leaves us with
+      if (sec.insight) { const d = el("div", "study__insight"); d.append(el("span", "study__k", sec.insight[0]), el("p", "", sec.insight[1])); s.appendChild(d); }
+      if (sec.hmw) { const d = el("p", "study__hmw"); d.append(el("span", "study__k", "The question"), "How might we " + sec.hmw); s.appendChild(d); }
       if (sec.cta) { const a = el("a", "study__btn"); a.href = sec.cta.href; a.target = "_blank"; a.rel = "noopener"; a.innerHTML = chev; a.prepend(sec.cta.label); s.appendChild(a); }
     };
     secs.forEach(({ sec, i, title, id: sid }) => {
@@ -2659,9 +2685,12 @@ function openLightbox(src, alt, opener) {
     // ── Previous and next ──
     main.appendChild(el("hr", "study__hr"));
     const pn = el("nav", "study__pn"); pn.setAttribute("aria-label", "More case studies");
-    [[(id - 2 + n) % n, "Previous"], [id % n, "Next"]].forEach(([q, l]) => {
-      const a = el("a"); a.href = PROJECTS[q].href;
-      a.append(el("span", "study__k", `${l} case study`), el("b", "", PROJECTS[q].name), el("span", "", `${PROJECTS[q].metric.value} ${PROJECTS[q].metric.label}`));
+    const caseNav = visibleCase ? DISPLAY_PROJECTS : PROJECTS;
+    const atCase = caseNav.indexOf(p);
+    [[(atCase - 1 + caseNav.length) % caseNav.length, "Previous"], [(atCase + 1) % caseNav.length, "Next"]].forEach(([q, l]) => {
+      const nextProject = caseNav[q];
+      const a = el("a"); a.href = nextProject.href;
+      a.append(el("span", "study__k", `${l} case study`), el("b", "", nextProject.name), el("span", "", `${nextProject.metric.value} ${nextProject.metric.label}`));
       pn.appendChild(a);
     });
     main.appendChild(pn);
@@ -2824,4 +2853,87 @@ function openLightbox(src, alt, opener) {
     if (seen) set(seen.target.id);
   }, { rootMargin: "-10% 0px -75% 0px" });
   heads.forEach((h) => io.observe(h));
+})();
+
+// ── Ruler border: number scale on the top and left edges, drawn on canvas (desktop only) ──
+(() => {
+  const mq = matchMedia("(min-width: 768px)");
+  const SIZE = 24, FONT = "9px 'Geist Mono', ui-monospace, monospace";
+  let cx, cy, gx, gy, raf = 0, t0 = 0, colors;
+
+  const readColors = () => {
+    // Resolve the CSS variables (rgb with alpha) to concrete colours once per theme change
+    const probe = document.createElement("i");
+    document.body.append(probe);
+    const get = (v) => { probe.style.color = `var(${v})`; return getComputedStyle(probe).color; };
+    colors = { bg: get("--ruler-bg"), line: get("--ruler-line"), tick: get("--ruler-tick"), label: get("--ruler-label") };
+    probe.remove();
+  };
+
+  const size = () => {
+    const dpr = devicePixelRatio || 1, w = innerWidth, h = innerHeight;
+    cx.width = w * dpr; cx.height = SIZE * dpr; cy.width = SIZE * dpr; cy.height = h * dpr;
+    cx.style.width = "100%"; cy.style.height = "100%";
+    gx.setTransform(dpr, 0, 0, dpr, 0, 0); gy.setTransform(dpr, 0, 0, dpr, 0, 0);
+  };
+
+  const draw = () => {
+    const w = innerWidth, h = innerHeight, sx = scrollX, sy = scrollY;
+    // Intro sweep: the scale draws itself in over 1.5s, skipped under reduced motion
+    const p = motionReduced() ? 1 : Math.min(1, (performance.now() - t0) / 1500), e = 1 - (1 - p) ** 4;
+    const ex = e * (w + sx), ey = e * (h + sy);
+
+    gx.clearRect(0, 0, w, SIZE);
+    gx.fillStyle = colors.bg; gx.fillRect(0, 0, w, SIZE);
+    gx.fillStyle = colors.line; gx.fillRect(0, SIZE - .5, Math.min(w, ex - sx), .5);
+    gx.font = FONT; gx.textAlign = "center"; gx.textBaseline = "middle";
+    for (let v = 10 * Math.floor(sx / 10); v <= sx + w && v <= ex; v += 10) {
+      const major = v % 100 === 0, len = major ? 10 : 4;
+      gx.globalAlpha = Math.min(1, (ex - v) / 200);
+      gx.fillStyle = colors.tick; gx.fillRect(v - sx, SIZE - len, .5, len);
+      if (major) { gx.fillStyle = colors.label; gx.fillText(String(v), v - sx, 12); }
+    }
+
+    gy.clearRect(0, 0, SIZE, h);
+    gy.globalAlpha = 1;
+    gy.fillStyle = colors.bg; gy.fillRect(0, 0, SIZE, h);
+    gy.fillStyle = colors.line; gy.fillRect(SIZE - .5, 0, .5, Math.min(h, ey - sy));
+    for (let v = 10 * Math.floor(sy / 10); v <= sy + h && v <= ey; v += 10) {
+      const major = v % 100 === 0, len = major ? 10 : 4, y = v - sy;
+      gy.globalAlpha = Math.min(1, (ey - v) / 200);
+      gy.fillStyle = colors.tick; gy.fillRect(SIZE - len, y, len, .5);
+      if (major) {
+        gy.save(); gy.fillStyle = colors.label; gy.font = FONT; gy.textAlign = "center"; gy.textBaseline = "middle";
+        gy.translate(12, y); gy.rotate(-Math.PI / 2); gy.fillText(String(v), 0, 0); gy.restore();
+      }
+    }
+    gx.globalAlpha = gy.globalAlpha = 1;
+    raf = p < 1 && !document.hidden ? requestAnimationFrame(draw) : 0;
+  };
+  const queue = () => { if (!raf && cx) raf = requestAnimationFrame(draw); };
+
+  const mount = () => {
+    if (cx) return;
+    const mk = (cls) => { const c = document.createElement("canvas"); c.className = `ruler ${cls}`; c.setAttribute("aria-hidden", "true"); return c; };
+    const x = mk("ruler--x"), y = mk("ruler--y"), corner = document.createElement("div");
+    corner.className = "ruler ruler--corner"; corner.setAttribute("aria-hidden", "true");
+    document.body.append(x, y, corner);
+    cx = x; cy = y; gx = x.getContext("2d"); gy = y.getContext("2d");
+    document.documentElement.classList.add("has-ruler");
+    readColors(); size(); t0 = performance.now(); queue();
+  };
+  const unmount = () => {
+    if (!cx) return;
+    document.querySelectorAll(".ruler").forEach((n) => n.remove());
+    document.documentElement.classList.remove("has-ruler");
+    cancelAnimationFrame(raf); raf = 0; cx = cy = gx = gy = null;
+  };
+  const sync = () => (mq.matches ? mount() : unmount());
+
+  mq.addEventListener("change", sync);
+  addEventListener("resize", () => { if (cx) { size(); queue(); } });
+  addEventListener("scroll", queue, { passive: true });
+  document.addEventListener("visibilitychange", queue);
+  new MutationObserver(() => { if (cx) { readColors(); queue(); } }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  sync();
 })();

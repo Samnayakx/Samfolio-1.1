@@ -6,7 +6,8 @@ Static visuals and looping cover videos for the case studies are authored as HTM
 |---|---|
 | `payman-boards/` | Payman design system, layout exploration, first-screen analytics (WebP) |
 | `payman-cover/` (earlier cut), `payman-grid-cover/` (current), `arcade-cover/`, `gap-cover/`, `cotonai-ds-cover/` | Looping cover videos (1920x1080, 30fps; 8s, Arcade 12s) |
-| `gap-boards/` | Gap 3D Fit solution board, composed from real QuickFit screens in `src/` (the three decision images are the original concept SVGs, rendered to WebP) |
+| `gap-boards/` | Gap 3D Fit final-flow board (`solution-flow.webp`), composed from captures of the working prototype in `src2/` (run `capture-flow.cjs` with the site served on :8080); the decision images are the original concept SVGs, rendered to WebP |
+| `gap-timeline/` | Gap 3D Fit constraint timeline, a Gantt-style board (`board-timeline.webp`): solid bars are what happened, dashed bars were planned or proposed. Render with `boards.mjs` as below, then save as WebP |
 
 ## Boards (PNG, then WebP)
 

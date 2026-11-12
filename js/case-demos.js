@@ -1,13 +1,8 @@
-// Case-study demos: small authored product animations (Stageshow approach) that play inside a study's media.
-// js/site.js renders <div data-case-demo="name">; this file finds them, loads GSAP once, and mounts each one.
-// They are illustrations, not automation: a scripted cursor presses, and the scene changes in response.
+// Case-study demos: interactive product prototypes that mount inside a study's media.
+// js/site.js renders <div data-case-demo="name">; this file finds them and mounts each one.
 (() => {
   const reduce = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
   const h = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
-  let gsapP = null;
-  const loadGsap = () => gsapP || (gsapP = window.gsap ? Promise.resolve(window.gsap) : new Promise((res) => {
-    const s = document.createElement("script"); s.src = "/js/vendor/gsap.min.js"; s.onload = () => res(window.gsap); s.onerror = () => res(null); document.head.appendChild(s);
-  }));
 
   // Scale a fixed design size to the container's width, switching to a compact layout in a phone column
   function fitStage(host, stage, W, H, CW, CH, onMode) {
@@ -16,126 +11,1021 @@
       const w = host.clientWidth, compact = w < 560, dw = compact ? CW : W, dh = compact ? CH : H;
       host.style.aspectRatio = `${dw} / ${dh}`;
       stage.style.width = dw + "px"; stage.style.height = dh + "px"; stage.style.transform = `scale(${w / dw})`;
-      const m = compact ? "compact" : "wide"; if (m !== mode) { mode = m; onMode(m); }
+      const m = compact ? "compact" : "wide"; if (m !== mode) { mode = m; onMode?.(m); }
     });
     ro.observe(host);
     return () => ro.disconnect();
   }
 
-  // The cursor: a shallow arc timed by distance on the travel curve, a visible press, aims measured live
-  function cursor(stage, g, scaleOf) {
-    const cub = (x1, y1, x2, y2) => (t) => { let q = t; for (let i = 0; i < 8; i++) { const x = 3 * (1 - q) * (1 - q) * q * x1 + 3 * (1 - q) * q * q * x2 + q * q * q - t, dx = 3 * (1 - q) * (1 - q) * x1 + 6 * (1 - q) * q * (x2 - x1) + 3 * q * q * (1 - x2); if (Math.abs(dx) < 1e-6) break; q -= x / dx; } q = Math.max(0, Math.min(1, q)); return 3 * (1 - q) * (1 - q) * q * y1 + 3 * (1 - q) * q * q * y2 + q * q * q; };
-    const ease = cub(0.45, 0, 0.1, 1), live = new Set(), pos = { x: 0, y: 0 };
-    const el = h("div", "cd-cur", '<svg viewBox="0 0 16 22" width="22" height="30" aria-hidden="true"><path d="M1.5 1.5v15.2l3.7-3.4 2.6 6 2.7-1.2-2.6-5.9h5.1z" fill="#fff" stroke="#111" stroke-width="1.2" stroke-linejoin="round"/></svg>');
-    stage.appendChild(el); g.set(el, { opacity: 0 });
-    const track = (t) => (live.add(t), t);
-    const api = {
-      at: (t, fx = 0.5, fy = 0.5) => { const r = t.getBoundingClientRect(), b = stage.getBoundingClientRect(), s = scaleOf(); return { x: (r.left - b.left + r.width * fx) / s, y: (r.top - b.top + r.height * fy) / s }; },
-      sleep: (ms) => new Promise((res) => track(g.delayedCall(ms / 1000, res))),
-      place: (x, y) => { pos.x = x; pos.y = y; g.set(el, { x, y, scale: 1 }); },
-      show: () => track(g.to(el, { opacity: 1, duration: 0.35 })),
-      hide: () => track(g.to(el, { opacity: 0, duration: 0.4 })),
-      travel: (target, k = 1) => new Promise((res) => {
-        const a = { x: pos.x, y: pos.y }, d0 = target(), p = { v: 0 };
-        const dur = Math.min(1.4, 0.45 + Math.hypot(d0.x - a.x, d0.y - a.y) / 560) * k;
-        track(g.to(p, { v: 1, duration: dur, ease, onUpdate: () => {
-          const b = target(), t = p.v, dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy) || 1, arc = Math.sin(Math.PI * t) * Math.min(34, len * 0.12);
-          pos.x = a.x + dx * t - (dy / len) * arc; pos.y = a.y + dy * t + (dx / len) * arc; g.set(el, { x: pos.x, y: pos.y });
-        }, onComplete: res }));
-      }),
-      drag: (dx, dur, onStep) => new Promise((res) => { const x0 = pos.x, p = { v: 0 }; track(g.to(el, { scale: 0.9, duration: 0.12 })); track(g.to(p, { v: 1, duration: dur, ease: "power2.inOut", onUpdate: () => { pos.x = x0 + dx * p.v; g.set(el, { x: pos.x }); onStep(p.v); }, onComplete: () => { track(g.to(el, { scale: 1, duration: 0.15 })); res(); } })); }),
-      press: async () => { track(g.to(el, { scale: 0.84, duration: 0.1, yoyo: true, repeat: 1, ease: "power2.out", transformOrigin: "0 0" })); await api.sleep(220); },
-      stop: () => { live.forEach((t) => t.kill()); live.clear(); g.set(el, { opacity: 0 }); },
+  let threeP = null;
+  const loadThree = () => threeP || (threeP = new Promise((res) => {
+    if (window.THREE) return res(window.THREE);
+    const s = document.createElement("script"); s.src = "/js/vendor/three.min.js";
+    s.onload = () => res(window.THREE || null); s.onerror = () => res(null); document.head.appendChild(s);
+  }));
+
+  // Reads the compact model format written by tools/build-gap-models.py: indexed triangles with positions
+  // quantised to uint16 over each mesh's bounds, int8 normals and uint16 UVs. Returns a Group of meshes.
+  const loadModel = (THREE, url) => fetch(url).then((r) => { if (!r.ok) throw new Error(url); return r.arrayBuffer(); }).then((buf) => {
+    if (new TextDecoder().decode(new Uint8Array(buf, 0, 4)) !== "GQM1") throw new Error("Not a GQM1 model");
+    const hl = new DataView(buf).getUint32(4, true), base = 8 + hl;
+    const { meshes } = JSON.parse(new TextDecoder().decode(new Uint8Array(buf, 8, hl)));
+    const group = new THREE.Group();
+    for (const m of meshes) {
+      const g = new THREE.BufferGeometry(), n = m.count;
+      const q = new Uint16Array(buf, base + m.pos, n * 3), pos = new Float32Array(n * 3);
+      for (let i = 0; i < n * 3; i++) { const k = i % 3; pos[i] = m.min[k] + (q[i] / 65535) * (m.max[k] - m.min[k]); }
+      g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+      if (m.nrm != null) {
+        const qn = new Int8Array(buf, base + m.nrm, n * 3), nrm = new Float32Array(n * 3);
+        for (let i = 0; i < n * 3; i++) nrm[i] = qn[i] / 127;
+        g.setAttribute("normal", new THREE.BufferAttribute(nrm, 3));
+        const qu = new Uint16Array(buf, base + m.uv, n * 2), uv = new Float32Array(n * 2);
+        for (let i = 0; i < n * 2; i++) { const k = i % 2; uv[i] = m.uvMin[k] + (qu[i] / 65535) * (m.uvMax[k] - m.uvMin[k]); }
+        g.setAttribute("uv", new THREE.BufferAttribute(uv, 2));
+      }
+      g.setIndex(new THREE.BufferAttribute(m.idx32 ? new Uint32Array(buf, base + m.idx, m.indices) : new Uint16Array(buf, base + m.idx, m.indices), 1));
+      const mesh = new THREE.Mesh(g); mesh.name = m.name; group.add(mesh);
+    }
+    return group;
+  });
+
+  // ── Gap · QuickFit Finder ────────────────────────────────────────────────
+  // The flow starts where shoppers met it: an Old Navy product page (High-Waisted Wow Wide-Leg Jeans,
+  // numeric sizes, Short / Regular / Long). QuickFit asks height, then usual size, then optional
+  // measurements, and returns a size on a 3D avatar with fit by zone and a reason on request.
+
+  const SIZES = ["00", "0", "2", "4", "6", "8", "10", "12", "14", "16", "18", "20"];
+  // Body measurements each size is designed for (inches)
+  const CHART_W = [24.5, 25.5, 26.5, 27.5, 28.5, 29.5, 30.5, 32, 33.5, 35, 37, 39];
+  const CHART_H = [34, 35, 36, 37, 38, 39, 40, 41.5, 43, 44.5, 46.5, 48.5];
+  const LENGTHS = [{ id: "Short", inseam: 28 }, { id: "Regular", inseam: 30 }, { id: "Long", inseam: 32 }];
+  const HEIGHTS = Array.from({ length: 17 }, (_, i) => 58 + i); // 4′10″ … 6′2″
+  // Old Navy lists one colorway for this style, so that is all the prototype offers
+  const COLORS = [
+    { id: "Medium Wash", hex: "#5D7A9C", rgb: [1.3, 1.38, 1.55], under: 0x30476f },
+  ];
+  // Old Navy's own photos of this style in Medium Wash (oldnavy.gap.com, pid 732609002), in the order of its gallery
+  const PHOTOS = [
+    { alt: "Model in a taupe button-front cardigan and High-Waisted Wow Wide-Leg Jeans in Medium Wash, front view, with white boots" },
+    { alt: "Close-up of the High-Waisted Wow Wide-Leg Jeans in Medium Wash from the waist down, front view" },
+    { alt: "Model in a taupe cardigan, back view of the High-Waisted Wow Wide-Leg Jeans in Medium Wash, showing the back pockets" },
+    { alt: "Model in a red-and-white striped shirt and the High-Waisted Wow Wide-Leg Jeans in Medium Wash, front view, with flats" },
+    { alt: "Model in a red-and-white striped shirt, back view of the High-Waisted Wow Wide-Leg Jeans in Medium Wash" },
+  ];
+  const FIT = {
+    Waist: { Tight: "Unlikely to fit", Fitted: "Desired fit", Loose: "May require a belt" },
+    Hips: { Tight: "Unlikely to fit", Fitted: "Some pressure on hips", Loose: "No pressure on hips" },
+    Calf: { Tight: "Unlikely to fit", Fitted: "Pressure on calves", Loose: "No pressure on calves" },
+  };
+  const MEAS = [["waist", "Waist"], ["hips", "Hips"], ["inseam", "Inseam"], ["thigh", "Thigh"], ["calf", "Calf"]];
+
+  const r05 = (n) => Math.round(n * 2) / 2;
+  const ftIn = (n) => `${Math.floor(n / 12)}′${n % 12}″`;
+  const inch = (n) => `${Number.isInteger(n) ? n : n.toFixed(1)}″`;
+  const baseBody = (height, si) => ({
+    waist: CHART_W[si], hips: CHART_H[si], inseam: r05(height * 0.45),
+    thigh: r05(CHART_H[si] * 0.56), calf: r05(13 + si * 0.35),
+  });
+  // A loose, straight leg: roomier hips, thigh and calf than the chart; the waist is cut to the chart
+  const garment = (i) => ({ waist: CHART_W[i], hips: CHART_H[i] + 1.5, thigh: CHART_H[i] * 0.56 + 1.5, calf: 15 + i * 0.4 });
+  const zoneFit = (body, i) => {
+    const g = garment(i);
+    const dW = g.waist - body.waist, dH = Math.min(g.hips - body.hips, g.thigh - body.thigh), dC = g.calf - body.calf;
+    return {
+      Waist: dW < -0.5 ? "Tight" : dW <= 0.75 ? "Fitted" : "Loose",
+      Hips: dH < -0.5 ? "Tight" : dH <= 2 ? "Fitted" : "Loose",
+      // A loose leg has room to spare, so the calf only rules a size out when it is well over
+      Calf: dC < -1.5 ? "Tight" : dC < 1.5 ? "Fitted" : "Loose",
+      dW, dH, dC,
     };
-    return api;
+  };
+  // The smallest size nothing is tight in, preferring a fitted waist: how the item was designed to fit
+  const recommend = (body) => {
+    const ok = SIZES.map((_, i) => ({ i, f: zoneFit(body, i) })).filter(({ f }) => f.Waist !== "Tight" && f.Hips !== "Tight" && f.Calf !== "Tight");
+    if (!ok.length) return SIZES.length - 1;
+    return (ok.find(({ f }) => f.Waist === "Fitted") || ok[0]).i;
+  };
+  const recLength = (body) => LENGTHS.findIndex((l) => l.inseam >= body.inseam - 0.5) === -1 ? 2 : LENGTHS.findIndex((l) => l.inseam >= body.inseam - 0.5);
+
+  // ── 3D viewer ──
+  // The jeans face +Z and the body OBJ faces −Z, so the body is turned 180° to match. The jeans come from
+  // a different rig: they are scaled, then nudged per height (tables measured from both meshes) to sit on the body.
+  const CAMS = {
+    Full: { pos: [0, 1.02, 4.3], look: [0, 1.0, 0] },
+    Front: { pos: [0, 0.78, 2.75], look: [0, 0.7, 0] },
+    Waist: { pos: [0, 1.08, 1.3], look: [0, 1.02, 0] },
+    Ankles: { pos: [0, 0.32, 1.2], look: [0, 0.16, 0] },
+  };
+  const TABS = { Front: { cam: "Front", angle: 0 }, Waist: { cam: "Waist", angle: 0 }, Ankles: { cam: "Ankles", angle: 0 }, Back: { cam: "Front", angle: Math.PI } };
+  const Z_SHIFT = [[0, 0.09], [0.1, 0.088], [0.2, 0.06], [0.3, 0.036], [0.4, 0.001], [0.5, -0.014], [0.6, -0.01], [0.7, -0.003], [0.8, 0.004], [1.0, -0.017], [1.1, -0.02]];
+  const LEG_IN = [[0, -0.07], [0.1, -0.065], [0.2, -0.055], [0.3, -0.053], [0.4, -0.04], [0.5, -0.028], [0.6, -0.022], [0.7, -0.017], [0.78, -0.008], [0.85, 0]];
+  const lerpT = (t, y) => {
+    if (y <= t[0][0]) return t[0][1];
+    for (let i = 1; i < t.length; i++) if (y <= t[i][0]) { const [y0, a] = t[i - 1], [y1, b] = t[i]; return a + (b - a) * (y - y0) / (y1 - y0); }
+    return t[t.length - 1][1];
+  };
+  const JEANS_SCALE = 0.188, HEM_Y0 = -0.007, KNEE_Y = 0.55;
+  // A high-waisted women's rise: the mesh's waistband (y ≈ 1.07, on the hip bone) is lifted to sit just below
+  // the navel (y ≈ 1.25). The rise is lengthened in the plain denim between crotch and pockets, so the
+  // pockets, fly and waistband keep their proportions and just move up.
+  const RAW_TOP = 1.068, WAIST_Y = 1.19, RISE0 = 0.7, RISE1 = 0.93, DY = WAIST_Y - RAW_TOP;
+  const riseY = (y) => y <= RISE0 ? y : y >= RISE1 ? y + DY : RISE0 + (y - RISE0) * (RISE1 + DY - RISE0) / (RISE1 - RISE0);
+  // How much the body is pulled in under the jeans: full size at the ankle and above the waistband
+  const tuck = (y) => y <= 0.05 || y >= 1.25 ? 1 : y < 0.12 ? 1 - 0.1 * (y - 0.05) / 0.07 : y < 0.95 ? 0.9 : y < 1.15 ? 0.9 + 0.05 * (y - 0.95) / 0.2 : 0.95 + 0.05 * (y - 1.15) / 0.1;
+  // Cross-section of a mesh per 1 cm slice (half-width, front and back): an envelope over ±2 cm, since the
+  // meshes are sparse in places, with empty slices filled from their neighbours
+  const profile = (arrays, flipZ, y0, y1) => {
+    const n = Math.round((y1 - y0) / 0.01) + 1, raw = Array.from({ length: n }, () => null);
+    for (const a of arrays) for (let i = 0; i < a.length; i += 3) {
+      const x = a[i], y = a[i + 1], z = flipZ ? -a[i + 2] : a[i + 2];
+      if (y < y0 || y > y1 || Math.abs(x) > 0.3) continue;
+      const k = Math.round((y - y0) / 0.01), r = raw[k] || (raw[k] = { hw: 0, z0: z, z1: z });
+      r.hw = Math.max(r.hw, Math.abs(x)); r.z0 = Math.min(r.z0, z); r.z1 = Math.max(r.z1, z);
+    }
+    const env = raw.map((_, k) => {
+      const near = raw.slice(Math.max(0, k - 2), k + 3).filter(Boolean);
+      return near.length ? { hw: Math.max(...near.map((r) => r.hw)), z0: Math.min(...near.map((r) => r.z0)), z1: Math.max(...near.map((r) => r.z1)) } : null;
+    });
+    const known = env.map((r, i) => (r ? i : -1)).filter((i) => i >= 0);
+    for (let i = 0; i < n; i++) if (!env[i]) env[i] = env[known.reduce((b, k) => (Math.abs(k - i) < Math.abs(b - i) ? k : b), known[0])];
+    return (y) => {
+      const f = Math.min(n - 1, Math.max(0, (y - y0) / 0.01)), i = Math.floor(f), j = Math.min(n - 1, i + 1), t = f - i;
+      const L = (key) => env[i][key] + (env[j][key] - env[i][key]) * t;
+      return { hw: L("hw"), z0: L("z0"), z1: L("z1") };
+    };
+  };
+  const smooth = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+
+  function mountViewer(canvas, THREE, onAngle) {
+    // Retina screens are already sharp, so skip MSAA there; never render more than 2× pixels
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: devicePixelRatio < 2, alpha: true, powerPreference: "default" });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.05;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(32, 1, 0.05, 40);
+    scene.add(new THREE.HemisphereLight(0xffffff, 0xd8dce4, 0.85));
+    const key = new THREE.DirectionalLight(0xffffff, 0.72); key.position.set(1.4, 2.2, 2.4); scene.add(key);
+    const fill = new THREE.DirectionalLight(0xffffff, 0.3); fill.position.set(-1.8, 1.2, 1.4); scene.add(fill);
+    const rim = new THREE.DirectionalLight(0xffffff, 0.35); rim.position.set(0, 1.6, -2.4); scene.add(rim);
+
+    const avatar = new THREE.Group(); scene.add(avatar);
+    // Soft contact shadow so the avatar stands on something
+    const sc = document.createElement("canvas"); sc.width = sc.height = 128;
+    const g2 = sc.getContext("2d"), grd = g2.createRadialGradient(64, 64, 4, 64, 64, 64);
+    grd.addColorStop(0, "rgba(0,0,0,.22)"); grd.addColorStop(1, "rgba(0,0,0,0)"); g2.fillStyle = grd; g2.fillRect(0, 0, 128, 128);
+    const shadow = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(sc), transparent: true, depthWrite: false }));
+    shadow.rotation.x = -Math.PI / 2; shadow.position.set(0, 0.002, 0.04); shadow.scale.set(0.9, 0.5, 1); scene.add(shadow);
+
+    let body = null, jeans = null, jeansMat = null, parts = [], skinMat = null, dressedMat = null, under = [];
+    let angle = 0, angleTo = null, vel = 0, dragging = false, dirty = true, raf = 0, disposed = false, lastMove = 0;
+    let camName = "Full", camScale = 1, camT = 1, hemY = 0.02;
+    const look = new THREE.Vector3(), from = { p: new THREE.Vector3(), l: new THREE.Vector3() }, to = { p: new THREE.Vector3(), l: new THREE.Vector3() };
+    const target = (name) => {
+      const c = CAMS[name], s = name === "Full" ? 1 : camScale;
+      return { p: new THREE.Vector3(...c.pos).multiplyScalar(s), l: new THREE.Vector3(...c.look).multiplyScalar(s) };
+    };
+    { const t = target("Full"); camera.position.copy(t.p); look.copy(t.l); camera.lookAt(look); }
+
+    const resize = () => {
+      const w = canvas.clientWidth, hh = canvas.clientHeight;
+      if (!w || !hh) return;
+      renderer.setSize(w, hh, false); camera.aspect = w / hh; camera.updateProjectionMatrix(); dirty = true;
+    };
+    const setAngle = (a) => { angle = a; avatar.rotation.y = a; dirty = true; onAngle?.(a); };
+
+    const tick = () => {
+      if (disposed) return;
+      raf = requestAnimationFrame(tick);
+      if (camT < 1) {
+        camT = Math.min(1, camT + 0.06);
+        const e = 1 - Math.pow(1 - camT, 3);
+        camera.position.lerpVectors(from.p, to.p, e); look.lerpVectors(from.l, to.l, e); camera.lookAt(look); dirty = true;
+      }
+      if (angleTo !== null) {
+        const d = angleTo - angle;
+        if (Math.abs(d) < 0.002) { setAngle(angleTo); angleTo = null; } else setAngle(angle + d * 0.14);
+      } else if (!dragging && Math.abs(vel) > 0.0005) { setAngle(angle + vel); vel *= 0.92; }
+      if (dirty) { renderer.render(scene, camera); dirty = false; }
+    };
+
+    // Height the hem must clear over the feet, on an 8 mm grid (filled once the body loads)
+    const FOOT_N = 76, FOOT_S = 0.008, FOOT_O = -0.3, footTop = new Float32Array(FOOT_N * FOOT_N);
+    const footAt = (x, z) => { // blended between cells, so the hem edge stays smooth
+      const fx = (x - FOOT_O) / FOOT_S - 0.5, fz = (z - FOOT_O) / FOOT_S - 0.5, i = Math.floor(fx), j = Math.floor(fz), tx = fx - i, tz = fz - j;
+      const at = (a, b) => (a < 0 || b < 0 || a >= FOOT_N || b >= FOOT_N ? 0 : footTop[b * FOOT_N + a]);
+      return (at(i, j) * (1 - tx) + at(i + 1, j) * tx) * (1 - tz) + (at(i, j + 1) * (1 - tx) + at(i + 1, j + 1) * tx) * tz;
+    };
+    const applyHem = () => {
+      // Pull the lower leg up from the knee so the hem lands where this length would on this body. Then let the
+      // hem rest on the feet instead of passing through them: wherever the foot is higher than the hem, the
+      // denim is lifted onto it, and the extra length bunches up gradually above (the "break") rather than
+      // folding through itself. Over the floor beside and behind the foot, the hem falls to its full length.
+      for (const { geo, base } of parts) {
+        const pos = geo.attributes.position.array;
+        for (let i = 0; i < base.length; i += 3) {
+          let y = base[i + 1];
+          if (y < KNEE_Y) y = hemY + (y - HEM_Y0) * (KNEE_Y - hemY) / (KNEE_Y - HEM_Y0);
+          if (y < 0.3) {
+            const lift = Math.max(0, footAt(base[i], base[i + 2]) + 0.006 - hemY);
+            if (lift) y += lift * (1 - Math.min(1, Math.max(0, (y - hemY) / Math.max(0.12, lift * 1.6))));
+          }
+          pos[i + 1] = y;
+        }
+        geo.attributes.position.needsUpdate = true; geo.computeBoundingSphere();
+      }
+      dirty = true;
+    };
+
+    const texLoader = new THREE.TextureLoader();
+    const loadTex = (url, srgb) => new Promise((resolve) => texLoader.load(url, (t) => { if (srgb) t.encoding = THREE.sRGBEncoding; resolve(t); }, undefined, () => resolve(null)));
+    const ready = Promise.all([
+      loadModel(THREE, "/assets/models/gap/body.v1.bin"),
+      loadModel(THREE, "/assets/models/gap/jeans.v1.bin"),
+      loadTex("/assets/models/gap/jeans-albedo.v1.webp", true),
+      loadTex("/assets/models/gap/jeans-normal.v1.webp", false),
+      loadTex("/assets/models/gap/jeans-roughness.v1.webp", false),
+    ]).then(([bodyObj, jeansObj, albedo, normal, roughness]) => {
+      if (disposed) return;
+      // Bare skin for the avatar steps; once dressed, the skin under the jeans takes the wash's shadow tone so
+      // the pocket openings (the mesh has no pocket bags) read as denim instead of showing the body through them
+      skinMat = new THREE.MeshStandardMaterial({ color: 0xe9e5e0, roughness: 0.9, metalness: 0 });
+      dressedMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.9, metalness: 0, vertexColors: true });
+      const bodyMat = skinMat;
+      // The body's real shape (turned to face +Z), measured before it is tucked, is what the jeans are cut to
+      const bodyArrays = []; bodyObj.traverse((c) => { if (c.isMesh) bodyArrays.push(c.geometry.attributes.position.array); });
+      const bodyAt = profile(bodyArrays, true, 0.76, 1.26);
+      bodyObj.traverse((c) => {
+        if (!c.isMesh) return;
+        c.material = bodyMat;
+        {
+          const p = c.geometry.attributes.position.array, col = new Float32Array(p.length);
+          const w = new Float32Array(p.length / 3);
+          for (let i = 0; i < w.length; i++) { const y = p[i * 3 + 1]; w[i] = smooth(0.26, 0.3, y) * (1 - smooth(WAIST_Y - 0.035, WAIST_Y - 0.015, y)); }
+          const sk = new THREE.Color(0xe9e5e0).convertSRGBToLinear();
+          for (let i = 0; i < col.length; i += 3) { col[i] = sk.r; col[i + 1] = sk.g; col[i + 2] = sk.b; }
+          c.geometry.setAttribute("color", new THREE.BufferAttribute(col, 3));
+          under.push({ attr: c.geometry.attributes.color, w });
+        }
+        // Tuck the body inside the jeans wherever they cover it, so skin never shows through the denim.
+        // Each 2 cm slice shrinks toward its own centre (one per leg below the crotch), easing back to
+        // full size just above the waistband so the visible waist still reads naturally.
+        const pos = c.geometry.attributes.position.array, ctr = new Map();
+        const key = (x, y) => `${Math.floor(y / 0.02)}${y < 0.84 ? (x < 0 ? "L" : "R") : "T"}`;
+        for (let i = 0; i < pos.length; i += 3) {
+          const x = pos[i], y = pos[i + 1], z = pos[i + 2];
+          if (y <= 0.05 || y >= 1.25) continue;
+          const k = key(x, y), b = ctr.get(k) || { x0: x, x1: x, z0: z, z1: z };
+          b.x0 = Math.min(b.x0, x); b.x1 = Math.max(b.x1, x); b.z0 = Math.min(b.z0, z); b.z1 = Math.max(b.z1, z); ctr.set(k, b);
+        }
+        for (let i = 0; i < pos.length; i += 3) {
+          const y = pos[i + 1], s = tuck(y);
+          if (s === 1) continue;
+          const b = ctr.get(key(pos[i], y)), cx = (b.x0 + b.x1) / 2, cz = (b.z0 + b.z1) / 2;
+          pos[i] = cx + (pos[i] - cx) * s; pos[i + 2] = cz + (pos[i + 2] - cz) * s;
+        }
+        c.geometry.computeVertexNormals(); // the body ships without normals; smooth ones from the final shape
+      });
+      body = bodyObj; body.rotation.y = Math.PI; avatar.add(body);
+      // Map the top of each foot (body turned 180°, so x and z flip). Only the foot itself counts: the ankle
+      // column above 11 cm is left out, and each cell takes its neighbours' max so the hem clears the edges.
+      {
+        const raw = new Float32Array(FOOT_N * FOOT_N);
+        bodyObj.traverse((c) => {
+          if (!c.isMesh) return;
+          const p = c.geometry.attributes.position.array;
+          for (let k = 0; k < p.length; k += 3) {
+            if (p[k + 1] > 0.11) continue;
+            const i = Math.floor((-p[k] - FOOT_O) / FOOT_S), j = Math.floor((-p[k + 2] - FOOT_O) / FOOT_S);
+            if (i >= 0 && j >= 0 && i < FOOT_N && j < FOOT_N) raw[j * FOOT_N + i] = Math.max(raw[j * FOOT_N + i], p[k + 1]);
+          }
+        });
+        // Spread it into a soft tent (falling 1.8 cm per cm away from the foot, out to 5 cm) so the hem rests over
+        // the foot in a smooth arch, the way fabric does, instead of notching around its outline
+        const R = 7;
+        for (let j = 0; j < FOOT_N; j++) for (let i = 0; i < FOOT_N; i++) {
+          let m = 0;
+          for (let dj = -R; dj <= R; dj++) for (let di = -R; di <= R; di++) {
+            const a = i + di, b = j + dj;
+            if (a < 0 || b < 0 || a >= FOOT_N || b >= FOOT_N || !raw[b * FOOT_N + a]) continue;
+            const d = Math.hypot(di, dj) * FOOT_S;
+            if (d <= 0.056) m = Math.max(m, raw[b * FOOT_N + a] - 1.8 * Math.max(0, d - FOOT_S));
+          }
+          footTop[j * FOOT_N + i] = m;
+        }
+        // Soften twice with a 3×3 average so the arch has no ridges
+        for (let pass = 0; pass < 2; pass++) {
+          const src = footTop.slice();
+          for (let j = 0; j < FOOT_N; j++) for (let i = 0; i < FOOT_N; i++) {
+            let sum = 0, n = 0;
+            for (let dj = -1; dj <= 1; dj++) for (let di = -1; di <= 1; di++) {
+              const a = i + di, b = j + dj;
+              if (a >= 0 && b >= 0 && a < FOOT_N && b < FOOT_N) { sum += src[b * FOOT_N + a]; n++; }
+            }
+            footTop[j * FOOT_N + i] = Math.max(src[j * FOOT_N + i] * 0.6, sum / n);
+          }
+        }
+      }
+
+      jeansMat = new THREE.MeshStandardMaterial({ color: 0xffffff, map: albedo, normalMap: normal, roughnessMap: roughness, roughness: 0.85, metalness: 0 });
+      if (normal) jeansMat.normalScale = new THREE.Vector2(0.65, 0.65);
+      const meshes = [];
+      jeansObj.traverse((c) => { if (c.isMesh) { c.material = jeansMat; meshes.push(c); } });
+      // The main denim panel is the biggest mesh; everything else is trim (back pockets, coin pocket, rivets,
+      // button, belt loops). Only the panel is reshaped; trims keep their own shape and are pinned onto it after.
+      const panel = meshes.reduce((a, c) => (c.geometry.attributes.position.count > a.geometry.attributes.position.count ? c : a));
+      const trims = meshes.filter((c) => c !== panel), P = panel.geometry.attributes.position.array;
+      // Scale, and seat the legs on the body's legs
+      for (const c of meshes) {
+        const pos = c.geometry.attributes.position.array;
+        for (let i = 0; i < pos.length; i += 3) {
+          let x = pos[i] * JEANS_SCALE; const y = pos[i + 1] * JEANS_SCALE; let z = pos[i + 2] * JEANS_SCALE;
+          if (y < 0.85) x += Math.sign(x) * lerpT(LEG_IN, y);
+          z += lerpT(Z_SHIFT, y);
+          pos[i] = x; pos[i + 1] = y; pos[i + 2] = z;
+        }
+      }
+      const panelBefore = profile([P], false, 0.7, RAW_TOP + 0.01);
+      // Lengthen the rise (panel only)
+      for (let i = 1; i < P.length; i += 3) P[i] = riseY(P[i]);
+      // A relaxed, straight women's leg (a relaxed straight leg, not the full wide leg of the photos): fitted through the thigh, opening out from the knee
+      // so the hem falls straight rather than tapering like a skinny jean. Each leg widens about its own centre.
+      const legC = new Map(), legKey = (x, y) => `${Math.floor(y / 0.02)}${x < 0 ? "L" : "R"}`;
+      for (let i = 0; i < P.length; i += 3) {
+        const x = P[i], y = P[i + 1], z = P[i + 2];
+        if (y > 0.66) continue;
+        const k = legKey(x, y), r = legC.get(k) || { x0: x, x1: x, z0: z, z1: z };
+        r.x0 = Math.min(r.x0, x); r.x1 = Math.max(r.x1, x); r.z0 = Math.min(r.z0, z); r.z1 = Math.max(r.z1, z); legC.set(k, r);
+      }
+      for (let i = 0; i < P.length; i += 3) {
+        const y = P[i + 1], f = 1 + 0.2 * (1 - smooth(0.1, 0.62, y));
+        if (f === 1) continue;
+        const r = legC.get(legKey(P[i], y)), cx = (r.x0 + r.x1) / 2, cz = (r.z0 + r.z1) / 2;
+        P[i] = cx + (P[i] - cx) * f; P[i + 2] = cz + (P[i + 2] - cz) * f;
+      }
+      // Above the crotch, cut the jeans to her shape: each slice takes the body's width, belly and seat plus a
+      // little ease, so they follow the waist-to-hip curve instead of the mesh's straight, boxy cut
+      const jeansAt = profile([P], false, 0.76, WAIST_Y + 0.01);
+      for (let i = 0; i < P.length; i += 3) {
+        const y = P[i + 1], w = smooth(0.8, 0.93, y);
+        if (!w) continue;
+        const B = bodyAt(y), J = jeansAt(y);
+        const tx = (B.hw * 1.035 + 0.008) / J.hw;
+        const bc = (B.z0 + B.z1) / 2, bd = (B.z1 - B.z0) / 2 * 1.035 + 0.008, jc = (J.z0 + J.z1) / 2, jd = (J.z1 - J.z0) / 2;
+        P[i] *= 1 + (tx - 1) * w;
+        P[i + 2] += (bc + (P[i + 2] - jc) * bd / jd - P[i + 2]) * w;
+      }
+      // Pin each trim onto the reshaped panel: it moves up whole (by as much as the panel moved at the trim's top
+      // edge), and keeps its place on the surface, mapped from the panel's old cross-section to its new one
+      const panelAfter = profile([P], false, 0.7, WAIST_Y + 0.01);
+      for (const c of trims) {
+        const pos = c.geometry.attributes.position.array;
+        let top = -Infinity;
+        for (let i = 1; i < pos.length; i += 3) top = Math.max(top, pos[i]);
+        const lift = riseY(top) - top;
+        for (let i = 0; i < pos.length; i += 3) {
+          const y = pos[i + 1], R = panelBefore(y), F = panelAfter(y + lift);
+          const rc = (R.z0 + R.z1) / 2, rd = (R.z1 - R.z0) / 2, fc = (F.z0 + F.z1) / 2, fd = (F.z1 - F.z0) / 2;
+          pos[i] *= F.hw / R.hw; pos[i + 1] = y + lift; pos[i + 2] = fc + (pos[i + 2] - rc) * fd / rd;
+          pos[i + 2] += Math.sign(pos[i + 2] - fc) * 0.004; // sit just proud of the curved panel, never sunk into it
+        }
+      }
+      for (const c of meshes) parts.push({ geo: c.geometry, base: Float32Array.from(c.geometry.attributes.position.array) });
+      jeans = jeansObj; jeans.visible = false; avatar.add(jeans);
+      applyHem(); resize();
+    });
+
+    return {
+      ready, resize,
+      bindDrag(el, onFirst) {
+        let id = null, lastX = 0, first = true;
+        el.addEventListener("pointerdown", (e) => {
+          if (e.button !== 0 || id !== null) return;
+          id = e.pointerId; el.setPointerCapture(id); dragging = true; angleTo = null; vel = 0; lastX = e.clientX; el.classList.add("is-drag");
+          if (first) { first = false; onFirst?.(); }
+        });
+        el.addEventListener("pointermove", (e) => {
+          if (e.pointerId !== id) return;
+          const a = (e.clientX - lastX) * 0.012; lastX = e.clientX; vel = a; lastMove = performance.now(); setAngle(angle + a);
+        });
+        const end = (e) => {
+          if (e.pointerId !== id) return;
+          id = null; dragging = false; el.classList.remove("is-drag");
+          if (reduce() || performance.now() - lastMove > 80) vel = 0;
+        };
+        el.addEventListener("pointerup", end); el.addEventListener("pointercancel", end); el.addEventListener("lostpointercapture", end);
+      },
+      rotateBy(a) { vel = 0; angleTo = (angleTo ?? angle) + a; if (reduce()) { setAngle(angleTo); angleTo = null; } },
+      turnTo(a) { vel = 0; const t = a + Math.PI * 2 * Math.round((angle - a) / (Math.PI * 2)); if (reduce()) setAngle(t); else angleTo = t; },
+      setCam(name, instant) {
+        camName = name; const t = target(name);
+        if (instant || reduce()) { camera.position.copy(t.p); look.copy(t.l); camera.lookAt(look); camT = 1; dirty = true; return; }
+        from.p.copy(camera.position); from.l.copy(look); to.p.copy(t.p); to.l.copy(t.l); camT = 0;
+      },
+      setAvatar(height, girth) {
+        const s = height / 66; camScale = s;
+        avatar.scale.set(s * girth, s, s * girth); shadow.scale.set(0.9 * s * girth, 0.5 * s * girth, 1);
+        if (camName !== "Full") this.setCam(camName); dirty = true;
+      },
+      setGarment(on) { if (jeans) jeans.visible = on; body?.traverse((c) => { if (c.isMesh) c.material = on ? dressedMat : skinMat; }); dirty = true; },
+      setFit(f, hem) {
+        if (jeans) jeans.scale.set(f, 1, f);
+        if (hem !== hemY) { hemY = hem; if (parts.length) applyHem(); }
+        dirty = true;
+      },
+      setTint(rgb, underHex) {
+        if (!jeansMat) return;
+        jeansMat.color.setRGB(...rgb);
+        const skin = new THREE.Color(0xe9e5e0).convertSRGBToLinear(), u = new THREE.Color(underHex).convertSRGBToLinear();
+        for (const { attr, w } of under) {
+          const a = attr.array;
+          for (let i = 0; i < w.length; i++) { const t = w[i]; a[i * 3] = skin.r + (u.r - skin.r) * t; a[i * 3 + 1] = skin.g + (u.g - skin.g) * t; a[i * 3 + 2] = skin.b + (u.b - skin.b) * t; }
+          attr.needsUpdate = true;
+        }
+        dirty = true;
+      },
+      get angle() { return angle; },
+      start() { if (!raf && !disposed) { dirty = true; tick(); } },
+      stop() { cancelAnimationFrame(raf); raf = 0; },
+      dispose() { disposed = true; cancelAnimationFrame(raf); renderer.dispose(); },
+    };
   }
 
-  // ── Gap · QuickFit Finder (web): the three decisions in one pass ──
-  // 1 height first (Decision 1) → the size arrives on the avatar; 2 the Hips descriptor says what fitted feels like (Decision 3);
-  // 3 the reason is one tap away (Decision 2); then Add to bag confirms on itself, and "‹ Height" leaves the way the product does.
-  function gapQuickFit(host, g) {
-    const W = 960, H = 540, CW = 420, CH = 640;
+  const ICON = {
+    bag: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2L5 8Z" stroke="currentColor" stroke-width="1.6"/><path d="M9 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.6"/></svg>',
+    avatar: '<svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="16" cy="6.5" r="3.2" stroke="currentColor" stroke-width="1.6"/><path d="M11 12.5h10l-1.4 7.5h-1.4L17.5 29h-3l-.7-9h-1.4L11 12.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 21c0 2.2 5.4 4 12 4s12-1.8 12-4" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 2.4"/></svg>',
+    chev: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" stroke="currentColor" stroke-width="1.6"/></svg>',
+    back: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m4-4L3 8l4 4" stroke="currentColor" stroke-width="1.5"/></svg>',
+    rotate: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12c0-2.2 3.6-4 8-4s8 1.8 8 4-3.6 4-8 4" stroke="currentColor" stroke-width="1.6"/><path d="m11 13.5 1.5 2.5-2.5 1.5" stroke="currentColor" stroke-width="1.6"/></svg>',
+  };
+
+  function gapQuickFit(host) {
+    const W = 960, H = 620, CW = 420, CH = 960;
     const stage = h("div", "gq");
-    const chips = ["5′3″", "5′4″", "5′5″", "5′6″", "5′7″", "5′8″"].map((t) => `<span class="gq__c" data-h="${t}">${t}</span>`).join("");
-    const row = (z, v) => `<div class="gq__z" data-z="${z}"><em>${z}</em><b>${v}</b><i class="gq__i">?</i></div>`;
+    const chips = (list, attr, cls = "gq__c") => list.map((v) => `<button type="button" class="${cls}" data-${attr}="${v}" aria-pressed="false">${v}</button>`).join("");
+
     stage.innerHTML = `
-      <div class="gq__app">
-        <p class="gq__ttl">QUICKFIT FINDER</p>
-        <section class="gq__s1 is-on">
-          <div class="gq__body gq__body--ghost"></div>
-          <div class="gq__ask"><p class="gq__k">(1 of 3)</p><p class="gq__q">How tall are you?</p>
-            <div class="gq__chips"><span class="gq__arr">‹</span>${chips}<span class="gq__arr">›</span></div></div>
-        </section>
-        <section class="gq__s2">
-          <span class="gq__back">‹ Height · 5′6″</span>
-          <div class="gq__left">
-            <p class="gq__k">Size</p><div class="gq__row"><span class="gq__c">27W</span><span class="gq__c on">28W</span><span class="gq__c">29W</span></div>
-            <span class="gq__why">Why this recommendation?</span>
-            <div class="gq__whycard"><p>Your height and this cut put you in 28W.</p><p><b>Feels small?</b> Try 29W. <b>Large?</b> Try 27W.</p></div>
-            <div class="gq__len"><p class="gq__k">Length</p><div class="gq__row"><span class="gq__c">30L</span><span class="gq__c on">32L</span><span class="gq__c">34L</span></div></div>
-            <span class="gq__add"><span class="a">ADD TO BAG</span><span class="b">✓ ADDED</span></span>
+      <div class="gq__pdp">
+        <p class="gq__promo">Free shipping on $50+ for rewards members · Free returns</p>
+        <div class="gq__hd">
+          <span class="gq__logo">OLD NAVY</span>
+          <span class="gq__nav"><span>Women</span><span>Men</span><span>Girls</span><span>Boys</span><span>Toddler</span><span>Baby</span></span>
+          <span class="gq__search">Search</span>
+          <span class="gq__bag" data-bag-wrap aria-label="Bag, 0 items">${ICON.bag}<b data-bag hidden>0</b></span>
+        </div>
+        <div class="gq__body">
+          <div class="gq__gal">
+            <div class="gq__thumbs" role="group" aria-label="Product photos">${PHOTOS.map((p, i) => `<button type="button" class="${i ? "" : "on"}" data-photo="${i}" aria-label="Photo ${i + 1} of ${PHOTOS.length}: ${p.alt}" aria-pressed="${!i}"><img src="/assets/images/gap/pdp-${i + 1}-thumb.webp" alt="" width="56" height="75" loading="lazy" decoding="async"></button>`).join("")}</div>
+            <div class="gq__photo"><img src="/assets/images/gap/pdp-1.webp" alt="${PHOTOS[0].alt}" width="800" height="1067" loading="lazy" decoding="async"></div>
           </div>
-          <div class="gq__body"><span class="gq__jean"></span></div>
-          <div class="gq__tabs"><span class="on">Front</span><span>Waist</span><span>Ankles</span><span>Back</span></div>
-          <div class="gq__right"><p class="gq__k">On your avatar</p><p class="gq__sz">28W 32L</p>${row("Waist", "Fitted")}${row("Hips", "Fitted")}${row("Calf", "Loose")}</div>
-          <div class="gq__pop"><p class="gq__ph">Hips</p><p><span class="t">Tight:</span> Unlikely to fit</p><p><b>Fitted:</b> Some pressure on hips</p><p><b>Loose:</b> No pressure on hips</p></div>
-        </section>
+          <div class="gq__info">
+            <p class="gq__crumb">Women / Jeans / Wide-Leg</p>
+            <p class="gq__pt">High-Waisted Wow Wide-Leg Jeans</p>
+            <p class="gq__rate"><span class="gq__stars" aria-label="Rated 4.7 out of 5"><span>★★★★★</span><span style="width:93.4%">★★★★★</span></span>4.7 <u>(21,319)</u></p>
+            <p class="gq__price">$22.19</p>
+            <p class="gq__lbl">Color: <b data-pdp-color>Medium Wash</b></p>
+            <div class="gq__row" role="group" aria-label="Color">${COLORS.map((c, i) => `<button type="button" class="gq__sw${i ? "" : " on"}" data-pcolor="${i}" style="--sw:${c.hex}" aria-label="${c.id}" aria-pressed="${!i}"></button>`).join("")}</div>
+            <div class="gq__ftabs" role="group" aria-label="Fit">${["Regular", "Petite", "Tall", "Plus"].map((f, i) => `<button type="button" data-ftype="${f}" class="${i ? "" : "on"}" aria-pressed="${!i}">${f}</button>`).join("")}</div>
+            <p class="gq__lbl">Size: <b data-pdp-size>Select a size</b></p>
+            <div class="gq__sgrid" role="group" aria-label="Size">${chips(SIZES, "psize", "gq__sq")}</div>
+            <p class="gq__lbl">Length: <b data-pdp-len>Select a length</b></p>
+            <div class="gq__lrow" role="group" aria-label="Length">${chips(LENGTHS.map((l) => l.id), "plen", "gq__sq")}</div>
+            <button type="button" class="gq__qf" aria-haspopup="dialog">${ICON.avatar}<span><b>QuickFit Finder</b><small data-qf-sub>Not sure of your size? See it on a 3D avatar</small></span>${ICON.chev}</button>
+            <button type="button" class="gq__atb">Add to Bag</button>
+            <p class="gq__err" role="alert" hidden>Select a size and length to add to bag.</p>
+          </div>
+        </div>
+        <div class="gq__toast" role="status" hidden><img src="/assets/images/gap/pdp-1-thumb.webp" alt=""><div><b>Added to bag</b><span data-toast></span></div></div>
+      </div>
+
+      <div class="gq__finder" hidden>
+        <div class="gq__app" role="dialog" aria-modal="true" aria-label="QuickFit Finder" data-step="1">
+          <p class="gq__ttl">QUICKFIT FINDER</p>
+          <button type="button" class="gq__close" aria-label="Close QuickFit Finder">×</button>
+          <div class="gq__grid">
+            <div class="gq__q">
+              <div class="gq__p" data-panel="1">
+                <p class="gq__qh">(1 of 3) How tall are you?</p>
+                <div class="gq__hrow">
+                  <button type="button" class="gq__arw" data-hshift="-3" aria-label="Shorter heights">‹</button>
+                  <div class="gq__hwin"><div class="gq__htrack">${HEIGHTS.map((n) => `<button type="button" class="gq__c gq__c--h" data-height="${n}" aria-pressed="false">${ftIn(n)}</button>`).join("")}</div></div>
+                  <button type="button" class="gq__arw" data-hshift="3" aria-label="Taller heights">›</button>
+                </div>
+                <button type="button" class="gq__next" data-goto="2" disabled>Next</button>
+              </div>
+              <div class="gq__p" data-panel="2" hidden>
+                <button type="button" class="gq__back" data-goto="1">${ICON.back}<span data-back-h>Height</span></button>
+                <p class="gq__qh">(2 of 3) What size do you usually wear?</p>
+                <p class="gq__qs">In jeans, from any brand</p>
+                <div class="gq__ugrid">${chips(SIZES, "usual")}</div>
+                <button type="button" class="gq__next" data-goto="3" disabled>Next</button>
+              </div>
+              <div class="gq__p" data-panel="3" hidden>
+                <button type="button" class="gq__back" data-goto="2">${ICON.back}<span data-back-s>Size</span></button>
+                <p class="gq__qh">(3 of 3) Further customize your avatar (optional)</p>
+                <p class="gq__qs" data-meas-for></p>
+                <div class="gq__meas">${MEAS.map(([k, label]) => `
+                  <div class="gq__m" data-m="${k}"><p><span>${label}:</span> <b data-mv></b></p>
+                    <div><button type="button" data-step="-0.5" aria-label="Decrease ${label.toLowerCase()}">−</button><button type="button" data-step="0.5" aria-label="Increase ${label.toLowerCase()}">+</button></div>
+                  </div>`).join("")}</div>
+                <div class="gq__pair"><button type="button" class="gq__ghost" data-reset>Reset</button><button type="button" class="gq__next" data-goto="4">Done customizing</button></div>
+              </div>
+            </div>
+
+            <div class="gq__left">
+              <button type="button" class="gq__edit" data-goto="3">Edit Body</button>
+              <p class="gq__k">Size</p>
+              <div class="gq__row" role="group" aria-label="Size" data-rsizes></div>
+              <button type="button" class="gq__why" aria-haspopup="dialog">Why this recommendation?</button>
+              <p class="gq__k">Length</p>
+              <div class="gq__row" role="group" aria-label="Length">${LENGTHS.map((l) => `<button type="button" class="gq__c" data-len="${l.id}" aria-pressed="false">${l.id}</button>`).join("")}</div>
+              <p class="gq__k">Color</p>
+              <div class="gq__row" role="group" aria-label="Color">${COLORS.map((c, i) => `<button type="button" class="gq__sw${i ? "" : " on"}" data-color="${i}" style="--sw:${c.hex}" aria-label="${c.id}" aria-pressed="${!i}"></button>`).join("")}</div>
+              <button type="button" class="gq__add"><span class="a">ADD TO BAG</span><span class="b">✓ ADDED</span></button>
+            </div>
+
+            <div class="gq__stage">
+              <div class="gq__viewport" tabindex="0" role="img" aria-label="3D avatar. Drag, or use the left and right arrow keys, to turn it.">
+                <canvas class="gq__canvas"></canvas>
+                <p class="gq__load">Loading avatar…</p>
+                <p class="gq__hint" aria-hidden="true">${ICON.rotate}Drag to rotate</p>
+              </div>
+              <div class="gq__tabs" role="group" aria-label="View">${Object.keys(TABS).map((t, i) => `<button type="button" class="gq__tab${i ? "" : " on"}" data-view="${t}" aria-pressed="${!i}">${t}</button>`).join("")}</div>
+            </div>
+
+            <div class="gq__right">
+              <p class="gq__k gq__k--top">On your avatar</p>
+              <p class="gq__sz" data-sz></p>
+              <div class="gq__zones">${Object.keys(FIT).map((z) => `<button type="button" class="gq__z" data-z="${z}" aria-expanded="false"><em>${z}</em><b data-fit></b><i class="gq__i" aria-hidden="true">?</i></button>`).join("")}</div>
+              <div class="gq__pop" hidden>
+                <button type="button" class="gq__x" data-close-pop aria-label="Close">×</button>
+                <p class="gq__ph" data-pop-title></p>
+                <p><span class="t">Tight:</span> <span data-d="Tight"></span></p>
+                <p><b>Fitted:</b> <span data-d="Fitted"></span></p>
+                <p><b>Loose:</b> <span data-d="Loose"></span></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="gq__whyModal" hidden>
+            <div class="gq__whyCard" role="dialog" aria-modal="true" aria-label="Why this recommendation?">
+              <button type="button" class="gq__x" data-close-why aria-label="Close">×</button>
+              <p class="gq__whyT">Why this recommendation?</p>
+              <p class="gq__whyLead">It represents how the item was designed to fit based on your inputted measurements. It might not be how you like the item to fit, but you can select different sizes to find your preferred fit.</p>
+              <p class="gq__whyCmp" data-why-cmp></p>
+              <div data-why-small>
+                <p class="gq__whyH">Is this recommendation smaller than you were expecting?</p>
+                <ol class="gq__whyList"><li>Double check the body measurements to make sure they represent your dimensions</li><li>You might prefer a tighter fit</li><li>This item might run large</li></ol>
+              </div>
+              <div data-why-large>
+                <p class="gq__whyH">Is this recommendation larger than you were expecting?</p>
+                <ol class="gq__whyList"><li>Double check the body measurements to make sure they represent your dimensions</li><li>You might prefer a looser fit</li><li>This item might run small</li></ol>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>`;
     host.appendChild(stage);
-    const $ = (q) => stage.querySelector(q), $$ = (q) => [...stage.querySelectorAll(q)];
-    const s1 = $(".gq__s1"), s2 = $(".gq__s2"), pop = $(".gq__pop"), why = $(".gq__whycard");
-    let scale = 1;
-    const stopFit = fitStage(host, stage, W, H, CW, CH, (m) => { stage.dataset.mode = m; });
-    new ResizeObserver(() => { scale = host.clientWidth / (stage.dataset.mode === "compact" ? CW : W); }).observe(host);
-    const show = (el, on, from = { y: 6 }) => { if (on) { el.classList.add("is-on"); g.fromTo(el, { opacity: 0, ...from }, { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.55, ease: "expo.out" }); } else g.to(el, { opacity: 0, duration: 0.25, ease: "power2.in", onComplete: () => el.classList.remove("is-on") }); };
-    const swap = (from, to) => { // a page swap inside one window: the body crossfades with a short rise, the frame stays
-      g.to(from, { opacity: 0, y: -6, duration: 0.22, ease: "power2.in", onComplete: () => { from.classList.remove("is-on"); g.set(from, { clearProps: "all" }); } });
-      to.classList.add("is-on"); g.fromTo(to, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out", delay: 0.14 });
-    };
-    const reset = () => {
-      s2.classList.remove("is-on"); s1.classList.add("is-on"); g.set([s1, s2], { clearProps: "all" });
-      [pop, why].forEach((e) => { e.classList.remove("is-on"); g.set(e, { clearProps: "all" }); });
-      $$(".gq__c[data-h]").forEach((c) => c.classList.remove("on")); $(".gq__add").classList.remove("is-added"); $$(".gq__z").forEach((z) => z.classList.remove("on"));
-    };
-    // poster: the result with the descriptor and the reason both open (reduced motion, screenshots)
-    if (reduce()) { s1.classList.remove("is-on"); s2.classList.add("is-on"); pop.classList.add("is-on"); why.classList.add("is-on"); $('.gq__z[data-z="Hips"]').classList.add("on"); return () => stopFit(); }
 
-    const cur = cursor(stage, g, () => scale);
-    let run = 0, live = false;
-    async function story(id) {
-      const ok = () => id === run, cm = stage.dataset.mode === "compact";
-      reset(); cur.place(cm ? 330 : 820, cm ? 600 : 470); cur.show(); await cur.sleep(600); if (!ok()) return;
-      // 1 · height first
-      const c = $('.gq__c[data-h="5′6″"]');
-      await cur.travel(() => cur.at(c, 0.72, 0.68)); if (!ok()) return;
-      await cur.press(); c.classList.add("on"); await cur.sleep(380); if (!ok()) return;
-      swap(s1, s2); g.fromTo($$(".gq__z"), { opacity: 0, x: 8 }, { opacity: 1, x: 0, duration: 0.5, stagger: 0.08, delay: 0.4, ease: "power3.out" });
-      await cur.sleep(1500); if (!ok()) return;
-      // 2 · what does fitted feel like?
-      const hip = $('.gq__z[data-z="Hips"] .gq__i');
-      await cur.travel(() => cur.at(hip, 0.7, 0.7)); if (!ok()) return;
-      await cur.press(); $('.gq__z[data-z="Hips"]').classList.add("on"); show(pop, true, { x: -10, scale: 0.97 }); await cur.sleep(2200); if (!ok()) return;
-      show(pop, false); $('.gq__z[data-z="Hips"]').classList.remove("on");
-      // 3 · the reason, one tap away
-      await cur.travel(() => cur.at($(".gq__why"), 0.86, 0.7)); if (!ok()) return;
-      await cur.press(); show(why, true); await cur.sleep(2200); if (!ok()) return;
-      // 4 · decide
-      await cur.travel(() => cur.at($(".gq__add"), 0.82, 0.66)); if (!ok()) return;
-      await cur.press(); $(".gq__add").classList.add("is-added"); await cur.sleep(1800); if (!ok()) return;
-      // 5 · out the way the product goes: back to height
-      await cur.travel(() => cur.at($(".gq__back"), 0.8, 0.66)); if (!ok()) return;
-      await cur.press(); swap(s2, s1); await cur.sleep(600); if (!ok()) return;
-      cur.hide(); await cur.sleep(900);
+    const $ = (q) => stage.querySelector(q), $$ = (q) => [...stage.querySelectorAll(q)];
+    const press = (sel, match) => $$(sel).forEach((b) => { const on = match(b); b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); });
+    const pdp = $(".gq__pdp"), finder = $(".gq__finder"), app = $(".gq__app"), pop = $(".gq__pop"), whyModal = $(".gq__whyModal");
+    const vp = $(".gq__viewport"), loadEl = $(".gq__load"), hint = $(".gq__hint");
+
+    // State
+    const S = {
+      step: 1, height: null, usual: null, body: null, base: null, rec: 5, size: 5, len: 1, color: 0,
+      hOffset: 4, openZone: null, done: false,
+      pdp: { size: null, len: null, color: 0, bag: 0, photo: 0 },
+    };
+    let viewer = null, viewerP = null, io = null, lastFocus = null, toastT = 0, addT = 0;
+
+    const stopFit = fitStage(host, stage, W, H, CW, CH, (m) => { stage.dataset.mode = m; layoutHeights(); requestAnimationFrame(() => viewer?.resize()); });
+
+    // ── Product page ──
+    const renderPdp = () => {
+      const P = S.pdp;
+      press("[data-psize]", (b) => b.dataset.psize === P.size);
+      press("[data-plen]", (b) => b.dataset.plen === P.len);
+      press("[data-pcolor]", (b) => +b.dataset.pcolor === P.color);
+      $("[data-pdp-size]").textContent = P.size ?? "Select a size";
+      $("[data-pdp-len]").textContent = P.len ? `${P.len} (${LENGTHS.find((l) => l.id === P.len).inseam}″ inseam)` : "Select a length";
+      $("[data-pdp-color]").textContent = COLORS[P.color].id;
+      const ph = $(".gq__photo img"), photo = PHOTOS[P.photo];
+      ph.src = `/assets/images/gap/pdp-${P.photo + 1}.webp`; ph.alt = photo.alt;
+      press("[data-photo]", (b) => +b.dataset.photo === P.photo);
+      const bag = $("[data-bag]"); bag.textContent = P.bag; bag.hidden = !P.bag;
+      $("[data-bag-wrap]").setAttribute("aria-label", `Bag, ${P.bag} item${P.bag === 1 ? "" : "s"}`);
+      $("[data-qf-sub]").textContent = S.done ? `Your fit: ${SIZES[S.rec]} ${LENGTHS[recLength(S.body)].id} · see it on your avatar` : "Not sure of your size? See it on a 3D avatar";
+      $(".gq__qf").classList.toggle("is-done", S.done);
+      if (P.size && P.len) $(".gq__err").hidden = true;
+    };
+    const toast = (text) => {
+      $("[data-toast]").textContent = text;
+      const t = $(".gq__toast"); t.hidden = false; requestAnimationFrame(() => t.classList.add("in"));
+      clearTimeout(toastT); toastT = setTimeout(() => { t.classList.remove("in"); setTimeout(() => { t.hidden = true; }, 300); }, 3200);
+    };
+    const addToBag = (size, len, color) => {
+      S.pdp.bag += 1; renderPdp();
+      toast(`High-Waisted Wow Wide-Leg Jeans · ${size} ${len} · ${COLORS[color].id}`);
+    };
+
+    // ── Finder ──
+    const derive = () => {
+      if (S.height == null || S.usual == null) return;
+      const si = SIZES.indexOf(S.usual);
+      if (!S.base || S.base.h !== S.height || S.base.si !== si) { S.base = { h: S.height, si, ...baseBody(S.height, si) }; S.body = { ...baseBody(S.height, si) }; }
+    };
+    const girth = () => Math.min(1.3, Math.max(0.82, ((S.body?.hips ?? 39) / 39 + (S.body?.waist ?? 29.5) / 29.5) / 2));
+
+    const syncAvatar = () => {
+      if (!viewer) return;
+      viewer.setAvatar(S.height ?? 65, S.body ? girth() : 1);
+      viewer.setGarment(S.step === 4);
+      if (S.step === 4) {
+        const f = zoneFit(S.body, S.size);
+        const hem = 0.02 + (S.body.inseam - LENGTHS[S.len].inseam) / S.body.inseam * 0.86;
+        // Looser sizes sit a little roomier; a tight size never shrinks the jeans into the body (the label says Tight)
+        viewer.setFit(1 + Math.min(3, Math.max(0, f.dW)) * 0.012, Math.min(0.25, Math.max(HEM_Y0, hem)));
+        viewer.setTint(COLORS[S.color].rgb, COLORS[S.color].under);
+      }
+    };
+
+    const renderMeas = () => {
+      $("[data-meas-for]").textContent = `Showing measurements for ${ftIn(S.height)} size ${S.usual}`;
+      MEAS.forEach(([k]) => {
+        const row = $(`[data-m="${k}"]`);
+        row.querySelector("[data-mv]").textContent = inch(S.body[k]);
+        row.classList.toggle("is-changed", S.body[k] !== S.base[k]);
+      });
+    };
+
+    const renderResult = () => {
+      const lo = Math.max(0, Math.min(S.rec - 1, SIZES.length - 3));
+      $("[data-rsizes]").innerHTML = SIZES.slice(lo, lo + 3).map((s, j) => {
+        const i = lo + j, rec = i === S.rec, on = i === S.size;
+        return `<button type="button" class="gq__c${on ? " on" : ""}${rec ? " is-rec" : ""}" data-size="${i}" aria-pressed="${on}"${rec ? ' aria-describedby="gq-rec"' : ""}>${s}</button>`;
+      }).join("") + '<span id="gq-rec" hidden>Recommended</span>';
+      press("[data-len]", (b) => b.dataset.len === LENGTHS[S.len].id);
+      $$("[data-len]").forEach((b) => b.classList.toggle("is-rec", LENGTHS.findIndex((l) => l.id === b.dataset.len) === recLength(S.body)));
+      press("[data-color]", (b) => +b.dataset.color === S.color);
+      $("[data-sz]").textContent = `${SIZES[S.size]} ${LENGTHS[S.len].id}`;
+      const fit = zoneFit(S.body, S.size);
+      $$(".gq__z").forEach((z) => {
+        const v = fit[z.dataset.z], b = z.querySelector("[data-fit]");
+        b.textContent = v; b.dataset.v = v;
+      });
+      syncAvatar();
+    };
+
+    const setStep = (n) => {
+      if (n >= 2 && S.height == null) n = 1;
+      if (n >= 3 && S.usual == null) n = 2;
+      S.step = n; app.dataset.step = n;
+      $$(".gq__p").forEach((p) => { p.hidden = +p.dataset.panel !== n; });
+      hidePop(); whyModal.hidden = true;
+      if (n >= 3) derive();
+      if (n === 2) $("[data-back-h]").textContent = `Height: ${ftIn(S.height)}`;
+      if (n === 3) { $("[data-back-s]").textContent = `Size: ${S.usual}`; renderMeas(); }
+      if (n === 4) {
+        S.rec = recommend(S.body); S.size = S.rec; S.len = recLength(S.body); S.done = true;
+        viewer?.turnTo(0); setView("Front", true);
+        renderResult();
+      } else viewer?.setCam("Full");
+      syncAvatar();
+      requestAnimationFrame(() => viewer?.resize());
+    };
+
+    const layoutHeights = () => {
+      // Show a whole number of chips (up to six) in whatever width the panel has
+      const win = $(".gq__hwin"), track = $(".gq__htrack"), panel = $('[data-panel="1"]');
+      const chip = track.firstElementChild; if (!chip || !panel.clientWidth) return;
+      const step = chip.offsetWidth + 6, vis = Math.max(1, Math.min(6, Math.floor((panel.clientWidth - 64 - 4 + 6) / step)));
+      win.style.width = `${vis * step - 6 + 4}px`; win.scrollLeft = 0;
+      S.hOffset = Math.max(0, Math.min(HEIGHTS.length - vis, S.hOffset));
+      track.style.transform = `translateX(${-S.hOffset * step}px)`;
+      $$("[data-hshift]").forEach((b) => { b.disabled = +b.dataset.hshift < 0 ? S.hOffset === 0 : S.hOffset >= HEIGHTS.length - vis; });
+      $$("[data-height]").forEach((b, i) => { b.tabIndex = i >= S.hOffset && i < S.hOffset + vis ? 0 : -1; });
+    };
+
+    let activeView = "Front";
+    const setView = (name, instant) => {
+      activeView = name; const t = TABS[name];
+      viewer?.setCam(t.cam, instant); viewer?.turnTo(t.angle);
+      press("[data-view]", (b) => b.dataset.view === name);
+    };
+    // After a drag, keep the zoom tab lit; light Front or Back only when the avatar faces that way
+    const onAngle = (a) => {
+      if (S.step !== 4) return;
+      const n = ((a % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+      const near = (x) => Math.min(Math.abs(n - x), Math.PI * 2 - Math.abs(n - x)) < 0.2;
+      const zoom = TABS[activeView].cam !== "Front";
+      press("[data-view]", (b) => zoom ? b.dataset.view === activeView : (b.dataset.view === "Front" && near(0)) || (b.dataset.view === "Back" && near(Math.PI)));
+    };
+
+    const showPop = (zone) => {
+      S.openZone = zone;
+      pop.querySelector("[data-pop-title]").textContent = zone;
+      Object.entries(FIT[zone]).forEach(([k, v]) => { pop.querySelector(`[data-d="${k}"]`).textContent = v; });
+      pop.dataset.z = zone; pop.hidden = false;
+      $$(".gq__z").forEach((z) => { const on = z.dataset.z === zone; z.classList.toggle("on", on); z.setAttribute("aria-expanded", on); });
+    };
+    function hidePop() {
+      S.openZone = null; pop.hidden = true;
+      $$(".gq__z").forEach((z) => { z.classList.remove("on"); z.setAttribute("aria-expanded", "false"); });
     }
-    const start = () => { if (live) return; live = true; const id = ++run; (async () => { while (id === run) await story(id); })(); };
-    const stop = () => { live = false; run++; cur.stop(); };
-    const io = new IntersectionObserver(([e]) => (e.isIntersecting && !document.hidden ? start() : stop()), { threshold: 0.35 });
-    io.observe(host);
-    return () => { io.disconnect(); stop(); stopFit(); };
+
+    const openWhy = () => {
+      const usual = SIZES.indexOf(S.usual), d = S.rec - usual, rec = `${SIZES[S.rec]} ${LENGTHS[recLength(S.body)].id}`;
+      const why = `We recommend ${rec} from your height (${ftIn(S.height)}), the size you usually wear (${S.usual})${MEAS.some(([k]) => S.body[k] !== S.base[k]) ? " and the measurements you adjusted" : ""}.`;
+      $("[data-why-cmp]").textContent = d === 0 ? `${why} It matches the size you usually wear.` : `${why} That is ${Math.abs(d) === 1 ? "one size" : `${Math.abs(d)} sizes`} ${d < 0 ? "smaller" : "larger"} than you usually wear.`;
+      const tight = Object.keys(FIT).filter((z) => zoneFit(S.body, S.rec)[z] === "Tight");
+      if (tight.length) $("[data-why-cmp]").textContent += ` It is the largest size in this style, and the ${tight.join(" and ").toLowerCase()} may still be tight.`;
+      $("[data-why-small]").hidden = d > 0; $("[data-why-large]").hidden = d < 0;
+      whyModal.hidden = false; $("[data-close-why]").focus();
+    };
+
+    const ensureViewer = () => viewerP || (viewerP = loadThree().then((THREE) => {
+      if (!THREE) { loadEl.textContent = "3D unavailable"; return null; }
+      viewer = mountViewer($(".gq__canvas"), THREE, onAngle);
+      viewer.bindDrag(vp, () => hint.classList.add("is-gone"));
+      viewer.ready.then(() => { loadEl.hidden = true; syncAvatar(); if (S.step === 4) renderResult(); viewer.resize(); }, () => { loadEl.textContent = "3D unavailable"; });
+      io = new IntersectionObserver(([e]) => { if (e.isIntersecting && !finder.hidden) { viewer.resize(); viewer.start(); } else viewer.stop(); }, { threshold: 0.1 });
+      io.observe(host);
+      return viewer;
+    }));
+
+    const openFinder = (step) => {
+      lastFocus = document.activeElement;
+      finder.hidden = false; pdp.inert = true;
+      requestAnimationFrame(() => finder.classList.add("in"));
+      setStep(step ?? (S.done ? 4 : S.height == null ? 1 : S.usual == null ? 2 : 3));
+      layoutHeights();
+      ensureViewer().then((v) => { if (!v) return; syncAvatar(); if (S.step === 4) setView(activeView, true); else v.setCam("Full", true); v.resize(); v.start(); });
+      requestAnimationFrame(() => (app.querySelector(".gq__p:not([hidden]) button:not([disabled]):not(.gq__back):not(.gq__arw):not([tabindex='-1'])") || $(".gq__close")).focus({ preventScroll: true }));
+    };
+    const closeFinder = () => {
+      finder.classList.remove("in"); finder.hidden = true; pdp.inert = false; viewer?.stop();
+      clearTimeout(addT); $(".gq__add").classList.remove("is-added");
+      renderPdp();
+      (lastFocus && stage.contains(lastFocus) ? lastFocus : $(".gq__qf")).focus({ preventScroll: true });
+    };
+
+    stage.addEventListener("click", (e) => {
+      const t = e.target, q = (s) => t.closest(s);
+      let b;
+      // Product page
+      if ((b = q("[data-psize]"))) { S.pdp.size = b.dataset.psize; return renderPdp(); }
+      if ((b = q("[data-plen]"))) { S.pdp.len = b.dataset.plen; return renderPdp(); }
+      if ((b = q("[data-photo]"))) { S.pdp.photo = +b.dataset.photo; return renderPdp(); }
+      if ((b = q("[data-pcolor]"))) { S.pdp.color = +b.dataset.pcolor; S.color = S.pdp.color; return renderPdp(); }
+      if ((b = q("[data-ftype]"))) return press("[data-ftype]", (x) => x === b);
+      if (q(".gq__qf")) return openFinder();
+      if (q(".gq__atb")) {
+        if (!S.pdp.size || !S.pdp.len) { $(".gq__err").hidden = false; return; }
+        return addToBag(S.pdp.size, S.pdp.len, S.pdp.color);
+      }
+      // Finder chrome
+      if (q(".gq__close") || t === finder) return closeFinder();
+      if (q("[data-close-why]") || t === whyModal) { whyModal.hidden = true; return $(".gq__why").focus(); }
+      if (q("[data-close-pop]")) { const z = S.openZone; hidePop(); return $(`.gq__z[data-z="${z}"]`)?.focus(); }
+      if ((b = q("[data-goto]"))) return setStep(+b.dataset.goto);
+      // Step 1
+      if ((b = q("[data-hshift]"))) { S.hOffset += +b.dataset.hshift; return layoutHeights(); }
+      if ((b = q("[data-height]"))) {
+        S.height = +b.dataset.height; press("[data-height]", (x) => x === b);
+        $('[data-panel="1"] .gq__next').disabled = false; return syncAvatar();
+      }
+      // Step 2
+      if ((b = q("[data-usual]"))) {
+        S.usual = b.dataset.usual; press("[data-usual]", (x) => x === b);
+        $('[data-panel="2"] .gq__next').disabled = false; derive(); return syncAvatar();
+      }
+      // Step 3
+      if ((b = q("[data-m] [data-step]"))) {
+        const k = b.closest("[data-m]").dataset.m, base = S.base[k];
+        S.body[k] = Math.min(base + 6, Math.max(base - 6, S.body[k] + +b.dataset.step));
+        renderMeas(); return syncAvatar();
+      }
+      if (q("[data-reset]")) { MEAS.forEach(([k]) => { S.body[k] = S.base[k]; }); renderMeas(); return syncAvatar(); }
+      // Result
+      if ((b = q("[data-size]"))) { S.size = +b.dataset.size; return renderResult(); }
+      if ((b = q("[data-len]"))) { S.len = LENGTHS.findIndex((l) => l.id === b.dataset.len); return renderResult(); }
+      if ((b = q("[data-color]"))) { S.color = +b.dataset.color; S.pdp.color = S.color; return renderResult(); }
+      if ((b = q("[data-view]"))) return setView(b.dataset.view);
+      if ((b = q(".gq__z"))) return S.openZone === b.dataset.z ? hidePop() : showPop(b.dataset.z);
+      if (q(".gq__why")) return openWhy();
+      if (q(".gq__add")) {
+        const btn = $(".gq__add"); if (btn.classList.contains("is-added")) return;
+        btn.classList.add("is-added");
+        Object.assign(S.pdp, { size: SIZES[S.size], len: LENGTHS[S.len].id, color: S.color });
+        addT = setTimeout(() => { closeFinder(); addToBag(S.pdp.size, S.pdp.len, S.pdp.color); }, reduce() ? 300 : 900);
+      }
+    });
+
+    stage.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !finder.hidden) {
+        e.stopPropagation();
+        if (!whyModal.hidden) { whyModal.hidden = true; return $(".gq__why").focus(); }
+        if (S.openZone) { const z = S.openZone; hidePop(); return $(`.gq__z[data-z="${z}"]`)?.focus(); }
+        return closeFinder();
+      }
+      if (e.target === vp && (e.key === "ArrowLeft" || e.key === "ArrowRight")) {
+        e.preventDefault(); hint.classList.add("is-gone");
+        viewer?.rotateBy(e.key === "ArrowLeft" ? -Math.PI / 8 : Math.PI / 8);
+      }
+      // Keep Tab inside the open dialog
+      if (e.key === "Tab" && !finder.hidden) {
+        const scope = whyModal.hidden ? app : whyModal;
+        const f = [...scope.querySelectorAll("button:not([disabled]), [tabindex='0']")].filter((x) => x.offsetParent && x.tabIndex >= 0 && (whyModal.hidden ? !whyModal.contains(x) : true));
+        if (!f.length) return;
+        const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+
+    // Load the 3D (~0.8 MB) only on intent: pointing at, focusing or touching QuickFit, or opening it. On a fast
+    // connection without Save-Data, also after the demo has been on screen for a moment, so opening is instant.
+    const qf = $(".gq__qf"), intent = () => ensureViewer();
+    ["pointerenter", "focus", "touchstart"].forEach((t) => qf.addEventListener(t, intent, { once: true, passive: true }));
+    const net = navigator.connection, fast = !net || (!net.saveData && !/2g/.test(net.effectiveType || ""));
+    let dwell = 0;
+    const warm = new IntersectionObserver(([e]) => {
+      clearTimeout(dwell);
+      if (e.isIntersecting && fast) dwell = setTimeout(() => { warm.disconnect(); ensureViewer(); }, 1500);
+    }, { threshold: 0.5 });
+    warm.observe(host);
+    renderPdp();
+
+    return () => { warm.disconnect(); clearTimeout(dwell); io?.disconnect(); viewer?.dispose(); stopFit(); clearTimeout(toastT); clearTimeout(addT); };
   }
 
-  const DEMOS = { gapQuickFit };
-  const mount = (el) => { if (el.dataset.on) return; el.dataset.on = "1"; loadGsap().then((g) => { const fn = DEMOS[el.dataset.caseDemo]; if (fn && g) fn(el, g); }); };
+  // ── CotonAI design system, live ──
+  // Real components from ~/dev/cotonai/src/design-system running on its real tokens (css/case-studies.css, DS-LIVE block,
+  // generated by tools/build-ds-live-css.py). Behaviour follows the components: Button loading, Switch, SegmentedControl,
+  // Progress, Skeleton, StatusPill, Menu, Tooltip, Dialog, and the generation lifecycle configure > ready > queued > running > done | cancelled.
+  function dsLive(host) {
+    if (!document.getElementById("dsx-inter")) {   // the product's own typeface, loaded only when this demo mounts
+      const l = document.createElement("link"); l.id = "dsx-inter"; l.rel = "stylesheet";
+      l.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap"; document.head.appendChild(l);
+    }
+    const SPIN = (c = "") => `<svg class="dsx-spin ${c}" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-opacity=".25" stroke-width="1.6"/><path d="M8 2a6 6 0 0 1 6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`;
+    const ICON = {
+      share: `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V2.5M5.5 5 8 2.5 10.5 5M3.5 8v4.5h9V8"/></svg>`,
+      dots: `<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="3.5" cy="8" r="1.2"/><circle cx="8" cy="8" r="1.2"/><circle cx="12.5" cy="8" r="1.2"/></svg>`,
+    };
+    const root = h("div", "dsx");
+    root.innerHTML = `
+      <div class="dsx__bar">
+        <span class="dsx__title">CotonAI design system, live. Real components on the real tokens.</span>
+        <div class="dsx-seg dsx-seg--sm" role="radiogroup" aria-label="Theme mode">
+          <button type="button" role="radio" aria-checked="true" data-mode="light">Light</button>
+          <button type="button" role="radio" aria-checked="false" data-mode="dark">Dark</button>
+        </div>
+      </div>
+      <div class="dsx__grid">
+        <section class="dsx__tile" aria-label="Generation lifecycle">
+          <p class="dsx__k"><b>Generation</b><span>Progress · Skeleton · StatusPill</span></p>
+          <div class="dsx-gen__meta"><span class="dsx-pill" data-pill></span><span class="dsx__k" style="margin:0">Render · 6 credits</span></div>
+          <div class="dsx-gen__stage" data-stage data-phase="ready"><div class="dsx-gen__sk"></div><div class="dsx-gen__img"></div><span class="dsx-gen__txt" data-stage-txt></span></div>
+          <div class="dsx-bar" role="progressbar" aria-label="Generation progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i data-fill></i></div>
+          <div class="dsx__row"><button type="button" class="dsx-btn dsx-btn--primary" data-gen>Generate</button><button type="button" class="dsx-btn dsx-btn--ghost" data-cancel hidden>Cancel</button></div>
+        </section>
+
+        <section class="dsx__tile" aria-label="Controls">
+          <p class="dsx__k"><b>Controls</b><span>Button · Switch · SegmentedControl</span></p>
+          <div class="dsx__row">
+            <button type="button" class="dsx-btn dsx-btn--primary">Generate</button><button type="button" class="dsx-btn dsx-btn--secondary">Credits</button>
+            <button type="button" class="dsx-btn dsx-btn--neutral">Share</button><button type="button" class="dsx-btn dsx-btn--solid">Export</button>
+            <button type="button" class="dsx-btn dsx-btn--ghost">Maybe later</button><button type="button" class="dsx-btn dsx-btn--danger">Delete</button>
+          </div>
+          <div class="dsx-sw-row"><span id="dsx-sw1">Snap to guides</span><button type="button" class="dsx-sw" role="switch" aria-checked="true" aria-labelledby="dsx-sw1"><i></i></button></div>
+          <div class="dsx-sw-row"><span id="dsx-sw2">Show layer names</span><button type="button" class="dsx-sw" role="switch" aria-checked="false" aria-labelledby="dsx-sw2"><i></i></button></div>
+          <div class="dsx-sw-row"><span id="dsx-q">Quality</span>
+            <div class="dsx-seg" role="radiogroup" aria-labelledby="dsx-q"><button type="button" role="radio" aria-checked="false">Low</button><button type="button" role="radio" aria-checked="true">Medium</button><button type="button" role="radio" aria-checked="false">High</button></div></div>
+        </section>
+
+        <section class="dsx__tile" aria-label="Overlays">
+          <p class="dsx__k"><b>Overlays</b><span>Tooltip · Menu · Dialog</span></p>
+          <div class="dsx__row">
+            <span class="dsx-pop"><button type="button" class="dsx-ib" aria-label="Share">${ICON.share}</button><span class="dsx-tip" role="tooltip">Share<span>⌘S</span></span></span>
+            <span class="dsx-pop"><button type="button" class="dsx-ib" aria-label="More actions" aria-haspopup="menu" aria-expanded="false" data-menu-btn>${ICON.dots}</button>
+              <div class="dsx-menu" role="menu" data-state="closed" data-menu>
+                <button type="button" role="menuitem" class="dsx-row">Rename<kbd>⏎</kbd></button>
+                <button type="button" role="menuitem" class="dsx-row">Duplicate<kbd>⌘D</kbd></button>
+                <div class="dsx-sep" role="separator"></div>
+                <button type="button" role="menuitem" class="dsx-row dsx-row--danger" data-del>Delete board</button>
+              </div></span>
+            <button type="button" class="dsx-btn dsx-btn--danger" data-del>Delete board</button>
+          </div>
+          <p class="dsx__k" style="margin-top:auto">Hover the share button for the tooltip. Open the menu, or delete, for the dialog. Esc closes.</p>
+          <div class="dsx-scrim" data-state="closed" data-scrim><div class="dsx-dlg" role="dialog" aria-modal="true" aria-labelledby="dsx-dt">
+            <h4 id="dsx-dt">Delete this board?</h4><p>The board and its 12 frames are removed for everyone.</p>
+            <div class="dsx__row"><button type="button" class="dsx-btn dsx-btn--ghost" data-dlg-close>Cancel</button><button type="button" class="dsx-btn dsx-btn--danger" data-dlg-close>Delete</button></div></div></div>
+        </section>
+
+        <section class="dsx__tile" aria-label="Agent states">
+          <p class="dsx__k"><b>Agent</b><span>StatusPill · pulse · ping · cursor</span></p>
+          <div class="dsx-ag"><span class="dsx-dot" aria-hidden="true"></span><span class="dsx-think">Thinking…</span></div>
+          <p class="dsx-stream" aria-live="off"><span data-stream></span><span class="dsx-cur" aria-hidden="true"></span></p>
+          <div class="dsx__row">
+            <span class="dsx-pill dsx-pill--accent">${SPIN("dsx-spin--sm")}2 running</span>
+            <span class="dsx-pill">Queued · 1</span>
+            <span class="dsx-pill dsx-pill--warning">Low credits</span>
+            <span class="dsx-pill dsx-pill--danger">Out of credits</span>
+          </div>
+        </section>
+      </div>
+      <p class="dsx__foot">Tokens: tokens.css. Motion: fast 90ms, base 200ms, theme 240ms. Respects reduced motion.</p>`;
+    host.appendChild(root);
+    const $ = (s) => root.querySelector(s), $$ = (s) => [...root.querySelectorAll(s)];
+    const timers = new Set(), genT = new Set();   // genT holds only the generation run, so Generate never cancels the agent loop or a button reset
+    const later = (fn, ms, set = timers) => { const t = setTimeout(() => { set.delete(t); fn(); }, ms); set.add(t); return t; };
+
+    // Light / Dark: the same semantic names, two modes
+    $$("[data-mode]").forEach((b) => b.addEventListener("click", () => {
+      root.classList.toggle("is-dark", b.dataset.mode === "dark");
+      $$("[data-mode]").forEach((x) => x.setAttribute("aria-checked", String(x === b)));
+    }));
+
+    // Switches and segmented controls
+    $$(".dsx-sw").forEach((s) => s.addEventListener("click", () => s.setAttribute("aria-checked", String(s.getAttribute("aria-checked") !== "true"))));
+    $$(".dsx-seg:not([aria-label]) button").forEach((b, _, all) => b.addEventListener("click", () => all.forEach((x) => x.setAttribute("aria-checked", String(x === b)))));
+    $$(".dsx-btn:not([data-gen]):not([data-cancel]):not([data-del]):not([data-dlg-close])").forEach((b) => b.addEventListener("click", () => {
+      if (b.classList.contains("dsx-btn--primary") && !b.hasAttribute("aria-busy")) {   // Button loading: spinner, aria-busy, clicks blocked
+        const html = b.innerHTML; b.setAttribute("aria-busy", "true"); b.disabled = true; b.innerHTML = SPIN() + html;
+        later(() => { b.removeAttribute("aria-busy"); b.disabled = false; b.innerHTML = html; }, 1400);
+      }
+    }));
+
+    // Generation lifecycle
+    const pill = $("[data-pill]"), stage = $("[data-stage]"), txt = $("[data-stage-txt]"), fill = $("[data-fill]"), bar = $(".dsx-bar");
+    const gen = $("[data-gen]"), cancel = $("[data-cancel]");
+    let phase = "ready", pct = 0, iv = 0, queuedAt = 0, ranOnce = false;
+    const LABEL = { ready: ["Ready", ""], queued: ["Queued", ""], running: ["Running", "accent"], done: ["Done", ""], cancelled: ["Cancelled", ""] };
+    const STAGE = { ready: "Select an image, then generate", queued: "Queued", running: "Generating", done: "Render complete", cancelled: "Cancelled" };
+    const render = () => {
+      const [t, tone] = LABEL[phase], busy = phase === "queued" || phase === "running";
+      pill.className = "dsx-pill" + (tone ? " dsx-pill--" + tone : "");
+      pill.innerHTML = (busy ? SPIN("dsx-spin--sm") : "") + t + (phase === "running" ? ` ${Math.round(pct)}%` : "");
+      stage.dataset.phase = phase; txt.textContent = STAGE[phase];
+      fill.style.transform = `translateX(-${100 - pct}%)`; bar.setAttribute("aria-valuenow", String(Math.round(pct)));
+      gen.disabled = busy; if (busy) { gen.setAttribute("aria-busy", "true"); } else gen.removeAttribute("aria-busy");
+      gen.innerHTML = (busy ? SPIN() : "") + (phase === "done" || phase === "cancelled" ? "Generate again" : "Generate");
+      cancel.hidden = !busy;
+    };
+    const stop = () => { clearInterval(iv); genT.forEach(clearTimeout); genT.clear(); };
+    const start = () => {
+      if (phase === "queued" || phase === "running") return;
+      stop(); ranOnce = true; pct = 0; phase = "queued"; render();
+      later(() => {
+        phase = "running"; render();
+        iv = setInterval(() => { pct = Math.min(100, pct + 2 + Math.random() * 6); if (pct >= 100) { clearInterval(iv); later(() => { phase = "done"; render(); }, 240, genT); } render(); }, 110);
+      }, 700, genT);
+    };
+    gen.addEventListener("click", start);
+    cancel.addEventListener("click", () => { stop(); phase = "cancelled"; pct = 0; render(); });
+    render();
+    const io = new IntersectionObserver((es) => { if (es[0].isIntersecting && !ranOnce) { start(); io.disconnect(); } }, { threshold: 0.3 });
+    io.observe(host);
+
+    // Menu, tooltip, dialog
+    const menu = $("[data-menu]"), mbtn = $("[data-menu-btn]"), scrim = $("[data-scrim]");
+    const setMenu = (open) => { menu.dataset.state = open ? "open" : "closed"; mbtn.setAttribute("aria-expanded", String(open)); };
+    const setDlg = (open) => { scrim.dataset.state = open ? "open" : "closed"; if (open) { setMenu(false); later(() => $("[data-dlg-close]").focus({ preventScroll: true }), 160); } };
+    mbtn.addEventListener("click", (e) => { e.stopPropagation(); setMenu(menu.dataset.state !== "open"); });
+    $$("[data-del]").forEach((b) => b.addEventListener("click", () => setDlg(true)));
+    $$("[data-dlg-close]").forEach((b) => b.addEventListener("click", () => setDlg(false)));
+    scrim.addEventListener("click", (e) => { if (e.target === scrim) setDlg(false); });
+    root.addEventListener("click", (e) => { if (!e.target.closest(".dsx-pop")) setMenu(false); });
+    root.addEventListener("keydown", (e) => { if (e.key === "Escape") { setMenu(false); setDlg(false); } });
+
+    // Agent: a streamed answer with the blinking cursor, looping
+    const out = $("[data-stream]"), LINE = "Starting with a muted moodboard: three sage greens and one warm sand.";
+    let i = 0, dir = 1;
+    const type = () => {
+      if (reduce()) { out.textContent = LINE; return; }
+      i += dir; out.textContent = LINE.slice(0, i);
+      if (dir > 0 && i >= LINE.length) { dir = -1; later(type, 2200); return; }
+      if (dir < 0 && i <= 0) { dir = 1; later(type, 600); return; }
+      later(type, dir > 0 ? 38 : 8);
+    };
+    out.textContent = ""; later(type, 800);
+
+    return () => { stop(); timers.forEach(clearTimeout); io.disconnect(); };
+  }
+
+  const DEMOS = { gapQuickFit, dsLive };
+  const mount = (el) => {
+    if (el.dataset.on) return;
+    el.dataset.on = "1";
+    const fn = DEMOS[el.dataset.caseDemo];
+    if (fn) fn(el);
+  };
   const scan = () => document.querySelectorAll("[data-case-demo]").forEach(mount);
   scan();
   new MutationObserver(scan).observe(document.documentElement, { childList: true, subtree: true });

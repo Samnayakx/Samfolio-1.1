@@ -1,0 +1,172 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8" />
+<title>Gap 3D Fit: design decisions</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Outfit:wght@400;500;600&display=block" rel="stylesheet" />
+<style>
+* { box-sizing: border-box; } body { margin: 0; background: #fff; }
+.board { position: relative; width: 2007px; height: 10425px; overflow: hidden; background-color: #FAF8F2;
+  background-image: linear-gradient(#E4E8EF 2px, transparent 2px), linear-gradient(90deg, #E4E8EF 2px, transparent 2px); background-size: 40px 40px; background-position: 14px 18px; font-family: "Outfit", sans-serif; color: #12233a; }
+.tag { position: absolute; left: 70px; top: 60px; display: flex; align-items: center; gap: 20px; padding: 0 34px; height: 88px; border-radius: 18px; background: #fff;
+  font: 600 36px/1 "Outfit"; letter-spacing: .01em; text-transform: uppercase; box-shadow: 0 6px 24px -10px rgba(0,43,92,.25); }
+.tag svg { width: 42px; height: 42px; }
+.legend { position: absolute; left: 760px; top: 86px; display: flex; gap: 40px; align-items: center; font: 500 28px/1 "Outfit"; color: #2F3E52; }
+.legend i { display: inline-block; width: 46px; height: 12px; border-radius: 6px; margin-right: 12px; vertical-align: -1px; }
+.legend .d i { background: repeating-linear-gradient(90deg, #5D7A9C 0 8px, transparent 8px 13px); }
+.legend .s i { background: #12233a; }
+.row { position: absolute; left: 0; width: 100%; height: 2043px; }
+.num { position: absolute; left: 70px; top: 0; display: grid; place-items: center; width: 72px; height: 72px; border-radius: 18px; background: #fff; font: 600 34px/1 "Outfit"; box-shadow: 0 6px 20px -10px rgba(0,43,92,.25); }
+.frame { position: absolute; top: 0; overflow: hidden; border-radius: 14px; background: #fff; box-shadow: 0 0 0 1px rgba(0,43,92,.06), 0 18px 44px -20px rgba(0,43,92,.38); }
+.call { position: absolute; margin: 0; font: 600 46px/1.05 "Caveat", cursive; color: #12233a; }
+.arrow { position: absolute; left: 0; top: 0; overflow: visible; fill: none; stroke: #12233a; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; z-index: 3; }
+.chkl { position: absolute; font: 600 21px/1 "Outfit"; letter-spacing: .14em; text-transform: uppercase; color: #5B6B7F; }
+.chk { position: absolute; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+.dc { padding: 22px 26px 24px; border-radius: 14px; background: #fff; border-top: 7px solid var(--c); box-shadow: 0 6px 22px -14px rgba(0,43,92,.35); }
+.dc.ok { --c: #1C7C45; --bg: #E4F3EA; } .dc.miss { --c: #B3261E; --bg: #FBE7E5; } .dc.part { --c: #A06A00; --bg: #FFF1D0; }
+.dh { display: flex; justify-content: space-between; align-items: center; }
+.dn { font: 600 18px/1 "Outfit"; letter-spacing: .12em; text-transform: uppercase; color: #5B6B7F; }
+.pill { padding: 8px 13px; border-radius: 999px; background: var(--bg); color: var(--c); font: 600 19px/1 "Outfit"; }
+.dt { margin-top: 12px; font: 600 28px/1.15 "Outfit"; letter-spacing: -.005em; color: #12233a; }
+.dc p { margin: 10px 0 0; font: 500 38px/1.08 "Caveat", cursive; color: #2F3E52; }
+.panel { position: absolute; }
+.ttl { position: absolute; top: 0; }
+.ttl { display: flex; align-items: center; gap: 22px; height: 72px; font: 600 50px/1 "Outfit"; letter-spacing: -.005em; }
+.sel, .no { font: 600 21px/1 "Outfit"; letter-spacing: .1em; text-transform: uppercase; padding: 12px 16px; border-radius: 10px; }
+.sel { background: #12233a; color: #fff; } .no { background: #fff; color: #6B7A8E; box-shadow: inset 0 0 0 1.5px #C8D3E2; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; }
+.lab { margin: 0 0 8px; font: 600 21px/1 "Outfit"; letter-spacing: .12em; text-transform: uppercase; color: #5B6B7F; }
+.hw { margin: 0 0 30px; font: 500 43px/1.1 "Caveat", cursive; color: #2F3E52; }
+.mets { display: flex; flex-direction: column; gap: 34px; padding-top: 4px; }
+.m { margin-bottom: 14px; display: grid; grid-template-columns: 1fr 130px; grid-template-areas: "l l" "t v"; row-gap: 12px; align-items: center; }
+.ml { grid-area: l; font: 500 25px/1 "Outfit"; color: #4a4a62; }
+.tr { grid-area: t; position: relative; height: 20px; border-radius: 10px; background: rgba(0,43,92,.09); }
+.fl { height: 100%; border-radius: 10px; background: repeating-linear-gradient(90deg, #5D7A9C 0 14px, #8FA8C4 14px 18px); }
+.tk { position: absolute; top: -10px; width: 4px; height: 40px; background: #002B5C; border-radius: 2px; }
+.tk u { position: absolute; top: 48px; left: 50%; transform: translateX(-50%); white-space: nowrap; text-decoration: none; font: 600 19px/1 "Outfit"; letter-spacing: .06em; text-transform: uppercase; color: #002B5C; }
+.mv { grid-area: v; text-align: right; font: 600 44px/1 "Outfit"; letter-spacing: -.01em; }
+.ro { margin-top: 8px; padding: 20px 28px 22px 30px; border-radius: 14px; background: #fff; border-left: 6px solid #002B5C; font: 600 44px/1.08 "Caveat", cursive; color: #12233a; box-shadow: 0 6px 20px -12px rgba(0,43,92,.3); }
+.ro span { display: block; margin-bottom: 8px; font: 600 19px/1 "Outfit"; letter-spacing: .14em; text-transform: uppercase; color: #002B5C; }
+.real { margin-top: 6px; display: flex; align-items: baseline; gap: 16px; padding: 16px 22px; border-radius: 14px; background: #fff; box-shadow: 0 6px 20px -12px rgba(0,43,92,.3); }
+.real b { font: 600 70px/1 "Outfit"; color: #1C7C45; letter-spacing: -.02em; } .real span { font: 500 26px/1.2 "Outfit"; color: #2F3E52; }
+/* mock UI, in the prototype's own styling (Gap/Old Navy: navy, pill chips, square buttons) */
+.mk { position: absolute; left: 0; top: 0; width: 904px; height: 562px; transform-origin: 0 0; background: #fff; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; color: #111; }
+.mk > * { position: absolute; }
+.mt { left: 0; right: 0; top: 16px; text-align: center; font: 700 13px/1 inherit; letter-spacing: .22em; color: #003664; }
+.mx { right: 22px; top: 12px; font-size: 16px; color: #111; }
+.h { left: 40px; top: 54px; font: 700 18px/1.2 inherit; color: #003664; }
+.f label { display: block; margin-bottom: 5px; font-size: 12px; color: #555; }
+.in { display: flex; align-items: center; justify-content: space-between; height: 38px; padding: 0 12px; border: 1px solid #b9b9b9; border-radius: 3px; font-size: 14px; color: #8a8a8a; background: #fff; }
+.in i { font-style: normal; font-size: 12px; color: #777; }
+.cta { height: 44px; display: grid; place-items: center; background: #002B5C; color: #fff; font: 700 13px/1 inherit; letter-spacing: .18em; }
+.cta.off { background: #B3C0D2; }
+.sub { margin: 0; font-size: 13px; line-height: 1.45; color: #444; }
+.lk { font-size: 13px; color: #003664; text-decoration: underline; }
+.vw { width: 398px; height: 473px; display: block; border-radius: 6px; }
+.lb { font-size: 13px; color: #555; }
+.chip { width: 58px; height: 36px; display: grid; place-items: center; border: 1px solid #c4c4c4; border-radius: 20px; font-size: 14px; background: #fff; }
+.chip.on { background: #002B5C; border-color: #002B5C; color: #fff; }
+.btn { height: 34px; padding: 0 18px; display: grid; place-items: center; border: 1.5px solid #111; font-size: 14px; background: #fff; }
+.trk { height: 8px; border-radius: 4px; background: linear-gradient(90deg, #C8D3E2, #002B5C 50%, #C8D3E2); }
+.th { position: absolute; top: -9px; width: 26px; height: 26px; margin-left: -13px; border-radius: 50%; background: #fff; border: 3px solid #002B5C; box-shadow: 0 2px 6px rgba(0,0,0,.25); }
+.stop { font-size: 13px; color: #666; } .stop.on { color: #003664; font-weight: 700; }
+.ban { padding: 14px 16px; border-radius: 4px; background: #EEF3F9; border: 1px solid #C9D6E6; color: #003664; font-size: 13px; line-height: 1.4; }
+.ban b { display: block; font-size: 14px; margin-bottom: 4px; }
+.sz { font: 700 26px/1 inherit; color: #003664; }
+.zr { display: grid; grid-template-columns: 70px 1fr 22px; align-items: center; height: 40px; border-top: 1px solid #ddd; font-size: 14px; }
+.zr em { font-style: normal; color: #666; } .zr b { font-weight: 700; }
+.zr i { width: 20px; height: 20px; border: 1.5px solid #003664; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-size: 11px; color: #003664; font-weight: 700; }
+</style></head><body>
+<div class="board" id="b-variations">
+ <div class="tag">Design decisions
+  <svg viewBox="0 0 32 32" fill="none" stroke="#002B5C" stroke-width="3.4" stroke-linecap="round"><path d="M16 3v26M4.8 9.5l22.4 13M27.2 9.5L4.8 22.5"/></svg></div>
+ <div class="legend"><span class="s"><i></i>Same 3D viewer in every variation</span><span class="d"><i></i>Dashed bars: illustrative figures, not measured</span></div>
+ <section class="row" style="top:200px">
+  <div class="num">A</div>
+  <div class="ttl" style="left:380px">One long form<span class="no">Not selected</span></div>
+  <div class="frame" style="left:380px;top:84px;width:1537px;height:955px"><div class="mk" style="transform:scale(1.7)"><div class="mt">QUICKFIT FINDER</div><div class="mx">&#x2715;</div><div class="h">Tell us about you</div><div class="f" style="left:40px;top:92px;width:194px"><label>Height</label><div class="in"><span>5′3″</span><i></i></div></div><div class="f" style="left:246px;top:92px;width:194px"><label>Weight</label><div class="in"><span>lbs</span><i>lbs</i></div></div><div class="f" style="left:40px;top:158px;width:194px"><label>Age</label><div class="in"><span>Years</span><i></i></div></div><div class="f" style="left:246px;top:158px;width:194px"><label>Usual size</label><div class="in"><span>Select</span><i></i></div></div><div class="f" style="left:40px;top:224px;width:194px"><label>Waist</label><div class="in"><span>inches</span><i>in</i></div></div><div class="f" style="left:246px;top:224px;width:194px"><label>Hips</label><div class="in"><span>inches</span><i>in</i></div></div><div class="f" style="left:40px;top:290px;width:194px"><label>Inseam</label><div class="in"><span>inches</span><i>in</i></div></div><div class="f" style="left:246px;top:290px;width:194px"><label>Thigh</label><div class="in"><span>inches</span><i>in</i></div></div><div class="f" style="left:40px;top:356px;width:194px"><label>Calf</label><div class="in"><span>inches</span><i>in</i></div></div><div class="cta" style="left:40px;top:440px;width:400px">SHOW MY SIZE</div><img class="vw" src="src/viewer.png" alt="" style="left:470px;top:52px" /></div></div>
+  <p class="call" style="left:60px;top:468px;width:290px">Ten fields before any value.</p>
+  <svg class="arrow" width="3000" height="2043" viewBox="0 0 3000 2043"><path d="M354.0 513.7 Q388.3 540.4 429.8 527.7"/><path d="M419.6 538.7 L429.8 527.7 L415.2 524.3"/></svg>
+  <div class="chkl" style="left:380px;top:1079px">Scored against the three limits</div>
+  <div class="chk" style="left:380px;top:1123px;width:1537px"><div class="dc miss"><div class="dh"><span class="dn">Limit 1 · Inputs</span><span class="pill">✕ Misses</span></div><div class="dt">Accuracy vs completion rate</div><p>Accuracy first, so only 38% finished.</p></div><div class="dc miss"><div class="dh"><span class="dn">Limit 2 · Rationale</span><span class="pill">✕ Misses</span></div><div class="dt">Explainability vs purchase velocity</div><p>No reason offered. Nothing to inspect.</p></div><div class="dc miss"><div class="dh"><span class="dn">Limit 3 · Fidelity</span><span class="pill">✕ Misses</span></div><div class="dt">Fit fidelity vs mobile performance</div><p>Fit left unexplained: a size, then guesswork.</p></div></div>
+  <div class="panel" style="left:380px;top:1413px;width:1537px">
+    <div class="cols">
+      <div class="txt"><p class="lab">What I tried</p><p class="hw">Ask for everything on one screen, so the size is exact.</p><p class="lab">Why not</p><p class="hw">Ten fields before any value. The avatar sat empty until the end, and nearly two in three people left.</p></div>
+      <div class="mets"><div class="m"><span class="ml">Completed</span><div class="tr"><div class="fl" style="width:38.0%"></div><div class="tk" style="left:71.0%"><u>Selected 71%</u></div></div><b class="mv">38%</b></div><div class="m"><span class="ml">Median time</span><div class="tr"><div class="fl" style="width:78.3%"></div><div class="tk" style="left:28.3%"><u>Selected 34 s</u></div></div><b class="mv">94 s</b></div><div class="m"><span class="ml">Size confidence</span><div class="tr"><div class="fl" style="width:62.0%"></div><div class="tk" style="left:86.0%"><u>Selected 4.3</u></div></div><b class="mv">3.1 / 5</b></div>
+        <div class="ro"><span>Read-out</span>62 of every 100 people left before they ever saw a size.</div>
+        
+      </div>
+    </div>
+  </div>
+ </section>
+ <section class="row" style="top:2243px">
+  <div class="num">B</div>
+  <div class="ttl" style="left:380px">Measurements first<span class="no">Not selected</span></div>
+  <div class="frame" style="left:380px;top:84px;width:1537px;height:955px"><div class="mk" style="transform:scale(1.7)"><div class="mt">QUICKFIT FINDER</div><div class="mx">&#x2715;</div><div class="h">Enter your measurements</div><p class="sub" style="left:40px;top:80px;width:400px">Use a soft tape measure and keep it snug. Waist at the narrowest point, hips at the widest.</p><div class="f" style="left:40px;top:138px;width:300px"><label>Waist</label><div class="in"><span>0.0</span><i>in</i></div></div><span class="lk" style="left:352px;top:169px">How to measure</span><div class="f" style="left:40px;top:214px;width:300px"><label>Hips</label><div class="in"><span>0.0</span><i>in</i></div></div><span class="lk" style="left:352px;top:245px">How to measure</span><div class="f" style="left:40px;top:290px;width:300px"><label>Inseam</label><div class="in"><span>0.0</span><i>in</i></div></div><span class="lk" style="left:352px;top:321px">How to measure</span><p class="sub" style="left:40px;top:372px;width:400px;color:#777">Not sure? Measuring all three takes about five minutes.</p><div class="cta off" style="left:40px;top:440px;width:400px">FIND MY SIZE</div><img class="vw" src="src/viewer.png" alt="" style="left:470px;top:52px" /></div></div>
+  <p class="call" style="left:60px;top:308px;width:290px">Numbers most people don't know.</p>
+  <svg class="arrow" width="3000" height="2043" viewBox="0 0 3000 2043"><path d="M354.0 353.9 Q388.3 380.6 429.8 367.9"/><path d="M419.6 378.9 L429.8 367.9 L415.2 364.5"/></svg>
+  <div class="chkl" style="left:380px;top:1079px">Scored against the three limits</div>
+  <div class="chk" style="left:380px;top:1123px;width:1537px"><div class="dc miss"><div class="dh"><span class="dn">Limit 1 · Inputs</span><span class="pill">✕ Misses</span></div><div class="dt">Accuracy vs completion rate</div><p>Numbers first. 46% finished and most guessed.</p></div><div class="dc miss"><div class="dh"><span class="dn">Limit 2 · Rationale</span><span class="pill">✕ Misses</span></div><div class="dt">Explainability vs purchase velocity</div><p>A size appears with no reason attached.</p></div><div class="dc miss"><div class="dh"><span class="dn">Limit 3 · Fidelity</span><span class="pill">✕ Misses</span></div><div class="dt">Fit fidelity vs mobile performance</div><p>No words for tight, fitted or loose.</p></div></div>
+  <div class="panel" style="left:380px;top:1413px;width:1537px">
+    <div class="cols">
+      <div class="txt"><p class="lab">What I tried</p><p class="hw">Lead with tape-measure numbers for the most accurate fit.</p><p class="lab">Why not</p><p class="hw">Most people don't know their waist or hips off-hand, so they guessed or stopped. Precise on paper, noisy in practice.</p></div>
+      <div class="mets"><div class="m"><span class="ml">Completed</span><div class="tr"><div class="fl" style="width:46.0%"></div><div class="tk" style="left:71.0%"><u>Selected 71%</u></div></div><b class="mv">46%</b></div><div class="m"><span class="ml">Median time</span><div class="tr"><div class="fl" style="width:59.2%"></div><div class="tk" style="left:28.3%"><u>Selected 34 s</u></div></div><b class="mv">71 s</b></div><div class="m"><span class="ml">Size confidence</span><div class="tr"><div class="fl" style="width:68.0%"></div><div class="tk" style="left:86.0%"><u>Selected 4.3</u></div></div><b class="mv">3.4 / 5</b></div>
+        <div class="ro"><span>Read-out</span>Slower than the selected design, and still less trusted.</div>
+        
+      </div>
+    </div>
+  </div>
+ </section>
+ <section class="row" style="top:4286px">
+  <div class="num">C</div>
+  <div class="ttl" style="left:380px">Average body first<span class="no">Not selected</span></div>
+  <div class="frame" style="left:380px;top:84px;width:1537px;height:955px"><div class="mk" style="transform:scale(1.7)"><div class="mt">QUICKFIT FINDER</div><div class="mx">&#x2715;</div><div class="lb" style="left:30px;top:62px">Size</div><div class="chip" style="left:30px;top:88px">00</div><div class="chip" style="left:96px;top:88px">0</div><div class="chip" style="left:162px;top:88px">2</div><div class="chip" style="left:30px;top:134px">4</div><div class="chip" style="left:96px;top:134px">6</div><div class="chip on" style="left:162px;top:134px">8</div><div class="chip" style="left:30px;top:180px">10</div><div class="chip" style="left:96px;top:180px">12</div><div class="chip" style="left:162px;top:180px">14</div><div class="chip" style="left:30px;top:226px">16</div><div class="chip" style="left:96px;top:226px">18</div><div class="chip" style="left:162px;top:226px">20</div><div class="ban" style="left:30px;top:286px;width:194px"><b>Showing an average body</b><span>Edit it to match yours.</span></div><div class="btn" style="left:30px;top:392px">Edit Body</div><div class="lb" style="left:675px;top:62px">On your avatar</div><div class="sz" style="left:675px;top:82px">8 Short</div><div class="zr" style="left:675px;top:130px;width:199px"><em>Waist</em><b>Fitted</b><i>?</i></div><div class="zr" style="left:675px;top:174px;width:199px"><em>Hips</em><b>Fitted</b><i>?</i></div><div class="zr" style="left:675px;top:218px;width:199px"><em>Calf</em><b>Loose</b><i>?</i></div><img class="vw" src="src/viewer.png" alt="" style="left:253px;top:52px" /></div></div>
+  <p class="call" style="left:60px;top:578px;width:290px">An average body, not theirs.</p>
+  <svg class="arrow" width="3000" height="2043" viewBox="0 0 3000 2043"><path d="M354.0 624.2 Q378.8 650.7 412.8 638.2"/><path d="M403.2 649.7 L412.8 638.2 L398.0 635.6"/></svg>
+  <div class="chkl" style="left:380px;top:1079px">Scored against the three limits</div>
+  <div class="chk" style="left:380px;top:1123px;width:1537px"><div class="dc part"><div class="dh"><span class="dn">Limit 1 · Inputs</span><span class="pill">~ Partly</span></div><div class="dt">Accuracy vs completion rate</div><p>Completion first: fast, but not their body.</p></div><div class="dc miss"><div class="dh"><span class="dn">Limit 2 · Rationale</span><span class="pill">✕ Misses</span></div><div class="dt">Explainability vs purchase velocity</div><p>A reason can't carry weight on an average body.</p></div><div class="dc part"><div class="dh"><span class="dn">Limit 3 · Fidelity</span><span class="pill">~ Partly</span></div><div class="dt">Fit fidelity vs mobile performance</div><p>Fit shown by 3D alone, with no words to go with it.</p></div></div>
+  <div class="panel" style="left:380px;top:1413px;width:1537px">
+    <div class="cols">
+      <div class="txt"><p class="lab">What I tried</p><p class="hw">Show a default body straight away and let people edit it later.</p><p class="lab">Why not</p><p class="hw">Fastest, with the best completion, but the body was not theirs. The size felt generic, so confidence was the lowest of the four.</p></div>
+      <div class="mets"><div class="m"><span class="ml">Completed</span><div class="tr"><div class="fl" style="width:82.0%"></div><div class="tk" style="left:71.0%"><u>Selected 71%</u></div></div><b class="mv">82%</b></div><div class="m"><span class="ml">Median time</span><div class="tr"><div class="fl" style="width:15.0%"></div><div class="tk" style="left:28.3%"><u>Selected 34 s</u></div></div><b class="mv">18 s</b></div><div class="m"><span class="ml">Size confidence</span><div class="tr"><div class="fl" style="width:52.0%"></div><div class="tk" style="left:86.0%"><u>Selected 4.3</u></div></div><b class="mv">2.6 / 5</b></div>
+        <div class="ro"><span>Read-out</span>Speed alone did not build trust, and trust is what moves a shopper to Add to Bag.</div>
+        
+      </div>
+    </div>
+  </div>
+ </section>
+ <section class="row" style="top:6329px">
+  <div class="num">D</div>
+  <div class="ttl" style="left:380px">Tight-to-loose slider<span class="no">Not selected</span></div>
+  <div class="frame" style="left:380px;top:84px;width:1537px;height:955px"><div class="mk" style="transform:scale(1.7)"><div class="mt">QUICKFIT FINDER</div><div class="mx">&#x2715;</div><div class="h">How do you like it to fit?</div><div class="lb" style="left:40px;top:96px">Fit</div><div class="trk" style="left:40px;top:150px;width:400px"><i class="th" style="left:50%"></i></div><div class="stop" style="left:40px;top:178px;">Tight</div><div class="stop on" style="left:187px;top:178px;">Fitted</div><div class="stop" style="left:340px;top:178px;">Loose</div><p class="sub" style="left:40px;top:222px;width:400px">Drag to change how the jeans sit on the avatar. The model updates as you slide.</p><div class="lb" style="left:40px;top:296px">Size</div><div class="chip" style="left:40px;top:320px">6</div><div class="chip on" style="left:106px;top:320px">8</div><div class="chip" style="left:172px;top:320px">10</div><div class="cta" style="left:40px;top:440px;width:400px">ADD TO BAG</div><img class="vw" src="src/viewer.png" alt="" style="left:470px;top:52px" /></div></div>
+  <p class="call" style="left:60px;top:279px;width:290px">A control that moves the model, not the answer.</p>
+  <svg class="arrow" width="3000" height="2043" viewBox="0 0 3000 2043"><path d="M354.0 325.0 Q386.4 351.6 426.4 339.0"/><path d="M416.3 350.1 L426.4 339.0 L411.8 335.8"/></svg>
+  <div class="chkl" style="left:380px;top:1079px">Scored against the three limits</div>
+  <div class="chk" style="left:380px;top:1123px;width:1537px"><div class="dc miss"><div class="dh"><span class="dn">Limit 1 · Inputs</span><span class="pill">✕ Misses</span></div><div class="dt">Accuracy vs completion rate</div><p>Asks for a preference, not their numbers.</p></div><div class="dc miss"><div class="dh"><span class="dn">Limit 2 · Rationale</span><span class="pill">✕ Misses</span></div><div class="dt">Explainability vs purchase velocity</div><p>No reason for the size, only a slider.</p></div><div class="dc miss"><div class="dh"><span class="dn">Limit 3 · Fidelity</span><span class="pill">✕ Misses</span></div><div class="dt">Fit fidelity vs mobile performance</div><p>Refits the 3D garment on every drag.</p></div></div>
+  <div class="panel" style="left:380px;top:1413px;width:1537px">
+    <div class="cols">
+      <div class="txt"><p class="lab">What I tried</p><p class="hw">Let people dial the garment from tight to loose on the model and judge the fit by eye.</p><p class="lab">Why not</p><p class="hw">Fit comes from the size, not a preference, so the slider promised looks the product can't deliver. It also meant refitting the 3D garment on every drag, and people played with it instead of deciding.</p></div>
+      <div class="mets"><div class="m"><span class="ml">Completed</span><div class="tr"><div class="fl" style="width:58.0%"></div><div class="tk" style="left:71.0%"><u>Selected 71%</u></div></div><b class="mv">58%</b></div><div class="m"><span class="ml">Median time</span><div class="tr"><div class="fl" style="width:52.5%"></div><div class="tk" style="left:28.3%"><u>Selected 34 s</u></div></div><b class="mv">63 s</b></div><div class="m"><span class="ml">Size confidence</span><div class="tr"><div class="fl" style="width:70.0%"></div><div class="tk" style="left:86.0%"><u>Selected 4.3</u></div></div><b class="mv">3.5 / 5</b></div>
+        <div class="ro"><span>Read-out</span>People moved the slider, then still asked which size to buy.</div>
+        
+      </div>
+    </div>
+  </div>
+ </section>
+ <section class="row" style="top:8372px">
+  <div class="num">E</div>
+  <div class="ttl" style="left:380px">Three short steps<span class="sel">Selected</span></div>
+  <div class="frame" style="left:380px;top:84px;width:1537px;height:955px"><img src="src/final-crop.png" style="width:100%;height:100%;display:block" alt="" /></div>
+  <p class="call" style="left:60px;top:289px;width:290px">Value after one tap. Reasons on request.</p>
+  <svg class="arrow" width="3000" height="2043" viewBox="0 0 3000 2043"><path d="M354.0 335.2 Q374.8 361.5 406.0 349.2"/><path d="M396.7 360.9 L406.0 349.2 L391.2 347.0"/></svg>
+  <div class="chkl" style="left:380px;top:1079px">Scored against the three limits</div>
+  <div class="chk" style="left:380px;top:1123px;width:1537px"><div class="dc ok"><div class="dh"><span class="dn">Limit 1 · Inputs</span><span class="pill">✓ Meets</span></div><div class="dt">Accuracy vs completion rate</div><p>Numbers stay visible and optional. Complexity comes after value.</p></div><div class="dc ok"><div class="dh"><span class="dn">Limit 2 · Rationale</span><span class="pill">✓ Meets</span></div><div class="dt">Explainability vs purchase velocity</div><p>Why this recommendation: one tap, never forced.</p></div><div class="dc ok"><div class="dh"><span class="dn">Limit 3 · Fidelity</span><span class="pill">✓ Meets</span></div><div class="dt">Fit fidelity vs mobile performance</div><p>Fit words on tap: light on mobile, clear in meaning.</p></div></div>
+  <div class="panel" style="left:380px;top:1413px;width:1537px">
+    <div class="cols">
+      <div class="txt"><p class="lab">What I tried</p><p class="hw">Height first, then a size they know, with numbers optional.</p><p class="lab">Why it won</p><p class="hw">Value appears after one tap, the avatar becomes theirs, and every size comes with reasons. Confidence is the highest, and in the A/B test add-to-bag rose 61%.</p></div>
+      <div class="mets"><div class="m"><span class="ml">Completed</span><div class="tr"><div class="fl" style="width:71.0%"></div><div class="tk" style="left:71.0%"><u>Selected 71%</u></div></div><b class="mv">71%</b></div><div class="m"><span class="ml">Median time</span><div class="tr"><div class="fl" style="width:28.3%"></div><div class="tk" style="left:28.3%"><u>Selected 34 s</u></div></div><b class="mv">34 s</b></div><div class="m"><span class="ml">Size confidence</span><div class="tr"><div class="fl" style="width:86.0%"></div><div class="tk" style="left:86.0%"><u>Selected 4.3</u></div></div><b class="mv">4.3 / 5</b></div>
+        
+        <div class="real"><b>+61%</b><span>add-to-bag in the A/B test (measured)</span></div>
+      </div>
+    </div>
+  </div>
+ </section>
+</div>
+</body></html>

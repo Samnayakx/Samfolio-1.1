@@ -3,6 +3,8 @@
 const fs = require("fs"), path = require("path");
 const root = path.resolve(__dirname, "..");
 const files = ["index.html", "about.html", "writing.html", "playground.html", "case-study.html", ...["writing", "work"].flatMap((d) => (fs.existsSync(path.join(root, d)) ? fs.readdirSync(path.join(root, d)).filter((f) => f.endsWith(".html")).map((f) => `${d}/${f}`) : []))];
+// Most case studies share one seven-section story; a study can declare its own flow in js/site.js (`cs.structure`) and list it here
+const STRUCTURE_BY_PAGE = { "work/gap-3d-fit.html": "final-designs,overview,what-existed-today,understanding-users,design-process,outcomes-and-reflection", "work/cotonai-design-system.html": "context,diagnosis,design-decisions,system-architecture,applied-workflows,engineering-validation,measured-impact" };
 const STRUCTURE = "overview-background,defining-the-problem,understanding-your-users,your-role-and-responsibilities,scope-and-constraints,ideation-steps-the-solution,outcomes-and-takeaways";
 const seen = { title: new Map(), desc: new Map() }; let bad = 0;
 const fail = (f, m) => { console.error(`✗ ${f}: ${m}`); bad++; };
@@ -14,7 +16,8 @@ for (const f of files) {
   if (f.startsWith("work/") && !/study__sec/.test(s)) fail(f, "not prerendered (no case content in HTML)");
   if (f.startsWith("work/")) { // every case study tells its story in the same seven sections, in order
     const ids = [...s.matchAll(/<section class="study__sec" id="([^"]+)"/g)].map((m) => m[1]).join(",");
-    if (ids !== STRUCTURE) fail(f, `sections are not the seven-section structure (found: ${ids || "none"})`);
+    const want = STRUCTURE_BY_PAGE[f] || STRUCTURE;
+    if (ids !== want) fail(f, `sections are not the expected structure (found: ${ids || "none"}; want: ${want})`);
   }
 }
 console.log(bad ? `${bad} problem(s)` : `OK: ${files.length} pages checked`); process.exit(bad ? 1 : 0);

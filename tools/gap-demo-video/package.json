@@ -1,0 +1,23 @@
+{
+  "name": "gap-demo-video",
+  "private": true,
+  "description": "Remotion + GSAP product demo of the Old Navy QuickFit 3D viewer, rendered to assets/images/gap for the case card and hero.",
+  "scripts": {
+    "capture": "DPR=3 node capture.cjs",
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts QuickFitDemo out/quickfit-demo.mp4 --codec h264 --crf 20 --pixel-format yuv420p",
+    "poster": "remotion still src/index.ts QuickFitDemo out/quickfit-demo-poster.jpg --frame 330 --image-format jpeg --jpeg-quality 82"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.250",
+    "@remotion/google-fonts": "^4.0.250",
+    "gsap": "^3.12.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.250"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "typescript": "^5.6.3"
+  }
+}

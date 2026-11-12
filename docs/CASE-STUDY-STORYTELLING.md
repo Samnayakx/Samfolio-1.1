@@ -5,6 +5,19 @@
 > for a senior / founding product designer narrative. Layout and UI are defined in `DESIGN.md`
 > ("Case-study long-form direction"); this file only covers **what the story says and in what order**.
 > Every case study, UX or branding, uses the same seven sections (after Ruben Cespedes' "Case Study Structure").
+>
+> **One exception: Gap 3D Fit** follows a research-led flow after Rachel Chen's PokerGPT study (Final Designs first, then Overview, which
+> carries the initial observations as a part, then What Existed Today, Understanding Users, Design Process, Outcomes and Reflection). It
+> declares that flow as `cs.structure` in `js/site.js`, and `tools/check-seo.cjs` lists it in `STRUCTURE_BY_PAGE`. Its
+> section objects can use two extra blocks: `insight: [label, text]` (a hypothesis or finding to stop on) and
+> `hmw: "..."` (renders as "The question: How might we …"). Rachel's Competitor Research step is left out on purpose:
+> there are no Gap competitor facts to write it from, and facts are never invented.
+>
+> **Second exception: CotonAI Design System** follows a systems flow that Sambit specified: Context → Diagnosis → Design decisions → System
+> architecture → Applied workflows → Engineering validation → Measured impact. It is declared as `cs.structure` on its project in `js/site.js`
+> and listed in `STRUCTURE_BY_PAGE` in `tools/check-seo.cjs`. Every number on it comes from the CotonAI repo (`docs/design-system/AUDIT.md`,
+> `MIGRATION.md`, `design-tokens/cotonai.tokens.json`) or from running its gates (`npm run tokens:check`, `npm run lint:colors`). Measured impact
+> carries only what was measured, and says plainly what was not (adoption, time saved, how it looks in a browser). The other five studies keep the fixed seven.
 
 ---
 
@@ -112,7 +125,7 @@ The seven sections never change. A variant only changes what goes inside them.
 - **Early-stage AI (CotonAI Agent).** In 05, separate *what the live product proved* from *where the agent is going*. Pilot numbers are labelled "early pilot".
 - **Startup, then acquired (Gap 3D Fit).** Overview states the hypothesis with the startup and acquisition context, using public sources. 06 holds the decisions (real screen first, then the four trade-off rows, then "What testing showed / What I did next") and the final flow as a part. Lead 07 with the method ("A/B test") before the number. Use real screens and published numbers only.
 - **Compressed (Trailhead Solve).** 06 carries `What we killed`, `What we shipped` and `Build & test` as parts, so the longer beats get sub-heads without adding rail items.
-- **Systems work (CotonAI Design System).** 03 is about the people who build with the system, not end users. If there was no user study, say so.
+- **Systems work (CotonAI Design System).** Uses its own seven-step flow (see the second exception at the top). Diagnosis cites counts from an audit, Design decisions pairs each choice with the number that forced it (a contrast ratio, a count), and Measured impact separates what was measured from what was not.
 - **Branding and redesign (Payman AI).** Positioning is the decision. 02 is the tension between product and surface, 03 is the buyer, 06 holds the decision, the system and the page as parts, and 07 names when there are no production metrics. The system is *derived from* the decision, never assembled from taste, and each system paragraph starts with its own name.
 
 ---

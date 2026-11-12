@@ -966,3 +966,70 @@ press scale .97. Only opacity, transform, clip-path and colour animate. Loops ru
 off under `prefers-reduced-motion`; every control still works. Photos (`assets/images/playground/avatar-1..3.jpg`,
 `moss.jpg`, `sunset.jpg`) are optional: initials and CSS gradients stand in until they exist.
 INT-13 and INT-15 (compose bar, empty sessions) follow the same tokens and rules.
+
+## Data density (November 2026)
+
+Applies to dense product UI: dashboards, tables, lists, sidebars, and the data-heavy demos
+in case studies and the playground. The goal is efficiency: maximum context on screen, the
+right item found in milliseconds, no needless scrolling. Marketing and editorial pages keep
+the airy rules in §4 and §14.
+
+**Where this differs from the rest of this file:** dense UI may use hairline borders
+(§14 says no 1px borders for page chrome) and a 6px radius on interactive items. Everything
+else here agrees with §1 (no shadows, small radii, mono for data).
+
+### 1. Hierarchy by opacity, not colour
+
+Use one foreground colour (`#F4F4F4` on dark, `#040404` on light, per §14) and vary its alpha.
+Never add hues to separate text levels.
+
+| Alpha | Use |
+|---|---|
+| 100% | Headers, active states, critical text |
+| 85% | Body copy, list items, standard labels |
+| 40–60% | Metadata, timestamps, shortcuts, placeholders |
+| 15–25% | Borders, dividers, disabled states |
+
+Because it is alpha, the hierarchy survives a background or brand colour change.
+
+### 2. Hairline structural grid
+
+- No blur drop shadows; they use space and muddy dense layouts.
+- Separate rows, columns and sidebars with 0.5px or 1px crisp borders (0.5px on high-DPI, 1px fallback).
+- Cards and panels: a background 2% lighter or darker than the canvas **plus** a crisp border.
+
+### 3. Tight spacing (4px / 8px system)
+
+| Step | Use |
+|---|---|
+| 2px / 4px | Icon-to-label gap, padding inside a small tag |
+| 6px / 8px | Table cells, list rows, input fields |
+| 12px / 16px | Sidebars, main panels, dashboards |
+
+Padding inside a component (badge, button) is always smaller than the margin between components.
+
+### 4. Micro-typography
+
+- Tracking: `-0.01em` to `-0.02em` on text 14px and up.
+- Weight: cap at 600; prefer 500. No 700+.
+- Numbers that change or stack (prices, IDs, counts) use tabular or monospace figures
+  (`font-variant-numeric: tabular-nums`, or Geist Mono per §3).
+
+### 5. Radius by element size
+
+| Element | Radius |
+|---|---|
+| Tags, badges, checkboxes | 2–4px |
+| Buttons, inputs | 6px |
+| Modals, large cards, main panes | 8–12px max |
+
+No pills. Dense UI should read as a desktop app, not a mobile one.
+
+### Checklist
+
+| Step | Action | Objective |
+|---|---|---|
+| 1 | Swap coloured text for the foreground colour at 40%, 60% and 85% | Reduce noise |
+| 2 | Drop layout padding from 16/24px to 8/12px | Reclaim canvas |
+| 3 | Replace drop shadows with hairline borders | Sharpen boundaries |
+| 4 | Apply negative tracking to labels and headers | Compact text |

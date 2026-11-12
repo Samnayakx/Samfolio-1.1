@@ -1,0 +1,60 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8" />
+<title>Gap 3D Fit: annotated design decisions</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Outfit:wght@500;600&display=block" rel="stylesheet" />
+<style>
+* { box-sizing: border-box; } body { margin: 0; background: #fff; }
+.board { position: relative; width: 2640px; height: 2130px; overflow: hidden; background-color: #FAF8F2;
+  background-image: linear-gradient(#E4E8EF 2px, transparent 2px), linear-gradient(90deg, #E4E8EF 2px, transparent 2px); background-size: 40px 40px; background-position: 14px 18px; }
+.tag { position: absolute; left: 60px; top: 50px; display: flex; align-items: center; gap: 18px; padding: 0 26px; height: 72px; border-radius: 16px; background: #fff;
+  font: 600 29px/1 "Outfit", system-ui, sans-serif; letter-spacing: .01em; text-transform: uppercase; color: #12233a; box-shadow: 0 6px 24px -10px rgba(0,43,92,.25); }
+.tag svg { width: 34px; height: 34px; }
+.cell { position: absolute; width: 1230px; height: 650px; }
+.num { position: absolute; left: 0; display: grid; place-items: center; width: 60px; height: 60px; border-radius: 16px; background: #fff;
+  font: 600 28px/1 "Outfit", sans-serif; color: #12233a; box-shadow: 0 6px 20px -10px rgba(0,43,92,.25); z-index: 2; }
+.shot { position: absolute; display: block; border-radius: 12px; background: #fff; box-shadow: 0 0 0 1px rgba(0,43,92,.06), 0 16px 40px -18px rgba(0,43,92,.35); }
+.note { position: absolute; margin: 0; font: 500 35px/1.1 "Caveat", cursive; color: #2F3E52; }
+.note b { display: block; margin-bottom: 6px; font-weight: 600; font-size: 44px; line-height: 1.0; color: #12233a; }
+.arrow { position: absolute; left: 0; top: 0; overflow: visible; fill: none; stroke: #12233a; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; z-index: 3; }
+</style></head><body>
+<div class="board" id="b-annotated">
+  <div class="tag">Final design decisions
+    <svg viewBox="0 0 32 32" fill="none" stroke="#002B5C" stroke-width="3.4" stroke-linecap="round"><path d="M16 3v26M4.8 9.5l22.4 13M27.2 9.5L4.8 22.5"/></svg>
+  </div>
+  <div class="cell" style="left:60px; top:170px">
+    <div class="num" style="top:30px">01</div>
+    <img class="shot" src="src/crop-a-entry.png" style="left:70px; top:30px; width:798px; height:543px" alt="" />
+    <p class="note" style="left:918px; top:233px; width:310px"><b>Entry where doubt peaks</b>Sits just above Add to Bag, where shoppers hesitate. It is optional, so anyone who knows their size never meets it.</p>
+    <svg class="arrow" width="1230" height="650" viewBox="0 0 1230 650"><path d="M910.0 398.1 Q894.9 380.1 879.8 398.1"/><path d="M882.4 383.4 L879.8 398.1 L893.9 393.0"/></svg>
+  </div>
+  <div class="cell" style="left:1290px; top:170px">
+    <div class="num" style="top:30px">02</div>
+    <img class="shot" src="src/crop-b-height.png" style="left:430px; top:30px; width:836px; height:365px" alt="" />
+    <p class="note" style="left:70px; top:55px; width:310px"><b>Ask one thing first</b>Height is the only upfront question, and the avatar resizes the moment you pick one. Value shows up before effort does.</p>
+    <svg class="arrow" width="1230" height="650" viewBox="0 0 1230 650"><path d="M376.0 186.8 Q428.4 168.8 480.9 186.8"/><path d="M466.2 189.6 L480.9 186.8 L471.0 175.4"/></svg>
+  </div>
+  <div class="cell" style="left:60px; top:820px">
+    <div class="num" style="top:30px">03</div>
+    <img class="shot" src="src/crop-c-usual.png" style="left:430px; top:30px; width:798px; height:414px" alt="" />
+    <p class="note" style="left:70px; top:58px; width:310px"><b>Start from a size they know</b>Their usual size, from any brand, calibrates the body without a tape measure. Next stays off until there is an answer.</p>
+    <svg class="arrow" width="1230" height="650" viewBox="0 0 1230 650"><path d="M376.0 230.4 Q423.7 212.4 471.4 230.4"/><path d="M456.6 232.9 L471.4 230.4 L461.9 218.8"/></svg>
+  </div>
+  <div class="cell" style="left:1290px; top:820px">
+    <div class="num" style="top:30px">04</div>
+    <img class="shot" src="src/crop-d-meas.png" style="left:430px; top:30px; width:783px; height:619px" alt="" />
+    <p class="note" style="left:70px; top:293px; width:310px"><b>Keep the numbers visible</b>Measurements stay in inches beside each control. People who knew a few of theirs trusted numbers over a visual guess.</p>
+    <svg class="arrow" width="1230" height="650" viewBox="0 0 1230 650"><path d="M376.0 342.6 Q425.6 324.6 475.2 342.6"/><path d="M460.4 345.2 L475.2 342.6 L465.5 331.1"/></svg>
+  </div>
+  <div class="cell" style="left:60px; top:1470px">
+    <div class="num" style="top:30px">05</div>
+    <img class="shot" src="src/crop-e-result.png" style="left:430px; top:30px; width:429px; height:524px" alt="" />
+    <p class="note" style="left:70px; top:214px; width:310px"><b>Reasons on request</b>Why this recommendation is one tap, never forced open. It says when the size is smaller or larger than usual.</p>
+    <svg class="arrow" width="1230" height="650" viewBox="0 0 1230 650"><path d="M376.0 265.6 Q406.6 247.6 437.2 265.6"/><path d="M422.2 265.5 L437.2 265.6 L429.8 252.5"/></svg>
+  </div>
+  <div class="cell" style="left:1290px; top:1470px">
+    <div class="num" style="top:30px">06</div>
+    <img class="shot" src="src/crop-f-fit.png" style="left:70px; top:30px; width:475px; height:600px" alt="" />
+    <p class="note" style="left:595px; top:328px; width:310px"><b>Say what fit feels like</b>Waist, Hips and Calf each get a plain word, and the ? defines tight, fitted and loose.</p>
+    <svg class="arrow" width="1230" height="650" viewBox="0 0 1230 650"><path d="M587.0 460.8 Q556.7 442.8 526.4 460.8"/><path d="M533.7 447.8 L526.4 460.8 L541.4 460.7"/></svg>
+  </div>
+</div>
+</body></html>

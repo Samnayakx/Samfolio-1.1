@@ -1,0 +1,47 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8" />
+<title>Gap 3D Fit: the constraint, as a timeline</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=block" rel="stylesheet" />
+<style>
+/* Gantt-style board: solid bars are what happened, dashed ghost bars are what was planned or proposed and did not happen.
+   Columns are relative, not to scale. Bar position = grid column (--s) and span (--w). */
+:root { --cream:#FEFBF2; --ink:#002B5C; --solid:#BFD0E4; --solid-ink:#002B5C; --ghost:#EAF0F7; --ghost-ink:#7F97B5; --line:#E4E8EF; --navy:#003664; --col:83px; }
+* { box-sizing:border-box; } body { margin:0; background:#fff; font:400 15px/1.4 "Outfit",system-ui,sans-serif; color:var(--ink); }
+.board { position:relative; width:1468px; padding:64px 70px 56px; background:var(--cream); }
+.phases { position:relative; height:44px; margin-left:0; }
+.phase { position:absolute; top:0; text-align:center; font:600 22px/1 "Outfit"; letter-spacing:.04em; text-transform:uppercase; color:#003664; }
+.grid { position:relative; width:calc(var(--col) * 16); height:640px; margin-top:20px; background:repeating-linear-gradient(90deg, var(--line) 0 2px, transparent 2px var(--col)); }
+.grid::after { content:""; position:absolute; right:0; top:0; bottom:0; width:2px; background:var(--line); }
+.mark { position:absolute; top:-16px; bottom:0; width:0; border-left:2px dashed #5D7A9C; z-index:2; }
+.mark.end b { left:auto; right:12px; background:#003664; color:#fff; }
+.mark b { position:absolute; top:-6px; left:10px; padding:7px 14px; white-space:nowrap; border-radius:999px; background:#fff; font:600 17px/1 "Outfit"; color:#002B5C; box-shadow:0 4px 14px -6px rgba(0,43,92,.3); }
+.bar { position:absolute; left:calc(var(--col) * var(--s)); width:calc(var(--col) * var(--w)); height:58px; display:flex; align-items:center; gap:14px; padding:0 18px; border-radius:8px; background:var(--solid); color:var(--solid-ink); font:600 22px/1 "Outfit"; white-space:nowrap; overflow:hidden; }
+.bar::before, .bar::after { content:""; width:4px; height:18px; flex:none; background:radial-gradient(circle, currentColor 1.6px, transparent 2px) 0 0/4px 6px; opacity:.7; }
+.bar::after { margin-left:auto; }
+.bar.ghost { background:var(--ghost); color:var(--ghost-ink); outline:2px dashed #B7C7DC; outline-offset:-2px; font-weight:500; }
+.bar.ghost s { text-decoration-thickness:2px; text-decoration-color:rgba(93,122,156,.6); }
+.bar.go { background:var(--navy); color:#fff; }
+.bar small { font:500 17px/1 "Outfit"; opacity:.8; }
+.legend { display:flex; gap:34px; margin-top:34px; font:500 19px/1 "Outfit"; color:#5B6B7F; }
+.legend i { display:inline-block; width:44px; height:18px; margin-right:12px; border-radius:5px; vertical-align:-3px; background:var(--solid); }
+.legend .g i { background:var(--ghost); outline:2px dashed #B7C7DC; outline-offset:-2px; }
+.legend .n { margin-left:auto; }
+</style></head><body>
+<div class="board" id="b-timeline">
+ <div class="phases">
+  <div class="phase" style="left:0;width:calc(var(--col)*4.2)">Testing, as planned</div>
+  <div class="phase" style="left:calc(var(--col)*4.2);width:calc(var(--col)*11.8)">Launch date moves up</div>
+ </div>
+ <div class="grid">
+  <div class="mark" style="left:calc(var(--col)*4.2)"><b>Management changes</b></div>
+  <div class="mark end" style="left:calc(var(--col)*16 - 2px)"><b>Web launch</b></div>
+  <div class="bar" style="--s:0;--w:4.2;top:40px">User testing <small>50 users</small></div>
+  <div class="bar ghost" style="--s:4.2;--w:3.4;top:120px"><s>More testing</s> <small>no testers</small></div>
+  <div class="bar ghost" style="--s:5.4;--w:8.4;top:200px"><s>Hold the launch</s> <small>proposed</small></div>
+  <div class="bar" style="--s:4.4;--w:3.2;top:280px">Clarity <small>sessions</small></div>
+  <div class="bar" style="--s:7.6;--w:3.3;top:360px">Hypothesis <small>+ redesign</small></div>
+  <div class="bar" style="--s:10.9;--w:2.4;top:440px">Show the data</div>
+  <div class="bar" style="--s:13.3;--w:2.7;top:520px">Test new users</div>
+ </div>
+ <div class="legend"><span><i></i>What I did</span><span class="g"><i></i>Planned or proposed, did not happen</span><span class="n">Relative, not to scale</span></div>
+</div>
+</body></html>

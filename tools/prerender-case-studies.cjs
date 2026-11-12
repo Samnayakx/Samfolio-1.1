@@ -29,7 +29,11 @@ const esc = (s) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g
     const r = await page.evaluate(() => {
       const m = document.querySelector("[data-cs-root]"), h = document.head;
       const tags = [...h.querySelectorAll('link[rel="canonical"], meta[name="description"], meta[property^="og:"], meta[name^="twitter:"], script[data-cs-ld]')].map((e) => e.outerHTML);
-      return { title: document.title, tags, style: m.getAttribute("style") || "", html: m.innerHTML };
+      // Interactive demos mount client-side; bake only their empty placeholder, never a live, already-mounted copy
+      const c = m.cloneNode(true);
+      c.querySelectorAll("[data-case-demo]").forEach((d) => { d.replaceChildren(); d.removeAttribute("data-on"); d.removeAttribute("style"); });
+      c.querySelectorAll("[data-gq-notes]").forEach((n) => n.remove()); // the demo script adds its callouts on load
+      return { title: document.title, tags, style: m.getAttribute("style") || "", html: c.innerHTML };
     });
     let out = tpl
       .replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(r.title)}</title>`)
