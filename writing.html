@@ -35,7 +35,7 @@
     <div class="navgroup" data-nav="work">
       <nav class="seg" aria-label="Primary">
         <a class="seg__item seg__brand" href="/" aria-label="Sambit Nayak, home"><svg class="logo" aria-hidden="true"></svg></a>
-        <button class="seg__item only-desktop" type="button" id="work-tab" aria-expanded="false" aria-controls="work-panel">Work <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <a class="seg__item only-desktop" href="/work" id="work-tab" aria-haspopup="true" aria-expanded="false" aria-controls="work-panel">Work <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></a>
         <a class="seg__item only-desktop" href="/about">About</a>
         <a class="seg__item only-desktop" href="/writing" aria-current="true">Writing</a>
         <a class="seg__item only-desktop" href="/playground">Playground</a>
@@ -52,7 +52,7 @@
           <div class="pcard__main">
             <p class="pcard__label">Navigate</p>
             <ul class="pcard__list" role="list">
-              <li><a href="/#work">Work</a></li>
+              <li><a href="/work">Work</a></li>
               <li><a href="/about">About</a></li>
               <li><a href="/writing">Writing</a></li>
               <li><a href="/playground">Playground</a></li>
@@ -98,8 +98,8 @@
       <div class="work__inner">
         <div class="work__head">
           <div class="work__label">
-            <p class="work__eyebrow">Writing ( <span data-count>02</span> )</p>
-            <p class="work__sub">A curated pair of sourced essays on AI interfaces. Shorter craft notes still exist, but they no longer lead the writing page.</p>
+            <p class="work__eyebrow">Writing ( <span data-count>03</span> )</p>
+            <p class="work__sub">Two sourced essays on AI interfaces and one post on how I work. Shorter craft notes still exist, but they no longer lead the writing page.</p>
           </div>
           <div class="work__headline">
             <h1 class="work__title" id="wr-title">Evidence before opinion.</h1>
@@ -107,6 +107,17 @@
         </div>
         <ul class="posts posts--curated" role="list" data-posts>
       <li class="post post--feature">
+        <div class="post__label"><span>Nov 2026</span><span class="post__read">3 min read · Process</span></div>
+        <a class="post__link" href="/writing/paper-design-workflow">
+          <span class="post__tags"><i>Process</i><i>Paper</i></span>
+          <div class="post__tile pdp" style="--bg:url(/assets/images/writing/abstract/3.webp)" aria-hidden="true"><span class="pd-plate"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="12" width="14" height="24" rx="2" stroke-dasharray="3 3" opacity=".6"/><path d="M24 24L28 24" /><path d="M26 21L29 24L26 27"/><rect x="31" y="10" width="10" height="28" rx="2" fill="currentColor" stroke="none" opacity=".9"/></svg></span></div>
+          <span class="post__tag">Process · Design systems</span>
+          <h2 class="post__title">Low fidelity first: how Paper changed my design loop</h2>
+          <p class="post__excerpt">I used to draw every screen pixel-perfect in Figma before any code. Now I sketch loose, build my own system in Paper, and raise the winner to high fidelity. By my estimate it is about three times faster.</p>
+          <span class="case__cta">Read post <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5"/></svg></span>
+        </a>
+      </li>
+      <li class="post">
         <div class="post__label"><span>Mar 7, 2026</span><span class="post__read">6 min read · 4 sources</span></div>
         <a class="post__link" href="/writing/confidence-is-the-missing-layer">
           <span class="post__tags"><i>Confidence</i><i>Agents</i></span>
@@ -374,5 +385,6 @@
 
   <script src="/js/analytics.js"></script>
   <script src="/js/site.js"></script>
+  <script src="/js/sound.js" defer></script>
 </body>
 </html>

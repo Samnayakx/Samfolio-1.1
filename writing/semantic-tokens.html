@@ -35,7 +35,7 @@
     <div class="navgroup" data-nav="work">
       <nav class="seg" aria-label="Primary">
         <a class="seg__item seg__brand" href="/" aria-label="Sambit Nayak, home"><svg class="logo" aria-hidden="true"></svg></a>
-        <button class="seg__item only-desktop" type="button" id="work-tab" aria-expanded="false" aria-controls="work-panel">Work <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <a class="seg__item only-desktop" href="/work" id="work-tab" aria-haspopup="true" aria-expanded="false" aria-controls="work-panel">Work <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></a>
         <a class="seg__item only-desktop" href="/about">About</a>
         <a class="seg__item only-desktop" href="/writing" aria-current="true">Writing</a>
         <a class="seg__item only-desktop" href="/playground">Playground</a>
@@ -52,7 +52,7 @@
           <div class="pcard__main">
             <p class="pcard__label">Navigate</p>
             <ul class="pcard__list" role="list">
-              <li><a href="/#work">Work</a></li>
+              <li><a href="/work">Work</a></li>
               <li><a href="/about">About</a></li>
               <li><a href="/writing">Writing</a></li>
               <li><a href="/playground">Playground</a></li>
@@ -185,6 +185,7 @@
   <footer data-footer></footer>
   <script src="/js/analytics.js"></script>
   <script src="/js/site.js"></script>
+  <script src="/js/sound.js" defer></script>
   <script src="/js/writing-demos.js" defer></script>
 </body>
 </html>

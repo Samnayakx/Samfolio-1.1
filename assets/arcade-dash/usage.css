@@ -1,0 +1,105 @@
+.adx .ux0{background-color:var(--color-graphite);display:flex;font-size:12px;height:fit-content;line-height:16px;min-height:1000px;overflow:clip;width:1440px}
+.adx .ux1{background-color:var(--color-surface-0);border-right-color:var(--color-border);border-right-style:solid;border-right-width:1px;display:flex;flex-direction:column;flex-shrink:0;justify-content:space-between;padding-bottom:16px;padding-top:18px;width:232px}
+.adx .ux2{display:flex;flex-direction:column;gap:20px}
+.adx .ux3{padding-inline:20px}
+.adx .ux4{display:inline-block;width:104px;height:28px}
+.adx .ux5{display:flex;flex-direction:column;gap:2px;padding-inline:8px}
+.adx .ux6{align-items:center;display:flex;flex-shrink:0;gap:12px;height:34px;padding-inline:12px}
+.adx .ux7{display:inline-block;flex-shrink:0}
+.adx .ux8{color:var(--color-text-muted);display:inline-block;font-family:"Inter", system-ui, sans-serif;font-size:14px;line-height:18px}
+.adx .ux9{display:inline-block;padding-bottom:6px;padding-inline:12px}
+.adx .ux10{color:var(--color-text-faint);display:inline-block;font-family:"Inter", system-ui, sans-serif;font-size:11px;font-weight:500;letter-spacing:0.08em;line-height:14px}
+.adx .ux11{align-items:center;background-color:var(--color-surface-2);border-bottom-right-radius:8px;border-left-color:var(--color-coral);border-left-style:solid;border-left-width:2px;border-top-right-radius:8px;display:flex;flex-shrink:0;gap:12px;height:36px;padding-inline:12px}
+.adx .ux12{color:var(--color-text);display:inline-block;font-family:"Inter", system-ui, sans-serif;font-size:14px;font-weight:500;line-height:18px}
+.adx .ux13{display:flex;flex-direction:column;gap:12px;padding-inline:8px}
+.adx .ux14{align-items:center;background-color:var(--color-surface-2);border-radius:8px;display:flex;flex-shrink:0;gap:10px;height:36px;padding-inline:12px}
+.adx .ux15{align-items:center;display:flex;gap:10px;padding-block:8px;padding-inline:12px}
+.adx .ux16{align-items:center;background-color:var(--color-periwinkle);border-radius:999px;display:flex;flex-shrink:0;height:28px;justify-content:center;width:28px}
+.adx .ux17{color:#FFFFFF;font-family:"Inter", system-ui, sans-serif;font-size:12px;font-weight:600;line-height:16px}
+.adx .ux18{display:flex;flex-direction:column}
+.adx .ux19{color:var(--color-text);display:inline-block;font-family:"Inter", system-ui, sans-serif;font-size:13px;font-weight:500;line-height:16px}
+.adx .ux20{color:var(--color-text-muted);display:inline-block;font-family:"Inter", system-ui, sans-serif;font-size:11px;line-height:14px}
+.adx .ux21{display:flex;flex-basis:0%;flex-direction:column;flex-grow:1;min-width:0px}
+.adx .ux22{align-items:center;border-bottom-color:var(--color-border);border-bottom-style:solid;border-bottom-width:1px;display:flex;flex-shrink:0;height:56px;justify-content:space-between;padding-inline:32px}
+.adx .ux23{align-items:center;display:flex;gap:10px}
+.adx .ux24{align-items:center;display:flex;gap:8px}
+.adx .ux25{background-color:var(--color-periwinkle);border-radius:6px;flex-shrink:0;height:20px;width:20px}
+.adx .ux26{color:var(--color-text-faint);display:inline-block;font-family:"Inter", system-ui, sans-serif;font-size:14px;line-height:18px}
+.adx .ux27{background-color:var(--color-teal);border-radius:6px;flex-shrink:0;height:20px;width:20px}
+.adx .ux28{align-items:center;display:flex;gap:12px}
+.adx .ux29{align-items:center;border-color:var(--color-border-strong);border-radius:8px;border-style:solid;border-width:1px;display:flex;flex-shrink:0;gap:8px;height:36px;padding-inline:12px}
+.adx .ux30{color:var(--color-text);font-family:"Inter", system-ui, sans-serif;font-size:13px;font-weight:500;line-height:16px}
+.adx .ux31{align-items:center;background-color:var(--color-surface-1);border-radius:8px;display:flex;flex-shrink:0;gap:8px;height:36px;padding-left:12px;padding-right:10px}
+.adx .ux32{color:#F2F2F2;display:inline-block;font-family:"Inter", system-ui, sans-serif;font-size:13px;font-weight:500;line-height:16px;white-space:pre}
+.adx .ux33{align-items:center;background-color:#3B3B3B;border-radius:999px;display:flex;flex-shrink:0;height:16px;padding:2px;width:28px}
+.adx .ux34{background-color:#9B9B9B;border-radius:999px;flex-shrink:0;height:12px;width:12px}
+.adx .ux35{align-items:center;background-color:var(--color-surface-1);border-radius:8px;display:flex;flex-shrink:0;height:36px;justify-content:center;width:36px}
+.adx .ux36{align-items:center;background-color:var(--color-coral);border-radius:8px;display:flex;gap:8px;height:36px;padding-inline:16px}
+.adx .ux37{color:#FFFFFF;display:inline-block;font-family:"Inter", system-ui, sans-serif;font-size:14px;font-weight:500;line-height:18px}
+.adx .ux38{display:flex;flex-direction:column;gap:24px;padding:32px}
+.adx .ux39{align-items:end;display:flex;justify-content:space-between}
+.adx .ux40{display:flex;flex-direction:column;gap:6px}
+.adx .ux41{color:var(--color-text);font-family:"Inter", system-ui, sans-serif;font-size:28px;font-weight:600;letter-spacing:-0.02em;line-height:34px}
+.adx .ux42{color:var(--color-text-muted);font-family:"Inter", system-ui, sans-serif;font-size:14px;line-height:20px}
+.adx .ux43{background-color:var(--color-surface-1);border-radius:999px;display:flex;gap:2px;padding:3px}
+.adx .ux44{background-color:var(--color-surface-3);border-radius:999px;padding-block:6px;padding-inline:14px}
+.adx .ux45{color:var(--color-text);font-family:"Inter", system-ui, sans-serif;font-size:13px;font-weight:600;line-height:16px}
+.adx .ux46{padding-block:6px;padding-inline:14px}
+.adx .ux47{color:var(--color-text-muted);font-family:"Inter", system-ui, sans-serif;font-size:13px;line-height:16px}
+.adx .ux48{background-color:var(--color-surface-2);border-radius:8px;padding-block:9px;padding-inline:14px}
+.adx .ux49{display:flex;gap:16px}
+.adx .ux50{background-color:var(--color-surface-1);border-radius:16px;display:flex;flex-basis:0px;flex-direction:column;flex-grow:2;gap:16px;padding-block:22px;padding-inline:24px}
+.adx .ux51{align-items:center;display:flex;justify-content:space-between}
+.adx .ux52{color:var(--color-text-muted);font-family:"Inter", system-ui, sans-serif;font-size:14px;line-height:18px}
+.adx .ux53{background-color:var(--color-surface-2);border-radius:8px;padding-block:7px;padding-inline:12px}
+.adx .ux54{align-items:baseline;display:flex;gap:12px}
+.adx .ux55{color:var(--color-text);font-family:"Inter", system-ui, sans-serif;font-size:48px;font-weight:600;letter-spacing:-0.04em;line-height:52px}
+.adx .ux56{color:var(--color-text-muted);font-family:"Inter", system-ui, sans-serif;font-size:16px;line-height:22px}
+.adx .ux57{background-color:var(--color-surface-3);border-radius:4px;flex-shrink:0;height:8px;position:relative}
+.adx .ux58{background-color:var(--color-data);border-radius:4px;height:8px;left:0px;position:absolute;top:0px;width:64%}
+.adx .ux59{background-color:var(--color-marigold);height:16px;left:80%;position:absolute;top:-4px;width:2px}
+.adx .ux60{display:flex;justify-content:space-between}
+.adx .ux61{color:var(--color-marigold);font-family:"Inter", system-ui, sans-serif;font-size:13px;line-height:16px}
+.adx .ux62{color:var(--color-text-faint);font-family:"Inter", system-ui, sans-serif;font-size:13px;line-height:16px}
+.adx .ux63{background-color:var(--color-surface-1);border-radius:16px;display:flex;flex-basis:0px;flex-direction:column;flex-grow:1;gap:6px;padding-block:22px;padding-inline:24px}
+.adx .ux64{color:var(--color-text);font-family:"Inter", system-ui, sans-serif;font-size:36px;font-weight:600;letter-spacing:-0.03em;line-height:42px}
+.adx .ux65{color:var(--color-text-faint);font-family:"Inter", system-ui, sans-serif;font-size:13px;line-height:18px}
+.adx .ux66{color:var(--color-green);font-family:"Inter", system-ui, sans-serif;font-size:13px;line-height:18px}
+.adx .ux67{background-color:var(--color-surface-1);border-radius:16px;display:flex;flex-basis:0px;flex-direction:column;flex-grow:2;gap:14px;padding-block:22px;padding-inline:24px}
+.adx .ux68{color:var(--color-text);font-family:"Inter", system-ui, sans-serif;font-size:16px;font-weight:600;line-height:20px}
+.adx .ux69{display:flex;gap:18px}
+.adx .ux70{color:var(--color-data);font-family:"Inter", system-ui, sans-serif;font-size:12px;line-height:16px}
+.adx .ux71{color:var(--color-text-muted);font-family:"Inter", system-ui, sans-serif;font-size:12px;line-height:16px}
+.adx .ux72{flex-shrink:0}
+.adx .ux73{color:var(--color-text-faint);font-family:"Inter", system-ui, sans-serif;font-size:11px;line-height:14px}
+.adx .ux74{color:var(--color-text);font-family:"Inter", system-ui, sans-serif;font-size:16px;font-weight:600;line-height:20px;margin-bottom:8px}
+.adx .ux75{align-items:center;border-top-color:var(--color-border);border-top-style:solid;border-top-width:1px;display:flex;justify-content:space-between;padding-block:13px}
+.adx .ux76{color:var(--color-text);font-family:"Inter", system-ui, sans-serif;font-size:14px;line-height:18px}
+.adx .ux77{color:var(--color-sky);font-family:"Inter", system-ui, sans-serif;font-size:14px;line-height:18px}
+.adx .ux78{background-color:var(--color-surface-1);border-radius:16px;display:flex;flex-direction:column;gap:6px;padding-block:22px;padding-inline:24px}
+.adx .ux79{align-items:baseline;display:flex;justify-content:space-between}
+.adx .ux80{align-items:center;display:flex;padding-bottom:10px;padding-top:14px}
+.adx .ux81{color:var(--color-text-faint);flex-shrink:0;font-family:"JetBrains Mono", system-ui, sans-serif;font-size:11px;letter-spacing:0.06em;line-height:14px;width:300px}
+.adx .ux82{color:var(--color-text-faint);flex-shrink:0;font-family:"JetBrains Mono", system-ui, sans-serif;font-size:11px;letter-spacing:0.06em;line-height:14px;width:100px}
+.adx .ux83{color:var(--color-text-faint);flex-grow:1;font-family:"JetBrains Mono", system-ui, sans-serif;font-size:11px;letter-spacing:0.06em;line-height:14px}
+.adx .ux84{color:var(--color-text-faint);flex-shrink:0;font-family:"JetBrains Mono", system-ui, sans-serif;font-size:11px;letter-spacing:0.06em;line-height:14px;text-align:right;width:120px}
+.adx .ux85{color:var(--color-text-faint);flex-shrink:0;font-family:"JetBrains Mono", system-ui, sans-serif;font-size:11px;letter-spacing:0.06em;line-height:14px;text-align:right;width:130px}
+.adx .ux86{color:var(--color-text-faint);flex-shrink:0;font-family:"JetBrains Mono", system-ui, sans-serif;font-size:11px;letter-spacing:0.06em;line-height:14px;text-align:right;width:170px}
+.adx .ux87{align-items:center;border-top-color:var(--color-border);border-top-style:solid;border-top-width:1px;display:flex;padding-block:14px}
+.adx .ux88{align-items:center;display:flex;flex-shrink:0;gap:12px;width:300px}
+.adx .ux89{flex-shrink:0;display:inline-block}
+.adx .ux90{color:var(--color-text);font-family:"Inter", system-ui, sans-serif;font-size:14px;font-weight:500;line-height:18px}
+.adx .ux91{background-color:var(--color-marigold-soft);border-radius:999px;padding-block:2px;padding-inline:8px}
+.adx .ux92{color:var(--color-marigold);font-family:"Inter", system-ui, sans-serif;font-size:12px;font-weight:500;line-height:16px}
+.adx .ux93{color:var(--color-text);flex-shrink:0;font-family:"Inter", system-ui, sans-serif;font-size:14px;font-weight:600;line-height:18px;width:100px}
+.adx .ux94{flex-grow:1;padding-right:40px}
+.adx .ux95{background-color:var(--color-surface-3);border-radius:3px;height:6px}
+.adx .ux96{background-color:var(--color-data);border-radius:3px;height:6px;width:55%}
+.adx .ux97{color:var(--color-text);flex-shrink:0;font-family:"Inter", system-ui, sans-serif;font-size:14px;line-height:18px;text-align:right;width:120px}
+.adx .ux98{color:var(--color-marigold);flex-shrink:0;font-family:"Inter", system-ui, sans-serif;font-size:14px;line-height:18px;text-align:right;width:130px}
+.adx .ux99{display:flex;flex-shrink:0;justify-content:end;width:170px}
+.adx .ux100{background-color:var(--color-data-muted);border-radius:3px;height:6px;width:25%}
+.adx .ux101{color:var(--color-text-muted);flex-shrink:0;font-family:"Inter", system-ui, sans-serif;font-size:14px;line-height:18px;text-align:right;width:130px}
+.adx .ux102{flex-shrink:0;width:170px}
+.adx .ux103{background-color:var(--color-data-muted);border-radius:3px;height:6px;width:13%}
+.adx .ux104{background-color:var(--color-data-muted);border-radius:3px;height:6px;width:7%}

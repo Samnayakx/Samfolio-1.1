@@ -1,0 +1,11 @@
+/* ---- shell + tokens (tokens.css from the Arcade handoff) ---- */
+.adx { --color-surface-0:#1E1E1E; --color-graphite:#2B2B2B; --color-surface-1:#262626; --color-surface-2:#303030; --color-surface-3:#3B3B3B; --color-text:#F2F2F2; --color-text-muted:#9B9B9B; --color-text-faint:#6F6F6F;
+  --color-border:#FFFFFF14; --color-border-strong:#FFFFFF29; --color-coral:#E34927; --color-coral-deep:#BE3A1D; --color-marigold:#EBB63B; --color-sky:#B5DDE6; --color-periwinkle:#7C77B9; --color-teal:#3CB5AB; --color-green:#139B4E;
+  --color-on-coral:#FFFFFF; --color-on-marigold:#1E1E1E; --color-coral-soft:#E3492726; --color-coral-border:#E3492766; --color-marigold-soft:#EBB63B26; --color-marigold-border:#EBB63B66; --color-green-soft:#139B4E26; --color-green-border:#139B4E66; --color-sky-soft:#B5DDE626;
+  --color-brand-tile:#FFFFFF; --color-data:#6F86E0; --color-data-soft:#6F86E01A; --color-data-muted:#6F86E04D; --color-grid:#FFFFFF0F;
+  --font-sans:"Inter",system-ui,sans-serif; --font-mono:"JetBrains Mono",ui-monospace,monospace; position: relative; width: 100%; overflow: hidden; background: #2B2B2B; }
+.adx__stage { width: 1440px; transform-origin: 0 0; text-align: left; -webkit-font-smoothing: antialiased; font-family: "Inter", system-ui, sans-serif; color: #F2F2F2; }
+.adx__stage *, .adx__stage *::before, .adx__stage *::after { box-sizing: border-box; }
+.adx__stage { user-select: none; -webkit-user-select: none; }
+.adx-ktip { position: absolute; right: 16px; top: 14px; font: 500 11px/14px "Inter", sans-serif; color: #9B9B9B; background: #1E1E1E; border: 1px solid #FFFFFF14; border-radius: 6px; padding: 3px 7px; opacity: 0; transition: opacity .12s; pointer-events: none; white-space: nowrap; z-index: 2; }
+.adx-ktip.is-on { opacity: 1; }

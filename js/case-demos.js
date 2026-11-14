@@ -1019,7 +1019,301 @@
     return () => { stop(); timers.forEach(clearTimeout); io.disconnect(); };
   }
 
-  const DEMOS = { gapQuickFit, dsLive };
+  // ── Arcade.dev dashboard, live ──
+  // The real "Dashboard · Active" screen from the Paper file, exported to assets/arcade-dash/ (dash.html + dash.css, built by
+  // tools/build-arcade-dash.py from the Paper markup). Everything is static except the data viz, which is wired here:
+  // KPI sparklines, the Tool calls chart (scrub + 1W/1M/3M), Outcomes, Top tools and the When agents run grid.
+  const adxCache = {};
+  const adxLoad = (name) => adxCache[name] || (adxCache[name] = Promise.all([
+    new Promise((res) => {
+      let n = 0; const done = () => { if (++n === 2) res(); };
+      for (const f of ["base", name]) {
+        const id = "adx-css-" + f; if (document.getElementById(id)) { done(); continue; }
+        const l = h("link"); l.id = id; l.rel = "stylesheet"; l.href = `/assets/arcade-dash/${f}.css`; l.onload = l.onerror = done; document.head.appendChild(l);
+      }
+      if (!document.getElementById("adx-fonts")) { const f = h("link"); f.id = "adx-fonts"; f.rel = "stylesheet"; f.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"; document.head.appendChild(f); }
+    }),
+    fetch(`/assets/arcade-dash/${name}.html`).then((r) => r.text()),
+  ]).then((x) => x[1]));
+
+  // Each screen is the Paper frame exported to assets/arcade-dash/<name>.html + .css (tools/arcade-dash/). Static except the data viz, wired in `wire`.
+  const adxScreen = (name, wire) => (host) => {
+    const root = h("div", "adx"); host.appendChild(root);
+    let off = () => {}, dead = false;
+    adxLoad(name).then((html) => { if (dead) return; root.innerHTML = `<div class="adx__stage">${html}</div>`; off = adxMount(host, root, wire); });
+    return () => { dead = true; off(); };
+  };
+  const adxMount = (host, root, wire) => {
+    const stg = root.firstChild, AW = 1440;
+    const fit = () => { const sc = host.clientWidth / AW; stg.style.transform = `scale(${sc})`; root.style.height = stg.offsetHeight * sc + "px"; };
+    const ro = new ResizeObserver(fit); ro.observe(host); fit();
+    const done = wire ? wire(host, root) : null;
+    return () => { ro.disconnect(); done?.(); };
+  };
+  const arcadeDash = adxScreen("dash", (host, root) => adxWire(host, root));
+  const arcadeApprovals = adxScreen("approvals", null);
+  const arcadeUsage = adxScreen("usage", (host, root) => adxUsage(host, root));
+
+  function adxWire(host, root) {
+    const AW = 1440;
+    const $ = (k) => root.querySelector(`[data-w="${k}"]`);
+    const fmt = (n) => Math.round(n).toLocaleString("en-US");
+    const txt = (el) => el.firstElementChild ? txt(el.firstElementChild) : el;   // innermost text-bearing element
+
+    // ── KPI sparklines: hover a bar (or the line) to read that day ──
+    const KV = [
+      { vals: [2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4], u: (v) => `${v} agents` },
+      { vals: null, u: (v) => `${v}%` },
+      { vals: [2, 4, 3, 5, 4, 6, 4, 5, 6, 6, 7, 8], u: (v) => `${v} users` },
+      { vals: [10, 9, 9, 8, 8, 6, 7, 5, 5, 4, 4, 3], u: (v) => `${v} failures` },
+    ];
+    for (let i = 0; i < 4; i++) {
+      const tile = $("kpi" + i), svg = $("ks" + i); if (!tile || !svg) continue;
+      tile.style.position = "relative";
+      const tip = h("span", "adx-ktip"); tile.appendChild(tip);
+      const rects = [...svg.querySelectorAll("rect")], line = svg.querySelector("polyline");
+      let vals = KV[i].vals, pts = null, dot = null;
+      if (line) {
+        pts = line.getAttribute("points").trim().split(/\s+/).map((p) => p.split(",").map(Number));
+        vals = pts.map((p) => Math.round(91 - ((p[1] - 4) / 13.2) * 6));
+        dot = document.createElementNS("http://www.w3.org/2000/svg", "circle"); dot.setAttribute("r", 3.5); dot.setAttribute("fill", "#6F86E0"); dot.setAttribute("stroke", "#262626"); dot.setAttribute("stroke-width", 2); dot.style.opacity = 0; svg.appendChild(dot);
+      }
+      const n = vals.length, base = rects.map((r) => r.getAttribute("fill"));
+      svg.style.cursor = "crosshair"; svg.style.overflow = "visible";
+      svg.addEventListener("pointermove", (e) => {
+        const r = svg.getBoundingClientRect(), x = Math.min(0.999, Math.max(0, (e.clientX - r.left) / r.width)), j = Math.floor(x * n);
+        tip.textContent = `${KV[i].u(vals[j])} · ${n - 1 - j === 0 ? "today" : (n - 1 - j) + "d ago"}`; tip.classList.add("is-on");
+        rects.forEach((b, k) => b.setAttribute("fill", k === j ? "#A9B8FF" : base[k]));
+        if (dot) { dot.setAttribute("cx", pts[j][0]); dot.setAttribute("cy", pts[j][1]); dot.style.opacity = 1; }
+      });
+      svg.addEventListener("pointerleave", () => { tip.classList.remove("is-on"); rects.forEach((b, k) => b.setAttribute("fill", base[k])); if (dot) dot.style.opacity = 0; });
+    }
+
+    // ── Tool calls per day ──
+    const svg = $("chart"), T = svg.querySelectorAll(":scope > text"), poly = svg.querySelector("polygon"), pl = svg.querySelectorAll("polyline");
+    const prevL = pl[0], curL = pl[1], cross = svg.querySelector("line:nth-of-type(5)") || [...svg.querySelectorAll("line")].pop(), circ = svg.querySelectorAll("circle")[0], rect = svg.querySelector("rect"), tDate = T[T.length - 2], tVal = T[T.length - 1];
+    const X0 = 44, X1 = 716, YB = 184, K = 164 / 750, XL = [...T].slice(4, 9);
+    const parse = (el) => el.getAttribute("points").trim().split(/\s+/).map((p) => Math.round((YB - Number(p.split(",")[1])) / K));
+    const C30 = parse(curL), P30 = parse(prevL);
+    let sd = 11; const rnd = () => (sd = (sd * 16807) % 2147483647) / 2147483647;
+    const older = (a) => Array.from({ length: 60 }, (_, i) => Math.round(Math.max(140, Math.min(560, a.reduce((x, y) => x + y, 0) / a.length * (0.72 + 0.28 * (i / 60)) + (rnd() - 0.5) * 150))));
+    const CUR = older(C30).concat(C30), PRV = older(P30).concat(P30);
+    const END = new Date(2026, 10, 12), lab = (back) => new Date(END.getTime() - back * 864e5).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    const orig = { poly: poly.getAttribute("points"), cur: curL.getAttribute("points"), prev: prevL.getAttribute("points"), lx1: cross.getAttribute("x1"), cy: circ.getAttribute("cy"), cx: circ.getAttribute("cx"), rx: rect.getAttribute("x"), tx: tDate.getAttribute("x"), d: tDate.textContent, v: tVal.textContent, xl: XL.map((t) => t.textContent) };
+    const sum30 = C30.reduce((a, b) => a + b, 0), scale = 12480 / sum30;
+    const cTotal = txt($("calls-total")), cDelta = txt($("calls-delta")), legC = $("leg-cur"), legP = $("leg-prev"), outSub = $("out-sub"), outSubOrig = outSub.textContent;
+    let range = 30, cs = C30, ps = P30, calls = 12480;
+    const px = (i) => X0 + (i / (cs.length - 1)) * (X1 - X0), py = (v) => YB - v * K;
+    const line = (a) => a.map((v, i) => `${px(i).toFixed(1)},${py(v).toFixed(1)}`).join(" ");
+    const showTip = (i) => {
+      const x = px(i); cross.setAttribute("x1", x); cross.setAttribute("x2", x); circ.setAttribute("cx", x); circ.setAttribute("cy", py(cs[i]));
+      tDate.textContent = lab(cs.length - 1 - i); tVal.textContent = `${fmt(cs[i])} calls · prev ${fmt(ps[i])}`;
+      const w = Math.max(146, Math.ceil(tVal.getComputedTextLength?.() || 122) + 24), rx = x - w - 12 < X0 - 6 ? x + 12 : x - w - 12;
+      rect.setAttribute("width", w); rect.setAttribute("x", rx); tDate.setAttribute("x", rx + 12); tVal.setAttribute("x", rx + 12);
+    };
+    const rest = () => { cross.setAttribute("x1", orig.lx1); cross.setAttribute("x2", orig.lx1); circ.setAttribute("cx", orig.cx); circ.setAttribute("cy", orig.cy); rect.setAttribute("x", orig.rx); rect.setAttribute("width", 146); tDate.setAttribute("x", orig.tx); tVal.setAttribute("x", orig.tx); tDate.textContent = orig.d; tVal.textContent = orig.v; };
+    const idxAt = (e) => { const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY; const x = pt.matrixTransform(svg.getScreenCTM().inverse()).x; return Math.max(0, Math.min(cs.length - 1, Math.round(((x - X0) / (X1 - X0)) * (cs.length - 1)))); };
+    svg.style.cursor = "crosshair"; svg.style.touchAction = "pan-y";
+    svg.addEventListener("pointermove", (e) => showTip(idxAt(e)));
+    svg.addEventListener("pointerdown", (e) => showTip(idxAt(e)));
+    svg.addEventListener("pointerleave", () => { if (range === 30) rest(); else showTip(cs.length - 1); });
+
+    // 1W / 1M / 3M
+    const btn = { 7: $("r7"), 30: $("r30"), 90: $("r90") }, cls = (n) => [btn[n].className, txt(btn[n]).className];
+    const SEL = cls(30), UN = cls(7);
+    const setRange = (n) => {
+      range = n; cs = CUR.slice(-n); ps = PRV.slice(-n);
+      for (const k in btn) { const c = +k === n ? SEL : UN; btn[k].className = c[0]; txt(btn[k]).className = c[1]; btn[k].setAttribute("aria-pressed", String(+k === n)); }
+      if (n === 30) { poly.setAttribute("points", orig.poly); curL.setAttribute("points", orig.cur); prevL.setAttribute("points", orig.prev); XL.forEach((t, i) => t.textContent = orig.xl[i]); rest(); cTotal.textContent = "12,480"; cDelta.textContent = "+18% vs previous 30 days"; calls = 12480; }
+      else {
+        curL.setAttribute("points", line(cs)); prevL.setAttribute("points", line(ps)); poly.setAttribute("points", `${line(cs)} ${X1},${YB} ${X0},${YB}`);
+        XL.forEach((t, i) => t.textContent = lab(cs.length - 1 - Math.round((i / 4) * (cs.length - 1)))); showTip(cs.length - 1);
+        calls = Math.round(cs.reduce((a, b) => a + b, 0) * scale); cTotal.textContent = fmt(calls);
+        const d = Math.round((cs.reduce((a, b) => a + b, 0) / ps.reduce((a, b) => a + b, 0) - 1) * 100); cDelta.textContent = `${d >= 0 ? "+" : "−"}${Math.abs(d)}% vs previous ${n === 7 ? "7" : "90"} days`;
+      }
+      legC.textContent = `Last ${n} days`; legP.textContent = `Previous ${n} days`;
+      outSub.textContent = n === 30 ? outSubOrig : `${fmt(calls)} calls, last ${n} days`;
+    };
+    for (const k in btn) { btn[k].style.cursor = "pointer"; btn[k].setAttribute("role", "button"); btn[k].tabIndex = 0; btn[k].addEventListener("click", () => setRange(+k)); btn[k].addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setRange(+k); } }); }
+
+    // ── Outcomes: hover a segment or its key ──
+    const SEG = [["Success", 91], ["Held by policy", 6], ["Failed", 3]], segs = [0, 1, 2].map((i) => $("seg" + i)), keys = [0, 1, 2].map((i) => $("key" + i));
+    const dim = (els, on, k) => els.forEach((el, i) => { el.style.transition = "opacity .15s"; el.style.opacity = on && i !== k ? 0.35 : 1; });
+    [0, 1, 2].forEach((i) => [segs[i], keys[i]].forEach((el) => {
+      el.style.cursor = "default";
+      el.addEventListener("pointerenter", () => { dim(segs, true, i); dim(keys, true, i); outSub.textContent = `${SEG[i][0]}: ${fmt((calls * SEG[i][1]) / 100)} calls · ${SEG[i][1]}%`; });
+      el.addEventListener("pointerleave", () => { dim(segs, false); dim(keys, false); outSub.textContent = range === 30 ? outSubOrig : `${fmt(calls)} calls, last ${range} days`; });
+    }));
+
+    // ── Top tools ──
+    const tools = [0, 1, 2, 3, 4].map((i) => $("tool" + i));
+    tools.forEach((el, i) => { el.style.transition = "opacity .15s"; el.addEventListener("pointerenter", () => dim(tools, true, i)); el.addEventListener("pointerleave", () => dim(tools, false)); });
+
+    // ── When agents run ──
+    const RW = ["Night", "Morning", "Afternoon", "Evening"], DY = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    const bk = $("bk"), bt = $("bt"), bd = $("bd"), o = { k: bk.textContent, t: bt.textContent, d: bd.textContent };
+    const cells = [], size = (c) => parseFloat(c.firstElementChild.style.width) || c.firstElementChild.getBoundingClientRect().width / (host.clientWidth / AW);
+    for (let r = 0; r < 4; r++) for (let c = 0; c < 7; c++) { const slot = $(`hm${r}-${c}`), dot = slot.firstElementChild; cells.push({ slot, dot, r, c, calls: Math.round(1204 * Math.pow(dot.getBoundingClientRect().width / (host.clientWidth / AW) / 20, 2)) }); }
+    cells.forEach((cl) => {
+      cl.slot.style.cursor = "default"; cl.dot.style.transition = "transform .12s, box-shadow .12s";
+      cl.slot.addEventListener("pointerenter", () => {
+        cells.forEach((x) => { x.dot.style.transform = x === cl ? "scale(1.25)" : ""; x.dot.style.boxShadow = x === cl ? "0 0 0 4px #6F86E033" : ""; });
+        const best = cl.r === 2 && cl.c === 1;
+        bk.textContent = best ? o.k : "Selected"; bt.textContent = `${DY[cl.c]} ${RW[cl.r].toLowerCase()}`;
+        bd.textContent = best ? o.d : `${fmt(cl.calls)} calls, ${Math.round((cl.calls / 1204) * 100)}% of the busiest window.`;
+      });
+      cl.slot.addEventListener("pointerleave", () => { cells.forEach((x) => { x.dot.style.transform = ""; x.dot.style.boxShadow = ""; }); bk.textContent = o.k; bt.textContent = o.t; bd.textContent = o.d; });
+    });
+    return null;
+  }
+
+  // Usage & budget: spend chart scrub + Month/Quarter, share bars, budget bar
+  function adxUsage(host, root) {
+    const $ = (k) => root.querySelector(`[data-w="${k}"]`), NS = "http://www.w3.org/2000/svg", AW = 1440;
+    const el = (t, a) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); return e; };
+    const money = (v) => "$" + v.toFixed(2), scale = () => host.clientWidth / AW;
+    const svg = $("chart"); svg.style.overflow = "visible"; svg.style.cursor = "crosshair"; svg.style.touchAction = "pan-y";
+    const [area, lineP] = [...svg.querySelectorAll("path")], dot = svg.querySelector("circle"), pace = svg.querySelectorAll("line")[4];
+    const YB = 176, K = 132 / 48.2, W = 700;
+    const parse = (d) => d.match(/[ML]\s*[\d.]+\s+[\d.]+/g).map((m) => m.replace(/[ML]\s*/, "").split(/\s+/).map(Number));
+    const NOV = parse(lineP.getAttribute("d")).map((p) => (YB - p[1]) / K);
+    const orig = { area: area.getAttribute("d"), line: lineP.getAttribute("d"), cx: dot.getAttribute("cx"), cy: dot.getAttribute("cy") };
+    const axis = $("axis"), labels = [...axis.children], origLab = labels.map((l) => l.textContent), leg = $("legend");
+    // Quarter: three month-to-date curves, each resetting on the 1st (Sep and Oct are full months)
+    let sd = 5; const rnd = () => (sd = (sd * 16807) % 2147483647) / 2147483647;
+    const month = (days, end) => Array.from({ length: days }, (_, i) => { const t = (i + 1) / days; return end * (0.12 + 0.88 * Math.pow(t, 1.12)) + (rnd() - 0.5) * end * 0.04; }).map((v, i, a) => (i === a.length - 1 ? end : v));
+    const nov13 = Array.from({ length: 13 }, (_, i) => { const t = i / 12 * 13; const k = Math.min(13, t) / 13 * 13, lo = Math.floor(k), hi = Math.min(13, lo + 1); return NOV[lo] + (NOV[hi] - NOV[lo]) * (k - lo); });
+    const QD = [...month(30, 58.4), ...month(31, 66.1), ...nov13];
+    const QL = (i) => { const dt = new Date(2026, 8, 1 + i); return dt.toLocaleDateString("en-US", { month: "short", day: "numeric" }); };
+    let mode = "month", pts = NOV, y = (v) => YB - v * K, label = (i) => { const d = Math.round(1 + (i * 12) / 13); return "Nov " + d; };
+    const x = (i) => (i / (pts.length - 1)) * W;
+    const draw = () => {
+      const d = pts.map((v, i) => `${i ? "L" : "M"}${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join(" ");
+      lineP.setAttribute("d", d); area.setAttribute("d", `${d} L${W} ${YB} L0 ${YB} Z`);
+      dot.setAttribute("cx", W); dot.setAttribute("cy", y(pts[pts.length - 1]));
+    };
+    const cross = el("line", { y1: 8, y2: YB, stroke: "#FFFFFF40", x1: -9, x2: -9 }), hd = el("circle", { r: 5, fill: "#6F86E0", stroke: "#262626", "stroke-width": 2, cx: -9, cy: 0 });
+    const tr = el("rect", { y: -26, height: 40, rx: 8, fill: "#303030", width: 150, x: -999 }), t1 = el("text", { "font-family": "Inter", "font-size": 11, fill: "#9B9B9B", y: -9 }), t2 = el("text", { "font-family": "Inter", "font-size": 12, "font-weight": 600, fill: "#F2F2F2", y: 7 });
+    [cross, hd, tr, t1, t2].forEach((n) => { n.style.pointerEvents = "none"; n.style.opacity = 0; n.style.transition = "opacity .12s"; svg.appendChild(n); });
+    const show = (e) => {
+      const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY; const px = pt.matrixTransform(svg.getScreenCTM().inverse()).x;
+      const i = Math.max(0, Math.min(pts.length - 1, Math.round((px / W) * (pts.length - 1)))), v = pts[i], cx = x(i);
+      cross.setAttribute("x1", cx); cross.setAttribute("x2", cx); hd.setAttribute("cx", cx); hd.setAttribute("cy", y(v));
+      t1.textContent = label(i); const pv = mode === "month" ? (YB - (150 - (90 * cx) / W)) / K : null;
+      t2.textContent = mode === "month" ? `${money(v)} · pace ${money(pv)}` : `${money(v)} spent`;
+      const w = Math.max(130, Math.ceil(t2.getComputedTextLength?.() || 110) + 24), rx = cx > W - w - 20 ? cx - w - 12 : cx + 12, ty = Math.max(14, y(v) - 18);
+      tr.setAttribute("x", rx); tr.setAttribute("width", w); tr.setAttribute("y", ty - 26); t1.setAttribute("x", rx + 12); t1.setAttribute("y", ty - 9); t2.setAttribute("x", rx + 12); t2.setAttribute("y", ty + 7);
+      [cross, hd, tr, t1, t2].forEach((n) => (n.style.opacity = 1));
+    };
+    svg.addEventListener("pointermove", show); svg.addEventListener("pointerdown", show);
+    svg.addEventListener("pointerleave", () => [cross, hd, tr, t1, t2].forEach((n) => (n.style.opacity = 0)));
+    // Month / Quarter
+    const bm = $("m-month"), bq = $("m-quarter"), inner = (b) => b.firstElementChild;
+    const SEL = [bm.className, inner(bm).className], UN = [bq.className, inner(bq).className];
+    const setMode = (m) => {
+      mode = m;
+      [[bm, "month"], [bq, "quarter"]].forEach(([b, k]) => { const c = k === m ? SEL : UN; b.className = c[0]; inner(b).className = c[1]; });
+      if (m === "month") { pts = NOV; y = (v) => YB - v * K; label = (i) => "Nov " + Math.round(1 + (i * 12) / 13); pace.style.opacity = 1; labels.forEach((l, i) => (l.textContent = origLab[i])); leg.lastElementChild.style.opacity = 1; }
+      else { pts = QD; const k = 150 / 70; y = (v) => YB - v * k; label = QL; pace.style.opacity = 0; leg.lastElementChild.style.opacity = 0; labels.forEach((l, i) => (l.textContent = QL(Math.round((i / 4) * (pts.length - 1))))); }
+      draw();
+    };
+    [bm, bq].forEach((b, i) => { b.style.cursor = "pointer"; b.setAttribute("role", "button"); b.tabIndex = 0; b.addEventListener("click", () => setMode(i ? "quarter" : "month")); b.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setMode(i ? "quarter" : "month"); } }); });
+    // Spend by agent: hover a row to read its share of spend
+    const SP = [26.4, 12.1, 6.2, 3.5], TOT = 48.2, rows = [0, 1, 2, 3].map((i) => $("row" + i));
+    rows.forEach((r, i) => {
+      const track = $("share" + i); track.style.position = "relative";
+      const tip = h("span", "adx-ktip"); tip.style.top = "-26px"; tip.style.right = "auto"; tip.style.left = "0"; tip.textContent = `${Math.round((SP[i] / TOT) * 100)}% of spend`; track.appendChild(tip);
+      r.style.transition = "opacity .15s"; r.addEventListener("pointerenter", () => { rows.forEach((o, j) => (o.style.opacity = j === i ? 1 : 0.45)); tip.classList.add("is-on"); });
+      r.addEventListener("pointerleave", () => { rows.forEach((o) => (o.style.opacity = 1)); tip.classList.remove("is-on"); });
+    });
+    // Budget bar: hover the bar or the warning marker
+    const bar = $("bbar"), btip = h("span", "adx-ktip"); btip.style.top = "-34px"; btip.style.right = "auto"; bar.appendChild(btip);
+    bar.style.cursor = "default";
+    bar.addEventListener("pointermove", (e) => { const r = bar.getBoundingClientRect(), f = (e.clientX - r.left) / r.width; btip.textContent = Math.abs(f - 0.8) < 0.02 ? "Warning at 80% · $60" : f <= 0.64 ? "Spent $48.20 · 64% of $75" : "Left $26.80"; btip.style.left = Math.max(0, Math.min(f * 100, 80)) + "%"; btip.classList.add("is-on"); });
+    bar.addEventListener("pointerleave", () => btip.classList.remove("is-on"));
+    return null;
+  }
+
+  // ── Arcade feature explorer: an Apple-style pill toggle over live Paper screens ──
+  // Screens are the Paper frames as code (assets/arcade-dash/f-*.html, built by tools/arcade-dash/). `set` on the host picks the list.
+  const AF_SETS = {
+    "first-call": [
+      { label: "Role fork", src: "role-fork", w: 2880, h: 1800, alt: "Arcade onboarding: what do you want to do? Build an agent, connect an AI client, or operate Arcade for a team.", cap: "Role fork: build an agent, connect an AI client, or operate Arcade for a team. Each path gets a different first five minutes." },
+      { label: "Quickstart", src: "quickstart", w: 2880, h: 2000, alt: "Quickstart: a code snippet and a live listener waiting for the first tool call.", cap: "Quickstart: a key, a snippet and a live listener for the first call, with a manual fallback and a nudge if nothing arrives." },
+      { label: "First call detected", src: "first-call", w: 2880, h: 2000, alt: "Quickstart after the first call was received, with next steps: connect a real tool, add to Cursor or Claude, set a first policy.", cap: "First call received: the console confirms it, unlocks Governance, and offers three next steps." },
+      { label: "Empty dashboard", src: "dashboard-empty", w: 2880, h: 2000, alt: "An empty dashboard with one call to action: create your first agent flow.", cap: "Empty dashboard: one next step instead of a grid of empty charts." },
+    ],
+    connect: [
+      { label: "Tool catalog", src: "tool-catalog", w: 2880, h: 2000, alt: "Tool catalog: toolkits with filters for all and connected, and categories on the left.", cap: "Tool catalog: browse toolkits, filter to what is connected, and see which ones need authorization." },
+      { label: "Playground", src: "playground-auth", w: 2880, h: 2000, alt: "Playground with an inline Authorize GitHub card inside the conversation.", cap: "Playground: authorization happens inline, in the conversation, the first time a tool needs it." },
+      { label: "Accounts", src: "accounts", w: 2880, h: 2000, alt: "Authentication: connected accounts with status, and a detail panel with scopes, activity and a re-authorization link.", cap: "Authentication: every connected account with its status and the fix beside it. Tokens are never shown." },
+      { label: "Gateway", src: "gateway-builder", w: 2880, h: 2076, alt: "Gateway builder: choose tools, name the gateway and copy a one-click config for the client.", cap: "Gateway builder: choose tools, name it, then copy a one-click config for the client." },
+    ],
+    debug: [
+      { label: "Policy blocked", src: "trace-policy", w: 2880, h: 2728, alt: "A trace where a policy held a Slack call, with a timeline, the rule that fired and actions to edit the rule or allow the channel.", cap: "Policy blocked: the trace shows which rule held the call and offers Edit rule or Allow the channel." },
+      { label: "Auth expired", src: "trace-auth", w: 2880, h: 2568, alt: "A trace where a Salesforce authorization expired, with the account to fix and how many other runs it blocks.", cap: "Auth expired: the run stopped at the authorization check, and the page says which account to fix and what else it blocks." },
+      { label: "All failure states", src: "trace-states", w: 2880, h: 2172, alt: "Trace failure states: each failure has a name, a cause and one next step.", cap: "Every failure has a name, a cause and one next step." },
+    ],
+    govern: [
+      { label: "Simulator", src: "policy-simulator", w: 2880, h: 2000, alt: "Policies: a rule list on the left, a draft rule in the middle, and a simulator asking whether a call would be allowed.", cap: "Simulator: test a draft against the live rules, then publish." },
+      { label: "Rule conflict", src: "policy-conflict", w: 2880, h: 2000, alt: "Policies with a rule conflict: two rules overlap, three ways to resolve it, and publishing is blocked.", cap: "Rule conflict: publishing is blocked until the overlap is resolved, with fixes offered." },
+      { label: "Replay results", src: "policy-replay", w: 2880, h: 2000, alt: "Policy replay: what a draft would have changed across the last seven days of calls.", cap: "Replay results: see what the draft would have changed across the last seven days of calls." },
+    ],
+    agent: [
+      { label: "Summoned", src: "agent-summoned", w: 2880, h: 2000, alt: "Arcade Agent summoned as a glow bar over a dimmed page.", cap: "Summoned: a glow bar over the dimmed page. Type or speak." },
+      { label: "Docked panel", src: "agent-docked", w: 2880, h: 2728, alt: "The agent docked beside a trace, explaining why a call was blocked and proposing a change.", cap: "Docked panel: it reads the trace, explains the block and proposes a change that waits for approval." },
+      { label: "Agent-first home", src: "agent-home", w: 2880, h: 2000, alt: "Agent-first home: a prompt, what needs you, and recent changes tagged Agent, You or API.", cap: "Agent-first home: ask or draft, then what needs you and recent changes tagged Agent, You or API." },
+      { label: "Charts", src: "agent-charts", w: 2880, h: 1972, alt: "Agent answers with charts: ask for a number, get one chart that fits the question.", cap: "Answers with charts: ask for a number, get the one chart that fits the question." },
+    ],
+  };
+
+  function arcadeFeatures(host) {
+    const items = AF_SETS[host.dataset.set]; if (!items) return;
+    const AW = 1440, root = h("div", "af");
+    root.innerHTML = `<div class="af__stage"></div><div class="af__bar"><div class="af__pill" role="radiogroup" aria-label="Choose a screen"><i class="af__thumb" aria-hidden="true"></i></div></div><p class="af__cap" aria-live="polite"></p>`;
+    host.appendChild(root);
+    const stage = root.querySelector(".af__stage"), pill = root.querySelector(".af__pill"), thumb = root.querySelector(".af__thumb"), cap = root.querySelector(".af__cap");
+    // Each screen is the Paper frame as code (assets/arcade-dash/f-<name>.html + .css), laid out at 1440px and scaled to the stage
+    const scrs = items.map((it) => { const d = h("div", "af__scr"); d.setAttribute("role", "img"); d.setAttribute("aria-label", it.alt); d.innerHTML = '<div class="adx"></div>'; stage.appendChild(d); it.nat = it.h / 2; return d; });
+    const btns = items.map((it, i) => {
+      const b = h("button", "af__btn", it.label); b.type = "button"; b.setAttribute("role", "radio"); b.tabIndex = i ? -1 : 0;
+      b.addEventListener("click", () => pick(i, true)); pill.appendChild(b); return b;
+    });
+    let cur = -1, capT = 0;
+    const scale = () => stage.clientWidth / AW;
+    const lay = (i) => { const adx = scrs[i].firstChild, stg = adx.firstChild; if (!stg) return; const sc = scale(); stg.style.transform = `scale(${sc})`; adx.style.height = items[i].nat * sc + "px"; };
+    const load = (i) => {
+      const it = items[i]; if (it.state) return; it.state = 1;
+      adxLoad("f-" + it.src).then((html) => { scrs[i].firstChild.innerHTML = `<div class="adx__stage">${html}</div>`; it.nat = scrs[i].firstChild.firstChild.offsetHeight; lay(i); if (i === cur) size(); }).catch(() => { it.state = 0; });
+    };
+    const size = () => { stage.style.height = items[cur].nat * scale() + "px"; };
+    const place = () => { const b = btns[cur]; thumb.style.width = b.offsetWidth + "px"; thumb.style.transform = `translateX(${b.offsetLeft}px)`; };
+    function pick(i, user) {
+      if (i === cur) return; const first = cur < 0; cur = i; load(i);
+      scrs.forEach((d, k) => d.classList.toggle("is-on", k === i));
+      btns.forEach((b, k) => { b.setAttribute("aria-checked", String(k === i)); b.tabIndex = k === i ? 0 : -1; });
+      if (first) root.classList.add("is-still"); size(); place();
+      if (first) requestAnimationFrame(() => root.classList.remove("is-still"));
+      clearTimeout(capT); cap.classList.add("is-out");
+      capT = setTimeout(() => { cap.textContent = items[i].cap; cap.classList.remove("is-out"); }, first ? 0 : 140);
+      if (user) btns[i].focus({ preventScroll: true });
+    }
+    pill.addEventListener("keydown", (e) => {
+      const d = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0; if (!d) return;
+      e.preventDefault(); pick((cur + d + items.length) % items.length, true);
+    });
+    pick(0, false);
+    const ro = new ResizeObserver(() => { items.forEach((_, i) => lay(i)); size(); place(); }); ro.observe(root);
+    // Load the first screen when the explorer is near the viewport, then the rest when the browser is idle
+    const io = new IntersectionObserver((es) => {
+      if (!es[0].isIntersecting) return; io.disconnect(); load(0);
+      const rest = () => items.forEach((_, k) => load(k)); if (window.requestIdleCallback) requestIdleCallback(rest, { timeout: 1500 }); else setTimeout(rest, 600);
+    }, { rootMargin: "600px 0px" });
+    io.observe(host);
+    return () => { ro.disconnect(); io.disconnect(); clearTimeout(capT); };
+  }
+
+  const DEMOS = { gapQuickFit, dsLive, arcadeDash, arcadeApprovals, arcadeUsage, arcadeFeatures };
   const mount = (el) => {
     if (el.dataset.on) return;
     el.dataset.on = "1";

@@ -1029,3 +1029,39 @@ html.pgx-lock { overflow: hidden; }
 .fc__ring u { width: 9px; height: 9px; border-radius: 50%; background: #fff; }
 .fc__dot { position: absolute; width: 18px; height: 18px; margin: -9px; border-radius: 50%; background: rgba(120,170,220,.16); box-shadow: inset 0 0 0 1px rgba(160,205,245,.28); }
 @media (prefers-reduced-motion: reduce) { .fc__c, .fc__bd, .fc__b i::after, .fc__ring { transition: none; } }
+
+/* Interface screenshots on the board: the screen fills the tile, with a soft scrim so the labels read */
+.lab__tile--cover .lab__stage--img { padding: 0; }
+.lab__tile--cover .lab__stage--img img { object-fit: cover; filter: none; }
+.lab__tile--cover::after { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: inherit; background: linear-gradient(180deg, rgb(0 0 0 / .34), transparent 30%, transparent 52%, rgb(0 0 0 / .56)); transition: opacity .25s var(--ease-standard); }
+.lab__tile--cover .lab__top, .lab__tile--cover .lab__bottom, .lab__tile--cover .lab__title, .lab__tile--cover .lab__area { color: #fff; }
+@media (hover: hover) and (pointer: fine) { .lab__tile--cover::after { opacity: 0; } .lab__tile--cover:hover::after, .lab__tile--cover:focus-within::after { opacity: 1; } }
+.pg-board .lab__tile.lab__tile--cover:nth-child(n) { aspect-ratio: var(--ar, 4 / 3); }  /* a screenshot keeps its own shape, so nothing is cropped */
+
+/* Quiet playground: nothing pops up on hover, and the overlay is just the demo, with no explanation panel or credits */
+.lab__tile--ix::before { display: none; }
+.lab__tile--cover::after, .lab__tile--cover:hover::after, .lab__tile--cover:focus-within::after { opacity: 0; }
+.lab__tile:hover .lab__stage--img img { transform: none; }
+.lab__tile:hover .lab__type { letter-spacing: .02em; }
+.lab__tile:hover .lab__art svg { animation: none; }
+.pgx__info { display: none; }
+.pgx__frame { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 767px) { .pgx__frame { grid-template-rows: minmax(0, 1fr); } }
+
+/* Interface studies are the product, full tile: no labels over it, no tint around it */
+.lab__tile--cover .lab__top, .lab__tile--cover .lab__bottom { display: none; }
+.lab__tile--cover .lab__stage { top: 0; right: 0; bottom: 0; left: 0; }
+
+/* Pinterest-style board: no filter tabs, three wide columns, almost no side margin, labels never pop in on hover */
+.pg-board.sheet { margin-inline: var(--space-1); padding-inline: var(--space-1); }
+.pg-board .work__inner { padding-inline: 0; }
+.pg-board .work__head { margin-bottom: var(--space-3); }
+.pg-board .lab { column-gap: 8px; }
+.pg-board .lab__tile { margin-bottom: 8px; }
+.pg-board .lab__top, .pg-board .lab__bottom, .pg-board .lab__tile:hover .lab__top, .pg-board .lab__tile:hover .lab__bottom, .pg-board .lab__tile:focus-within .lab__top, .pg-board .lab__tile:focus-within .lab__bottom { opacity: 0; pointer-events: none; }
+@media (max-width: 1023px) { .pg-board .work__inner { padding-inline: 0; } }
+@media (max-width: 767px) { .pg-board.sheet { margin-inline: 0; padding-inline: 8px; } .pg-board .work__inner { padding-inline: 0; } }
+
+/* Masonry (js/playground-board.js): explicit columns of 1px rows, each tile spans its own height */
+.pg-board .lab.is-masonry { display: grid; column-count: auto; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); column-gap: 8px; row-gap: 0; grid-auto-rows: 1px; }
+.pg-board .lab.is-masonry .lab__tile { margin: 0 0 8px; height: auto; align-self: stretch; }

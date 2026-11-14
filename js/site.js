@@ -440,82 +440,6 @@ const PROJECTS = [
     },
   },
   {
-    name: "Arcade Control Plane", org: "Arcade.dev", area: "Agent infrastructure", tags: ["Dev tools", "AI Agents"],
-    title: "Turning Arcade from an infrastructure inventory into an agent deployment control plane.",
-    desc: "I led the redesign of Arcade.dev's dashboard into a deployment control plane. Median time to a first authorized tool call fell from 47 minutes to 8.",
-    seo: "Arcade.dev case study: I led the redesign of an agent infrastructure dashboard into a control plane, cutting time to a first authorized tool call from 47 minutes to 8.",
-    metric: { value: "47→8", label: "Minutes to a first authorized tool call" }, thumb: { video: "/assets/images/arcade/video-arcade-cover.mp4", poster: "/assets/images/arcade/video-arcade-cover-poster.jpg", alt: "Arcade cover: the new Build, Roll out, Observe navigation; a status that turns from Authorize GitHub to Connected; GitHub, Linear and Slack; and an execution trace that pauses for Linear authorization and then creates the issue", navPoster: "/assets/images/arcade/video-arcade-cover-poster.jpg", bleed: true }, slug: "arcade-control-plane", href: "/work/arcade-control-plane", tint: ["#F6A6CF", "#FFDDEE", "#FFF7FB"], accent: "#F0299B",
-    cs: {
-      meta: [["Role", "Lead Product Designer"], ["Timeline", "Mar – Jun 2026, 14 weeks"], ["Team", "1 PM, 5 engineers, 1 DevRel, 1 designer"], ["Tools", "Figma, shadcn/ui, Cursor + Figma MCP, PostHog"]],
-      sections: [
-        { title: "Overview / Background", statement: "Overview: Arcade wins when the first tool call works.",
-          text: ["Arcade is the auth and tool-calling layer for AI agents. New teams signed up, browsed the dashboard and left before their agent made a single authorized call.",
-            "Over 14 weeks I led the redesign that turned a resource inventory into a control plane built around that first call."],
-          cards: [["Problem: 47 minutes to a first call", "Users assembled Arcade's runtime in their heads before anything ran."], ["Solution: four surfaces, one path", "Navigation, onboarding, Playground and Project Home, rebuilt around the first call."], ["Outcome: 8 minutes", "Median time to a first authorized call. Day-one activation rose from 22% to 61%."]] },
-
-        { title: "Defining the Problem", statement: "Problem: users met the architecture before the value.",
-          text: ["The dashboard listed 18 destinations and about 8,000 tools. Before anything ran, a new user had to choose code, gateway or sandbox, then stitch docs, config and OAuth together across four places.",
-            "So we asked: how might a new team reach a working, authorized call in one session, without leaving for the docs?"],
-          board: { src: "/assets/images/arcade/board-before.webp", alt: "Before: a resource dashboard with 18 flat sidebar items and about 8k tools exposed by default, then a choice of code, gateway or sandbox before any value, then docs, config and OAuth assembled across 4 places, then hoping the first call works with no next step. Diagnosis: resource inventory, decision paralysis, fragmented setup, weak feedback.", cap: "The path before the redesign" } },
-
-        { title: "Understanding your Users", statement: "Users: AI engineers who quit at OAuth, not out of curiosity.",
-          text: ["We interviewed 12 AI engineers for 30 minutes each, shadowed three live setups and replayed 340 onboarding sessions in PostHog."],
-          stats: [["12", "AI engineers interviewed, 30 minutes each"], ["340", "onboarding sessions replayed"], ["64%", "of new projects never finished OAuth"]],
-          cards: [["1. Setup lives outside the product", "8 of 12 opened the docs in a second tab before their first click."], ["2. Auth is the cliff", "Most stalled projects were missing a single scope."], ["3. Failures are silent", "9 of 12 couldn't say why a call failed, so they stopped trying."]],
-          quote: "I had the agent working locally in ten minutes. Getting it permission to touch Linear took the afternoon.", quoteBy: "AI engineer, Series A startup" },
-
-        { title: "Your Role and Responsibilities", statement: "Role: the only designer, from framing the problem to shipped UI.",
-          text: ["I led design end to end: research, information architecture, onboarding, AI UX and the coded prototype engineering built from. \"We\" below means me, a PM, five engineers and DevRel.",
-            "Weekly workshops with engineering kept the design honest about how auth, scopes and the gateway really work."],
-          cards: [["Lead Product Designer", "Research, IA, onboarding, AI UX, prototyping and QA."], ["Team of 8", "1 PM, 5 engineers, 1 DevRel and me."], ["14 weeks", "March to June 2026, shipped in two releases."]] },
-
-        { title: "Scope and Constraints", statement: "Constraints: build one path completely, and defer the rest.",
-          text: ["We ranked every request with MoSCoW. Anything that didn't shorten the path to the first call waited."],
-          board: { src: "/assets/images/arcade/board-scope.webp", alt: "4 of 12 sidebar destinations built: Dashboard with 4 states, Playground with Chat and Execute, Tool catalog with 39 integrations, and Servers with a gateway wizard. Users, policies, runs, audit and usage were deferred because none gets a new user closer to the first call.", cap: "Must-haves, and what waited" },
-          cards: [["Success metric", "Median time to a first authorized tool call."], ["Guardrail", "No new drop-off at the auth step."], ["Won't, for now", "Users, policies, runs, audit and usage."]] },
-
-        { title: "Ideation Steps (The Solution)", statement: "Solution: four surfaces, each shortening the path to the first call.",
-          text: ["We moved a new user from a resource inventory to a first authorized call in four steps."],
-          board: { src: "/assets/images/arcade/board-after.webp", alt: "After: navigation grouped into Build, Roll out and Observe (18 destinations became 12), onboarding that starts with an outcome and a recommended path, a Playground with eight checks per run that pauses to authorize in place, and a Project Home that follows progress with every blocker shipping with its fix, ending at the first authorized tool call.", cap: "Four surfaces, one first call" },
-          parts: [
-        { title: "Rejected designs", statement: "Rejected: four variations that failed in testing.",
-          text: ["We ran moderated sessions with five engineers on each lo-fi concept. These four failed, and each failure shaped what shipped."],
-          mediaLayout: "stack", media: [
-            { wide: true, src: "/assets/images/arcade/rejected-canvas.webp", alt: "Rejected A: a node canvas as the home page, with agent, gateway and tool nodes and Authorize hidden in an inspector. Why it failed: architecture before value again, as 4 of 5 testers asked where to start; auth hid in the inspector, found by 1 of 5; and the graph was blank for new projects. The graph survived as the execution map inside each Playground run.", cap: "A: the graph showed architecture, not a next step" },
-            { wide: true, src: "/assets/images/arcade/rejected-goals.webp", alt: "Rejected B: onboarding with nine goal cards and a tiny skip setup link. Why it failed: nine goals read as a wall and testers picked the first card after about 6 seconds; Triage, Support and Code review used the same tool bundle; and SDK users hunted for the skip link. What shipped: 5 goals, one recommended path and Explore first as a real button.", cap: "B: nine goals became five" },
-            { wide: true, src: "/assets/images/arcade/rejected-modal.webp", alt: "Rejected C: a Connect Linear modal over the Playground listing six scopes. Why it failed: the modal covered the run and 3 of 5 lost track of the paused step; Cancel killed the run; and six scopes gave no hint that only issues:create was needed. What shipped: auth inline at step 3 of the trace, one scope, one click.", cap: "C: the modal moved into the trace" },
-            { wide: true, src: "/assets/images/arcade/rejected-split.webp", alt: "Rejected D: Project Home as a fixed 50/50 split, setup checklist on the left and metrics on the right. Why it failed: new projects saw half a screen of empty charts; active teams scrolled past a finished checklist; and one layout tried to serve two jobs. What shipped: one page with four states that changes as the project progresses.", cap: "D: one split became four states" }] },
-
-        { title: "Feature 01", statement: "Navigation: group by the job, not the object.",
-          text: ["Same features, regrouped into Build, Roll out and Observe. 18 destinations became 12."],
-          mediaLayout: "stack", media: [{ src: "/assets/images/arcade/nav-old-new.jpg", alt: "Old Arcade sidebar with 18 ungrouped destinations next to the new sidebar grouped into Build, Roll out and Observe.", cap: "Old sidebar (left), redesign (right)", narrow: true }] },
-
-        { title: "Feature 02", statement: "Onboarding: intent before infrastructure.",
-          text: ["Ask what they want done, recommend the fastest path, and keep expert paths one click away. Sandbox is the default: safe to test, promoted later."],
-          mediaLayout: "stack", media: [{ src: "/assets/images/arcade/onboarding-goal.jpg", alt: "Onboarding step one: What do you want to get done? with five outcome cards.", cap: "Step 1: pick an outcome" }, { src: "/assets/images/arcade/onboarding-path.jpg", alt: "Onboarding step two: choose Playground, MCP gateway or SDK, with the proposed tool bundle and its auth status.", cap: "Step 2: choose how to use it" }] },
-
-        { title: "Feature 03", statement: "Playground: a runtime simulator, not a chat box.",
-          text: ["Every run shows the same eight checks. When a tool needs access, the run pauses and asks in place, one click to authorize."],
-          mediaLayout: "stack", media: [{ src: "/assets/images/arcade/playground-chat.jpg", alt: "Playground chat with an execution map and an eight-step execution visibility rail.", cap: "Chat, execution map and trace rail" }, { src: "/assets/images/arcade/playground-auth.jpg", alt: "Playground paused at step three, authorization required, showing the user, required scope and a Continue to Linear button.", cap: "Authorization, at the moment it's needed" }] },
-
-        { title: "Feature 04", statement: "Project Home: one page, four states.",
-          text: ["Home follows the team's progress from empty to active, and every blocker ships with its fix."],
-          mediaLayout: "stack", media: [{ src: "/assets/images/arcade/dashboard-needs-auth.jpg", alt: "Dashboard in the Needs auth state, with a setup checklist and a single next action.", cap: "Needs auth: one next action" }, { src: "/assets/images/arcade/dashboard-active.jpg", alt: "Dashboard in the Active state with KPIs, project summary and a recent execution map.", cap: "Active: health, runs and blockers" }] },
-          ] },
-
-        { title: "Outcomes and Takeaways", statement: "Outcome: a first authorized call in 8 minutes, not 47.",
-          text: ["Measured on new projects six weeks after the second release, against the quarter before."],
-          stats: [["47→8", "minutes, median time to a first authorized call"], ["22→61%", "of new teams made an authorized call on day one"], ["−38%", "auth-related support tickets"]],
-          cards: [["Guardrail held", "Drop-off at the auth step fell from 64% to 29%."], ["3.4× traces opened", "Users read the run instead of retrying blind."], ["Now the default", "The trace pattern now carries into Runs and Audit."]],
-          parts: [
-        { title: "Takeaway", statement: "Takeaway: pick the moment that matters, and build the path to it.",
-          text: ["The biggest gain came from what we deferred, not what we added. The honest limit: teams with an existing gateway barely moved, and they are the next study."],
-          cta: { label: "View the prototype", href: "https://arcadedevv.vercel.app/" } },
-          ] },
-      ],
-    },
-  },
-  {
     name: "Gap 3D Fit", org: "Gap", area: "E-commerce · 3D fit · Web and iOS", tags: ["E-comm", "UX Design"],
     title: "Turning sizing uncertainty into a 61% add-to-bag decision.",
     desc: "Gap Inc. acquired Drapr for its 3D fit. When the web launch moved up and testers ran out, I argued against waiting, rebuilt the flow from live session data and shipped on time. An A/B test showed +61% add-to-bag.",
@@ -636,63 +560,82 @@ const PROJECTS = [
     },
   },
   {
-    name: "Payman AI", org: "Payman", area: "Fintech · Agentic banking", tags: ["Fintech", "Branding"],
-    title: "Payman AI: rebranding an agentic banking site for institutional trust.",
-    desc: "Agents that move real money, behind a first screen that read like a friendly startup. I rebuilt the brand around control.",
-    seo: "Payman AI case study: I audited an agentic banking site as a bank buyer, rebuilt the brand around control and trust, and fixed the usability issues in the way.",
-    metric: { value: "4", label: "Steps from question to payment, each one logged" }, thumb: { video: "/assets/images/payman-case/video-payman-cover.mp4", poster: "/assets/images/payman-case/video-payman-cover-poster.jpg", alt: "Payman AI cover: a six-tile grid of loops: a request typed to the agent, a payments table moving through Requested, Checked, Approved and Logged, an approval code, the Meet your agent action, the agent connected to a bank's systems, and the audit log", navPoster: "/assets/images/payman-case/video-payman-cover-poster.jpg", bleed: true }, slug: "payman-ai", href: "/work/payman-ai", tint: ["#3C9A98", "#C6E6DF", "#86C6C0"],
+    name: "Gatherly", org: "Agency client", area: "Events · Mobile app · iOS", tags: ["Mobile", "UI/UX Design"],
+    title: "Designing Gatherly, an events app, from brief to shipped MVP in three months.",
+    desc: "An independent project for an agency: the UI and UX of an app to find events, get tickets and host your own, from a brief inspired by Airbnb. The MVP shipped.",
+    seo: "Gatherly case study: an independent UI/UX design project for an agency, an events app for discovery, tickets and hosting, designed in three months from an Airbnb-inspired brief. The MVP shipped.",
+    metric: { value: "3 mo", label: "From brief to a shipped MVP" }, thumbnail: { src: "/assets/images/gatherly/thumb-dark-home.webp", alt: "The Gatherly home screen in dark mode on a phone: a Find an event search bar, filter tabs, and Popular in San Francisco event cards for a rooftop sunset session and a founders breakfast.", bleed: true, full: true, hero: true }, slug: "gatherly", href: "/work/gatherly", tint: ["#7A5AF8", "#EEE8FF", "#6D4AFF"],
     cs: {
-      meta: [["Role", "Brand and Web Designer, end to end"], ["Timeline", "2026"], ["Format", "Portfolio redesign of paymanai.com, solo"], ["Skills", "Brand audit, positioning, visual identity, web design, front-end build"]],
+      meta: [["Role", "UI/UX Designer"], ["Timeline", "3 months"], ["Client", "An agency · independent project"], ["Shipped", "MVP · iOS, light and dark"]],
+      layout: "tiles",
+      structure: ["Final Designs", "Brief", "Key flows", "Design system", "Outcome"],
       sections: [
-        { title: "Overview / Background", statement: "Setup: real money, and a buyer who trusts nothing yet.",
-          text: ["Payman deploys agents that move real money inside a bank's own systems. This is my redesign of paymanai.com, as it stood."],
-          media: [{ wide: true, src: "/assets/images/payman-case/before-hero.jpg", alt: "The live paymanai.com hero: the headline We deploy AI agents that handle money on a cream background, a choice between Banks and Credit Unions, and a mountain illustration.", cap: "paymanai.com as I found it" }] },
-
-        { title: "Defining the Problem", statement: "Tension: the page sold warmth to a buyer who needs proof.",
-          stats: [["55%", "of U.S. consumers already ask AI about money. TD Bank, 2026"], ["200M+", "people ask ChatGPT about money every month. OpenAI, 2026"]],
-          media: [{ wide: true, src: "/assets/images/payman-case/first-screen-analytics.webp", alt: "The old Payman first screen with three numbered callouts: the announcement bar, a header with no primary action, and a segment picker, each with a mock analytics figure.", cap: "Where the first screen loses a buyer (illustrative, not measured)" }, { src: "/assets/images/payman-case/before-first-load.jpg", alt: "The live paymanai.com on first load: an announcement bar, a newsletter pop-up covering the headline, and a cookie banner.", cap: "First load, desktop" }, { src: "/assets/images/payman-case/before-mobile-first-load.jpg", alt: "The live paymanai.com on a phone: the newsletter pop-up with its email field clipped to the word Enter.", cap: "First load, phone" }] },
-
-        { title: "Understanding your Users", statement: "Users: bank and credit-union buyers, weighing control before capability.",
-          text: ["The reader I designed for is a bank or credit-union buyer deciding whether to let agents move real money. I audited the site as that buyer would, and wrote down every place it asked for trust before it had earned any.",
-            "I did not test with real bank buyers. The audit stands in for that, and it is the main limit of this study."],
-          cards: [["Bank and credit-union buyers", "Weigh control, proof and risk before capability."], ["Their customers and members", "Already ask AI about money, inside or outside the bank."]] },
-
-        { title: "Your Role and Responsibilities", statement: "Role: one designer across the audit, the identity, the page and the build.",
-          text: ["This is an independent redesign of paymanai.com, so every call was mine: the audit, the positioning, the visual identity, the web design and the front-end build."],
-          cards: [["Brand and Web Designer, end to end", "2026."], ["Portfolio redesign, solo", "A redesign of paymanai.com, as it stood."], ["Skills", "Brand audit, positioning, visual identity, web design and front-end build."]] },
-
-        { title: "Scope and Constraints", statement: "Constraints: same facts, same viewport, and no production data.",
-          text: ["I rebuilt the live site with the same facts, so before and after compare like for like. It is a portfolio redesign: there are no production metrics, and the chat and approval code are illustrative."], board: { src: "/assets/images/payman-case/board-limits.webp", alt: "What this redesign is and isn't. Method: same facts and same viewport, so before and after compare like for like. Illustrative: the chat and approval code, with no production metrics. Not tested: no real bank buyers, with an audit standing in for research and a free serif standing in for the real one.", cap: "What this redesign is, and isn't" },
-           },
-
-        { title: "Ideation Steps (The Solution)", statement: "Decision: sell the control, not the magic.",
-          mediaLayout: "stack",
-          media: [{ diagram: { kind: "flow", title: "The control process, shown in the hero", hi: 1, nodes: ["Request", "Policy check", "Approval required", "Audit log"], note: "Requested, checked, approved, logged. The same four steps return in the explainer and in the audit log." } }, { wide: true, src: "/assets/images/payman-case/layout-exploration.webp", alt: "A two-by-two grid of wireframes comparing control steps below the fold or in the hero, with a segment picker or one primary action; the hero with one action is chosen and leads to the final hero.", cap: "Layout exploration: control steps in the hero, one primary action" }, { wide: true, src: "/assets/images/payman-case/redesign-control.webp", alt: "The redesigned control section on a deep teal stage: Your rules, Full audit trail and Kill switch, with stepped bars above a governed agent layer between cores and anything that moves money.", cap: "Rules, audit trail and kill switch, moved up to the fourth section" }, { wide: true, src: "/assets/images/payman-case/redesign-how-logged.webp", alt: "The four-step section: a live chat in a bank app where Payman lists five vendor payments, asks for a phone code, and confirms five payments sent.", cap: "Four steps as a live chat: ask, check, approve, log" }, { diagram: { kind: "audit", title: "Audit: what I found, what I did", rows: [["One friendly voice for everything", "Two voices: a serif for the signed statement, a mono for the system record"], ["Decorative mountain art on the first screen", "The control process is the hero image: request, policy check, approval, audit log"], ["Rules, audit trail and kill switch in the last third", "Moved up to the fourth section, on their own teal stage"], ["Announcement bar, pop-up and cookie banner before the headline", "Nothing between the visitor and the headline; the pop-up is dropped"], ["A segment choice instead of an action", "One primary action, “Meet your agent”, in the header and the hero"], ["Pop-up clips the email field on phones", "One column on phones, form fields at least 44px tall, no overlays"]] } }],
-          parts: [
-        { title: "Rejected designs", statement: "Rejected: three directions the audit ruled out.",
-          text: ["Each one answered a question the buyer wasn't asking yet. Reading them as a bank buyer would is what pointed to selling the control."],
-          mediaLayout: "stack", media: [
-            { wide: true, src: "/assets/images/payman-case/rejected-fold.webp", alt: "Rejected A: a hero with the headline We deploy AI agents that handle money, a Banks or Credit Unions segment picker and an illustration, with the Request, Policy check, Approval and Audit log steps below the fold. Why it failed: capability came before control; the segment picker split the first click in two with no primary action; and the control proof only appeared after a scroll. What shipped: the four control steps in the hero, with one primary action.", cap: "A: the control steps moved above the fold" },
-            { wide: true, src: "/assets/images/payman-case/rejected-magic.webp", alt: "Rejected B: a warm hero reading Banking that feels like magic, with sparkles, a smiling mascot saying Hi! I can move money for you, and a Try it free button. Why it failed: it used the category's vocabulary of magic for a reader who has to sign off on the risk; it offered warmth where proof should be, with no audit trail, rules or kill switch; and the call to action read like a consumer startup. What shipped: paper, ink and deep teal, with yellow only as a signal, never a fill.", cap: "B: control replaced the magic" },
-            { wide: true, src: "/assets/images/payman-case/rejected-order.webp", alt: "Rejected C: a page outline in six sections, hero, stats, customers, integrations, security, and finally rules, audit trail and kill switch. Why it failed: control came last, after a long scroll; stats and logos arrived before the risk they answer; and the kill switch was a footnote. What shipped: one question per section, in the order a buyer worries, with controls moved up to section four.", cap: "C: the controls moved up to section four" }] },
-
-        { title: "The System", statement: "System: an identity derived from the position, not from taste.",
-          mediaLayout: "stack",
-          media: [{ wide: true, src: "/assets/images/payman-case/design-system.webp", alt: "Design system preview: typography, colour tokens and icons; buttons in active, hovered and disabled states; form inputs, checkboxes and radios; and components such as status tags, the kill switch and audit rows.", cap: "The design system behind the page" }, { diagram: { kind: "swatches", title: "Palette", chips: [["#F3F3F0", "Paper", "Page"], ["#171717", "Ink", "Text"], ["#0E3D42", "Teal", "Trust"], ["#2F8A8C", "Mid teal", "Focus"], ["#D4B3CA", "Mauve", "Warmth"], ["#F4FF45", "Signal yellow", "Signal only"]], note: "Yellow is a bar, a digit or a strip. Never a fill." } }, { diagram: { kind: "specimen", title: "Type: three voices, one job each", lines: [["Display · Newsreader", "'Newsreader', 'Times New Roman', serif", 46, "We deploy AI agents that handle money."], ["Body · Geist", "'Geist', sans-serif", 17, "Agents that carry out real banking transactions for your customers, under policies, approvals and audit trails you control."], ["Record · Geist Mono", "'Geist Mono', monospace", 12, "PM-2026-001 // VERSION 1.0 · REQUESTED → CHECKED → APPROVED → LOGGED"]] } }] },
-
-        { title: "The Page", statement: "Page: one question per section, in the order a buyer worries.",
-          mediaLayout: "stack",
-          media: [{ wide: true, src: "/assets/images/payman-case/redesign-shift.webp", alt: "Two columns: when the customer asks AI outside the bank, the customer leaves; inside the bank, the customer stays, with data, audit trail and a kill switch.", cap: "Risk: where the question is asked decides who keeps the customer" }, { wide: true, src: "/assets/images/payman-case/redesign-security.webp", alt: "The security section: Built like bank infrastructure. Because it is. Tabs for data and custody, identity and policy, and audit and control, with a teal panel of details.", cap: "Proof: built like bank infrastructure" }, { wide: true, src: "/assets/images/payman-case/redesign-who.webp", alt: "Banks, credit unions, and the people they serve: a grid of customers, members, staff, core banking, digital banking and voice and text around the Payman mark.", cap: "Fit: banks, credit unions, and the people they serve" }] },
-
-                  ] },
-
-        { title: "Outcomes and Takeaways", statement: "Outcome: the surfaces now match the claim.",
-          text: ["Same facts, same viewport. This is a portfolio redesign: no production metrics, and the chat and approval code are illustrative."],
-          media: [{ diagram: { kind: "slider", title: "Hero, desktop. Drag to compare", before: "/assets/images/payman-case/before-hero.jpg", after: "/assets/images/payman-case/after-hero.jpg", ar: "1440 / 900", altBefore: "The live paymanai.com hero.", altAfter: "The redesigned hero with the four-step control process." } }, { diagram: { kind: "slider", title: "The numbers, desktop. Drag to compare", before: "/assets/images/payman-case/before-numbers.jpg", after: "/assets/images/payman-case/after-numbers.jpg", ar: "1440 / 900", altBefore: "The live site's statistics section.", altAfter: "The redesigned statistics section, with sources in mono." } }, { diagram: { kind: "slider", title: "Hero, phone. Drag to compare", before: "/assets/images/payman-case/before-mobile.jpg", after: "/assets/images/payman-case/after-mobile.jpg", ar: "390 / 844", narrow: true, altBefore: "The live site's hero on a phone.", altAfter: "The redesigned hero on a phone." } }],
-          parts: [
-        { title: "The Takeaway", statement: "Takeaway: in regulated software, show the control before the capability.",
-          text: ["The page works because it drops the category's vocabulary of magic and warmth. Limits: a free stand-in serif, and no testing with real bank buyers. Next, I'd see whether compliance leads find the kill switch unprompted."],
-          cta: { label: "View the prototype", href: "/payman" } },
+        { title: "Final Designs", statement: "Final designs: find an event, get a ticket, host your own.",
+          tiles: [
+            { span: 12, bg: "violet", cap: "Guest", shots: [{ src: "/assets/images/gatherly/l-explore.webp", alt: "Gatherly Explore: search bar, filter chips and event cards." }, { src: "/assets/images/gatherly/l-event.webp", alt: "Gatherly Event page for Rooftop Sunset Sessions." }, { src: "/assets/images/gatherly/l-tickets.webp", alt: "Gatherly Tickets list." }] },
+            { span: 6, bg: "ink", cap: "Dark mode", shots: [{ src: "/assets/images/gatherly/d-explore.webp", alt: "Gatherly Explore in dark mode." }, { src: "/assets/images/gatherly/d-event.webp", alt: "Gatherly Event page in dark mode." }] },
+            { span: 6, bg: "lilac", cap: "Host", shots: [{ src: "/assets/images/gatherly/l-host.webp", alt: "Gatherly Host dashboard: 214 registered, 86 spots left, $5.3k revenue, guest list and Scan tickets button." }, { src: "/assets/images/gatherly/l-payouts.webp", alt: "Gatherly Payouts." }] },
+            { span: 12, bg: "canvas", cap: "Discover", shots: [{ src: "/assets/images/gatherly/l-search.webp", alt: "Gatherly Search." }, { src: "/assets/images/gatherly/l-filters.webp", alt: "Gatherly Filters." }, { src: "/assets/images/gatherly/l-calendar.webp", alt: "Gatherly Calendar of followed hosts." }] },
+          ] },
+        { title: "Brief", statement: "Brief: an events app in the spirit of Airbnb, designed in three months.",
+          stats: [["3 mo", "Brief to shipped MVP"], ["47", "Screens"], ["2", "Themes, light and dark"]],
+          cards: [["Independent project", "Designed for an agency"], ["Inspired by Airbnb", "The brief's reference point"], ["MVP", "Shipped"]] },
+        { title: "Key flows", statement: "Flows: four journeys cover the whole product.",
+          tiles: [
+            { span: 12, bg: "canvas", cap: "Discover", shots: [{ src: "/assets/images/gatherly/l-search.webp", alt: "Gatherly Search." }, { src: "/assets/images/gatherly/l-filters.webp", alt: "Gatherly Filters." }, { src: "/assets/images/gatherly/l-city.webp", alt: "Gatherly City picker." }, { src: "/assets/images/gatherly/l-calendar.webp", alt: "Gatherly Calendar of followed hosts." }] },
+            { span: 12, bg: "violet", cap: "Register and event day", shots: [{ src: "/assets/images/gatherly/l-register.webp", alt: "Gatherly Register: request to join with date, guests, total and payment." }, { src: "/assets/images/gatherly/l-confirmed.webp", alt: "Gatherly Registration confirmed." }, { src: "/assets/images/gatherly/l-ticket.webp", alt: "Gatherly Ticket with QR code." }, { src: "/assets/images/gatherly/l-live.webp", alt: "Gatherly iOS Live Activity on event day." }] },
+            { span: 12, bg: "ink", cap: "Connect", shots: [{ src: "/assets/images/gatherly/l-messages.webp", alt: "Gatherly Messages." }, { src: "/assets/images/gatherly/l-eventchat.webp", alt: "Gatherly Event chat." }, { src: "/assets/images/gatherly/l-notifications.webp", alt: "Gatherly Notifications." }, { src: "/assets/images/gatherly/l-chat.webp", alt: "Gatherly Chat with a host." }] },
+            { span: 6, bg: "lilac", cap: "Host: create", shots: [{ src: "/assets/images/gatherly/l-create.webp", alt: "Gatherly Create event." }, { src: "/assets/images/gatherly/l-create-tickets.webp", alt: "Gatherly Create event: tickets step." }] },
+            { span: 6, bg: "canvas", cap: "Host: event day", shots: [{ src: "/assets/images/gatherly/l-scanner.webp", alt: "Gatherly Check-in scanner." }, { src: "/assets/images/gatherly/l-analytics.webp", alt: "Gatherly Analytics." }] },
+          ] },
+        { title: "Design system", statement: "System: one token set drives light and dark.",
+          tiles: [
+            { span: 12, fill: true, src: "/assets/images/gatherly/ds-color.webp", alt: "Gatherly design system, colour: light and dark neutrals, the violet brand scale and success, warning and danger colours.", cap: "Colour tokens" },
+            { span: 12, fill: true, src: "/assets/images/gatherly/ds-components.webp", alt: "Gatherly design system, cards, lists and navigation in light and dark.", cap: "Cards, lists and navigation" },
+          ] },
+        { title: "Outcome", statement: "Outcome: the MVP shipped.",
+          text: ["Three months from brief to a shipped MVP, in light and dark."],
+          cta: { label: "Book a call", href: BOOK_A_CALL } },
+      ],
+    },
+  },
+  {
+    name: "Arcade.dev", org: "Arcade.dev", area: "Agent infrastructure", tags: ["Dev tools", "AI agents"],
+    title: "Arcade.dev: a web console and an iOS app for running agents with confidence.",
+    desc: "Two UX case studies for Arcade.dev, an agent runtime: a web console redesigned around first success, then trust, then control, and an iOS app to approve, debug and cap spend from the phone.",
+    seo: "Arcade.dev UX case studies: a web console for an agent runtime and an iOS companion app, covering first-call onboarding, approvals, status language, cost visibility and a design system.",
+    metric: { value: "100", label: "Screens across the web console and the iOS app" }, thumbnail: { src: "/assets/images/arcade-dev/thumbnail.jpg", alt: "Three Arcade.dev screens stacked at an angle: the Playground with an Authorize GitHub card in front, the dashboard Authorize GitHub next step behind it, and the policy approval queue at the back", bleed: true, full: true, hero: true }, slug: "arcade-dev", href: "/work/arcade-dev", tint: ["#F3B7A3", "#FFE3D8", "#FFF6F2"], accent: "#E34927",
+    cs: {
+      layout: "tiles",
+      variants: [
+        { key: "web", label: "Web console", lead: "Arcade console. Run agents with confidence. The engine was there; the story wasn’t. I redesigned the console around three things, in order: first success. Then trust. Then control.",
+          meta: [["Role", "Product designer"], ["Scope", "Web console, design system"], ["Delivered", "54 screens across six flows, tokens, status language"], ["Status", "Design concept, not yet user-tested"], ["Tools", "Paper"]],
+          structure: ["Background", "My role", "The challenge", "Critical journeys", "First call", "Status language", "Govern", "Cost", "Design system", "Outcome"],
+          sections: [
+            { title: "Background", statement: "Background: A great engine. A console that hides it.", text: ["Arcade sits between AI agents and the systems they work in. It authorizes as the user, runs tools, and logs every call. The public prototype and docs covered setup well. The real dashboards sit behind a login, so I designed from the prototype, the docs and public feedback."] },
+            { title: "My role", statement: "My role: Research. Flows. System.", cards: [["Research and framing", "Docs, prototype and public feedback turned into a gap list."], ["Flows and screens", "Six flows, every state: empty, error, blocked, conflict."], ["Design system", "Tokens, status language, verbs and nouns, agent icons."]] },
+            { title: "The challenge", statement: "The challenge: Day one needs a win. Day ninety needs control.", text: ["The same console serves a developer on day one and a security lead on day ninety. The first needs a working call in minutes. The second needs approvals, rules she can test, and an audit trail. Showing both at once buries both."] },
+            { title: "Critical journeys", statement: "Critical journeys: Get the highlights. Four moments, in the order people need them.", stepsTitle: "The four journeys", steps: [["Make a first call", "Role fork, Quickstart, detected first call."], ["Find why a run failed", "From a failed run to the cause and the fix."], ["Share tools by gateway", "Pick tools, create, connect a client."], ["Govern what agents do", "Draft rules, simulate, approve."]] },
+            { title: "First call", statement: "First call: Lead with value. Reveal the rest.", text: ["The console starts with a role fork and a Quickstart that detects the first call. Navigation grows as you do: Governance unlocks after the first successful call. The dashboard then answers one question first: what needs me?"], media: [{ demo: "arcadeFeatures", set: "first-call", alt: "Feature explorer. Use the toggle to switch between four first-run screens: Role fork, Quickstart, First call detected and Empty dashboard." }, { demo: "arcadeDash", alt: "Interactive Arcade web dashboard. Hover or touch the Tool calls chart to scrub a crosshair through the days and read each count against the previous period, switch the range between one week, one month and three months, hover the outcomes bar, the top tools and the weekday and time-of-day grid to read them out.", cap: "Live: move across the charts. Scrub the Tool calls line, switch 1W, 1M or 3M, and hover outcomes, tools and the run-time grid." }] },
+            { title: "Status language", statement: "Status language: One color, one meaning. Never decoration.", text: ["One data hue plus gray for charts. Status colors only when they carry meaning, always with an icon and a label. The same tokens run the console and the phone, so a held call looks the same everywhere. Verbs are fixed too: Authorize, Review, Retry, Replay."], tiles: [{ span: 12, fill: true, src: "/assets/images/arcade-dev/web-status.webp", alt: "Three status notes: three states with three tints, each with an icon and a word; one coral action per screen with Face ID for loosening a rule; one data hue and gray for every chart." }] },
+            { title: "Govern", statement: "Govern: Test every rule. Before it goes live.", text: ["Policies are edited as drafts, simulated against live rules and the last seven days, and blocked from publishing while they conflict. The approval queue ranks what needs a person, with bulk review for the dull cases. Approvals are the part the public docs do not cover, so it got the most care."], media: [{ demo: "arcadeApprovals", alt: "Arcade approval queue: tool calls waiting for a person, with a held Slack post to #support-escalations, the rule that blocked it, the approvers, and a coral Approve and run action.", cap: "Live: the Approval queue, as designed. Pending tool calls on the left, the held call and its reason on the right." }, { demo: "arcadeFeatures", set: "govern", alt: "Feature explorer. Use the toggle to switch between three policy screens: Simulator, Rule conflict and Replay results." }] },
+            { title: "Cost", statement: "Cost: Per-call pricing. Meet the speedometer.", text: ["Public feedback pointed at cost as the likeliest surprise. Usage and budget shows spend against a budget, the pace to month end, and the agent running hot, with a cap one click away. At the limit, new calls are held, not dropped."], media: [{ demo: "arcadeUsage", alt: "Arcade usage and budget: November spend against budget, the projected pace to month end, calls per day, and spend by agent with a cap control.", cap: "Live: scrub the Spend per day line, switch Month or Quarter, and hover the budget bar and each agent's share." }] },
+            { title: "Design system", statement: "The design system: One language. Fifty-four screens.", text: ["Dark graphite surfaces, one coral action per view, Inter for the interface and a mono face for code. Fixed verbs and nouns, status pills with icons and labels, brand marks on white tiles. Built as tokens first so the console, the phone and the code can share them."], tiles: [{ span: 12, fill: true, src: "/assets/images/arcade-dev/web-system.webp", alt: "Arcade design system board: the shell, the status language, brand marks on white tiles, and the rules that keep screens consistent." }] },
+            { title: "Outcome", statement: "Outcome: Built to change four things. Proven on none, yet.", text: ["A design concept, so these are targets to measure, not results. Nothing has been tested with users yet, and numbers on screens are placeholders.", "To test: how fast new workspaces reach a detected call, how often the simulator catches a rule mistake before it is published, and whether the 80% warning prevents bill surprises and held-call confusion."], stats: [["5 min", "To a first successful call"], ["0", "Rules published in conflict"], ["80%", "Warned before it is a bill"]] },
+          ] },
+        { key: "mobile", label: "iOS app", lead: "Arcade for iOS. Agents work on. So can you. An iPhone companion to approve changes, find what broke, and cap spend, from anywhere.",
+          meta: [["Role", "Product designer"], ["Scope", "iOS app, agent icons, prototype"], ["Delivered", "46 screens, 11 flows, clickable iPhone prototype"], ["Status", "Design concept, not yet user-tested"], ["Tools", "Paper"]],
+          structure: ["Background", "My role", "The challenge", "Critical journeys", "Put the phone to work", "Make cost visible", "One ring, five gestures", "The design system", "Outcome"],
+          sections: [
+            { title: "Background", statement: "Background: The agent works. You’re away from the desk.", text: ["Arcade runs agents that act in Slack, GitHub and Salesforce on a person's behalf. When one is held for approval or a login expires, the person is often not at a laptop. The docs and public prototype said nothing about mobile, so I worked from the console's flows and public feedback to decide what belongs on the phone."], tiles: [{ span: 12, fill: true, src: "/assets/images/arcade-dev/mob-inbox.webp", alt: "Four Arcade iPhone screens: the Inbox with Needs you, Held, Agents and Accounts, the Needs you list with a proposed rule change and an expired login, the review screen with Approve with Face ID, and the voice sheet hearing add GitHub and Slack to a new gateway." }] },
+            { title: "My role", statement: "My role: Research. Flows. System. Prototype.", cards: [["Research and framing", "Read the docs, the prototype and public feedback. Wrote the gaps down as a to-do list I could design against."], ["Flows and screens", "Mapped eleven mobile flows, then designed every screen and state in Paper."], ["System and prototype", "Built tokens, status language and agent icons, then a clickable iPhone prototype of the whole app."]] },
+            { title: "The challenge", statement: "The challenge: Control that feels quick. And calm.", text: ["Approvals were missing from the docs, nothing was designed for someone away from a laptop, and per-call pricing made cost a likely surprise. The phone had to answer three questions fast: what needs me, what broke, and what is it costing?"] },
+            { title: "Critical journeys", statement: "Critical journeys: Four moments. Trust is decided in each.", text: ["I started from what a person is trying to do on a small screen, not from the console's feature list. Each journey got its own flow and success measure."], stepsTitle: "The four journeys", steps: [["Pair and protect", "Pair with the console, turn on Face ID and notifications."], ["Find why a run failed", "From a failed run to the cause and the fix, on one screen."], ["Decide when alerted", "A push arrives. Read what would change, approve with Face ID."], ["Control what agents can do", "Pause everything or cap spend in one tap."]], tiles: [{ span: 12, fill: true, src: "/assets/images/arcade-dev/mock-review.webp", alt: "An iPhone showing the Arcade review screen: Allow #support-escalations for Support Agent, the rule change as a diff, 4 of 1,284 calls would change, and a coral Approve with Face ID button." }] },
+            { title: "Put the phone to work", statement: "Put the phone to work: No laptop? Still in charge.", text: ["The phone is not a shrunken console. It is an Inbox: what needs you, what is held, what broke. Chat is the main surface, answers come back as one fitting chart, and anything that loosens a rule needs Face ID. When a job needs a big screen, it hands off to the laptop."], tiles: [{ span: 12, fill: true, src: "/assets/images/arcade-dev/mob-trace.webp", alt: "Four Arcade iPhone screens: gateway ready, a run explained with the rule that held it, a lock screen alert, and failures grouped by cause." }, { span: 12, fill: true, src: "/assets/images/arcade-dev/mock-alert.webp", alt: "Close-up of an iPhone lock screen with two Arcade notifications: Needs your OK, allow #support-escalations for Support Agent with Review and Not now buttons, and Salesforce authorization expired, 5 runs are blocked for Jordan." }] },
+            { title: "Make cost visible", statement: "Cost: Per-call pricing. Meet the speedometer.", text: ["Public feedback pointed at cost as the likeliest surprise. Spend shows the budget, the pace to month end and the agent running hot, with a cap one tap away. At the limit, new calls are held, not dropped."], tiles: [{ span: 12, fill: true, src: "/assets/images/arcade-dev/mob-spend.webp", alt: "Four Arcade iPhone screens: spend against budget, spend by agent, setting a budget, and the budget reached state." }] },
+            { title: "One ring, five gestures", statement: "One ring, five gestures: Agents get faces. Lists read at a glance.", text: ["Letter tiles all looked alike. Each agent now has its own mark: one ring, one gesture. A split ring for triage, antennae for bugs, a turning arrow for updates, a tray for the inbox, a gradient spark for Arcade's own agent."], tiles: [{ span: 12, fill: true, src: "/assets/images/arcade-dev/mob-icons.webp", alt: "Five agent marks, each a ring with its own gesture: a split ring for triage, antennae for bugs, a turning arrow for updates, a tray for the inbox, and a gradient spark for the Arcade agent." }] },
+            { title: "The design system", statement: "The design system: Airy. Dark. One action at a time.", text: ["The phone shares tokens with the console but spends them differently: 24 pt margins, large titles, rows without boxes, and a single coral button per screen. Every tap target is at least 44 pt, and sheets use the iOS grabber and corner radius."], tiles: [{ span: 12, fill: true, src: "/assets/images/arcade-dev/mob-system.webp", alt: "Arcade iOS design system board: color tokens, type and spacing, and component rules such as a two-line row without a box at 44 pt tall." }] },
+            { title: "Outcome", statement: "Outcome: Built to change four things. Proven on none, yet.", text: ["This is a design concept, so these are targets I would measure, not results. Nothing here has been tested with users yet, and sample numbers on screens are placeholders.", "To test: where people drop off while pairing, how long it takes to decide from a push and how often people ask a question first, and whether the 80% warning, with new calls held and not dropped, prevents bill surprises."], stats: [["2 min", "To pair and protect the phone"], ["1 tap", "From alert to decision"], ["80%", "Warned before it is a bill"]] },
           ] },
       ],
     },
@@ -744,7 +687,7 @@ function metricTile(p, el, small = false) {
 }
 
 const pad = (n) => String(n).padStart(2, "0");
-const DISPLAY_ORDER = ["CotonAI Modes", "CotonAI Agent", "CotonAI Design System", "Gap 3D Fit", "Trailhead Solve"];
+const DISPLAY_ORDER = ["CotonAI Modes", "CotonAI Agent", "CotonAI Design System", "Arcade.dev", "Gatherly", "Gap 3D Fit", "Trailhead Solve"];
 const DISPLAY_PROJECTS = PROJECTS
   .filter((p) => DISPLAY_ORDER.includes(p.name))
   .sort((a, b) => DISPLAY_ORDER.indexOf(a.name) - DISPLAY_ORDER.indexOf(b.name));
@@ -760,10 +703,10 @@ const WORK_META = {
   "Trailhead Solve": { sectors: ["Enterprise", "AI agents"], featured: false, date: "2026-04" },
   "CotonAI Modes": { sectors: ["Fashion & retail", "AI agents"], featured: true, date: "2026-10" },
   "CotonAI Design System": { sectors: ["Fashion & retail"], featured: true, date: "2026-10" },
-  "Arcade Control Plane": { sectors: ["Dev tools", "AI agents"], featured: false, date: "2026-05" },
   "Gap 3D Fit": { sectors: ["Fashion & retail"], featured: true, date: "2025-07" },
+  "Gatherly": { sectors: ["Events & social"], featured: true, date: "2026-11" },
+  "Arcade.dev": { sectors: ["Dev tools", "AI agents"], featured: true, date: "2026-11" },
   "CotonAI Agent": { sectors: ["Fashion & retail", "AI agents"], featured: true, date: "2026-10" },
-  "Payman AI": { sectors: ["Fintech", "AI agents"], featured: false, date: "2026-10" },
 };
 // The caption under every tile, in the style of rachelchen.tech: project name / category and year
 const makeCap = (p) => {
@@ -778,11 +721,11 @@ const makeCap = (p) => {
 const units = [];
 if (list) DISPLAY_PROJECTS.forEach((p, displayI) => {
   const i = displayIndexOf(p);
-  if (p.org === "CotonAI") {
+  if (p.org === "CotonAI" && p.name !== "CotonAI Design System") {   // the design system study is open to everyone, so it is a normal card
     if (!lockGroup) {
       lockGroup = document.createElement("li");
       lockGroup.className = "case case--locked";
-      const ids = DISPLAY_PROJECTS.map((q, k) => (q.org === "CotonAI" ? pad(k + 1) : null)).filter(Boolean).join(" · ");
+      const ids = DISPLAY_PROJECTS.map((q, k) => (q.org === "CotonAI" && q.name !== "CotonAI Design System" ? pad(k + 1) : null)).filter(Boolean).join(" · ");
       lockGroup.innerHTML = `<div class="case__label"><span class="card__index">Case studies ( ${ids} )</span><span class="case__client">CotonAI</span><span class="case__year">Passcode protected</span></div><ul class="lockgrid" role="list"></ul>`;
       list.appendChild(lockGroup);
       units.push({ li: lockGroup, group: true, members: [], ids });
@@ -849,7 +792,7 @@ if (list && units.length) {
   const sectors = [...new Set(DISPLAY_PROJECTS.flatMap((p) => meta(p).sectors))].sort((a, b) => DISPLAY_PROJECTS.filter((p) => meta(p).sectors.includes(b)).length - DISPLAY_PROJECTS.filter((p) => meta(p).sectors.includes(a)).length);
   const filters = [{ key: "recent", label: "Recent" }, { key: "featured", label: "Featured" }, ...sectors.map((x) => ({ key: x, label: x }))];
   const fits = (p, key) => key === "recent" || (key === "featured" ? meta(p).featured : meta(p).sectors.includes(key));
-  const tabs = document.getElementById("work-tabs"), unitDate = (u) => u.members.reduce((m, x) => (meta(x.p).date > m ? meta(x.p).date : m), "");
+  const tabs = document.getElementById("work-tabs") || document.createElement("div"), unitDate = (u) => u.members.reduce((m, x) => (meta(x.p).date > m ? meta(x.p).date : m), "");
   const countEls = document.querySelectorAll(".work__eyebrow [data-work-count]");
   // Featured is the default so public work leads; the choice survives a trip into a case study and back
   const FILTER_KEY = "work-filter";
@@ -875,23 +818,32 @@ if (list && units.length) {
     });
     countEls.forEach((el) => (el.textContent = pad(shown)));
   };
-  filters.forEach((f) => {
+  // Sidebar: Recent and Featured on top, then Sectors as a nested group under a guide line
+  const ICONS = { recent: '<svg class="side__icon" viewBox="0 0 10 9" aria-hidden="true" fill="currentColor" shape-rendering="crispEdges"><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="7" y="1" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="0" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="9" y="5" width="1" height="1"/><rect x="1" y="6" width="1" height="1"/><rect x="8" y="6" width="1" height="1"/><rect x="2" y="7" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/><rect x="3" y="8" width="1" height="1"/><rect x="4" y="8" width="1" height="1"/><rect x="5" y="8" width="1" height="1"/><rect x="6" y="8" width="1" height="1"/></svg>', featured: '<svg class="side__icon" viewBox="0 0 9 9" aria-hidden="true" fill="currentColor" shape-rendering="crispEdges"><rect x="4" y="0" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="0" y="3" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/><rect x="3" y="5" width="1" height="1"/><rect x="4" y="5" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="3" y="6" width="1" height="1"/><rect x="5" y="6" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="1" y="7" width="1" height="1"/><rect x="2" y="7" width="1" height="1"/><rect x="6" y="7" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/><rect x="0" y="8" width="1" height="1"/><rect x="8" y="8" width="1" height="1"/></svg>', sectors: '<svg class="side__icon" viewBox="0 0 9 7" aria-hidden="true" fill="currentColor" shape-rendering="crispEdges"><rect x="0" y="0" width="1" height="1"/><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="0" y="1" width="1" height="1"/><rect x="3" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="7" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="0" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="8" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="8" y="5" width="1" height="1"/><rect x="0" y="6" width="1" height="1"/><rect x="1" y="6" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="3" y="6" width="1" height="1"/><rect x="4" y="6" width="1" height="1"/><rect x="5" y="6" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="7" y="6" width="1" height="1"/><rect x="8" y="6" width="1" height="1"/></svg>' };
+  const mkTab = (f) => {
     const b = document.createElement("button");
     b.type = "button"; b.className = "work__tab"; b.dataset.key = f.key; b.setAttribute("role", "tab"); b.setAttribute("aria-controls", "work-cards"); b.id = `work-tab-${f.key === "recent" ? "recent" : f.key.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
     const n = DISPLAY_PROJECTS.filter((p) => fits(p, f.key)).length;
-    b.append(f.label); const sup = document.createElement("sup"); sup.textContent = pad(n); b.appendChild(sup);
+    if (ICONS[f.key]) b.insertAdjacentHTML("beforeend", ICONS[f.key]);
+    const lab = document.createElement("span"); lab.className = "work__tablabel"; lab.textContent = f.label; b.appendChild(lab);
+    const sup = document.createElement("sup"); sup.textContent = pad(n); b.appendChild(sup);
     b.addEventListener("click", () => render(f.key));
-    tabs.appendChild(b);
-  });
+    return b;
+  };
+  const group = document.createElement("div"); group.className = "work__group"; group.setAttribute("role", "none");
+  group.insertAdjacentHTML("beforeend", `<p class="work__grouphead" aria-hidden="true">${ICONS.sectors}<span class="work__tablabel">Sectors</span><sup>${pad(sectors.length)}</sup></p>`);
+  const nest = document.createElement("div"); nest.className = "work__nest"; nest.setAttribute("role", "none"); group.appendChild(nest);
+  filters.forEach((f) => { const b = mkTab(f); (f.key === "recent" || f.key === "featured" ? tabs : nest).appendChild(b); });
+  tabs.appendChild(group);
   tabs.addEventListener("keydown", (e) => {
-    if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(e.key)) return;
-    const bs = [...tabs.querySelectorAll(".work__tab")], at = bs.findIndex((b) => b.dataset.key === active);
-    const next = e.key === "Home" ? bs[0] : e.key === "End" ? bs[bs.length - 1] : bs[(at + (e.key === "ArrowRight" ? 1 : bs.length - 1)) % bs.length];
+    if (!["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp", "Home", "End"].includes(e.key)) return;
+    const bs = [...tabs.querySelectorAll(".work__tab")], at = bs.findIndex((b) => b.dataset.key === active), fwd = e.key === "ArrowRight" || e.key === "ArrowDown";
+    const next = e.key === "Home" ? bs[0] : e.key === "End" ? bs[bs.length - 1] : bs[(at + (fwd ? 1 : bs.length - 1)) % bs.length];
     next.focus(); next.scrollIntoView({ block: "nearest", inline: "nearest" }); render(next.dataset.key); e.preventDefault();
   });
   let saved = null;
   try { saved = sessionStorage.getItem(FILTER_KEY); } catch (err) {}
-  render(filters.some((f) => f.key === saved) ? saved : "featured");
+  render(document.getElementById("work-tabs") && filters.some((f) => f.key === saved) ? saved : "featured");
 }
 
 // ── Work: the rim glow under the hero follows the pointer and brightens on hover ──
@@ -1206,7 +1158,12 @@ const setOpen = (menu, open) => {
 const closeAll = () => openMenu && setOpen(openMenu, false);
 const finePointer = matchMedia("(hover: hover) and (pointer: fine)");
 MENUS.forEach((m) => {
-  m.tab.addEventListener("click", () => {
+  m.tab.addEventListener("click", (e) => {
+    // Work is a real link to /work: a mouse click goes there (hover shows the menu); touch and keyboard still toggle the menu
+    if (m.tab.id === "work-tab") {
+      if (finePointer.matches && e.detail > 0) { openedByHover = false; closeAll(); return; }   // the page-transition handler navigates
+      e.preventDefault();
+    }
     // A click on a panel that hover just opened pins it open instead of closing it
     if (openMenu?.tab === m.tab && openedByHover) { openedByHover = false; return; }
     openedByHover = false;
@@ -1331,7 +1288,7 @@ if (weatherEl) fetch("https://api.open-meteo.com/v1/forecast?latitude=37.3382&lo
     <div class="sf__sign">
       <a class="sf__mark" href="#top" aria-label="Sam.design, back to top"><span>Sam.design</span></a>
       <div class="sf__cols">
-        <nav aria-label="Sitemap"><h3>Sitemap</h3><ul role="list"><li><a href="/">Home</a></li><li><a href="/#work">Work</a></li><li><a href="/about">About</a></li><li><a href="/writing">Writing</a></li><li><a href="/playground">Playground</a></li></ul></nav>
+        <nav aria-label="Sitemap"><h3>Sitemap</h3><ul role="list"><li><a href="/">Home</a></li><li><a href="/work">Work</a></li><li><a href="/about">About</a></li><li><a href="/writing">Writing</a></li><li><a href="/playground">Playground</a></li></ul></nav>
         <nav aria-label="Social"><h3>Social</h3><ul role="list"><li><a href="${CONTACT.linkedin}" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="${CONTACT.github}" target="_blank" rel="noopener">GitHub</a></li><li><a href="${CONTACT.x}" target="_blank" rel="noopener">X</a></li><li><a href="${CONTACT.substack}" target="_blank" rel="noopener">Substack</a></li></ul></nav>
         <div><h3>Contact</h3><ul role="list"><li><a href="mailto:${CONTACT.email}">${CONTACT.email}</a></li><li>San Francisco, California</li></ul></div>
         <div><h3>Work with me</h3><ul role="list"><li><a href="${CONTACT.book}" target="_blank" rel="noopener">Book a call</a></li><li><a href="${CONTACT.resume}" target="_blank" rel="noopener">Résumé (PDF)</a></li></ul></div>
@@ -2333,6 +2290,22 @@ function openLightbox(src, alt, opener) {
       { code: "INT-15", title: "Empty Sessions", status: "Interaction · Empty state", area: "Dev tools", tag: "interaction", demo: "emptySessions", bg: "#0C0C0C", dark: true, ptr: "none", tall: true,
         scope: "An empty state with some life in it: the windows fan out on hover, the pixel glyphs drift against the pointer, and clicking the stack shuffles it.",
         hint: "Move the pointer over the card, hover a glyph, and click the stack of windows.", tags: ["Empty state", "Parallax", "Pixel art"] },
+      { code: "UI-01", title: "Profile Collections", status: "Interface study", area: "Web design", tag: "ui", demo: "profileCollections", ptr: "hover", ar: "1024 / 768", alt: "A profile screen with a collections list, a hover card and a grid of photographs and a video thumbnail.", pos: "50% 50%", cover: true, bg: "#DCDBD3",
+        scope: "A profile screen with a collections list, a hover card and a grid of photographs and a video thumbnail.", tags: ["Interface", "Web design"] },
+      { code: "UI-02", title: "Balance Chart", status: "Interface study", area: "Product design", tag: "ui", demo: "balanceChart", ptr: "hover", ar: "1199 / 872", alt: "A dark balance dashboard with a stacked area chart by asset, avatar markers and a seven-day range selector.", pos: "50% 50%", cover: true, bg: "#111111",
+        scope: "A dark balance dashboard with a stacked area chart by asset, avatar markers and a seven-day range selector.", tags: ["Interface", "Product design"] },
+      { code: "UI-03", title: "Design Guidelines", status: "Interface study", area: "Brand", tag: "ui", demo: "designGuidelines", ptr: "hover", ar: "1200 / 800", alt: "A design system site with a dark header and a white logotype guidelines page showing construction grids.", pos: "50% 40%", cover: true, bg: "#E8E8E8",
+        scope: "A design system site with a dark header and a white logotype guidelines page showing construction grids.", tags: ["Interface", "Brand"] },
+      { code: "UI-04", title: "Timeline Chart", status: "Interface study", area: "Product design", tag: "ui", demo: "timelineChart", ptr: "hover", ar: "736 / 832", alt: "A translucent timeline chart of three days over a dark organic texture, with pink and yellow areas.", pos: "50% 30%", cover: true, bg: "#433A2D",
+        scope: "A translucent timeline chart of three days over a dark organic texture, with pink and yellow areas.", tags: ["Interface", "Product design"] },
+      { code: "UI-05", title: "Email Stats", status: "Interface study", area: "Web design", tag: "ui", demo: "emailStats", ptr: "hover", ar: "1200 / 720", alt: "A card with three columns of email stats: delivered, engaged and complaints, with advice under each.", pos: "50% 50%", cover: true, bg: "#E7E7E5",
+        scope: "A card with three columns of email stats: delivered, engaged and complaints, with advice under each.", tags: ["Interface", "Web design"] },
+      { code: "UI-06", title: "Contents Spread", status: "Interface study", area: "Brand", tag: "ui", demo: "contentsSpread", ptr: "hover", ar: "1199 / 782", alt: "A book contents spread with four seasonal photographs and page numbers.", pos: "50% 50%", cover: true, bg: "#FDFDFD",
+        scope: "A book contents spread with four seasonal photographs and page numbers.", tags: ["Interface", "Brand"] },
+      { code: "UI-07", title: "Lens Picker", status: "Interface study", area: "Web design", tag: "ui", demo: "lensPicker", ptr: "hover", ar: "736 / 736", alt: "A dark pill-shaped lens picker showing 24 millimetres with a yellow indicator.", pos: "50% 50%", cover: true, bg: "#1A1A1A",
+        scope: "A dark pill-shaped lens picker showing 24 millimetres with a yellow indicator.", tags: ["Interface", "Web design"] },
+      { code: "UI-08", title: "Workout App", status: "Interface study", area: "Product design", tag: "ui", demo: "workoutApp", ptr: "hover", ar: "1200 / 1533", alt: "A phone showing a workout summary with heart rate zones and a chart on a cream ground.", pos: "50% 22%", cover: true, bg: "#FCF0E6",
+        scope: "A phone showing a workout summary with heart rate zones and a chart on a cream ground.", tags: ["Interface", "Product design"] },
     ];
     setCount(LAB.length);
     const list = document.querySelector("[data-lab]");
@@ -2350,21 +2323,25 @@ function openLightbox(src, alt, opener) {
         if (it.dark) li.classList.add("lab__tile--dark");
         if (it.bleed) li.classList.add("lab__tile--bleed");
         if (it.bare) li.classList.add("lab__tile--bare");
+        if (it.cover) li.classList.add("lab__tile--cover");   // a rebuilt interface keeps the shape of the screen it came from
+        if (it.ar) li.style.setProperty("--ar", it.ar);
         li.style.setProperty("--ix-bg", it.bg);
         const stage = el("div", "lab__stage"); li.appendChild(stage);
         if (it.ptr !== "hover") stage.inert = true;   // the cover button owns the tile; controls inside the loop must not be tabbable or announced twice
-        window.Playground && window.Playground.DEMOS[it.demo](stage, { auto: true });
+        window.Playground && window.Playground.DEMOS[it.demo] && window.Playground.DEMOS[it.demo](stage, { auto: true });
       } else if (it.image) {
         // Branding: the artwork itself, contained on a tint taken from it
         li.classList.add("lab__tile--ix", "lab__tile--noptr"); li.style.setProperty("--ix-bg", it.bg);
+        if (it.cover) li.classList.add("lab__tile--bleed", "lab__tile--cover");
+        if (it.ar) li.style.setProperty("--ar", it.ar);   // an interface screenshot fills the tile edge to edge
         const stage = el("div", "lab__stage lab__stage--img"), img = el("img");
-        img.src = it.image; img.alt = it.alt || it.title; img.loading = "lazy"; img.decoding = "async"; stage.appendChild(img); li.appendChild(stage);
+        img.src = it.image; img.alt = it.alt || it.title; img.loading = "lazy"; img.decoding = "async"; if (it.pos) img.style.objectPosition = it.pos; stage.appendChild(img); li.appendChild(stage);
       } else if (it.thumb) {
         // Contextual thumbnail: the page itself inside a small browser frame, cropped by the tile
         li.classList.add("lab__tile--shot", "grain");
         ["#3C9A98", "#C6E6DF", "#86C6C0"].forEach((c, k) => li.style.setProperty(`--t${k + 1}`, c));
         const shot = el("div", "lab__shot"), bar = el("div", "lab__shotbar"), img = el("img");
-        bar.append(el("i"), el("i"), el("i"), el("span", "", "paymanai.com"));
+        bar.append(el("i"), el("i"), el("i"), el("span", "", it.host || ""));
         img.src = it.thumb; img.alt = `Preview of the ${it.title} page`; img.loading = "lazy"; img.decoding = "async";
         shot.append(bar, img); li.appendChild(shot);
         li.addEventListener("pointermove", (e) => {
@@ -2430,7 +2407,7 @@ function openLightbox(src, alt, opener) {
       ld.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "Article", headline: p.title, name: `${p.name}: case study`, description: p.seo || p.desc, url, mainEntityOfPage: url, image: img, author: { "@type": "Person", name: "Sambit Nayak", url: origin + "/" } });
       document.head.appendChild(ld);
       const bc = document.createElement("script"); bc.type = "application/ld+json"; bc.dataset.csLd = "";
-      bc.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [["Home", "/"], ["Work", "/#work"], [p.name, `/work/${p.slug}`]].map(([name, u], i) => ({ "@type": "ListItem", position: i + 1, name, item: origin + u })) });
+      bc.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [["Home", "/"], ["Work", "/work"], [p.name, `/work/${p.slug}`]].map(([name, u], i) => ({ "@type": "ListItem", position: i + 1, name, item: origin + u })) });
       document.head.appendChild(bc);
     }
     }
@@ -2538,7 +2515,7 @@ function openLightbox(src, alt, opener) {
       if (m.diagram) return diagramEl(m.diagram);
       if (m.demo) { // an authored product animation, mounted by js/case-demos.js
         const f = el("figure", "shot shot--wide shot--demo"), d = el("div", "cs-demo");
-        d.dataset.caseDemo = m.demo; d.setAttribute("role", "region"); d.setAttribute("aria-label", m.alt || m.cap || "Product demo");
+        d.dataset.caseDemo = m.demo; if (m.set) d.dataset.set = m.set; d.setAttribute("role", "region"); d.setAttribute("aria-label", m.alt || m.cap || "Product demo");
         f.appendChild(d); if (m.cap) f.appendChild(el("figcaption", "", m.cap)); return f;
       }
       if (typeof m === "string" || m.ph) return placeholder(typeof m === "string" ? m : m.ph, (typeof m === "object" && m.ratio) || "16:10", phId(tag, k));
@@ -2569,21 +2546,77 @@ function openLightbox(src, alt, opener) {
       items.forEach(([t, d], k) => { const li = el("li"); if (numbered) li.appendChild(el("span", "study__n", pad2(k + 1))); li.appendChild(el("h4", "", t)); if (d) li.appendChild(el("p", "", d)); g.appendChild(li); });
       return g;
     };
+    // Showcase tiles (layout: "tiles"): coloured panels with big screens rising from the bottom edge, in a 12-column grid
+    const tilesEl = (tiles) => {
+      const g = el("div", "study__tiles is-wide");
+      tiles.forEach((t) => {
+        const d = el("figure", "tile" + (t.fill ? " tile--fill" : "")); d.style.setProperty("--span", t.span || 12); d.dataset.bg = t.bg || "ink";
+        if (t.video) {
+          // A screen recording of a flow: muted, looping, plays only while it is on screen
+          d.classList.add("tile--fill", "tile--video");
+          const v = el("video"); v.muted = true; v.defaultMuted = true; v.loop = true; v.playsInline = true; v.preload = "none"; v.poster = t.poster; v.setAttribute("muted", ""); v.setAttribute("playsinline", ""); v.setAttribute("aria-label", t.alt);
+          const src = el("source"); src.src = t.video; src.type = "video/mp4"; v.appendChild(src); d.appendChild(v); autoVideo(v, 0.35, true);
+        }
+        else if (t.fill) { const im = el("img"); im.src = t.src; im.alt = t.alt; im.loading = "lazy"; im.decoding = "async"; d.appendChild(im); }
+        else { d.style.setProperty("--n", t.shots.length); t.shots.forEach((m) => { const im = el("img"); im.src = m.src; im.alt = m.alt; im.loading = "lazy"; im.decoding = "async"; d.appendChild(im); }); }
+        if (t.cap) d.appendChild(el("figcaption", "", t.cap));
+        g.appendChild(d);
+      });
+      const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.querySelectorAll("img").forEach((im) => im.classList.add("is-in")); io.unobserve(e.target); } }), { threshold: 0.15 });
+      g.querySelectorAll(".tile").forEach((t) => io.observe(t));
+      return g;
+    };
     const statementOf = (sec) => { const s = sec.statement || sec.title, k = s.indexOf(": "); const t = k > -1 && k < 48 ? s.slice(k + 2) : s; return t.charAt(0).toUpperCase() + t.slice(1); };
     // Every study tells its story in the same seven sections, in this order. A section's own `title` is optional;
     // `parts` hold the extra beats (what we killed, what we shipped, one per surface) that sit under a section.
+    // Every study reads in the same five beats: Overview, Problem, Hypothesis, Solution, Learning. Each study keeps its own sections as
+    // written; FIVE_MAP says which of them sit under which beat (numbers index `sections`; an object is a beat written for the map).
+    // The first section in a group becomes the beat, the rest become labelled sub-parts under it, so nothing is dropped.
+    // Hypotheses are drafted from what each study already claims, and should be confirmed by the author.
+    const FIVE = ["Overview", "Problem", "Hypothesis", "Solution", "Learning"];
+    const FIVE_MAP = {
+      "trailhead-solve": { five: [[0, 3], [1, 2], ["h", 4], [5], [6]], h: { statement: "Hypothesis: catch the ChatGPT moment, and experts come back.", text: ["If Trailhead answers an expert's hardest question at the moment they would otherwise open ChatGPT, and gives them a reason to return between milestones, it can become the first place they go when they are stuck."] } },
+      "cotonai-modes": { five: [[0, 3], [1, 2], ["h", 4], [5], [6]], h: { statement: "Hypothesis: remove the need to prompt, and more people get a good first result.", text: ["Two ways of helping users prompt better had already failed. The bet was to stop teaching prompting and give each stage of fashion work a structured entry point, so ambiguity drops while creativity stays open.", "Every iteration was judged on usage data, not opinion."] } },
+      "cotonai-agent": { five: [[0, 3], [1, 2], ["h", 4], [5], [6]], h: { statement: "Hypothesis: if the canvas carries the context, a prompt stops starting from zero.", text: ["The canvas shouldn't only hold the work. It should be the context an agent understands the work through: why a color was rejected, which silhouette was approved, what the brief asked for.", "The agent plans and executes while the designer approves each step. Only the live workspace has run in a pilot; the agent itself is still a proposal."] } },
+      "gap-3d-fit": { five: [[1], [2, 3], ["h"], [0, 4], [5]], h: { statement: "Hypothesis: shoppers need less sizing ambiguity, not more 3D realism.", text: ["Hold the 3D viewer constant and change only how the flow asks for input: ask little, then let the shopper verify the size.", "Sessions showed shoppers dropping off as the inputs piled up, before they saw any value. The test was whether cutting that friction would lift add-to-bag."] } },
+      "cotonai-design-system": { five: [[0], [1], ["h"], [2, 3, 4], [6, 5]], h: { statement: "Hypothesis: one generated source, with gates that fail the build, stops the system drifting.", text: ["An audit found that nothing enforced the design: colour, size and controls were decided again in every file. If one file generates every output and machines check the numbers, consistency stops depending on people remembering the rules.", "Only stage 1 is applied, so everything measured is a stage 1 number."] } },
+      "gatherly": { five: [[1], [{ title: "Problem", statement: "Problem: one events app has to serve people who go and people who host.", text: ["The brief was an events app in the spirit of Airbnb, designed for an agency in three months. Someone had to be able to find an event and get a ticket, and someone else to host their own."] }], ["h"], [0, 2, 3], [4]], h: { statement: "Hypothesis: four journeys and one token set are enough for the whole product.", text: ["Cover the product with four key flows, and drive light and dark from a single token set, so a three-month MVP stays consistent."] } },
+      "arcade-dev": {
+        web: { five: [[0, 1], [2, 3], ["h"], [4, { title: "Connect", statement: "Connect: Authorize where the work happens. Not on a settings page.", text: ["Per-user authorization is handled where it happens, inside the Playground conversation, instead of sending someone to a settings page. Connected accounts show their status with the fix beside it, and a gateway publishes one MCP URL that clients connect to."], media: [{ demo: "arcadeFeatures", set: "connect", alt: "Feature explorer. Use the toggle to switch between four screens: Tool catalog, Playground, Accounts and Gateway builder." }] }, { title: "Debug a run", statement: "Debug a run: Why it failed. And what to do next.", text: ["A failed run opens on a trace that says what stopped it. A held call and an expired login are different problems, so each gets its own state and its own verb: Review for a call that needs a person, Re-authorize for access that expired."], media: [{ demo: "arcadeFeatures", set: "debug", alt: "Feature explorer. Use the toggle to switch between three trace screens: Policy blocked, Auth expired and All failure states." }] }, 5, 6, 7, { title: "Arcade Agent", statement: "Arcade Agent: Reads the page. Drafts the change. Waits for approval.", text: ["A toggle in every top bar, or the keyboard shortcut, summons it. It reads the current page and drafts changes, and changes to rules, accounts or keys always wait for an approval card."], media: [{ demo: "arcadeFeatures", set: "agent", alt: "Feature explorer. Use the toggle to switch between four Arcade Agent screens: Summoned, Docked panel, Agent-first home and Charts." }] }, 8], [9]], h: { statement: "Hypothesis: First call first. Control as you grow.", text: ["The same console serves a developer on day one and a security lead on day ninety, and showing both at once buries both. The bet: start with a working call in minutes, and let navigation, rules and approvals appear as the person needs them.", "None of it has been tested with users yet. The last section lists what to measure."] } },
+        mobile: { five: [[0, 1], [2, 3], ["h"], [4, 5, 6, 7], [8]], h: { statement: "Hypothesis: Three questions, answered fast. The rest goes to the laptop.", text: ["The phone has to answer what needs me, what broke, and what it is costing. The bet: an Inbox and a chat, not a shrunken console, with Face ID for anything that loosens a rule and a handoff to the laptop for big jobs.", "It is a design concept, so this is a hypothesis to test, not a result."] } },
+      },
+    };
+    const toFive = (v, map) => {
+      if (!map) return v;
+      const pick = (x) => (x === "h" ? { title: "Hypothesis", ...map.h } : typeof x === "number" ? v.sections[x] : x);
+      // A merged section keeps its own label: its title, or the word before the colon in its statement when the title is the generic one
+      const label = (sec) => (sec.title && !CS_STRUCTURE.includes(sec.title) ? sec.title : (sec.statement || "").split(": ")[0] || sec.title);
+      const sections = map.five.map((group) => {
+        const [first, ...rest] = group.map(pick), parts = [...(first.parts || [])];
+        rest.forEach(({ parts: more, ...sec }) => { parts.push({ ...sec, title: label(sec) }); parts.push(...(more || [])); });
+        return { ...first, parts };
+      });
+      return { ...v, sections, structure: FIVE };
+    };
     const CS_STRUCTURE = ["Overview / Background", "Defining the Problem", "Understanding your Users", "Your Role and Responsibilities", "Scope and Constraints", "Ideation Steps (The Solution)", "Outcomes and Takeaways"];
     // A study can carry its own `structure` (Gap 3D Fit follows a research-led flow); otherwise it uses the seven above
-    const STRUCT = p.cs.structure || CS_STRUCTURE;
-    if (p.cs.sections.length !== STRUCT.length) console.warn(`${p.name}: expected ${STRUCT.length} sections, found ${p.cs.sections.length}`);
-    const secs = p.cs.sections.map((sec, i) => { const title = STRUCT[i] || sec.title; return { sec, i, title, id: slug(title) || `section-${i + 1}` }; });
+    // A study can also carry `variants` (Arcade.dev: Web console and iOS app): each has its own lead, meta, structure and sections,
+    // and a switch under the title shows one at a time. Section ids get the variant key as a prefix so they stay unique.
+    const variants = (p.cs.variants || [{ key: "", label: "", lead: p.desc, meta: p.cs.meta, structure: p.cs.structure, sections: p.cs.sections }])
+      .map((v) => { const m = FIVE_MAP[p.slug]; return toFive(v, m && (v.key ? m[v.key] : m)); });
+    const vsecs = variants.map((v) => {
+      const STRUCT = v.structure || CS_STRUCTURE;
+      if (v.sections.length !== STRUCT.length) console.warn(`${p.name}: expected ${STRUCT.length} sections, found ${v.sections.length}`);
+      return v.sections.map((sec, i) => { const title = STRUCT[i] || sec.title; return { sec, i, title, id: (v.key ? v.key + "-" : "") + (slug(title) || `section-${i + 1}`) }; });
+    });
+    let active = Math.max(0, variants.findIndex((v) => v.key && (new URLSearchParams(location.search).get("view") === v.key || location.hash.startsWith(`#${v.key}-`))));
 
     // Placeholders take the project's colour, not grey
     mount.style.setProperty("--ph-bg", p.photo ? `url("${p.photo.src}") ${p.photo.pos} / cover` : `radial-gradient(70% 90% at 18% 12%, ${p.tint[0]}, transparent 70%), radial-gradient(80% 80% at 88% 92%, ${p.tint[1]}, transparent 72%), ${p.tint[2]}`);
-    const main = el("div", "study__main");
+    const main = el("div", "study__main" + (p.cs.layout === "tiles" ? " study__main--tiles" : ""));
 
     // ── Breadcrumb ──
-    const crumb = el("p", "study__crumb is-wide"), back = el("a"); back.href = "/#work";
+    const crumb = el("p", "study__crumb is-wide"), back = el("a"); back.href = "/work";
     back.innerHTML = '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m4-4L3 8l4 4" stroke="currentColor" stroke-width="1.5"/></svg>Work';
     crumb.append(back, el("span", "study__sep", "/"), el("span", "", p.name));
 
@@ -2607,9 +2640,19 @@ function openLightbox(src, alt, opener) {
     // ── Title and meta ──
     const head = el("header", "study__head");
     const h1 = el("h1", "", p.title); h1.id = "cs-title";
-    const meta = el("dl", "study__meta");
-    p.cs.meta.forEach(([k, v]) => { const d = el("div"); d.append(el("dt", "", k), el("dd", "", v)); meta.appendChild(d); });
-    head.append(el("p", "study__eyebrow", `Case study ( ${pad2(displayId)} ) · ${p.org}`), h1, el("p", "study__lead", p.desc), meta);
+    head.append(el("p", "study__eyebrow", `Case study ( ${pad2(displayId)} ) · ${p.org}`), h1);
+    const vheads = variants.map((v) => {
+      const w = el("div", "study__vhead"), meta = el("dl", "study__meta");
+      v.meta.forEach(([k, val]) => { const d = el("div"); d.append(el("dt", "", k), el("dd", "", val)); meta.appendChild(d); });
+      w.append(el("p", "study__lead", v.lead), meta); return w;
+    });
+    let switchBtns = [];
+    if (variants.length > 1) {
+      const sw = el("div", "study__switch"); sw.setAttribute("role", "group"); sw.setAttribute("aria-label", "Choose a case study");
+      switchBtns = variants.map((v, k) => { const b = el("button", "", v.label); b.type = "button"; b.addEventListener("click", () => show(k, true)); sw.appendChild(b); return b; });
+      head.appendChild(sw);
+    }
+    vheads.forEach((w) => head.appendChild(w));
     main.append(crumb, hero, head);
 
     // ── Sections ──
@@ -2619,6 +2662,7 @@ function openLightbox(src, alt, opener) {
       // A flat explainer board (see tools/case-boards/ref-boards): one wide image that carries what the text would otherwise say
       if (sec.board) { const g = el("div", "study__media study__media--stack is-wide"); g.appendChild(mediaEl({ ...sec.board, board: true, wide: true }, ph, 0)); s.appendChild(g); }
 
+      if (sec.tiles) s.appendChild(tilesEl(sec.tiles));
       if (sec.stats) s.appendChild(statsEl(sec.stats));
       const rows = plainRows(sec); if (rows.length) s.appendChild(trio(rows));
       if (sec.viz) s.appendChild(caseViz(sec.viz));
@@ -2666,8 +2710,10 @@ function openLightbox(src, alt, opener) {
       if (sec.hmw) { const d = el("p", "study__hmw"); d.append(el("span", "study__k", "The question"), "How might we " + sec.hmw); s.appendChild(d); }
       if (sec.cta) { const a = el("a", "study__btn"); a.href = sec.cta.href; a.target = "_blank"; a.rel = "noopener"; a.innerHTML = chev; a.prepend(sec.cta.label); s.appendChild(a); }
     };
-    secs.forEach(({ sec, i, title, id: sid }) => {
-      main.appendChild(el("hr", "study__hr"));
+    const wraps = vsecs.map((secs, vi) => {
+      const wrap = el("div", "study__variant"); main.appendChild(wrap);
+      secs.forEach(({ sec, i, title, id: sid }) => {
+      wrap.appendChild(el("hr", "study__hr"));
       const s = el("section", "study__sec"); s.id = sid; s.setAttribute("aria-labelledby", `${sid}-t`);
       const h = el("h2", "study__t", statementOf(sec)); h.id = `${sid}-t`;
       const k = el("p", "study__k"); k.append(el("span", "study__num", pad2(i + 1)), title);
@@ -2679,7 +2725,9 @@ function openLightbox(src, alt, opener) {
         s.appendChild(ph3);
         fillSection(s, part, part.ph || sec.ph || pad2(i + 1));
       });
-      main.appendChild(s);
+      wrap.appendChild(s);
+      });
+      return wrap;
     });
 
     // ── Previous and next ──
@@ -2697,23 +2745,67 @@ function openLightbox(src, alt, opener) {
 
     // ── Contents rail: section links, the current one marked ──
     const toc = el("nav", "study__toc"); toc.setAttribute("aria-label", "Contents");
-    const ol = el("ol"); ol.setAttribute("role", "list");
-    const links = secs.map(({ i, title, id: sid }) => {
-      const li = el("li"), a = el("a"); a.append(el("span", "study__num", pad2(i + 1)), title); a.href = `#${sid}`;
-      a.addEventListener("click", (e) => { e.preventDefault(); document.getElementById(sid).scrollIntoView({ behavior: smooth, block: "start" }); history.replaceState(null, "", `#${sid}`); });
-      li.appendChild(a); ol.appendChild(li); return a;
+    const tocs = vsecs.map((secs) => {
+      const ol = el("ol"); ol.setAttribute("role", "list");
+      const links = secs.map(({ i, title, id: sid }) => {
+        const li = el("li"), a = el("a"); a.append(el("span", "study__num", pad2(i + 1)), title); a.href = `#${sid}`;
+        a.addEventListener("click", (e) => { e.preventDefault(); document.getElementById(sid).scrollIntoView({ behavior: smooth, block: "start" }); history.replaceState(null, "", `#${sid}`); });
+        li.appendChild(a); ol.appendChild(li); return a;
+      });
+      return { ol, links };
     });
     const book = el("a", "study__book"); book.href = BOOK_A_CALL; book.target = "_blank"; book.rel = "noopener"; book.innerHTML = chev; book.prepend("Book a call");
-    toc.append(ol, book);
-    const mark = (k) => links.forEach((a, j) => (j === k ? a.setAttribute("aria-current", "true") : a.removeAttribute("aria-current")));
-    mark(0);
+    toc.append(...tocs.map((t) => t.ol), book);
+    // ── Bottom dock: the same sections as a floating pill, the current one filled. Follows the active variant; a study with a `live` link leads with it ──
+    document.querySelectorAll(".study__dock").forEach((d) => d.remove());
+    const dock = el("nav", "study__dock"); dock.setAttribute("aria-label", "Jump to section");
+    const live = p.cs.live || p.live;
+    if (live) { const a = el("a", "study__dock-live"); a.href = live.href; a.target = "_blank"; a.rel = "noopener"; a.append(live.label || "Live website"); dock.appendChild(a); }
+    const docks = vsecs.map((secs) => {
+      const row = el("div", "study__dock-row"); row.setAttribute("role", "list");
+      const links = secs.map(({ title, id: sid }) => {
+        const a = el("a", "", title); a.href = `#${sid}`; a.setAttribute("role", "listitem");
+        a.addEventListener("click", (e) => { e.preventDefault(); document.getElementById(sid).scrollIntoView({ behavior: smooth, block: "start" }); history.replaceState(null, "", `#${sid}`); });
+        row.appendChild(a); return a;
+      });
+      return { row, links };
+    });
+    // Soft fades on whichever end has more sections hidden
+    const fades = (r) => { r.classList.toggle("has-l", r.scrollLeft > 4); r.classList.toggle("has-r", r.scrollLeft + r.clientWidth < r.scrollWidth - 4); };
+    docks.forEach((d) => d.row.addEventListener("scroll", () => fades(d.row), { passive: true }));
+    addEventListener("resize", () => docks.forEach((d) => fades(d.row)));
+    dock.append(...docks.map((d) => d.row)); document.body.appendChild(dock); requestAnimationFrame(() => docks.forEach((d) => fades(d.row)));
+    const markDock = (k) => docks[active].links.forEach((a, j) => {
+      if (j === k) { a.setAttribute("aria-current", "true"); const r = docks[active].row; r.scrollTo({ left: a.offsetLeft - (r.clientWidth - a.offsetWidth) / 2, behavior: motionReduced() ? "auto" : "smooth" }); }
+      else a.removeAttribute("aria-current");
+    });
+    // Show it once the reader is past the title and before the previous / next links
+    const pnEl = main.querySelector(".study__pn"), lead = main.querySelector(".study__sec");
+    const dockOn = () => { const top = lead ? lead.getBoundingClientRect().top : 0, end = pnEl ? pnEl.getBoundingClientRect().top : Infinity; dock.classList.toggle("is-on", top < innerHeight * 0.5 && end > innerHeight * 0.92); };
+    addEventListener("scroll", dockOn, { passive: true }); addEventListener("resize", dockOn); requestAnimationFrame(dockOn);
+    const mark = (k) => { tocs[active].links.forEach((a, j) => (j === k ? a.setAttribute("aria-current", "true") : a.removeAttribute("aria-current"))); markDock(k); };
     const visible = new Set();
     const spy = new IntersectionObserver((entries) => {
       entries.forEach((e) => (e.isIntersecting ? visible.add(e.target) : visible.delete(e.target)));
-      const first = secs.findIndex(({ id: sid }) => [...visible].some((v) => v.id === sid));
+      const first = vsecs[active].findIndex(({ id: sid }) => [...visible].some((v) => v.id === sid));
       if (first > -1) mark(first);
     }, { rootMargin: "-20% 0px -70% 0px" });
     main.querySelectorAll(".study__sec").forEach((s) => spy.observe(s));
+    // Show one variant at a time; the contents rail, the lead and the meta follow it
+    function show(k, user) {
+      active = k; visible.clear();
+      wraps.forEach((w, j) => { w.hidden = j !== k; });
+      vheads.forEach((w, j) => { w.hidden = j !== k; });
+      tocs.forEach((t, j) => { t.ol.hidden = j !== k; });
+      docks.forEach((d, j) => { d.row.hidden = j !== k; });
+      switchBtns.forEach((b, j) => b.setAttribute("aria-pressed", String(j === k)));
+      mark(0);
+      if (user) {
+        const u = new URL(location.href); u.hash = ""; u.searchParams.set("view", variants[k].key); history.replaceState(null, "", u);
+        const top = main.querySelector(".study__switch"); if (top) { const y = top.getBoundingClientRect().top + window.scrollY - 24; if (y < window.scrollY) window.scrollTo({ top: y, behavior: "auto" }); }
+      }
+    }
+    show(active, false);
 
     mount.replaceChildren(toc, main); // replaces the prerendered copy (tools/prerender-case-studies.cjs) on hydrate
     if (location.hash) { const t = document.getElementById(location.hash.slice(1)); if (t) requestAnimationFrame(() => t.scrollIntoView({ block: "start" })); }
@@ -2747,6 +2839,9 @@ function openLightbox(src, alt, opener) {
             w.className = "w"; i.textContent = p; w.append(i); frag.append(w);
           });
           n.replaceWith(frag);
+        } else if (n.nodeType === 1 && n.matches(".mx")) {
+          const w = document.createElement("span"), i = document.createElement("span");   // mixed-type word: one mask around the whole word
+          w.className = "w"; n.replaceWith(w); i.append(n); w.append(i);
         } else if (n.nodeType === 1 && !n.matches("svg, img, br, .w")) walk(n);
       });
       walk(el); el.dataset.split = "1";

@@ -369,7 +369,7 @@ The chart is the level. The 24-hour profile repeats as day after day, with ±8% 
 - **Loops are rare and slow** (4s and longer), except the status dot and the bell ring.
 - **Touch:** no hover-only information. Parallax is disabled for touch pointers. Tooltips also open on tap.
 - **Reduced motion** (`prefers-reduced-motion: reduce`): no loader spin or flight (a short fade instead), no bob, hop, parallax, blink, drift or loops. Reveals show their end state. The game stays available because the player starts it.
-- Page-level transitions between pages are not used.
+- Page-level transitions: a black-cover fade between pages, and a card-to-panel flight from Work cards. See "Site additions (November 2026)" §A.3 and §A.4 at the end of this file. (Supersedes the earlier "not used" rule.)
 
 ---
 
@@ -605,6 +605,8 @@ New posts without an entry fall back to a plain circle. **To add one**, draw it 
 
 ### 9.1 Floating header (nav pill)
 
+> **Superseded for this site:** the live header is two frosted segmented groups (left: logo, Work, About, Writing, Playground; right: local time, Contact, sound toggle, theme fader), not the single centred pill below. Behaviour is in "Site additions (November 2026)" §A.1. The pill spec is kept as the original Nothing reference.
+
 ```
 ┌──────────────────────── 576px ────────────────────────┐
 │ [⠿]              NOTHING (R)                    [🛍] │  48px tall
@@ -684,6 +686,7 @@ CLIENT NAME         │        ┌── image, inset ──┐          │
 
 - **Label column:** mono uppercase 12px. Index in muted, client in `--sec-fg`, year in muted. It is `position: sticky` (top `--space-10`) on desktop so it stays beside long rows. Below 1024px it moves above the tile as one wrapped line.
 - **Tile:** 16:9, `radius-lg` (8px), `--space-6` padding (16px on mobile). The background is a soft three-stop gradient (two radial washes over a base colour), tinted per project. The tile is **text only**: it holds the project's headline metric set very large (NType, `clamp(64px, 17cqw, 200px)`, tight tracking) with a one-line mono caption beneath (for example `61%` / `ADD-TO-BAG LIFT`). No screenshots or stock imagery. A row may also carry small outlined mono tags (area or discipline) under the description.
+- **Click behaviour:** the tile lifts out and grows into a near-fullscreen panel before the page changes (§A.4).
 - **Text sits outside the tile**, `--space-5` below it, and the whole row is one link. Hover nudges the chevron 3px.
 - **Rhythm:** each row has `--space-6` above and `--space-9` below the hairline-to-hairline block (`--space-8` on mobile). No card border, no fill behind the text.
 - **Section head** uses the same two columns: eyebrow and a one-line description on the left, the large title on the right, so the label column lines up through the whole section.
@@ -744,7 +747,7 @@ MAR 7, 2026        7 MIN READ     mono 12px, date left, read time muted
 
 ### 9.12 Template pages
 
-Three page templates share one skeleton, so a new page only needs content: **Playground** (`playground.html`), **Writing** (`writing.html`) and an individual **case study** (`case-study.html?case=N`).
+Four page templates share one skeleton, so a new page only needs content: **Work** (`work.html`, §A.2), **Playground** (`playground.html`), **Writing** (`writing.html`) and an individual **case study** (`case-study.html?case=N`).
 
 **Shared skeleton**
 - A white `.sheet` panel (same inset, radius and padding as every section, §4.1). The first sheet has `--section-y + --space-5` top padding to clear the fixed nav.
@@ -1033,3 +1036,130 @@ No pills. Dense UI should read as a desktop app, not a mobile one.
 | 2 | Drop layout padding from 16/24px to 8/12px | Reclaim canvas |
 | 3 | Replace drop shadows with hairline borders | Sharpen boundaries |
 | 4 | Apply negative tracking to labels and headers | Compact text |
+
+---
+
+## Site additions (November 2026)
+
+This section records what the live site added on top of the Nothing reference above. Where it conflicts with an earlier section, **this section wins**. Implementation lives in `css/site.css`, `js/site.js`, `js/sound.js` and `js/card-flight.js`.
+
+### A.1 Navigation
+
+- **Structure:** two frosted segmented groups, `.seg` (40px tall items, `--radius-lg` container, mono 12px caps). Left: brand ring, **Work**, About, Writing, Playground. Right: San Francisco local time, **Contact**, sound toggle, theme fader.
+- **Work is a real link to `/work`.** On a mouse device, **hover** opens the dropdown (case-study list with a thumbnail that swaps on hover; 180ms close delay) and **click** goes to `/work`. On touch and for keyboard (Enter), it toggles the dropdown instead. Mobile uses a separate grid-icon Menu button that always toggles.
+- **Contact** is a dropdown only (Book a call, Copy email).
+- **"Work" links everywhere** (mobile menu, footer sitemap, case-study breadcrumbs) point to `/work`. The homepage keeps its own Work section, and its "View selected work" button scrolls to it.
+- The Work item shows `aria-current="true"` while the Work section is in view (scroll-spy) and on `/work`.
+
+### A.2 Work page (`/work`)
+
+A standalone page using the shared `.sheet` skeleton (§9.12): eyebrow `Work ( NN )` with description on the left, `Case studies.` (h1, NType) on the right, then the filter tabs (Recent, Featured, then sectors) and the case-study rows of §9.5b. It renders from the same `PROJECTS` data as the homepage, so one edit updates both. It loads the card flight (§A.4) and sound (§A.5). Listed in `sitemap.xml` and `tools/check-seo.cjs`.
+
+### A.3 Page transitions and entrances
+
+- Same-site link click: the page fades to black over ~140ms (`.pt-cover`), then navigates; the next page starts under the cover and lifts it over .45s as the headline rises. `sessionStorage.pt` carries the handoff. Reduced motion skips all of it.
+- Headlines rise word by word out of masks (`.w`), one line at a time (80ms per line); supporting copy and media follow in page order; section headings and tiles reveal on scroll. (Reference: bymonolog.com.)
+
+### A.4 Card flight (Work cards)
+
+Click a case-study tile (or a passcode-locked tile) and it lifts out of the page and becomes a near-fullscreen panel, in the manner of jayasurya.design.
+
+| Part | Spec |
+|---|---|
+| Timing | **1.4s**, `cubic-bezier(.76, 0, .24, 1)` (slow start, slow landing) |
+| Landing | Panel 7px inside every viewport edge (`INSET = 7`) |
+| Corners | Held at 12px for the whole flight (the radius is counter-scaled against the panel's scale, so it never turns oval) |
+| Backdrop | Page dims to `rgb(0 0 0 / .45)` on the same curve |
+| Content | The card's contents are a ghost layer that fades out in 220ms while the shell travels |
+| Handoff | The panel's gradient washes to black over the last 55%, then the existing black cover (§A.3) takes over and the case study loads |
+| Off-screen card | Glides to the centre of the viewport over 1s (`cubic-bezier(.4, 0, .2, 1)`) first; wheel and touch scrolling are locked during the flight |
+| Engine | GSAP (`js/vendor/gsap.min.js`). Only transforms and opacity animate; the bezier is a small custom ease function because GSAP core has none |
+| Fallbacks | No GSAP, reduced motion, modified clicks (cmd, ctrl, shift) and external links use the normal page transition. A cancelled navigation returns the card after 3.5s |
+
+Tune with the `FLIGHT` constant at the top of `js/card-flight.js`; about 0.9s reads as the same effect if 1.4s feels heavy.
+
+### A.5 Interaction sound
+
+Every sound is synthesised live with Web Audio from a small recipe (voice, pitch, length, tone, body, bend, fade-in, space, variation, level, optional notes, interval, gap, tape). No audio files. Ported from dmcg.co/work/sandbar; master volume **20 / 100**.
+
+- **Toggle:** speaker icon in the right nav group, beside the theme fader. State persists in `localStorage` (`sn:ui-sound-muted:v1`). Sound is on by default, but browsers only allow audio after the first click or key press. Disabled on Safari, as on the reference.
+- **Engine behaviours:** one shared `AudioContext` behind a gentle compressor; 35ms rate limit; a silent source keeps the device awake so sounds fire without wake-up lag; sounds pause while the tab is hidden.
+
+| Interaction | Recipe |
+|---|---|
+| Hover a header item | Dial step: `tick`, 1760 Hz, 30ms |
+| Open or close Work / Contact panel | Felt step: `tick`, 880 Hz, 80ms, softer tone |
+| Hover a project row in a panel | Tap: `tap`, 1760 Hz, 30ms |
+| Open a case study (press, not click) | Dial step |
+| Any other internal page (press) | Tap |
+| Switch Work tab or filter chip | Dial step |
+| Copy email or mailto link | Felt reveal: `soft`, 440 Hz, 320ms, 3 notes, +5 semitones, 65ms apart |
+| Unmute | Bright chime rise: `chime`, 2093 Hz, 420ms, 3 notes, +6 semitones |
+| Theme fader, each of the 11 scale marks | `tick` rising from 1320 Hz toward light |
+| Theme fader, crossing the flip (45%) | Firmer tap, lower pitch |
+| Theme fader, reaching either end | Felt step (same as a panel opening) |
+
+Page-change sounds play on **press**, because the click would unload the page and cut them off.
+
+### A.6 Theme fader (light to dark)
+
+The theme control is a continuous fader, not a toggle: a 96 x 40px slot with 11 tick marks, a rail and an orange cap. Drag, click the track, or use Arrow keys (5% steps, 25% with Shift), Home and End. Backgrounds **blend linearly** between dark and light (`color-mix`), while text **switches** at 45% lightness (where white and ink read equally well) and secondary text is strengthened near that point. The level persists (`theme`, `themeLevel`), and other theme controls (the Playground switch) snap the fader to the nearer end.
+
+### A.7 Admired section (homepage)
+
+An inverse-panel section after Work: eyebrow `Admired ( 08 )` (Ndot) with a one-line description on the left; `People I look up to.` (NType) on the right, using the same two-column head as Work (§9.5b).
+
+- **List:** hairline-separated rows, one person each. Columns `1fr 3fr`: mono index `( 01 )`, then a flex group of **24px pixel logo + name + role** on one line, with the link (mono caps, trailing arrow) pinned right. Compact: 12px vertical padding, name NType 20px, role Geist 13px muted.
+- **Links** open in a new tab (`rel="noopener noreferrer"`); people without a link render as plain rows. Hover: soft `--sec-card-hover` wash and the name nudges 4px right.
+- **Mobile:** each row stacks (index, logo and name, role, link); the link indents under the name.
+- **Current list:** Tom Johnson (Vercel, v0), Rauno Freiberg (Vercel), Emil Kowalski (ex-Linear and Vercel), Karri Saarinen (Linear), Brian Chesky (Airbnb), Steve Jobs (Apple), Adam Mosseri (Instagram), Henry Modisett (Perplexity). Roles were checked against each person's own site where possible; re-check before relying on them.
+
+### A.8 Pixel brand logos
+
+Small company marks drawn on a **12 x 12 grid** (11 wide for Vercel's triangle) as inline SVG `<rect>`s with `fill="currentColor"` and `shape-rendering="crispEdges"`, shown at 24px (2px per cell) so they stay crisp and flip with the theme. They follow the pixel-icon family of §8.0 (square cells, no anti-aliasing, no colour).
+
+| Mark | Used for |
+|---|---|
+| Vercel triangle | Tom Johnson, Rauno Freiberg, Emil Kowalski |
+| Linear striped ball | Karri Saarinen |
+| Airbnb loop | Brian Chesky |
+| Apple with bite and leaf | Steve Jobs |
+| Instagram camera | Adam Mosseri |
+| Perplexity asterisk | Henry Modisett |
+
+Hand-drawn approximations, not official artwork. Linear and Airbnb are the loosest at this size.
+
+### A.9 Rules added
+
+- **Brand voice for labels is unchanged:** mono caps for labels and links, NType sentence case for headlines, Ndot caps for eyebrows with spaced brackets (`( 08 )`).
+- **Motion libraries:** CSS and WAAPI for small things; GSAP (vendored) for flights and anything needing a custom curve. Animate transforms and opacity only.
+- **Sound is part of the interaction design:** any new interactive pattern should map to an existing recipe in §A.5 before inventing a new one.
+- **One source of truth for work:** case studies are defined once in `js/site.js` (`PROJECTS`) and rendered on the homepage, `/work`, the nav dropdown and the footer.
+
+### A.10 About: design process (node graph)
+
+A `.sheet.process` panel below the About hero (`about.html`), using the shared two-column head: eyebrow `Process ( 05 )` and one line on the left, `How I design.` (h2) on the right. The body is a **workflow canvas** (inspired by node-based automation editors), so the process can be skimmed in a glance. Script: `js/process-graph.js`.
+
+- **Canvas:** a `--radius-lg` field with a 16px dot grid (`--sec-dot`-style dots), darker than the panel in light mode and near-black in dark mode.
+- **Nodes:** five cards placed at **staggered heights** (`--dy` per node) so the eye follows the wires. Each card has a header (16px pixel icon, NType 17px title, mono index at the right) and one or two **field rows**: a rounded inset block with a muted label on the left and the value on the right. Hairline outline instead of a shadow; hover lifts 2px and darkens the outline.
+- **Ports and wires:** ring ports (10px, ink ring, card-coloured centre) on each node edge. The script measures the ports and draws 2px **cubic-bezier S-curves** between them in an SVG overlay, redrawn on resize and on font load. Wires **draw on** (`stroke-dashoffset`, .9s `ease-expressive`, 140ms stagger) when the graph reaches 30% visible; under reduced motion they appear complete.
+- **Branching:** node 02 (Question) is a conditional. Its right port, green (`--ok`), continues to Explore; its bottom port, `--accent-red`, loops back to a bottom port on node 01 in a U-shaped red wire, labelled "Not convinced? Back to the map" (mono caps, red).
+- **Start pill:** a mono caps label above node 01, as on a workflow canvas.
+- **Tool icons:** 12-grid pixel SVGs (`currentColor`, `crispEdges`) like the brand logos in §A.8: Claude Code (12-ray burst), Figma (stacked blocks), Cursor (pointer), Paper (two overlapping squares, overlap cut out, after its app icon), plus a diamond (decision) for Question and `<·>` brackets for Ship.
+- **Responsive:** below 1280px gaps and padding tighten; below 1024px the graph turns **vertical**, nodes stack with no stagger, wires run top to bottom down the left edge, and the loop-back wire and its label are hidden.
+
+The five stages, in my own words: 01 Understand (mind maps in Claude Code artifacts), 02 Question (why am I doing this; real problem? yes continues, no loops back), 03 Explore (straight to high fidelity in Figma), 04 Design to code (Paper; low fidelity there, sometimes), 05 Ship (refine in code with Claude Code and Cursor). Keep copy first person, short, and limited to what Sambit has said about the process.
+
+### A.11 More work moved to the Playground
+
+The "More work ( 08 )" placeholder mosaic is gone from the homepage and `/work`. Its eight interface screenshots (`assets/images/more/*.webp`) now live on the Playground board as image tiles (`UI-01` to `UI-08`, `tag: "ui"`, `cover: true`) under an **Interfaces** filter chip beside All and Interactions. Each tile fills with its screenshot at the image's own aspect ratio (`ar`), so nothing is cropped; a soft scrim and white labels appear on hover, and the overlay shows the screenshot contained on its tint with the alt text as the description. They are reference screenshots collected as inspiration, not Sambit's own work; replace each with a real project image and name, or remove it.
+
+### A.12 Work: sidebar filter
+
+On desktop (1024px and up), the Work filter on the homepage and `/work` is a **sidebar column**, after a workspace-style app sidebar, with the case-study grid beside it (`.work__layout`: 248px sidebar, then the cards in two columns). The sidebar is sticky at `--space-10`.
+
+- **Switcher card:** a hairline card (`--sec-card`) with a pixel grid icon, `Case studies` (Geist 15px/500) over a mono caps `05 projects` count, and up-down chevrons. It is decorative; the count is live.
+- **Items:** Recent and Featured as full-width rows (40px, 8/10px padding, `--radius`), each with an 18px pixel icon (clock, star), a Geist 15px label and a **count badge** (24px pill, `--sec-card-hover`). The selected row takes the hover wash, `--sec-fg` text, a red (`--accent-red`) icon and an inverted badge.
+- **Sectors:** a heading row (folder icon, badge with the number of sectors) with the sector tabs **nested under a 1px guide line**, 14px, indented 19px. The sector tabs filter exactly as before.
+- **Keyboard:** the list is a vertical tablist; Up and Down (and Left and Right) move and select, Home and End jump.
+- **Below 1024px:** the sidebar steps back to the original wrapped row of mono chips; the switcher, icons and group heading are hidden, and the sector tabs flatten into the row.

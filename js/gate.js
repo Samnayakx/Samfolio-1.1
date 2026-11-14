@@ -1,8 +1,8 @@
 // Passcode gate for protected case studies. Runs in <head> so the page never flashes before it is covered.
 // Note: this is a courtesy gate. It is client-side only and keeps casual visitors out, not determined ones.
 (() => {
-  const LOCKED = { 2: "CotonAI Modes", 3: "CotonAI Design System", 6: "CotonAI Agent" };
-  const SLUGS = { "cotonai-modes": 2, "cotonai-design-system": 3, "cotonai-agent": 6 };
+  const LOCKED = { 2: "CotonAI Modes", 6: "CotonAI Agent" };   // the design system study (3) is open
+  const SLUGS = { "cotonai-modes": 2, "cotonai-agent": 6 };
   const PASSCODE = "hello";
   const KEY = "samfolio-unlocked";
   const slug = location.pathname.replace(/\.html$/, "").split("/").filter(Boolean).pop();

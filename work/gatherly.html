@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Case study — Sambit Nayak</title>
+  <meta name="description" content="A UX case study by Sambit Nayak.">
+  <link rel="canonical" href="https://www.sambitnayak.com/case-study">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Sambit Nayak">
+  <meta property="og:title" content="Case study — Sambit Nayak">
+  <meta property="og:description" content="A UX case study by Sambit Nayak.">
+  <meta property="og:url" content="https://www.sambitnayak.com/case-study">
+  <meta property="og:image" content="https://www.sambitnayak.com/assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@sambit_nayak_">
+  <meta name="twitter:title" content="Case study — Sambit Nayak">
+  <meta name="twitter:description" content="A UX case study by Sambit Nayak.">
+  <meta name="twitter:image" content="https://www.sambitnayak.com/assets/og-image.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;700&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;700&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" /></noscript>
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+  <link rel="stylesheet" href="/css/site.css" />
+  <link rel="stylesheet" href="/css/case-studies.css" />
+  <link rel="stylesheet" href="/css/gate.css" />
+  <script src="/js/gate.js"></script>
+</head>
+<body data-page="case">
+  <div class="loader" id="loader" aria-hidden="true"><div class="loader__bg"></div><svg></svg></div>
+  <noscript><style>.loader{display:none}</style></noscript>
+  <script src="/js/loader.js"></script>
+  <header class="header">
+    <div class="navgroup" data-nav="work">
+      <nav class="seg" aria-label="Primary">
+        <a class="seg__item seg__brand" href="/" aria-label="Sambit Nayak, home"><svg class="logo" aria-hidden="true"></svg></a>
+        <a class="seg__item only-desktop" href="/work" id="work-tab" aria-current="true" aria-haspopup="true" aria-expanded="false" aria-controls="work-panel">Work <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></a>
+        <a class="seg__item only-desktop" href="/about">About</a>
+        <a class="seg__item only-desktop" href="/writing">Writing</a>
+        <a class="seg__item only-desktop" href="/playground">Playground</a>
+        <button class="seg__item only-mobile" type="button" id="menu-tab" aria-expanded="false" aria-controls="work-panel" aria-label="Menu">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <rect x="2" y="2" width="2" height="2"/><rect x="7" y="2" width="2" height="2"/><rect x="12" y="2" width="2" height="2"/>
+            <rect x="2" y="7" width="2" height="2"/><rect x="7" y="7" width="2" height="2"/><rect x="12" y="7" width="2" height="2"/>
+            <rect x="2" y="12" width="2" height="2"/><rect x="7" y="12" width="2" height="2"/><rect x="12" y="12" width="2" height="2"/>
+          </svg>
+        </button>
+      </nav>
+      <div class="panel" id="work-panel">
+        <div class="pcard only-mobile pcard--plain">
+          <div class="pcard__main">
+            <p class="pcard__label">Navigate</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/work">Work</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/writing">Writing</a></li>
+              <li><a href="/playground">Playground</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pcard is-active">
+          <div class="pcard__main">
+            <p class="pcard__label">Case studies ( <span data-work-count>04</span> )</p>
+            <ul class="pcard__list" role="list" id="nav-projects"></ul>
+          </div>
+          <div class="pcard__thumb" id="nav-thumb" aria-hidden="true"></div>
+        </div>
+        <div class="pcard pcard--plain pcard--more">
+          <div class="pcard__main">
+            <p class="pcard__label">More</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/playground">Playground</a></li>
+              <li><a href="/writing">Writing</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="navgroup" data-nav="contact">
+      <div class="seg">
+        <span class="seg__item seg__time" title="Local time in San Francisco, California">San Francisco <time id="nav-clock" data-clock>--:--</time></span>
+        <button class="seg__item" type="button" id="contact-tab" aria-expanded="false" aria-controls="contact-panel">Contact <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <button class="icon-btn" type="button" id="theme" aria-label="Switch to dark mode">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+      <div class="panel panel--right" id="contact-panel"></div>
+    </div>
+  </header>
+
+  <main id="top" class="cs" data-case>
+    <section class="sheet sheet--first" aria-labelledby="cs-title">
+      <div class="study" data-cs-root style="--ph-bg: radial-gradient(70% 90% at 18% 12%, #7A5AF8, transparent 70%), radial-gradient(80% 80% at 88% 92%, #EEE8FF, transparent 72%), #6D4AFF;"><nav class="study__toc" aria-label="Contents"><ol role="list"><li><a href="#overview" aria-current="true"><span class="study__num">01</span>Overview</a></li><li><a href="#problem"><span class="study__num">02</span>Problem</a></li><li><a href="#hypothesis"><span class="study__num">03</span>Hypothesis</a></li><li><a href="#solution"><span class="study__num">04</span>Solution</a></li><li><a href="#learning"><span class="study__num">05</span>Learning</a></li></ol><a class="study__book" href="https://cal.com/sambit-nayak/30min?overlayCalendar=true" target="_blank" rel="noopener">Book a call<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5"></path></svg></a></nav><div class="study__main study__main--tiles"><p class="study__crumb is-wide rvf in" style="--d: 140ms;"><a href="/work"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m4-4L3 8l4 4" stroke="currentColor" stroke-width="1.5"></path></svg>Work</a><span class="study__sep">/</span><span>Gatherly</span></p><div class="study__hero is-wide rvm in" style="--d: 260ms;"><img src="/assets/images/gatherly/brand-mosaic.webp" alt="The Gatherly brand mosaic: the violet Gatherly logo at the centre, surrounded by event photos, a ticket, a dot pattern and the line Free is free. Paid is clear." decoding="async" fetchpriority="high"></div><header class="study__head"><p class="study__eyebrow">Case study ( 05 ) · Agency client</p><h1 id="cs-title">Designing Gatherly, an events app, from brief to shipped MVP in three months.</h1><div class="study__vhead"><p class="study__lead">An independent project for an agency: the UI and UX of an app to find events, get tickets and host your own, from a brief inspired by Airbnb. The MVP shipped.</p><dl class="study__meta"><div><dt>Role</dt><dd>UI/UX Designer</dd></div><div><dt>Timeline</dt><dd>3 months</dd></div><div><dt>Client</dt><dd>An agency · independent project</dd></div><div><dt>Shipped</dt><dd>MVP · iOS, light and dark</dd></div></dl></div></header><div class="study__variant"><hr class="study__hr"><section class="study__sec" id="overview" aria-labelledby="overview-t"><p class="study__k"><span class="study__num">01</span>Overview</p><h2 class="study__t rvh" id="overview-t" data-split="1"><span class="w"><span style="--d: 0ms;">An</span></span> <span class="w"><span style="--d: 0ms;">events</span></span> <span class="w"><span style="--d: 0ms;">app</span></span> <span class="w"><span style="--d: 0ms;">in</span></span> <span class="w"><span style="--d: 0ms;">the</span></span> <span class="w"><span style="--d: 0ms;">spirit</span></span> <span class="w"><span style="--d: 0ms;">of</span></span> <span class="w"><span style="--d: 80ms;">Airbnb,</span></span> <span class="w"><span style="--d: 80ms;">designed</span></span> <span class="w"><span style="--d: 80ms;">in</span></span> <span class="w"><span style="--d: 80ms;">three</span></span> <span class="w"><span style="--d: 80ms;">months.</span></span></h2><div class="cs__stats"><div><strong>3 mo</strong><span>Brief to shipped MVP</span></div><div><strong>47</strong><span>Screens</span></div><div><strong>2</strong><span>Themes, light and dark</span></div></div><ul class="study__trio" role="list"><li><h4>Independent project</h4><p>Designed for an agency</p></li><li><h4>Inspired by Airbnb</h4><p>The brief's reference point</p></li><li><h4>MVP</h4><p>Shipped</p></li></ul></section><hr class="study__hr"><section class="study__sec" id="problem" aria-labelledby="problem-t"><p class="study__k"><span class="study__num">02</span>Problem</p><h2 class="study__t rvh" id="problem-t" data-split="1"><span class="w"><span style="--d: 0ms;">One</span></span> <span class="w"><span style="--d: 0ms;">events</span></span> <span class="w"><span style="--d: 0ms;">app</span></span> <span class="w"><span style="--d: 0ms;">has</span></span> <span class="w"><span style="--d: 0ms;">to</span></span> <span class="w"><span style="--d: 0ms;">serve</span></span> <span class="w"><span style="--d: 0ms;">people</span></span> <span class="w"><span style="--d: 80ms;">who</span></span> <span class="w"><span style="--d: 80ms;">go</span></span> <span class="w"><span style="--d: 80ms;">and</span></span> <span class="w"><span style="--d: 80ms;">people</span></span> <span class="w"><span style="--d: 80ms;">who</span></span> <span class="w"><span style="--d: 80ms;">host.</span></span></h2><p class="study__p">The brief was an events app in the spirit of Airbnb, designed for an agency in three months. Someone had to be able to find an event and get a ticket, and someone else to host their own.</p></section><hr class="study__hr"><section class="study__sec" id="hypothesis" aria-labelledby="hypothesis-t"><p class="study__k"><span class="study__num">03</span>Hypothesis</p><h2 class="study__t rvh" id="hypothesis-t" data-split="1"><span class="w"><span style="--d: 0ms;">Four</span></span> <span class="w"><span style="--d: 0ms;">journeys</span></span> <span class="w"><span style="--d: 0ms;">and</span></span> <span class="w"><span style="--d: 0ms;">one</span></span> <span class="w"><span style="--d: 0ms;">token</span></span> <span class="w"><span style="--d: 0ms;">set</span></span> <span class="w"><span style="--d: 80ms;">are</span></span> <span class="w"><span style="--d: 80ms;">enough</span></span> <span class="w"><span style="--d: 80ms;">for</span></span> <span class="w"><span style="--d: 80ms;">the</span></span> <span class="w"><span style="--d: 80ms;">whole</span></span> <span class="w"><span style="--d: 80ms;">product.</span></span></h2><p class="study__p">Cover the product with four key flows, and drive light and dark from a single token set, so a three-month MVP stays consistent.</p></section><hr class="study__hr"><section class="study__sec" id="solution" aria-labelledby="solution-t"><p class="study__k"><span class="study__num">04</span>Solution</p><h2 class="study__t rvh" id="solution-t" data-split="1"><span class="w"><span style="--d: 0ms;">Find</span></span> <span class="w"><span style="--d: 0ms;">an</span></span> <span class="w"><span style="--d: 0ms;">event,</span></span> <span class="w"><span style="--d: 0ms;">get</span></span> <span class="w"><span style="--d: 0ms;">a</span></span> <span class="w"><span style="--d: 0ms;">ticket,</span></span> <span class="w"><span style="--d: 0ms;">host</span></span> <span class="w"><span style="--d: 0ms;">your</span></span> <span class="w"><span style="--d: 0ms;">own.</span></span></h2><div class="study__tiles is-wide"><figure class="tile" data-bg="violet" style="--span: 12; --n: 3;"><img src="/assets/images/gatherly/l-explore.webp" alt="Gatherly Explore: search bar, filter chips and event cards." loading="lazy" decoding="async"><img src="/assets/images/gatherly/l-event.webp" alt="Gatherly Event page for Rooftop Sunset Sessions." loading="lazy" decoding="async"><img src="/assets/images/gatherly/l-tickets.webp" alt="Gatherly Tickets list." loading="lazy" decoding="async"><figcaption>Guest</figcaption></figure><figure class="tile" data-bg="ink" style="--span: 6; --n: 2;"><img src="/assets/images/gatherly/d-explore.webp" alt="Gatherly Explore in dark mode." loading="lazy" decoding="async"><img src="/assets/images/gatherly/d-event.webp" alt="Gatherly Event page in dark mode." loading="lazy" decoding="async"><figcaption>Dark mode</figcaption></figure><figure class="tile" data-bg="lilac" style="--span: 6; --n: 2;"><img src="/assets/images/gatherly/l-host.webp" alt="Gatherly Host dashboard: 214 registered, 86 spots left, $5.3k revenue, guest list and Scan tickets button." loading="lazy" decoding="async"><img src="/assets/images/gatherly/l-payouts.webp" alt="Gatherly Payouts." loading="lazy" decoding="async"><figcaption>Host</figcaption></figure><figure class="tile" data-bg="canvas" style="--span: 12; --n: 3;"><img src="/assets/images/gatherly/l-search.webp" alt="Gatherly Search." loading="lazy" decoding="async"><img src="/assets/images/gatherly/l-filters.webp" alt="Gatherly Filters." loading="lazy" decoding="async"><img src="/assets/images/gatherly/l-calendar.webp" alt="Gatherly Calendar of followed hosts." loading="lazy" decoding="async"><figcaption>Discover</figcaption></figure></div><h3 class="study__sub"><span class="study__k">Key flows</span>Four journeys cover the whole product.</h3><div class="study__tiles is-wide"><figure class="tile" data-bg="canvas" style="--span: 12; --n: 4;"><img src="/assets/images/gatherly/l-search.webp" alt="Gatherly Search." loading="lazy" decoding="async"><img src="/assets/images/gatherly/l-filters.webp" alt="Gatherly Filters." loading="lazy" decoding="async"><img src="/assets/images/gatherly/l-city.webp" alt="Gatherly City picker." loading="lazy" decoding="async"><img src="/assets/images/gatherly/l-calendar.webp" alt="Gatherly Calendar of followed hosts." loading="lazy" decoding="async"><figcaption>Discover</figcaption></figure><figure class="tile" data-bg="violet" style="--span: 12; --n: 4;"><img src="/assets/images/gatherly/l-register.webp" alt="Gatherly Register: request to join with date, guests, total and payment." loading="lazy" decoding="async"><img src="/assets/images/gatherly/l-confirmed.webp" alt="Gatherly Registration confirmed." loading="lazy" decoding="async"><img src="/assets/images/gatherly/l-ticket.webp" alt="Gatherly Ticket with QR code." loading="lazy" decoding="async"><img src="/assets/images/gatherly/l-live.webp" alt="Gatherly iOS Live Activity on event day." loading="lazy" decoding="async"><figcaption>Register and event day</figcaption></figure><figure class="tile" data-bg="ink" style="--span: 12; --n: 4;"><img src="/assets/images/gatherly/l-messages.webp" alt="Gatherly Messages." loading="lazy" decoding="async"><img src="/assets/images/gatherly/l-eventchat.webp" alt="Gatherly Event chat." loading="lazy" decoding="async"><img src="/assets/images/gatherly/l-notifications.webp" alt="Gatherly Notifications." loading="lazy" decoding="async"><img src="/assets/images/gatherly/l-chat.webp" alt="Gatherly Chat with a host." loading="lazy" decoding="async"><figcaption>Connect</figcaption></figure><figure class="tile" data-bg="lilac" style="--span: 6; --n: 2;"><img src="/assets/images/gatherly/l-create.webp" alt="Gatherly Create event." loading="lazy" decoding="async"><img src="/assets/images/gatherly/l-create-tickets.webp" alt="Gatherly Create event: tickets step." loading="lazy" decoding="async"><figcaption>Host: create</figcaption></figure><figure class="tile" data-bg="canvas" style="--span: 6; --n: 2;"><img src="/assets/images/gatherly/l-scanner.webp" alt="Gatherly Check-in scanner." loading="lazy" decoding="async"><img src="/assets/images/gatherly/l-analytics.webp" alt="Gatherly Analytics." loading="lazy" decoding="async"><figcaption>Host: event day</figcaption></figure></div><h3 class="study__sub"><span class="study__k">Design system</span>One token set drives light and dark.</h3><div class="study__tiles is-wide"><figure class="tile tile--fill" data-bg="ink" style="--span: 12;"><img src="/assets/images/gatherly/ds-color.webp" alt="Gatherly design system, colour: light and dark neutrals, the violet brand scale and success, warning and danger colours." loading="lazy" decoding="async"><figcaption>Colour tokens</figcaption></figure><figure class="tile tile--fill" data-bg="ink" style="--span: 12;"><img src="/assets/images/gatherly/ds-components.webp" alt="Gatherly design system, cards, lists and navigation in light and dark." loading="lazy" decoding="async"><figcaption>Cards, lists and navigation</figcaption></figure></div></section><hr class="study__hr"><section class="study__sec" id="learning" aria-labelledby="learning-t"><p class="study__k"><span class="study__num">05</span>Learning</p><h2 class="study__t rvh" id="learning-t" data-split="1"><span class="w"><span style="--d: 0ms;">The</span></span> <span class="w"><span style="--d: 0ms;">MVP</span></span> <span class="w"><span style="--d: 0ms;">shipped.</span></span></h2><p class="study__p">Three months from brief to a shipped MVP, in light and dark.</p><a class="study__btn" href="https://cal.com/sambit-nayak/30min?overlayCalendar=true" target="_blank" rel="noopener">Book a call<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5"></path></svg></a></section></div><hr class="study__hr"><nav class="study__pn" aria-label="More case studies"><a href="/work/gap-3d-fit"><span class="study__k">Previous case study</span><b>Gap 3D Fit</b><span>+61% Add-to-bag lift, A/B tested</span></a><a href="/work/arcade-dev"><span class="study__k">Next case study</span><b>Arcade.dev</b><span>100 Screens across the web console and the iOS app</span></a></nav></div></div>
+    </section>
+  </main>
+
+  <footer data-footer></footer>
+
+  <script src="/js/analytics.js"></script>
+  <script src="/js/site.js"></script>
+  <script src="/js/sound.js" defer></script>
+  <script src="/js/case-demos.js" defer></script>
+</body>
+</html>

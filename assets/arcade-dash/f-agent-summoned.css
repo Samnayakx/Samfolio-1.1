@@ -1,0 +1,85 @@
+.adx .fo0{background-color:var(--color-graphite);display:flex;font-size:12px;height:fit-content;line-height:16px;min-height:1000px;overflow:clip;position:relative;width:1440px}
+.adx .fo1{align-self:stretch;background-color:var(--color-surface-0);border-right-color:var(--color-border);border-right-style:solid;border-right-width:1px;display:flex;flex-direction:column;flex-shrink:0;justify-content:space-between;padding-bottom:16px;padding-top:18px;width:232px}
+.adx .fo2{display:flex;flex-direction:column;gap:20px}
+.adx .fo3{padding-inline:20px}
+.adx .fo4{display:inline-block;width:104px;height:28px}
+.adx .fo5{display:flex;flex-direction:column;gap:2px;padding-inline:8px}
+.adx .fo6{align-items:center;display:flex;flex-shrink:0;gap:12px;height:36px;padding-inline:12px}
+.adx .fo7{display:inline-block;flex-shrink:0}
+.adx .fo8{color:var(--color-text-muted);display:inline-block;font-family:"Inter", system-ui, sans-serif;font-size:14px;line-height:18px}
+.adx .fo9{display:inline-block;padding-bottom:6px;padding-inline:12px}
+.adx .fo10{color:var(--color-text-faint);display:inline-block;font-family:"Inter", system-ui, sans-serif;font-size:11px;font-weight:500;letter-spacing:0.08em;line-height:14px}
+.adx .fo11{align-items:center;display:flex;flex-shrink:0;gap:12px;height:34px;padding-inline:12px}
+.adx .fo12{align-items:center;background-color:var(--color-surface-2);border-bottom-right-radius:8px;border-left-color:var(--color-coral);border-left-style:solid;border-left-width:2px;border-top-right-radius:8px;display:flex;flex-shrink:0;gap:12px;height:34px;padding-inline:12px}
+.adx .fo13{color:var(--color-text);display:inline-block;font-family:"Inter", system-ui, sans-serif;font-size:14px;font-weight:500;line-height:18px}
+.adx .fo14{display:flex;flex-direction:column;gap:12px;padding-inline:8px}
+.adx .fo15{align-items:center;background-color:var(--color-surface-2);border-radius:8px;display:flex;flex-shrink:0;gap:10px;height:36px;padding-inline:12px}
+.adx .fo16{align-items:center;display:flex;gap:10px;padding-block:8px;padding-inline:12px}
+.adx .fo17{align-items:center;background-color:var(--color-periwinkle);border-radius:999px;display:flex;flex-shrink:0;height:28px;justify-content:center;width:28px}
+.adx .fo18{color:#FFFFFF;font-family:"Inter", system-ui, sans-serif;font-size:12px;font-weight:600;line-height:16px}
+.adx .fo19{display:flex;flex-direction:column}
+.adx .fo20{color:var(--color-text);display:inline-block;font-family:"Inter", system-ui, sans-serif;font-size:13px;font-weight:500;line-height:16px}
+.adx .fo21{color:var(--color-text-muted);display:inline-block;font-family:"Inter", system-ui, sans-serif;font-size:11px;line-height:14px}
+.adx .fo22{display:flex;flex-basis:0%;flex-direction:column;flex-grow:1;min-width:0px}
+.adx .fo23{align-items:center;border-bottom-color:var(--color-border);border-bottom-style:solid;border-bottom-width:1px;display:flex;flex-shrink:0;height:56px;justify-content:space-between;padding-inline:32px}
+.adx .fo24{align-items:center;display:flex;gap:10px}
+.adx .fo25{align-items:center;display:flex;gap:8px}
+.adx .fo26{background-color:var(--color-periwinkle);border-radius:6px;flex-shrink:0;height:20px;width:20px}
+.adx .fo27{color:var(--color-text-faint);display:inline-block;font-family:"Inter", system-ui, sans-serif;font-size:14px;line-height:18px}
+.adx .fo28{background-color:var(--color-teal);border-radius:6px;flex-shrink:0;height:20px;width:20px}
+.adx .fo29{align-items:center;display:flex;gap:12px}
+.adx .fo30{background-image:linear-gradient(in oklab 90deg, #C3FF00 0%, #EF5B8B 50%, #FF20BC 100%);border-radius:9px;flex-shrink:0;padding:1px}
+.adx .fo31{align-items:center;background-color:#1E1E1E;border-radius:8px;display:flex;gap:8px;height:34px;padding-left:11px;padding-right:9px}
+.adx .fo32{color:#F2F2F2;display:inline-block;font-family:"Inter", system-ui, sans-serif;font-size:13px;font-weight:500;line-height:16px;white-space:pre}
+.adx .fo33{align-items:center;background-image:linear-gradient(in oklab 90deg, #C3FF00 0%, #EF5B8B 100%);border-radius:999px;display:flex;flex-shrink:0;height:16px;justify-content:end;padding:2px;width:28px}
+.adx .fo34{background-color:#FFFFFF;border-radius:999px;flex-shrink:0;height:12px;width:12px}
+.adx .fo35{align-items:center;background-color:var(--color-surface-1);border-radius:8px;display:flex;flex-shrink:0;height:36px;justify-content:center;width:36px}
+.adx .fo36{align-items:center;background-color:var(--color-coral);border-radius:8px;display:flex;gap:8px;height:36px;padding-inline:16px}
+.adx .fo37{color:#FFFFFF;display:inline-block;font-family:"Inter", system-ui, sans-serif;font-size:14px;font-weight:500;line-height:18px}
+.adx .fo38{display:flex;flex-direction:column;gap:24px;padding:32px}
+.adx .fo39{align-items:end;display:flex;justify-content:space-between}
+.adx .fo40{display:flex;flex-direction:column;gap:6px}
+.adx .fo41{color:var(--color-text);display:inline-block;font-family:"Inter", system-ui, sans-serif;font-size:28px;font-weight:600;letter-spacing:-0.025em;line-height:32px}
+.adx .fo42{align-items:center;background-color:var(--color-surface-1);border-radius:10px;display:flex;flex-shrink:0;gap:10px;height:40px;padding-inline:14px;width:320px}
+.adx .fo43{color:var(--color-text-faint);display:inline-block;flex-basis:0%;flex-grow:1;font-family:"Inter", system-ui, sans-serif;font-size:14px;line-height:18px}
+.adx .fo44{color:var(--color-text-faint);display:inline-block;font-family:"Inter", system-ui, sans-serif;font-size:12px;line-height:16px}
+.adx .fo45{align-items:start;display:flex;gap:24px}
+.adx .fo46{display:flex;flex-direction:column;flex-shrink:0;gap:20px;width:200px}
+.adx .fo47{background-color:var(--color-surface-1);border-radius:8px;display:flex;gap:2px;padding:3px}
+.adx .fo48{align-items:center;background-color:var(--color-surface-3);border-radius:6px;display:flex;flex-basis:0%;flex-grow:1;height:28px;justify-content:center}
+.adx .fo49{color:var(--color-text);font-family:"Inter", system-ui, sans-serif;font-size:13px;font-weight:500;line-height:16px}
+.adx .fo50{align-content:center;color:var(--color-text-muted);flex-basis:0%;flex-grow:1;font-family:"Inter", system-ui, sans-serif;font-size:13px;height:28px;line-height:16px;text-align:center}
+.adx .fo51{display:flex;flex-direction:column;gap:2px}
+.adx .fo52{display:inline-block;padding-bottom:6px;padding-inline:10px}
+.adx .fo53{display:inline-block;padding-block:7px;padding-inline:10px}
+.adx .fo54{display:flex;flex-basis:0%;flex-grow:1;flex-wrap:wrap;gap:16px}
+.adx .fo55{background-color:var(--color-surface-1);border-radius:16px;display:flex;flex-direction:column;gap:12px;padding:18px;width:calc(33.33% - 11px)}
+.adx .fo56{align-items:start;display:flex;justify-content:space-between}
+.adx .fo57{align-items:center;background-color:#FFFFFF;border-radius:10px;display:flex;flex-shrink:0;height:36px;justify-content:center;width:36px}
+.adx .fo58{color:var(--color-text-faint);display:inline-block;font-family:"JetBrains Mono", system-ui, sans-serif;font-size:11px;line-height:14px}
+.adx .fo59{display:flex;flex-direction:column;gap:4px}
+.adx .fo60{color:var(--color-text);display:inline-block;font-family:"Inter", system-ui, sans-serif;font-size:15px;font-weight:600;line-height:18px}
+.adx .fo61{color:var(--color-text-muted);display:inline-block;font-family:"Inter", system-ui, sans-serif;font-size:13px;line-height:18px}
+.adx .fo62{align-items:center;display:flex;justify-content:space-between;margin-top:4px}
+.adx .fo63{align-items:center;background-color:var(--color-surface-3);border-radius:6px;display:flex;height:22px;padding-inline:8px}
+.adx .fo64{color:var(--color-marigold);font-family:"Inter", system-ui, sans-serif;font-size:11px;font-weight:500;letter-spacing:0.06em;line-height:14px}
+.adx .fo65{color:var(--color-text-muted);display:inline-block;font-family:"Inter", system-ui, sans-serif;font-size:12px;line-height:16px}
+.adx .fo66{align-items:center;background-color:var(--color-periwinkle);border-radius:10px;display:flex;flex-shrink:0;height:36px;justify-content:center;width:36px}
+.adx .fo67{color:#FFFFFF;font-family:"Inter", system-ui, sans-serif;font-size:15px;font-weight:600;line-height:18px}
+.adx .fo68{align-items:center;background-color:#1E1E1E;border-radius:10px;display:flex;flex-shrink:0;height:36px;min-width:0px;overflow:clip;padding-left:3px;width:36px}
+.adx .fo69{display:inline-block;flex-shrink:0;width:130px;height:34px}
+.adx .fo70{color:var(--color-sky);font-family:"Inter", system-ui, sans-serif;font-size:11px;font-weight:500;letter-spacing:0.06em;line-height:14px}
+.adx .fo71{align-items:center;background-color:var(--color-marigold);border-radius:10px;display:flex;flex-shrink:0;height:36px;justify-content:center;width:36px}
+.adx .fo72{color:var(--color-on-marigold);font-family:"Inter", system-ui, sans-serif;font-size:15px;font-weight:600;line-height:18px}
+.adx .fo73{background-color:#080808C7;height:1000px;left:0px;position:absolute;top:0px;width:1440px}
+.adx .fo74{background-color:#0A0A0A;background-image:radial-gradient(ellipse 34% 90% at 6% 100% in oklab, #6076EE9E 0%, #6076EE00 100%), radial-gradient(ellipse 36% 80% at 50% 108% in oklab, #E3492780 0%, #E3492700 100%), radial-gradient(ellipse 30% 85% at 96% 100% in oklab, #C4BE3C6B 0%, #C4BE3C00 100%);background-origin:border-box;border-color:#FFFFFF14;border-radius:40px;border-style:solid;border-width:1px;height:200px;left:260px;overflow:clip;position:absolute;top:700px;width:920px}
+.adx .fo75{left:0px;padding-top:26px;position:absolute;text-align:center;top:0px;width:920px}
+.adx .fo76{color:#FFFFFF6B;font-family:"Inter", system-ui, sans-serif;font-size:12px;letter-spacing:0.02em;line-height:16px;text-align:center}
+.adx .fo77{color:#FFFFFF;font-family:"Inter", system-ui, sans-serif;font-size:26px;font-weight:500;left:0px;letter-spacing:-0.01em;line-height:32px;position:absolute;text-align:center;top:78px;width:920px}
+.adx .fo78{bottom:30px;position:absolute;right:30px}
+.adx .fo79{display:inline-block}
+.adx .fo80{bottom:0px;display:flex;height:3px;left:100px;position:absolute;width:720px}
+.adx .fo81{background-color:#4C7BF0;flex-basis:0%;flex-grow:1}
+.adx .fo82{background-color:#E34927;flex-basis:0%;flex-grow:1}
+.adx .fo83{background-color:#EBB63B;flex-basis:0%;flex-grow:1}
+.adx .fo84{background-color:#3FA856;flex-basis:0%;flex-grow:1}

@@ -27,6 +27,10 @@
   <link rel="stylesheet" href="/css/site.css" />
   <link rel="stylesheet" href="/css/playground.css" />
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.sambitnayak.com/"}, {"@type": "ListItem", "position": 2, "name": "Playground", "item": "https://www.sambitnayak.com/playground"}]}</script>
+  <link rel="stylesheet" href="/css/ui-protos-a.css" />
+  <link rel="stylesheet" href="/css/ui-protos-b.css" />
+  <link rel="stylesheet" href="/css/ui-protos-c.css" />
+  <link rel="stylesheet" href="/css/ui-protos-d.css" />
 </head>
 <body data-page="playground">
   <div class="loader" id="loader" aria-hidden="true"><div class="loader__bg"></div><svg></svg></div>
@@ -36,7 +40,7 @@
     <div class="navgroup" data-nav="work">
       <nav class="seg" aria-label="Primary">
         <a class="seg__item seg__brand" href="/" aria-label="Sambit Nayak, home"><svg class="logo" aria-hidden="true"></svg></a>
-        <button class="seg__item only-desktop" type="button" id="work-tab" aria-expanded="false" aria-controls="work-panel">Work <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <a class="seg__item only-desktop" href="/work" id="work-tab" aria-haspopup="true" aria-expanded="false" aria-controls="work-panel">Work <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></a>
         <a class="seg__item only-desktop" href="/about">About</a>
         <a class="seg__item only-desktop" href="/writing">Writing</a>
         <a class="seg__item only-desktop" href="/playground" aria-current="true">Playground</a>
@@ -53,7 +57,7 @@
           <div class="pcard__main">
             <p class="pcard__label">Navigate</p>
             <ul class="pcard__list" role="list">
-              <li><a href="/#work">Work</a></li>
+              <li><a href="/work">Work</a></li>
               <li><a href="/about">About</a></li>
               <li><a href="/writing">Writing</a></li>
               <li><a href="/playground">Playground</a></li>
@@ -104,10 +108,6 @@
           </div>
           <div class="work__headline">
             <h1 class="work__title" id="pg-title">Experiments and interface studies.</h1>
-            <div class="chips" role="group" aria-label="Filter experiments" data-chips>
-              <button class="chip" type="button" aria-pressed="true" data-filter="all">All</button>
-              <button class="chip" type="button" aria-pressed="false" data-filter="interaction">Interactions</button>
-            </div>
           </div>
         </div>
         <div class="lab-wrap"><ul class="lab" role="list" data-lab></ul></div>
@@ -120,6 +120,12 @@
   <script src="/js/analytics.js"></script>
   <script src="/js/vendor/gsap.min.js"></script>
   <script src="/js/playground.js"></script>
+  <script src="/js/ui-protos-a.js"></script>
+  <script src="/js/ui-protos-b.js"></script>
+  <script src="/js/ui-protos-c.js"></script>
+  <script src="/js/ui-protos-d.js"></script>
   <script src="/js/site.js"></script>
+  <script src="/js/playground-board.js" defer></script>
+  <script src="/js/sound.js" defer></script>
 </body>
 </html>

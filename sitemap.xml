@@ -2,6 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.sambitnayak.com/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://www.sambitnayak.com/about</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://www.sambitnayak.com/work</loc><lastmod>2026-11-12</lastmod></url>
   <url><loc>https://www.sambitnayak.com/writing</loc><lastmod>2026-10-16</lastmod></url>
   <url><loc>https://www.sambitnayak.com/writing/confidence-is-the-missing-layer</loc><lastmod>2026-10-16</lastmod></url>
   <url><loc>https://www.sambitnayak.com/writing/ux-for-agentic-systems</loc><lastmod>2026-10-16</lastmod></url>
@@ -10,10 +11,10 @@
   <url><loc>https://www.sambitnayak.com/work/trailhead-solve</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://www.sambitnayak.com/work/cotonai-modes</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://www.sambitnayak.com/work/cotonai-design-system</loc><lastmod>2026-10-18</lastmod></url>
-  <url><loc>https://www.sambitnayak.com/work/arcade-control-plane</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://www.sambitnayak.com/work/arcade-dev</loc><lastmod>2026-11-12</lastmod></url>
   <url><loc>https://www.sambitnayak.com/work/gap-3d-fit</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://www.sambitnayak.com/work/gatherly</loc><lastmod>2026-11-12</lastmod></url>
   <url><loc>https://www.sambitnayak.com/work/cotonai-agent</loc><lastmod>2026-10-18</lastmod></url>
-  <url><loc>https://www.sambitnayak.com/work/payman-ai</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://www.sambitnayak.com/writing/semantic-tokens</loc><lastmod>2026-11-02</lastmod></url>
   <url><loc>https://www.sambitnayak.com/writing/oklch</loc><lastmod>2026-11-02</lastmod></url>
   <url><loc>https://www.sambitnayak.com/writing/optical-alignment</loc><lastmod>2026-11-02</lastmod></url>
@@ -34,4 +35,5 @@
   <url><loc>https://www.sambitnayak.com/writing/notion-craft</loc><lastmod>2026-11-02</lastmod></url>
   <url><loc>https://www.sambitnayak.com/writing/boris-cherny</loc><lastmod>2026-11-02</lastmod></url>
   <url><loc>https://www.sambitnayak.com/writing/jordan-singer</loc><lastmod>2026-11-02</lastmod></url>
+  <url><loc>https://www.sambitnayak.com/writing/paper-design-workflow</loc><lastmod>2026-11-11</lastmod></url>
 </urlset>

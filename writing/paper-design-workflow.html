@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Low Fidelity First: How Paper Changed My Design Loop | Sambit Nayak</title>
+  <meta name="description" content="I used to draw every screen pixel-perfect in Figma before any code. Now I sketch loose, build my own system in Paper, and raise the winner to high fidelity. By my estimate it is about three times faster, and I try more variations." />
+  <link rel="canonical" href="https://www.sambitnayak.com/writing/paper-design-workflow" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Sambit Nayak" />
+  <meta property="og:title" content="Low Fidelity First: How Paper Changed My Design Loop | Sambit Nayak" />
+  <meta property="og:description" content="I used to draw every screen pixel-perfect in Figma before any code. Now I sketch loose, build my own system in Paper, and raise the winner to high fidelity. By my estimate it is about three times faster, and I try more variations." />
+  <meta property="og:url" content="https://www.sambitnayak.com/writing/paper-design-workflow" />
+  <meta property="og:image" content="https://www.sambitnayak.com/assets/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@sambit_nayak_" />
+  <meta name="twitter:title" content="Low Fidelity First: How Paper Changed My Design Loop | Sambit Nayak" />
+  <meta name="twitter:description" content="I used to draw every screen pixel-perfect in Figma before any code. Now I sketch loose, build my own system in Paper, and raise the winner to high fidelity. By my estimate it is about three times faster, and I try more variations." />
+  <meta name="twitter:image" content="https://www.sambitnayak.com/assets/og-image.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;700&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;700&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" /></noscript>
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+  <link rel="stylesheet" href="/css/site.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.sambitnayak.com/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://www.sambitnayak.com/writing"},{"@type":"ListItem","position":3,"name":"Low Fidelity First: How Paper Changed My Design Loop","item":"https://www.sambitnayak.com/writing/paper-design-workflow"}]}</script>
+</head>
+<body data-page="essay">
+  <div class="loader" id="loader" aria-hidden="true"><div class="loader__bg"></div><svg></svg></div>
+  <noscript><style>.loader{display:none}</style></noscript>
+  <script src="/js/loader.js"></script>
+  <header class="header">
+    <div class="navgroup" data-nav="work">
+      <nav class="seg" aria-label="Primary">
+        <a class="seg__item seg__brand" href="/" aria-label="Sambit Nayak, home"><svg class="logo" aria-hidden="true"></svg></a>
+        <a class="seg__item only-desktop" href="/work" id="work-tab" aria-haspopup="true" aria-expanded="false" aria-controls="work-panel">Work <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></a>
+        <a class="seg__item only-desktop" href="/about">About</a>
+        <a class="seg__item only-desktop" href="/writing" aria-current="true">Writing</a>
+        <a class="seg__item only-desktop" href="/playground">Playground</a>
+        <button class="seg__item only-mobile" type="button" id="menu-tab" aria-expanded="false" aria-controls="work-panel" aria-label="Menu">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <rect x="2" y="2" width="2" height="2"/><rect x="7" y="2" width="2" height="2"/><rect x="12" y="2" width="2" height="2"/>
+            <rect x="2" y="7" width="2" height="2"/><rect x="7" y="7" width="2" height="2"/><rect x="12" y="7" width="2" height="2"/>
+            <rect x="2" y="12" width="2" height="2"/><rect x="7" y="12" width="2" height="2"/><rect x="12" y="12" width="2" height="2"/>
+          </svg>
+        </button>
+      </nav>
+      <div class="panel" id="work-panel">
+        <div class="pcard only-mobile pcard--plain">
+          <div class="pcard__main">
+            <p class="pcard__label">Navigate</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/work">Work</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/writing">Writing</a></li>
+              <li><a href="/playground">Playground</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pcard is-active">
+          <div class="pcard__main">
+            <p class="pcard__label">Case studies ( <span data-work-count>04</span> )</p>
+            <ul class="pcard__list" role="list" id="nav-projects"></ul>
+          </div>
+          <div class="pcard__thumb" id="nav-thumb" aria-hidden="true"></div>
+        </div>
+        <div class="pcard pcard--plain pcard--more">
+          <div class="pcard__main">
+            <p class="pcard__label">More</p>
+            <ul class="pcard__list" role="list">
+              <li><a href="/playground">Playground</a></li>
+              <li><a href="/writing">Writing</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="navgroup" data-nav="contact">
+      <div class="seg">
+        <span class="seg__item seg__time" title="Local time in San Francisco, California">San Francisco <time id="nav-clock" data-clock>--:--</time></span>
+        <button class="seg__item" type="button" id="contact-tab" aria-expanded="false" aria-controls="contact-panel">Contact <svg class="seg__caret" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+        <button class="icon-btn" type="button" id="theme" aria-label="Switch to dark mode">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+      <div class="panel panel--right" id="contact-panel"></div>
+    </div>
+  </header>
+
+  <main id="top">
+    <article class="sheet sheet--first">
+      <div class="work__inner">
+        <div class="rd" data-reader>
+          <aside class="rd__side">
+            <a class="rd__back" href="/writing"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" aria-hidden="true"><path d="M7 4L3 8l4 4M3 8h9a1 1 0 0 1 1 1v2" stroke="currentColor" stroke-width="1.4"/></svg>Writing</a>
+            <nav class="rd__toc" aria-label="On this page">
+              <p class="rd__doc">On this page</p>
+              <a href="#the-loop-i-used-to-run">The loop I used to run</a>
+              <a href="#what-i-changed">What I changed</a>
+              <a href="#the-new-loop-in-four-steps">The new loop, in four steps</a>
+              <a href="#why-it-is-faster">Why it is faster</a>
+              <a href="#about-the-three-times">About the three times</a>
+              <a href="#what-it-costs-and-where-it-does-not-fit">What it costs, and where it does not fit</a>
+              <a href="#if-you-want-to-try-it">If you want to try it</a>
+            </nav>
+          </aside>
+          <div class="rd__main essay__body">
+            <header class="rd__head">
+              <div class="rd__top"><h1 class="rd__title" id="essay-title">Low Fidelity First: How Paper Changed My Design Loop</h1><span class="rd__date">Nov 2026</span></div>
+              <p class="rd__meta">3 min read · Process · Design systems</p>
+              <p class="rd__lede">I used to draw every screen pixel-perfect in Figma before any code. Now I sketch loose, build my own system in Paper, and raise the winner to high fidelity. By my estimate it is about three times faster, and I try more variations.</p>
+            </header>
+
+            <h2 id="the-loop-i-used-to-run">The loop I used to run</h2>
+            <p><strong>Pixel-perfect first.</strong> I designed each screen end to end in Figma at full fidelity, handed it to Cursor, and kept iterating in code. It worked, and the screens were polished.</p>
+            <p><strong>The cost was in the order.</strong> I paid for polish before I knew the direction was right. A new idea meant redrawing a whole screen, so I tried fewer ideas than I wanted to. And the handoff to code was a translation: someone, usually me, had to re-read the picture and rebuild it.</p>
+            <h2 id="what-i-changed">What I changed</h2>
+            <p>I recently added Paper to my workflow, and it moved two things: when fidelity happens, and where the system lives. I ideate at very low fidelity, build my own design system in Paper, and only then make the chosen direction high fidelity.</p>
+            <h2 id="the-new-loop-in-four-steps">The new loop, in four steps</h2>
+            <p><strong>1. Sketch loose, and sketch many.</strong> Boxes, rough type, real copy where I have it. Nothing is aligned yet, which is the point. A direction costs minutes, so I put several next to each other and compare them as a set, not one at a time.</p>
+            <p><strong>2. Build the system once.</strong> My own tokens and components live in the same file as the screens. On CotonAI that is one token file, a Paper library of 35 components and 13 patterns, and rules written down for agents. The full story is in the <a href="/work/cotonai-design-system">design system case study</a>.</p>
+            <p><strong>3. Raise the winner.</strong> I pick one sketch and rebuild it from the system. Spacing, radii, colour and type come from tokens, so most of the pixel work is already done. I spend the time on the details that are specific to the screen.</p>
+            <p><strong>4. Hand over the same thing.</strong> Paper artboards are HTML and CSS, and agents can read them through its MCP server. Cursor sees the real values (tokens, sizes, structure) and not a screenshot to guess from. Less is re-interpreted.</p>
+            <h2 id="why-it-is-faster">Why it is faster</h2>
+            <p><strong>Variations are cheap.</strong> Low fidelity moves the expensive decision, whether this direction is right, to the front, where being wrong costs minutes.</p>
+            <p><strong>The system does the pixel work.</strong> I used to hand-tune each screen. Now polish is mostly inherited, so high fidelity is assembly plus judgement.</p>
+            <p><strong>Less re-translation.</strong> The design and the code read from the same tokens, so there is less drift to fix after handoff.</p>
+            <h2 id="about-the-three-times">About the three times</h2>
+            <p class="essay__flag">My estimate, not a measurement.</p>
+            <p>I think the speed-up is more than 3x. I have not timed it. The number comes from how long a screen used to take me against how long it takes now, remembered, on different screens. I would not quote it as a benchmark.</p>
+            <p>To measure it honestly I would take five comparable screens, run half through the old loop and half through the new one, and record time from brief to approved high fidelity, plus how many directions I tried. The second number may matter more than the first: seeing more variations is where I think the quality gain comes from.</p>
+            <h2 id="what-it-costs-and-where-it-does-not-fit">What it costs, and where it does not fit</h2>
+            <p><strong>The system is upfront work.</strong> The speed shows up after the library exists. For a one-off screen, or a first week on a new product, you pay before you save.</p>
+            <p><strong>Loose sketches need a reader who trusts them.</strong> If the room expects polish, a rough direction can read as unfinished. I show a set of options with one line on what each tests, not a single rough screen.</p>
+            <p><strong>This is one designer's loop on one product.</strong> I can speak for my own work. I have not compared it across a team, and I would expect shared ownership of the library to need rules, as it does in any system.</p>
+            <h2 id="if-you-want-to-try-it">If you want to try it</h2>
+            <p>Do not start by building a library. Take one screen you would normally draw in full, sketch five versions at low fidelity in an afternoon, and pick one. Then notice which values you keep re-deciding. Those are your first tokens.</p>
+
+            <div class="essay__foot">
+              <nav class="cs__next" aria-label="More writing">
+                <a href="/writing"><small>Index</small><strong>All writing</strong></a>
+                <a href="/work/cotonai-design-system"><small>Case study</small><strong>CotonAI Design System</strong></a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer data-footer></footer>
+  <script src="/js/analytics.js"></script>
+  <script src="/js/site.js"></script>
+  <script src="/js/sound.js" defer></script>
+  <script src="/js/writing-demos.js" defer></script>
+</body>
+</html>

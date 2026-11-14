@@ -50,6 +50,8 @@ const G = {
   "boris-cherny": () => `${[0, 1, 2].map((i) => `<rect x="8" y="${9 + i * 11}" width="32" height="8" rx="2" opacity="${1 - i * .3}"/>`).join("")}<path d="M12 13L14.4 15.4L18.6 11" stroke-width="1.4"/>`,
   // play, inside an outline
   "jordan-singer": () => `${c(24, 24, 15)}<path d="M21 17.5L31 24L21 30.5Z" fill="currentColor" stroke="none"/>`,
+  // a dashed sketch becoming a solid screen
+  "paper-design-workflow": () => `<rect x="7" y="12" width="14" height="24" rx="2" stroke-dasharray="3 3" opacity=".6"/>${line(24, 24, 28, 24)}<path d="M26 21L29 24L26 27"/><rect x="31" y="10" width="10" height="28" rx="2" fill="currentColor" stroke="none" opacity=".9"/>`,
 };
 
 // Two short topic tags per post, shown above the thumbnail
@@ -62,6 +64,7 @@ const TAGS = {
   "trust-and-error-states": ["Trust", "Recovery"], "model-latency": ["Latency", "Material"], "generative-ui": ["Catalogs", "Generative UI"],
   "jobs-to-be-done": ["Agents", "Customers"], "linear-design-engineering-culture": ["Taste", "Culture"], "notion-craft": ["Selection", "Craft"],
   "boris-cherny": ["Review", "Chat"], "jordan-singer": ["Demos", "Research"],
+  "paper-design-workflow": ["Process", "Paper"],
 };
 const tagsFor = (slug) => { const k = Object.keys(TAGS).find((x) => slug === x || slug.includes(x)); return k ? `<span class="post__tags">${TAGS[k].map((t) => `<i>${t}</i>`).join("")}</span>\n          ` : ""; };
 

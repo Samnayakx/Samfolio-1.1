@@ -60,7 +60,7 @@
           "value": "4"
         }
       ],
-      "destination": "/work/arcade-control-plane",
+      "destination": "/work/arcade-dev",
       "permanent": true
     },
     {
@@ -96,7 +96,7 @@
           "value": "7"
         }
       ],
-      "destination": "/work/payman-ai",
+      "destination": "/work",
       "permanent": true
     },
     {

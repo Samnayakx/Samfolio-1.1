@@ -186,7 +186,7 @@ test.describe("menus", () => {
       const mobile = width < 768;
       const tab = page.locator(mobile ? "#menu-tab" : "#work-tab");
       const panel = page.locator("#work-panel");
-      await tab.click();
+      if (mobile) await tab.click(); else await tab.hover();   // desktop: Work is a link to /work and the menu opens on hover
       await expect(tab).toHaveAttribute("aria-expanded", "true");
       await expect(panel).toBeVisible();
       const inside = await panel.evaluate((el) => { const r = el.getBoundingClientRect(); return { bottom: r.bottom, vh: innerHeight, scrollable: el.scrollHeight > el.clientHeight, canScroll: getComputedStyle(el).overflowY }; });
@@ -259,7 +259,7 @@ test.describe("motion", () => {
 });
 
 test.describe("explainer boards", () => {
-  const SLUGS = ["trailhead-solve", "cotonai-modes", "cotonai-design-system", "arcade-control-plane", "gap-3d-fit", "cotonai-agent", "payman-ai"];
+  const SLUGS = ["trailhead-solve", "cotonai-modes", "cotonai-design-system", "gap-3d-fit", "gatherly", "cotonai-agent"];
   for (const slug of SLUGS) {
     test(`${slug}: boards load, fit the column and keep an accessible name`, async ({ page }) => {
       await page.addInitScript(() => sessionStorage.setItem("samfolio-unlocked", "1"));
