@@ -1,9 +1,8 @@
 /* Interaction sounds, ported from dmcg.co/work/sandbar.
    Every sound is synthesized live with Web Audio from a small "recipe" (voice, pitch, length, tone...),
-   so there are no audio files to download. Muted state persists in localStorage. */
+   so there are no audio files to download. */
 (() => {
   "use strict";
-  const KEY = "sn:ui-sound-muted:v1";
   const MASTER = 20; // Sandbar ships at volume 20 of 100
 
   // Browsers differ in audio latency; Sandbar disables sound on Safari, so do the same.
@@ -241,8 +240,8 @@
     } catch {}
   };
 
-  let muted = false;
-  try { muted = localStorage.getItem(KEY) === "true"; } catch {}
+  // Sound is always on: there is no mute control
+  const muted = false;
 
   const play = (id, recipe = SOUNDS[id]) => {
     if (!recipe || muted || document.hidden || !unlock()) return;
@@ -262,30 +261,6 @@
     addEventListener(ev, () => { const n = performance.now(); if (n - lastMove < 1000 || muted) return; lastMove = n; keepAwake(); }, { capture: true, passive: true });
   }
   document.addEventListener("visibilitychange", () => { if (document.hidden) { lastMove = 0; try { ctx && keepAlive && keepAlive.stop(ctx.currentTime); } catch {} } });
-
-  // ── Header toggle (speaker icon beside the theme control) ──
-  const ON = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6v4h2.5L8 13V3L4.5 6z" fill="currentColor" stroke="none"/><path d="M10.5 5.5a3.6 3.6 0 0 1 0 5M12.5 3.5a6.4 6.4 0 0 1 0 9"/></svg>';
-  const OFF = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6v4h2.5L8 13V3L4.5 6z" fill="currentColor" stroke="none"/><path d="M10.5 6l4 4M14.5 6l-4 4"/></svg>';
-  const theme = document.getElementById("theme");
-  const btn = document.createElement("button");
-  btn.type = "button"; btn.className = "icon-btn"; btn.id = "sound";
-  const paint = () => {
-    btn.innerHTML = muted ? OFF : ON;
-    btn.setAttribute("aria-label", muted ? "Turn interaction sounds on" : "Mute interaction sounds");
-    btn.setAttribute("aria-pressed", String(!muted));
-    btn.title = muted ? "Sounds off" : "Sounds on";
-  };
-  paint();
-  btn.addEventListener("click", () => {
-    muted = !muted;
-    try { localStorage.setItem(KEY, String(muted)); } catch {}
-    paint();
-    if (!muted) { unlock(); play("sound.on"); }
-    if (!matchMedia("(prefers-reduced-motion: reduce)").matches && btn.animate) {
-      btn.firstElementChild.animate([{ transform: "scale(1)" }, { transform: "scale(1.18)", offset: 0.25 }, { transform: "scale(1)" }], { duration: 420, easing: "cubic-bezier(.34,1.56,.64,1)" });
-    }
-  });
-  if (theme?.parentNode) theme.parentNode.insertBefore(btn, theme);
 
   // ── Wire interactions (event delegation, so panels and cards built later are covered) ──
   const fine = matchMedia("(hover: hover) and (pointer: fine)");

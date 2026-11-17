@@ -26,6 +26,38 @@ css = SRC.read_text()
 light, dark = block(css, ":root"), block(css, "\n.dark")
 assert len(light) > 100 and len(dark) > 60, (len(light), len(dark))
 
+# ---- Before: the superseded token set, for the Before / After toggle ----
+# Read from the real old file, resolved to hex. `.dsx.is-before` overrides only what differs (light);
+# `.dsx.is-before.is-dark` carries the full old dark set so it always beats the light override.
+import json
+OLD = pathlib.Path.home() / "Documents/CotonAI Design system/design-tokens/superseded-2026-10-14/cotonai.tokens.json"
+
+def old_sets():
+    d = json.loads(OLD.read_text())
+    def flat(o, pre=""):
+        for k, v in o.items():
+            if isinstance(v, dict) and "$value" not in v: yield from flat(v, pre + k + ".")
+            else: yield pre + k, v["$value"]
+    prim = dict(flat(d["primitives"]["color"], "color."))
+    def hx(v):
+        if isinstance(v, str): return hx(prim[v[1:-1]])
+        h, a = v["hex"].upper(), round(v.get("alpha", 1) * 255)
+        return h if a >= 255 else h + "%02X" % a
+    return {m: {k.replace("color.", "", 1).replace(".", "-"): hx(v) for k, v in flat(d[s])} for m, s in (("light", "semantic-light"), ("dark", "semantic-dark"))}
+
+def parse(lines):
+    return {m.group(1): m.group(2).upper() for l in lines if (m := re.match(r"\s*--([a-z0-9-]+):\s*(#[0-9A-Fa-f]+);", l))}
+
+old, new_l, new_d = old_sets(), parse(light), parse(dark)
+# alpha steps differ by one (4C vs 4D) from rounding only; a human would not call that a change
+def same(a, b): return a == b or (len(a) == len(b) == 9 and a[:7] == b[:7] and abs(int(a[7:], 16) - int(b[7:], 16)) <= 1)
+diff_l = {n: v for n, v in old["light"].items() if n in new_l and not same(v, new_l[n])}
+diff_d = {n: v for n, v in old["dark"].items() if n in new_d and not same(v, new_d[n])}
+full_d = {n: v for n, v in old["dark"].items() if n in new_d}
+before = [".dsx.is-before {", *(f"  --{n}: {v};" for n, v in diff_l.items()), "  --size-control-default: 30px;", "}",
+          ".dsx.is-before.is-dark {", *(f"  --{n}: {v};" for n, v in full_d.items()), "}"]
+counts = [f"  --dsx-changed: {len(diff_l)};", f"  --dsx-changed: {len(diff_d)};"]
+
 components = r"""
 /* ---- layout ---- */
 /* site.css gives every demo a fixed 960:620 clipped box (made for the Gap prototype); this one is fluid and sets its own height */
@@ -138,6 +170,16 @@ components = r"""
 .dsx-stream { min-height: 40px; margin: 0; font-size: 13px; line-height: 20px; color: var(--text-primary); }
 .dsx-cur { display: inline-block; width: 6px; height: 14px; margin-left: 2px; background: currentColor; transform: translateY(2px); animation: dsx-pulse 1s cubic-bezier(.4, 0, .6, 1) infinite; }
 
+/* ---- Before / After ---- */
+.dsx__ctl { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.dsx__diff { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; padding: 0 12px 12px; }
+.dsx__d { display: flex; flex-direction: column; gap: 6px; padding: 12px 14px; background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius-panel);
+  transition: background-color var(--duration-theme) var(--ease-standard), border-color var(--duration-theme) var(--ease-standard); }
+.dsx__d span { font-size: 11px; line-height: 16px; color: var(--text-tertiary); }
+.dsx__d b { display: flex; align-items: center; gap: 8px; font-size: 20px; line-height: 28px; font-weight: 500; letter-spacing: -0.012em; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.dsx__d i { width: 12px; height: 12px; border-radius: 3px; box-shadow: inset 0 0 0 1px var(--border-default); }
+.dsx__d em { font-style: normal; font-size: 11px; line-height: 16px; font-weight: 500; color: var(--success-fg, var(--text-primary)); }
+.dsx__d em[data-ok="false"] { color: var(--danger-fg, var(--text-primary)); }
 @keyframes dsx-spin { to { transform: rotate(360deg); } }
 @keyframes dsx-pulse { 50% { opacity: .5; } }
 @keyframes dsx-ping { 75%, 100% { transform: scale(2.2); opacity: 0; } }
@@ -145,11 +187,13 @@ components = r"""
 """
 
 gen = "\n".join([BEGIN, "/* Source: ~/dev/cotonai/src/design-system/tokens/tokens.css. Light is :root, dark is .dark. */",
-                 ".dsx {", *light, "}", ".dsx.is-dark {", *dark, "}", components.strip("\n"), END])
+                 ".dsx {", *light, counts[0], "}", ".dsx.is-dark {", *dark, counts[1], "}",
+                 "/* Before: superseded set (2026-10-14), from design-tokens/superseded-2026-10-14. Overrides only. */", *before, components.strip("\n"), END])
 cur = OUT.read_text()
 if BEGIN in cur:
     cur = re.sub(re.escape(BEGIN) + r".*?" + re.escape(END), lambda m: gen, cur, flags=re.S)
 else:
     cur = cur.rstrip("\n") + "\n\n" + gen + "\n"
 OUT.write_text(cur)
+print(f"before set: {len(diff_l)} light and {len(diff_d)} dark tokens differ")
 print(f"wrote {len(light)} light + {len(dark)} dark token vars and the component rules into {OUT.name}")

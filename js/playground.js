@@ -387,12 +387,12 @@
     const sel = new Set([0, 1, 2]);
     let view = "select", busy = false;
 
-    // Background: redraw the streaks a couple of dozen times a second while visible
+    // Background: redraw the streaks about a dozen times a second while visible
     const paint = streaks($(".ms__bg"));
     paint(0);
     const stopBg = reduce ? null : whileVisible(root, () => {
       let raf = 0, last = 0;
-      const loop = (t) => { if (t - last > 42) { paint(t); last = t; } raf = requestAnimationFrame(loop); };
+      const loop = (t) => { if (t - last > 84) { paint(t); last = t; } raf = requestAnimationFrame(loop); };   // about 12 a second: the streaks drift slowly, and each repaint is thousands of canvas strokes
       raf = requestAnimationFrame(loop);
       return () => cancelAnimationFrame(raf);
     });

@@ -5,7 +5,7 @@ const root = path.resolve(__dirname, "..");
 const files = ["index.html", "work.html", "about.html", "writing.html", "playground.html", "case-study.html", ...["writing", "work"].flatMap((d) => (fs.existsSync(path.join(root, d)) ? fs.readdirSync(path.join(root, d)).filter((f) => f.endsWith(".html")).map((f) => `${d}/${f}`) : []))];
 // Most case studies share one seven-section story; a study can declare its own flow in js/site.js (`cs.structure`) and list it here
 const FIVE = "overview,problem,hypothesis,solution,learning";
-const STRUCTURE_BY_PAGE = { "work/arcade-dev.html": ["web", "mobile"].map((k) => FIVE.split(",").map((x) => `${k}-${x}`).join(",")).join(",") };
+const STRUCTURE_BY_PAGE = { "work/cotonai-design-system.html": "overview,discover-define,design-validate,design-token", "work/arcade-dev.html": ["web", "mobile"].map((k) => FIVE.split(",").map((x) => `${k}-${x}`).join(",")).join(",") };
 const STRUCTURE = FIVE;
 const seen = { title: new Map(), desc: new Map() }; let bad = 0;
 const fail = (f, m) => { console.error(`✗ ${f}: ${m}`); bad++; };

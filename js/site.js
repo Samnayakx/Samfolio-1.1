@@ -1,6 +1,14 @@
 // Motion preference helper: loader.js defines the real one (OS setting + the site's Pause motion switch)
 window.motionReduced ||= () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+// Progressive blur along the bottom edge of the viewport: five stacked layers, each blurrier and masked to a narrower band
+(() => {
+  if (document.querySelector(".edge-blur")) return;
+  const d = document.createElement("div"); d.className = "edge-blur"; d.setAttribute("aria-hidden", "true");
+  d.innerHTML = "<i></i><i></i><i></i><i></i><i></i>";
+  document.body.appendChild(d);
+})();
+
 // Looping muted videos play only while on screen, the tab is visible and the device isn't set to reduce motion.
 // With reduced motion they show their poster; `manual` ones (case-study demos) get native controls instead.
 const autoVideo = (v, threshold, manual = false) => {
@@ -372,70 +380,53 @@ const PROJECTS = [
   },
   {
     name: "CotonAI Design System", org: "CotonAI", area: "Design systems · AI product", tags: ["Design Systems", "AI UX"],
-    title: "One token file that Paper, code and AI agents all build from, with gates that stop it drifting.",
-    desc: "CotonAI's UI took colour from two sources that disagreed. One token file now generates the code, Figma and Paper outputs, and a gate fails on low contrast.",
+    title: "CotonAI Design System",
+    desc: "Building a design system from scratch for an AI canvas: one token file that designers, engineers and AI agents all build from.",
     seo: "CotonAI design system case study: one W3C token file that generates CSS, Tailwind and Figma tokens, a Paper library of 35 components and 13 patterns, and a gate that checks 250 contrast pairs against WCAG AA.",
-    metric: { value: "250/250", label: "Contrast pairs meet WCAG AA in the token gate" }, thumb: { video: "/assets/images/cotonai-ds/video-cotonai-ds-cover.mp4", poster: "/assets/images/cotonai-ds/video-cotonai-ds-cover-poster.jpg", alt: "CotonAI Design System cover: the CotonAI mark over soft, out-of-focus yellow and orange flowers, then the title typed out", navPoster: "/assets/images/cotonai-ds/video-cotonai-ds-cover-poster.jpg", bleed: true }, slug: "cotonai-design-system", href: "/work/cotonai-design-system", tint: ["#8AA3AE", "#E3ECEE", "#C5D5DA"],
+    metric: { value: "250/250", label: "Contrast pairs meet WCAG AA in the token gate" }, thumb: { video: "/assets/images/cotonai-ds/video-cotonai-ds-cover.mp4", poster: "/assets/images/cotonai-ds/video-cotonai-ds-cover-poster.jpg", alt: "CotonAI Design System cover: the CotonAI mark over soft, out-of-focus yellow and orange flowers, then the title typed out", navPoster: "/assets/images/cotonai-ds/video-cotonai-ds-cover-poster.jpg", bleed: true }, slug: "cotonai-design-system", href: "/work/cotonai-design-system", tint: ["#FDBA4D", "#F8D0B0", "#FCC653"],
     cs: {
-      meta: [["Role", "Founding Product Designer"], ["Timeline", "Aug 2025 – Present"], ["Owned", "Token source, Paper library, rules for agents"], ["Team", "Co-founder, PM, engineering"]],
-      // This study follows its own flow, from context to measured impact (declared here and in STRUCTURE_BY_PAGE in tools/check-seo.cjs)
-      structure: ["Context", "Diagnosis", "Design decisions", "System architecture", "Applied workflows", "Engineering validation", "Measured impact"],
+      meta: [["Company", "CotonAI"], ["Tools", "Paper, Tailwind, Storybook"], ["Role", "Founding Product Designer"], ["Deliverables", "Token source, Paper library, Agent rules"]],
+      structure: ["Overview", "Discover & Define", "Design & Validate", "Design Token"],
       sections: [
-        { statement: "Context: a fashion canvas where the interface has to stay out of the work's way.",
-          text: ["CotonAI is an AI canvas for fashion teams. The work on the board is the product, so the interface around it has to stay quiet. I joined as founding product designer in August 2025 and took on the design system. Three groups build with it: designers in Paper, engineers in Tailwind, and AI agents that draft UI code."],
-          cards: [["Problem: Two token sources that disagreed.", "1,411 raw hex values on top of them."], ["Solution: One file generates the rest.", "CSS, Tailwind, Figma and Paper."], ["Outcome: A gate, not a guideline.", "250 contrast pairs pass AA."]] },
+        { statement: "Overview",
+          cols: ["CotonAI is an AI canvas for fashion teams. I joined as founding product designer in August 2025 and own the design system. Three kinds of builder use it: designers working in Paper, engineers working in Tailwind, and AI agents that draft UI code.",
+                 "I treated the system as a design problem and ran a double diamond. I audited the codebase first, then defined the question, then made one token file the source. Stage 1 of 4 is applied, so every number here is a stage 1 number."],
+          board: { src: "/assets/images/cotonai-ds/paper-process.webp", alt: "The process as a double diamond across Discover, Define, Design and Validate. Research: audit the codebase for raw colour, size and controls, read both token sources, check contrast on every text pair. Research findings: count and map the drift, list what fails WCAG AA. Define the right HMW: how might we make the right colour the easiest one to use, and group the findings by cause. Potential solutions: generate the palette in OKLCH, let contrast choose the blue, draft six base shells in Paper. Implementation: one token file that generates code and Figma tokens, a Paper library and agent rules, and gates that fail the build.", cap: "The process, drawn in Paper" } },
 
-        { statement: "Diagnosis: the interface was designed, but nothing enforced the design.",
-          text: ["An audit of src/ on 11 November 2026 found a missing source: colour, size and controls were decided again in every file."],
-          board: { src: "/assets/images/cotonai-ds/board-diagnosis.webp", alt: "What the audit of src/ found. 1,411 raw hex colours in 187 files, and the brand blue alone appears 269 times. 490 raw buttons, while only 5 files import the Button component. 669 arbitrary text sizes such as text-[13px]. 10 files build their own dialog, sheet or drawer. 7 shadcn components are imported nowhere, including select, tabs and switch. The old muted gray #888888 is 3.5:1 on white against the 4.5:1 AA needs. Root cause: two places defined colour and they disagreed, index.css with HSL variables for shadcn and boardUiTokens.ts with hex, imported by 106 files.", cap: "What the audit found in src/" } },
+        { statement: "Discover & Define",
+          cols: ["The first job was to find out what the interface was really made of. I audited the src folder on 11 November 2026 and checked every text pair for contrast.", "The cause was a missing source. Colour, size and controls were decided again in every file."],
+          facts: [["1,411", "raw hex colours in 187 files"], ["490", "raw buttons, while only 5 files import Button"], ["669", "arbitrary text sizes, like text-[13px]"], ["10", "files build their own dialog, sheet or drawer"], ["7", "shadcn components imported nowhere"], ["3.5:1", "contrast of the old muted gray on white"]],
+          numbered: { title: "Here's what that caused", text: "Reading both token sources side by side showed five problems.",
+            items: ["Two files defined colour and disagreed: shadcn's HSL variables in index.css against hex in boardUiTokens.ts, which 106 files import.", "Buttons and overlays were rebuilt in each file instead of reused.", "Sizes were decided file by file, so type drifted too.", "Nothing checked contrast, so a gray that fails AA shipped.", "Changing one shape would touch about 106 files."] },
+          insight: ["How might we", "Make the right colour the easiest one to use?"] },
 
-        { statement: "Decisions: generate the palette, pin the brand, and let contrast choose the blue.",
-          text: ["Each decision is backed by a number a machine can check."],
-          board: { src: "/assets/images/cotonai-ds/board-decisions.webp", alt: "Six design decisions. 1, palette: one neutral ramp gray/0 to 1000 and five hues generated in OKLCH with a fixed lightness per stop, with blue/500 #0C8CE9, red/500 #FF383C and purple/600 #8A38F5 pinned. 2, one blue with two jobs: white on #0C8CE9 is 3.53 to 1 and on #0076C7 it is 4.76 to 1, so filled actions use blue/600 while focus and selection keep the brand blue. 3, muted text moves to gray/650 #636360 in light and gray/450 #9F9E9C in dark, 4.96 to 1 on the selected row. 4, three radii 6, 12 and full, two control heights 32 and 28, and a 12px text floor. 5, old names stay as aliases of the new ones. 6, where index.css and boardUiTokens.ts disagreed, the values on the live board won, and there is one accent colour.", cap: "Six decisions, each one checkable" },
+        { statement: "Design & Validate",
+          text: ["Five principles shaped every decision. Each one is something a person or a machine can check."],
+          principles: [
+            { t: "Generated", text: "One JSON file, cotonai.tokens.json, is the only file edited by hand. It generates the CSS variables, the Tailwind theme, a TypeScript module and the Figma import files.",
+              media: { wide: true, src: "/assets/images/cotonai-ds/board-architecture.webp", alt: "cotonai.tokens.json, the single source of truth, feeds four layers: 97 primitives, 105 semantic tokens in two modes, component tokens, and 100 dimensions. These generate tokens.css, tailwind-theme.ts, tokens.ts and one Figma file per collection and mode. The Paper file holds 7 Foundations boards, 35 components and 13 patterns.", cap: "One file in, every output generated" } },
+            { t: "Semantic", text: "Components read roles such as bg-surface and text-muted, never raw values. Primitives only define the roles. The palette is generated in OKLCH, with the brand blue, red and purple pinned.",
+              media: { wide: true, src: "/assets/images/cotonai-ds/paper-tokens-semantic.webp", alt: "The Colour / Semantic Light board in the Paper file. Role-based tokens used by product code in the light theme, each swatch showing the token name, the primitive it aliases and the resolved value. Groups are Background, Border, Text, Icon, Accent, Status for success, warning, danger and info, and component tokens for nav, tab, toggle, scrollbar, loader, media and canvas.", cap: "Paper: semantic colour, light theme" } },
+            { t: "Themed", text: "Light and dark use the same names, so a component never changes structure between themes. Swapping the token set is the only difference.",
+              media: { wide: true, src: "/assets/images/cotonai-ds/paper-base-surface.webp", alt: "Paper board: Base/Surface in light and dark. The same panel with a header, body and footer in both themes, using the same radius, header height and padding. Below it, five states of a text field, then Row, Indicator and Toggle specimens.", cap: "Paper: one surface, two themes" } },
+            { t: "Interactive", text: "Default, hover, pressed, focus and disabled are drawn for every component. The demo runs the real components on the real tokens, and Before and After swaps in the old token set.",
+              media: { demo: "dsLive", alt: "Live CotonAI components with a Before and After switch between the old and current token sets, and a Light and Dark switch. Below the components, three readouts update: the filled button blue and its contrast with a white label (3.53 to 1 before, 4.76 to 1 after), muted text contrast (3.54 to 1 before, 6.03 to 1 after) and control height (30px before, 32px after).", cap: "Live: the same components on the old tokens and the new" } },
+            { t: "Accessible", text: "Contrast is a failing check. 250 of 250 text and UI pairs meet WCAG 2.2 AA, and the gate also fails if a generated file is stale.",
+              media: { wide: true, src: "/assets/images/cotonai-ds/board-gates.webp", alt: "Gates run on 11 November 2026. npm run tokens:check: 250 of 250 contrast pairs meet WCAG 2.2 AA, and it also fails if a generated file is stale. npm run lint:colors: 1,202 raw colour literals in 167 files, down from 1,326 in 168, and the check fails if the number goes up. What the gate caught: warning and danger text fail 4.5 to 1 on their pressed fill, so interactive warning and danger pills hover with a border instead of a fill.", cap: "The gates, as run on 11 November 2026" } },
+          ],
           parts: [
-            { title: "What I replaced", statement: "Replaced: a token set that wrote the code down instead of correcting it.",
-              text: ["The first token set (57 primitives, 48 aliases) was extracted from the code and described it as it was. The current set is generated and checked against contrast, so it says what the code should be."] },
+            { title: "Design System Structure", text: ["The Paper file has four pages: seven Foundations boards, 35 component artboards, 13 patterns and an Index that says which component to use for which job. Six base shells sit under the components. They are designed in Paper and not built in code yet."],
+              media: [
+                { wide: true, src: "/assets/images/cotonai-ds/paper-index.webp", alt: "The Index page of the CotonAI Paper file. It lists Foundations with 7 boards, Components with 35 artboards and Patterns with 13 artboards, a table of which component to use for which job, and three rules: Build, Check and Change.", cap: "Paper: the Index page" },
+                { wide: true, src: "/assets/images/cotonai-ds/paper-base-overview.webp", alt: "Paper board: Base components overview. Three layers, tokens, base and components, then the six bases and which of the 35 components wear each: Control 8, Field 5, Surface 9, Row 3, Indicator 7 and Toggle 3.", cap: "Paper: six bases, and which components wear each" }],
+              mediaLayout: "stack" },
           ] },
 
-        { statement: "Architecture: one source, four layers, every output generated.",
-          text: ["cotonai.tokens.json is the only file edited by hand. npm run tokens generates the CSS variables, Tailwind theme, TypeScript module and Figma import files, and the Paper library is re-pushed from the same JSON. Components use semantic tokens. Primitives only define them."],
-          board: { src: "/assets/images/cotonai-ds/board-architecture.webp", alt: "cotonai.tokens.json, the single source of truth in W3C design-token format, feeds four layers: 97 primitives generated in OKLCH, 105 semantic tokens in two modes, component tokens, and 100 dimensions plus 7 effects. These generate tokens.css, tailwind-theme.ts, tokens.ts and one Figma tokens file per collection and mode. The Paper file has 7 Foundations boards, 35 component artboards, 13 pattern artboards and 1 Index page.", cap: "One file in, every output generated" },
-          media: [{ demo: "dsLive", alt: "Live CotonAI components running on the real design tokens, with a Light and Dark switch. A generation tile moves through queued, running and done with a progress bar, skeleton and status pill. Buttons, a switch and a segmented control respond to hover, press and selection. A tooltip, a menu and a delete dialog open and close with the system's fade and zoom. An agent shows thinking, a streamed answer and status pills.", cap: "Live: the real components on the real tokens. Flip Light and Dark, press Generate, open the menu" },
-            { wide: true, src: "/assets/images/cotonai-ds/paper-index.webp", alt: "The Index page of the CotonAI Paper file. It lists the pages in the file: Foundations with 7 boards, Components with 35 artboards and Patterns with 13 artboards. A table says which component to use for which job, across Controls, Display, Structure, Overlays and Canvas chrome. Three rules follow: Build, with tokens only and one accent colour. Check, with text at 4.5:1 and UI at 3:1 contrast and all states covered. Change, with one library owner who approves new tokens and components.", cap: "The Index page of the Paper file: which component for which job, and three rules" },
-            { wide: true, src: "/assets/images/cotonai-ds/paper-tokens-primitives.webp", alt: "The Colour / Primitives board in the Paper file. Raw palette ramps that product code never uses directly. A 22-step warm-neutral gray ramp from gray-0 #FFFFFF to gray-1000 #000000, five hue ramps from 50 to 950 for blue (accent, info, with 500 #0C8CE9 and 600 #0076C7), green (success), amber (warning), red (danger) and purple (layer text, spread), and translucent alpha tokens shown on white and on gray-950.", cap: "Foundations: colour primitives, 97 raw values" },
-            { wide: true, src: "/assets/images/cotonai-ds/paper-tokens-semantic.webp", alt: "The Colour / Semantic Light board in the Paper file. Role-based tokens used by product code in the light theme, each swatch showing the token name, the primitive it aliases and the resolved value. Groups are Background, Border, Text, Icon, Accent, Status for success, warning, danger and info, and component tokens for nav, tab, toggle, scrollbar, loader, media and canvas.", cap: "Foundations: semantic colour, light theme. Each role names the primitive it aliases" },
-            { wide: true, src: "/assets/images/cotonai-ds/paper-tokens-type.webp", alt: "The Typography board in the Paper file. Inter for UI and JetBrains Mono for code, three weights (regular 400, medium 500, semibold 600), and thirteen sizes from the 11px hint to the 56px display-lg, each with its line height and tracking, for example text-md at 13 over 20 with -0.01em. Tracking tightens as type grows, from +0.1em for eyebrows to -0.04em for display-lg. Rules: 12px is the floor for anything read, use the role and not a raw size, and line heights only grow with size.", cap: "Foundations: type, in Inter and JetBrains Mono" },
-            { wide: true, src: "/assets/images/cotonai-ds/paper-tokens-spacing.webp", alt: "The Spacing, Radius and Sizes board in the Paper file. A 2px-based spacing scale from 0 to 64. Radii: none 0, control 6px for buttons, fields and chips, panel 12px for panels, menus and dialogs, and full for pills and avatars. Control heights: xs and sm 28px, md and lg 32px, dense 28px for inspector fields, and a 32px icon square. Icon sizes from 12px to 24px. Panel and chrome measurements such as the 300px editor width and 45px top bar, and canvas measurements such as handle and hit sizes.", cap: "Foundations: spacing, radius and sizes" }],
-          mediaLayout: "stack",
-          parts: [
-            { title: "Components", statement: "Components: 35, grouped by the job they do.",
-              cards: [["Controls", "Button, Switch, Select, TextField and the rest. Never a bare button with color classes."], ["Overlays", "Dialog interrupts, Popover holds free content, Menu lists actions."], ["Canvas chrome", "Dock, ToolRail, PromptBar and UploadSlot for the board itself."]] },
-            { title: "Documentation", statement: "Documentation: one Paper artboard per component.",
-              cards: [["Variants, sizes, states", "Default, hover, pressed, focus and disabled are drawn, not described."], ["A one-line use for", "So the right component is a lookup, not a debate."], ["An AGENTS.md entry", "A component is not done until people and agents can both find it."]] },
-          ] },
-
-        { statement: "Workflows: a change goes through one owner, and an agent's draft goes through a person.",
-          text: ["A change starts as an issue naming the two screens that need it. One library owner approves it, the JSON and Paper artboard change together, and an engineer checks it. Agents follow the same rules: they read AGENTS.md, produce a proposal, and a person reviews it."],
-          board: { src: "/assets/images/cotonai-ds/board-workflow.webp", alt: "Two flows. A change to the system: 1, issue, with the problem, the two screens that need it and the nearest existing option; 2, owner approves or redirects; 3, the token JSON and the Paper artboard change together and AGENTS.md is updated; 4, an engineer checks tokens and all states. A change made with an agent: give it the rules and one artboard; get a proposal; a human decides; the fix becomes a new line in AGENTS.md. The agent rules are five lines: tokens never literals, semantic over primitive, reuse before you build, contrast is a gate, and agent output is a proposal.", cap: "How a change is made, by people and with an agent" },
-          parts: [
-            { title: "Challenge", statement: "Challenge: changing shapes touches about 106 files. Solution: stage it, and look after each stage.",
-              stepsTitle: "Stages",
-              steps: [["Stage 0, tooling: done", "Generator, token files, baseline."], ["Stage 1, colours: done", "124 raw hex gone from boardUiTokens.ts."], ["Stage 2, shapes and sizes", "Radii and control heights. Not started."], ["Stage 3, roles", "Credits to neutral, menu hover to grey. Not started."], ["Stage 4, the rest", "Sub-bars, then modals. Not started."]] },
-          ] },
-
-        { statement: "Validation: the gates fail the build, so contrast and drift are not opinions.",
-          text: ["Run on 11 November 2026: the token build is current, every contrast pair passes, and raw colour sits on its baseline. Stage 1 also built with Vite."],
-          board: { src: "/assets/images/cotonai-ds/board-gates.webp", alt: "Gates run on 11 November 2026. npm run tokens:check: 250 of 250 contrast pairs meet WCAG 2.2 AA, and it also fails if a generated file is stale. npm run lint:colors: 1,202 raw colour literals in 167 files, down from 1,326 in 168, and the check fails if the number goes up. Gate history: 166 pairs grew to 250 as text tiers, canvas chrome and tinted fills were added. What the gate caught: warning and danger text fail 4.5 to 1 on their pressed fill, so interactive warning and danger pills hover with a border instead of a fill. Not yet verified: how stage 1 looks in a browser.", cap: "The gates, as run" } },
-
-        { dash: [{ type: "kpi", w: 4, label: "Raw colour", value: "−124", note: "1,326 to 1,202 literals, all from boardUiTokens.ts" }, { type: "kpi", w: 4, label: "Contrast gate", value: "250/250", note: "Pairs meet WCAG 2.2 AA, up from 166 checked" }, { type: "kpi", w: 4, label: "Colour source", value: "1 file", note: "Replaces two that disagreed" }],
-          statement: "Impact: raw colour is falling and contrast passes everywhere it is checked. The rest is not measured yet.",
-          text: ["Only stage 1 is applied, so these are stage 1 numbers."],
-          parts: [
-            { title: "Not measured yet", statement: "Not measured yet: adoption, time saved and the look in a browser.",
-              cards: [["Adoption", "490 raw buttons unchanged. Stages 2 to 4 not started."], ["Time saved", "No before and after yet."], ["In a browser", "Stage 1 not yet verified."]] },
-            { title: "Learning", statement: "Learning: a rule a machine can check outlasts a guideline.",
-              text: ["Once contrast became a failing check, two colours had to change: the filled blue and the muted gray. A system is useful in proportion to what it can refuse.", "Limits: the library owner is not yet named, and dark mode in Paper is a token prefix."] },
-          ] },
+        { statement: "Design Token",
+          tokenPanel: { alt: "Four token layers from most specific to most reach: component token, semantic token, primitive token and raw value.",
+            text: "Tokens are split by how widely they apply. A change at the bottom reaches everything above it. One example per layer.",
+            tiers: [["Component token", "--color-nav-fg-idle"], ["Semantic token", "--color-accent-default"], ["Primitive token", "--color-blue-600"], ["Raw value", "#0076C7"]],
+            subs: [["Primitive tokens", "97 raw values: one neutral ramp and five hues, generated in OKLCH. Never used directly in components."], ["Semantic tokens", "105 roles per mode, light and dark. This is what components use."], ["Component tokens", "Only where a component truly differs from the semantic set, such as nav and toggle colours."], ["Dimensions", "100 variables for spacing, radius, size, type, opacity, duration and layers, plus 7 effects."]] } },
       ],
     },
   },
@@ -485,7 +476,18 @@ const PROJECTS = [
           insight: ["The bet", "Live session data could stand in for the testers we did not have."],
           parts: [
             { title: "Design decisions", statement: "Decisions: four layouts, one 3D viewer, and why each lost.",
-              text: ["I held the 3D viewer constant and changed only how the flow asks for input. Each layout is scored against the three limits. Figures for the alternatives are illustrative; the 61% lift is measured."], board: { src: "/assets/images/gap/board-variations.webp", alt: "Five QuickFit layouts around the same 3D viewer, with illustrative figures. A, one long form: ten fields before any value; 38% completed, 94 seconds, size confidence 3.1 of 5; not selected. B, measurements first: most people do not know their waist or hips, so they guessed or stopped; 46% completed, 71 seconds, confidence 3.4; not selected. C, average body first: fastest at 82% completed and 18 seconds, but the body was not theirs and confidence was lowest at 2.6; not selected. D, a tight-to-loose slider on the 3D model: fit comes from the size, not a preference, so it promised looks the product cannot deliver; 58% completed, 63 seconds, confidence 3.5; not selected. E, three short steps, selected: 71% completed, 34 seconds, confidence 4.3, and a measured 61% lift in add-to-bag in the A/B test. Each layout is also scored against the three limits, too many inputs, too much rationale and too much fidelity (accuracy vs completion rate, explainability vs purchase velocity, fit fidelity vs mobile performance): A, B and D miss all three; C partly meets limits 1 and 3 and misses 2; E meets all three.", cap: "Four alternatives and the selected flow, each scored against the three limits. Dashed bars are illustrative, not measured." } },
+              text: ["I held the 3D viewer constant and changed only how the flow asks for input. Each layout is scored against the three limits. Figures for the alternatives are illustrative; the 61% lift is measured."], decisions: [
+              { q: "What if we asked for everything on one screen?", label: "A · One long form · Not selected", src: "/assets/images/gap/option-a.webp", alt: "Option A, one long form: the QuickFit Finder with ten fields on one screen (height, weight, age, usual size, waist, inseam, thigh, calf) and a Show my size button, beside an empty 3D avatar. Scored against the three limits it misses all three. 38% completed, 94 seconds median time, size confidence 3.1 of 5. Not selected.",
+                text: "Ten fields before any value. The avatar sat empty until the end, and nearly two in three people left. 38% completed, 94 seconds, size confidence 3.1 of 5.", read: "Read-out: 62 of every 100 people left before they ever saw a size." },
+              { q: "What if we led with tape-measure numbers?", label: "B · Measurements first · Not selected", src: "/assets/images/gap/option-b.webp", alt: "Option B, measurements first: the finder asks for waist, hips and inseam in inches, with How to measure links, and a disabled Find my size button. It misses all three limits. 46% completed, 71 seconds, size confidence 3.4 of 5. Not selected.",
+                text: "Most people don't know their waist or hips off-hand, so they guessed or stopped. Precise on paper, noisy in practice. 46% completed, 71 seconds, confidence 3.4 of 5.", read: "Read-out: slower than the selected design, and still less trusted." },
+              { q: "What if we showed an average body first?", label: "C · Average body first · Not selected", src: "/assets/images/gap/option-c.webp", alt: "Option C, average body first: a grid of sizes 00 to 20 beside a 3D avatar labelled as an average body, with an Edit Body button and Waist, Hips and Calf fit readouts. It partly meets limits 1 and 3 and misses limit 2. 82% completed, 18 seconds, size confidence 2.6 of 5. Not selected.",
+                text: "Fastest, with the best completion, but the body was not theirs, so confidence was the lowest of the four. 82% completed, 18 seconds, confidence 2.6 of 5.", read: "Read-out: speed alone did not build trust, and trust is what moves a shopper to Add to Bag." },
+              { q: "What if shoppers dialed the fit from tight to loose?", label: "D · Tight-to-loose slider · Not selected", src: "/assets/images/gap/option-d.webp", alt: "Option D, a tight-to-loose slider: a Fit slider from Tight through Fitted to Loose that changes how the jeans sit on the 3D avatar, with a size selector and an Add to bag button. It misses all three limits. 58% completed, 63 seconds, size confidence 3.5 of 5. Not selected.",
+                text: "Fit comes from the size, not a preference, so the slider promised looks the product cannot deliver. It also meant refitting the 3D garment on every drag, and people played with it instead of deciding. 58% completed, 63 seconds, confidence 3.5 of 5.", read: "Read-out: people moved the slider, then still asked which size to buy." },
+              { q: "What if we asked three short questions, and gave reasons on request?", label: "E · Three short steps · Selected", src: "/assets/images/gap/option-e.webp", alt: "Option E, three short steps, selected: height first, then a size they know, with numbers optional. The 3D avatar shows Waist, Hips and Calf fit, with a Why this recommendation link and an Add to bag button. It meets all three limits. 71% completed, 34 seconds, size confidence 4.3 of 5, and a measured +61% add-to-bag in the A/B test.",
+                text: "Height first, then a size they know, with numbers optional. Value appears after one tap, the avatar becomes theirs, and every size comes with reasons. 71% completed, 34 seconds, confidence 4.3 of 5.", read: "Result: +61% add-to-bag in the A/B test, measured. Figures for the other four layouts are illustrative." },
+            ] },
           ] },
 
         { title: "Outcomes and Reflection", statement: "Outcome: an A/B test showed a 61% lift in add-to-bag.",
@@ -567,7 +569,6 @@ const PROJECTS = [
     metric: { value: "3 mo", label: "From brief to a shipped MVP" }, thumbnail: { src: "/assets/images/gatherly/thumb-dark-home.webp", alt: "The Gatherly home screen in dark mode on a phone: a Find an event search bar, filter tabs, and Popular in San Francisco event cards for a rooftop sunset session and a founders breakfast.", bleed: true, full: true, hero: true }, slug: "gatherly", href: "/work/gatherly", tint: ["#7A5AF8", "#EEE8FF", "#6D4AFF"],
     cs: {
       meta: [["Role", "UI/UX Designer"], ["Timeline", "3 months"], ["Client", "An agency · independent project"], ["Shipped", "MVP · iOS, light and dark"]],
-      layout: "tiles",
       structure: ["Final Designs", "Brief", "Key flows", "Design system", "Outcome"],
       sections: [
         { title: "Final Designs", statement: "Final designs: find an event, get a ticket, host your own.",
@@ -606,7 +607,6 @@ const PROJECTS = [
     seo: "Arcade.dev UX case studies: a web console for an agent runtime and an iOS companion app, covering first-call onboarding, approvals, status language, cost visibility and a design system.",
     metric: { value: "100", label: "Screens across the web console and the iOS app" }, thumbnail: { src: "/assets/images/arcade-dev/thumbnail.jpg", alt: "Three Arcade.dev screens stacked at an angle: the Playground with an Authorize GitHub card in front, the dashboard Authorize GitHub next step behind it, and the policy approval queue at the back", bleed: true, full: true, hero: true }, slug: "arcade-dev", href: "/work/arcade-dev", tint: ["#F3B7A3", "#FFE3D8", "#FFF6F2"], accent: "#E34927",
     cs: {
-      layout: "tiles",
       variants: [
         { key: "web", label: "Web console", lead: "Arcade console. Run agents with confidence. The engine was there; the story wasn’t. I redesigned the console around three things, in order: first success. Then trust. Then control.",
           meta: [["Role", "Product designer"], ["Scope", "Web console, design system"], ["Delivered", "54 screens across six flows, tokens, status language"], ["Status", "Design concept, not yet user-tested"], ["Tools", "Paper"]],
@@ -2566,6 +2566,8 @@ function openLightbox(src, alt, opener) {
       g.querySelectorAll(".tile").forEach((t) => io.observe(t));
       return g;
     };
+    // Fact labels follow the reference template (Collaborators, Timeline, Scope)
+    const META_LABEL = { Team: "Collaborators", Skills: "Scope" };
     const statementOf = (sec) => { const s = sec.statement || sec.title, k = s.indexOf(": "); const t = k > -1 && k < 48 ? s.slice(k + 2) : s; return t.charAt(0).toUpperCase() + t.slice(1); };
     // Every study tells its story in the same seven sections, in this order. A section's own `title` is optional;
     // `parts` hold the extra beats (what we killed, what we shipped, one per surface) that sit under a section.
@@ -2579,7 +2581,6 @@ function openLightbox(src, alt, opener) {
       "cotonai-modes": { five: [[0, 3], [1, 2], ["h", 4], [5], [6]], h: { statement: "Hypothesis: remove the need to prompt, and more people get a good first result.", text: ["Two ways of helping users prompt better had already failed. The bet was to stop teaching prompting and give each stage of fashion work a structured entry point, so ambiguity drops while creativity stays open.", "Every iteration was judged on usage data, not opinion."] } },
       "cotonai-agent": { five: [[0, 3], [1, 2], ["h", 4], [5], [6]], h: { statement: "Hypothesis: if the canvas carries the context, a prompt stops starting from zero.", text: ["The canvas shouldn't only hold the work. It should be the context an agent understands the work through: why a color was rejected, which silhouette was approved, what the brief asked for.", "The agent plans and executes while the designer approves each step. Only the live workspace has run in a pilot; the agent itself is still a proposal."] } },
       "gap-3d-fit": { five: [[1], [2, 3], ["h"], [0, 4], [5]], h: { statement: "Hypothesis: shoppers need less sizing ambiguity, not more 3D realism.", text: ["Hold the 3D viewer constant and change only how the flow asks for input: ask little, then let the shopper verify the size.", "Sessions showed shoppers dropping off as the inputs piled up, before they saw any value. The test was whether cutting that friction would lift add-to-bag."] } },
-      "cotonai-design-system": { five: [[0], [1], ["h"], [2, 3, 4], [6, 5]], h: { statement: "Hypothesis: one generated source, with gates that fail the build, stops the system drifting.", text: ["An audit found that nothing enforced the design: colour, size and controls were decided again in every file. If one file generates every output and machines check the numbers, consistency stops depending on people remembering the rules.", "Only stage 1 is applied, so everything measured is a stage 1 number."] } },
       "gatherly": { five: [[1], [{ title: "Problem", statement: "Problem: one events app has to serve people who go and people who host.", text: ["The brief was an events app in the spirit of Airbnb, designed for an agency in three months. Someone had to be able to find an event and get a ticket, and someone else to host their own."] }], ["h"], [0, 2, 3], [4]], h: { statement: "Hypothesis: four journeys and one token set are enough for the whole product.", text: ["Cover the product with four key flows, and drive light and dark from a single token set, so a three-month MVP stays consistent."] } },
       "arcade-dev": {
         web: { five: [[0, 1], [2, 3], ["h"], [4, { title: "Connect", statement: "Connect: Authorize where the work happens. Not on a settings page.", text: ["Per-user authorization is handled where it happens, inside the Playground conversation, instead of sending someone to a settings page. Connected accounts show their status with the fix beside it, and a gateway publishes one MCP URL that clients connect to."], media: [{ demo: "arcadeFeatures", set: "connect", alt: "Feature explorer. Use the toggle to switch between four screens: Tool catalog, Playground, Accounts and Gateway builder." }] }, { title: "Debug a run", statement: "Debug a run: Why it failed. And what to do next.", text: ["A failed run opens on a trace that says what stopped it. A held call and an expired login are different problems, so each gets its own state and its own verb: Review for a call that needs a person, Re-authorize for access that expired."], media: [{ demo: "arcadeFeatures", set: "debug", alt: "Feature explorer. Use the toggle to switch between three trace screens: Policy blocked, Auth expired and All failure states." }] }, 5, 6, 7, { title: "Arcade Agent", statement: "Arcade Agent: Reads the page. Drafts the change. Waits for approval.", text: ["A toggle in every top bar, or the keyboard shortcut, summons it. It reads the current page and drafts changes, and changes to rules, accounts or keys always wait for an approval card."], media: [{ demo: "arcadeFeatures", set: "agent", alt: "Feature explorer. Use the toggle to switch between four Arcade Agent screens: Summoned, Docked panel, Agent-first home and Charts." }] }, 8], [9]], h: { statement: "Hypothesis: First call first. Control as you grow.", text: ["The same console serves a developer on day one and a security lead on day ninety, and showing both at once buries both. The bet: start with a working call in minutes, and let navigation, rules and approvals appear as the person needs them.", "None of it has been tested with users yet. The last section lists what to measure."] } },
@@ -2613,7 +2614,7 @@ function openLightbox(src, alt, opener) {
 
     // Placeholders take the project's colour, not grey
     mount.style.setProperty("--ph-bg", p.photo ? `url("${p.photo.src}") ${p.photo.pos} / cover` : `radial-gradient(70% 90% at 18% 12%, ${p.tint[0]}, transparent 70%), radial-gradient(80% 80% at 88% 92%, ${p.tint[1]}, transparent 72%), ${p.tint[2]}`);
-    const main = el("div", "study__main" + (p.cs.layout === "tiles" ? " study__main--tiles" : ""));
+    const main = el("div", "study__main" + (p.cs.layout === "tiles" ? " study__main--tiles" : "") + (p.cs.layout === "dossier" ? " study__main--dossier" : ""));
 
     // ── Breadcrumb ──
     const crumb = el("p", "study__crumb is-wide"), back = el("a"); back.href = "/work";
@@ -2643,7 +2644,7 @@ function openLightbox(src, alt, opener) {
     head.append(el("p", "study__eyebrow", `Case study ( ${pad2(displayId)} ) · ${p.org}`), h1);
     const vheads = variants.map((v) => {
       const w = el("div", "study__vhead"), meta = el("dl", "study__meta");
-      v.meta.forEach(([k, val]) => { const d = el("div"); d.append(el("dt", "", k), el("dd", "", val)); meta.appendChild(d); });
+      v.meta.forEach(([k, val]) => { const d = el("div"); d.append(el("dt", "", META_LABEL[k] || k), el("dd", "", val)); meta.appendChild(d); });
       w.append(el("p", "study__lead", v.lead), meta); return w;
     });
     let switchBtns = [];
@@ -2653,13 +2654,25 @@ function openLightbox(src, alt, opener) {
       head.appendChild(sw);
     }
     vheads.forEach((w) => head.appendChild(w));
-    main.append(crumb, hero, head);
+    // A dossier study reads title and facts first, then the hero (the order of a studio case-study page)
+    if (p.cs.layout === "dossier") main.append(crumb, head, hero); else main.append(crumb, hero, head);
 
     // ── Sections ──
     // A section and each of its parts fill the same way: text, stats, rows, media, steps, decisions, cards, quote, button
     const fillSection = (s, sec, ph) => {
       (sec.text || []).forEach((t) => s.appendChild(el("p", "study__p", t)));
+      // Dossier blocks: two columns of text, a cluster of fact cards, a numbered list, principle rows, a dark token panel
+      if (sec.cols) { const c = el("div", "study__cols"); sec.cols.forEach((t) => c.appendChild(el("p", "study__p", t))); s.appendChild(c); }
       // A flat explainer board (see tools/case-boards/ref-boards): one wide image that carries what the text would otherwise say
+      // Design decisions in the reference format: a question, a short paragraph, a grey panel with its mono label inside, then the read-out
+      (sec.decisions || []).forEach((d) => {
+        s.appendChild(el("h3", "study__q", d.q));
+        s.appendChild(el("p", "study__p", d.text));
+        const f = el("figure", "study__dec is-wide"), im = el("img");
+        im.alt = d.alt; im.src = d.src; im.loading = "lazy"; im.decoding = "async";
+        f.append(el("figcaption", "", d.label), im); s.appendChild(f);
+        if (d.read) s.appendChild(el("p", "study__p study__read", d.read));
+      });
       if (sec.board) { const g = el("div", "study__media study__media--stack is-wide"); g.appendChild(mediaEl({ ...sec.board, board: true, wide: true }, ph, 0)); s.appendChild(g); }
 
       if (sec.tiles) s.appendChild(tilesEl(sec.tiles));
@@ -2687,6 +2700,32 @@ function openLightbox(src, alt, opener) {
         if (t.note) s.appendChild(el("p", "study__p study__note", t.note));
       });
       if (sec.cards) s.appendChild(trio(sec.cards));
+      if (sec.facts) {
+        const ul = el("ul", "study__facts is-wide"); ul.setAttribute("role", "list");
+        sec.facts.forEach(([n, t]) => { const li = el("li"); li.append(el("b", "", n), el("span", "", t)); ul.appendChild(li); });
+        s.appendChild(ul);
+      }
+      if (sec.numbered) {
+        const w = el("div", "study__nl is-wide"), l = el("div", "study__nl-l");
+        l.append(el("h3", "", sec.numbered.title), el("p", "study__p", sec.numbered.text));
+        const ol = el("ol"); sec.numbered.items.forEach((t) => ol.appendChild(el("li", "", t)));
+        w.append(l, ol); s.appendChild(w);
+      }
+      (sec.principles || []).forEach((pr, pk) => {
+        const w = el("div", "study__pr"); w.append(el("h3", "", pr.t), el("p", "study__p", pr.text));
+        if (pr.media) { const g = el("div", studyMediaGrid([pr.media])); g.appendChild(mediaEl(pr.media, ph, pk)); w.appendChild(g); }
+        s.appendChild(w);
+      });
+      if (sec.tokenPanel) {
+        const tp = sec.tokenPanel, w = el("div", "study__dark is-wide"), top = el("div", "study__dark-top");
+        const intro = el("div"); intro.append(el("p", "", tp.text));
+        const pyr = el("div", "study__pyr"); pyr.setAttribute("role", "img"); pyr.setAttribute("aria-label", tp.alt);
+        const tri = el("div", "study__pyr-tri"); tri.innerHTML = '<i></i><i></i><i></i><i></i>';
+        const lab = el("ul"); tp.tiers.forEach(([k, v]) => { const li = el("li"); li.append(el("span", "", k), el("code", "", v)); lab.appendChild(li); });
+        pyr.append(tri, lab); top.append(intro, pyr); w.appendChild(top);
+        tp.subs.forEach(([t, d]) => { const x = el("div", "study__dark-sub"); x.append(el("h4", "", t), el("p", "", d)); w.appendChild(x); });
+        s.appendChild(w);
+      }
       // Testimonial cards: a row of short quotes in dark / accent / light tiles, with a line saying how they were sourced
       if (sec.quotes) {
         const w = el("div", "study__qs is-wide"), v = ["dark", "accent", "light"];
@@ -2717,7 +2756,8 @@ function openLightbox(src, alt, opener) {
       const s = el("section", "study__sec"); s.id = sid; s.setAttribute("aria-labelledby", `${sid}-t`);
       const h = el("h2", "study__t", statementOf(sec)); h.id = `${sid}-t`;
       const k = el("p", "study__k"); k.append(el("span", "study__num", pad2(i + 1)), title);
-      s.append(k, h);
+      // A label that only repeats the heading (Overview / Overview) is dropped
+      if (title.trim().toLowerCase() === h.textContent.trim().toLowerCase()) s.append(h); else s.append(k, h);
       fillSection(s, sec, sec.ph || pad2(i + 1));
       (sec.parts || []).forEach((part) => {
         const ph3 = el("h3", "study__sub");   // the mono label sits inside the heading, so label and claim read as one
@@ -2774,7 +2814,7 @@ function openLightbox(src, alt, opener) {
     const fades = (r) => { r.classList.toggle("has-l", r.scrollLeft > 4); r.classList.toggle("has-r", r.scrollLeft + r.clientWidth < r.scrollWidth - 4); };
     docks.forEach((d) => d.row.addEventListener("scroll", () => fades(d.row), { passive: true }));
     addEventListener("resize", () => docks.forEach((d) => fades(d.row)));
-    dock.append(...docks.map((d) => d.row)); document.body.appendChild(dock); requestAnimationFrame(() => docks.forEach((d) => fades(d.row)));
+    dock.append(...docks.map((d) => d.row)); /* the bottom pill is no longer shown: the sticky contents list is the only section nav */ requestAnimationFrame(() => docks.forEach((d) => fades(d.row)));
     const markDock = (k) => docks[active].links.forEach((a, j) => {
       if (j === k) { a.setAttribute("aria-current", "true"); const r = docks[active].row; r.scrollTo({ left: a.offsetLeft - (r.clientWidth - a.offsetWidth) / 2, behavior: motionReduced() ? "auto" : "smooth" }); }
       else a.removeAttribute("aria-current");

@@ -881,10 +881,16 @@
     const root = h("div", "dsx");
     root.innerHTML = `
       <div class="dsx__bar">
-        <span class="dsx__title">CotonAI design system, live. Real components on the real tokens.</span>
-        <div class="dsx-seg dsx-seg--sm" role="radiogroup" aria-label="Theme mode">
-          <button type="button" role="radio" aria-checked="true" data-mode="light">Light</button>
-          <button type="button" role="radio" aria-checked="false" data-mode="dark">Dark</button>
+        <span class="dsx__title">CotonAI design system, live</span>
+        <div class="dsx__ctl">
+          <div class="dsx-seg dsx-seg--sm" role="radiogroup" aria-label="Token set">
+            <button type="button" role="radio" aria-checked="false" data-set="before">Before</button>
+            <button type="button" role="radio" aria-checked="true" data-set="after">After</button>
+          </div>
+          <div class="dsx-seg dsx-seg--sm" role="radiogroup" aria-label="Theme mode">
+            <button type="button" role="radio" aria-checked="true" data-mode="light">Light</button>
+            <button type="button" role="radio" aria-checked="false" data-mode="dark">Dark</button>
+          </div>
         </div>
       </div>
       <div class="dsx__grid">
@@ -940,6 +946,11 @@
           </div>
         </section>
       </div>
+      <div class="dsx__diff" aria-live="polite">
+        <div class="dsx__d"><span>Filled button, white label</span><b><i data-sw="--accent-default"></i><span data-v="--accent-default" style="font:inherit;color:inherit"></span></b><em data-ratio="--text-on-accent|--accent-default"></em></div>
+        <div class="dsx__d"><span>Muted text on surface</span><b><i data-sw="--text-muted"></i><span data-v="--text-muted" style="font:inherit;color:inherit"></span></b><em data-ratio="--text-muted|--bg-surface"></em></div>
+        <div class="dsx__d"><span>Control height</span><b data-px="--size-control-default"></b><em data-changed></em></div>
+      </div>
       <p class="dsx__foot">Tokens: tokens.css. Motion: fast 90ms, base 200ms, theme 240ms. Respects reduced motion.</p>`;
     host.appendChild(root);
     const $ = (s) => root.querySelector(s), $$ = (s) => [...root.querySelectorAll(s)];
@@ -950,7 +961,26 @@
     $$("[data-mode]").forEach((b) => b.addEventListener("click", () => {
       root.classList.toggle("is-dark", b.dataset.mode === "dark");
       $$("[data-mode]").forEach((x) => x.setAttribute("aria-checked", String(x === b)));
+      later(readout, 20);
     }));
+
+    // Before / After: the superseded token set against the current one, on the same components
+    const cv = (n) => getComputedStyle(root).getPropertyValue(n).trim();
+    const lum = (hex) => { const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((v) => v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
+    const ratio = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+    const readout = () => {
+      $$("[data-v]").forEach((e) => { e.textContent = cv(e.dataset.v).slice(0, 7).toUpperCase(); });
+      $$("[data-sw]").forEach((e) => { e.style.background = cv(e.dataset.sw); });
+      $$("[data-ratio]").forEach((e) => { const [fg, bg] = e.dataset.ratio.split("|"), r = ratio(cv(fg), cv(bg)); e.dataset.ok = String(r >= 4.5); e.textContent = `${r.toFixed(2)}:1 · ${r >= 4.5 ? "meets AA" : "fails AA"}`; });
+      $$("[data-px]").forEach((e) => { e.textContent = cv(e.dataset.px); });
+      $$("[data-changed]").forEach((e) => { e.textContent = `${cv("--dsx-changed")} tokens differ`; });
+    };
+    $$("[data-set]").forEach((b) => b.addEventListener("click", () => {
+      root.classList.toggle("is-before", b.dataset.set === "before");
+      $$("[data-set]").forEach((x) => x.setAttribute("aria-checked", String(x === b)));
+      readout();
+    }));
+    later(readout, 60);
 
     // Switches and segmented controls
     $$(".dsx-sw").forEach((s) => s.addEventListener("click", () => s.setAttribute("aria-checked", String(s.getAttribute("aria-checked") !== "true"))));
