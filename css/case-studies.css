@@ -1125,3 +1125,11 @@ body[data-page="case"] { --greyscale-200: 216 216 216; --greyscale-700: 133 133 
 .study__dec figcaption { position: absolute; top: var(--space-4); left: var(--space-5); font: 400 12px/1.25 var(--font-mono); text-transform: uppercase; letter-spacing: .04em; color: var(--st-muted); max-width: none; }
 .study__dec img { display: block; width: 100%; height: auto; }
 .study__read { color: var(--st-ink); }
+
+/* Fill tiles (a single flat image or video) keep their own proportions at every width; the phone-frame rules above are for tiles holding raw screens */
+.tile.tile--fill, .tile.tile--fill[style*="--span"], .tile.tile--fill[style*="--n"] { aspect-ratio: auto; display: block; padding: 0; }
+.tile.tile--fill > img { width: 100%; height: auto; aspect-ratio: auto; border-radius: 0; box-shadow: none; transform: none; }
+
+/* Arcade flow demo: its stage is laid out at a fixed width and scaled, so the grid must not grow to fit it on a phone */
+.af { grid-template-columns: minmax(0, 1fr); min-width: 0; }
+.af__stage { min-width: 0; max-width: 100%; }

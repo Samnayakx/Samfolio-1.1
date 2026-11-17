@@ -1286,6 +1286,7 @@ if (weatherEl) fetch("https://api.open-meteo.com/v1/forecast?latitude=37.3382&lo
     </div>
     <div class="sf__axis" aria-hidden="true">${Array.from({ length: 24 }, (_, i) => `<span>${i + 1}</span>`).join("")}</div>
     <div class="sf__sign">
+      <img class="sf__flower" src="/assets/images/flower.webp" alt="" width="475" height="667" loading="lazy" decoding="async">
       <a class="sf__mark" href="#top" aria-label="Sam.design, back to top"><span>Sam.design</span></a>
       <div class="sf__cols">
         <nav aria-label="Sitemap"><h3>Sitemap</h3><ul role="list"><li><a href="/">Home</a></li><li><a href="/work">Work</a></li><li><a href="/about">About</a></li><li><a href="/writing">Writing</a></li><li><a href="/playground">Playground</a></li></ul></nav>
@@ -1307,10 +1308,11 @@ if (weatherEl) fetch("https://api.open-meteo.com/v1/forecast?latitude=37.3382&lo
     if (!box) return;
     mark.style.fontSize = "100px";
     const w = markText.getBoundingClientRect().width;
-    if (w) mark.style.fontSize = `${(100 * box) / w}px`;
+    if (w) { mark.style.fontSize = `${(100 * box) / w}px`; host.querySelector(".sf__sign").style.setProperty("--mk", `${(100 * box) / w}px`); }
   };
   new ResizeObserver(fitMark).observe(host);
-  if (document.fonts) document.fonts.ready.then(fitMark);
+  if (document.fonts) { document.fonts.ready.then(fitMark); document.fonts.addEventListener("loadingdone", fitMark); }
+  addEventListener("load", () => { fitMark(); setTimeout(fitMark, 400); });
   fitMark();
 
   const nowTime = new Date().toLocaleTimeString("en-US", { timeZone: TZ, hour: "2-digit", minute: "2-digit", hour12: false });

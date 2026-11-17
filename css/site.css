@@ -2445,3 +2445,11 @@ html.tuned[data-theme] .arc { --panel: var(--sec-card); }
 .edge-blur i:nth-child(3) { -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); -webkit-mask-image: linear-gradient(to bottom, transparent 40%, #000 60%, #000 80%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 40%, #000 60%, #000 80%, transparent 100%); }
 .edge-blur i:nth-child(4) { -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); -webkit-mask-image: linear-gradient(to bottom, transparent 60%, #000 80%, #000 100%); mask-image: linear-gradient(to bottom, transparent 60%, #000 80%, #000 100%); }
 .edge-blur i:nth-child(5) { -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); -webkit-mask-image: linear-gradient(to bottom, transparent 80%, #000 100%); mask-image: linear-gradient(to bottom, transparent 80%, #000 100%); }
+
+/* Footer flower: a poppy that grows out of the wordmark. Its stem is planted behind the letters. */
+.sf__sign { position: relative; --fh: clamp(220px, 24vw, 340px); margin-top: max(96px, calc(var(--fh) - var(--mk, 200px) * .8 + 40px)); }
+.sf__flower { position: absolute; right: 7%; top: 0; height: var(--fh); width: auto; transform: translateY(calc(-100% + var(--mk, 200px) * .8)); pointer-events: none; user-select: none; }
+.sf__mark { position: relative; z-index: 1; }
+@media (max-width: 767px) { .sf__sign { --fh: clamp(150px, 42vw, 220px); } .sf__flower { right: 4%; } }
+@media (prefers-reduced-motion: no-preference) { .sf__flower { transform-origin: 50% 100%; animation: flower-sway 7s ease-in-out infinite; } }
+@keyframes flower-sway { 0%, 100% { transform: translateY(calc(-100% + var(--mk, 200px) * .8)) rotate(-1.2deg); } 50% { transform: translateY(calc(-100% + var(--mk, 200px) * .8)) rotate(1.2deg); } }
