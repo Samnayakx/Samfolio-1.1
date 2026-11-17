@@ -2398,7 +2398,7 @@ function openLightbox(src, alt, opener) {
     // Per-case SEO: canonical, description, social tags and Article structured data (set at load; Google renders JS)
     {
       const origin = "https://www.sambitnayak.com", url = `${origin}/work/${p.slug}`, title = document.title;
-      const img = origin + ((p.thumb && (p.thumb.poster || p.thumb.navPoster)) || (p.thumbnail && p.thumbnail.src) || (p.photo && p.photo.src) || "/assets/og-image.jpg");
+      const img = origin + ((p.thumb && (p.thumb.poster || p.thumb.navPoster)) || (p.thumbnail && p.thumbnail.src) || (p.photo && p.photo.src) || "/assets/og-hero.jpg");
       const put = (sel, make, val) => { let t = document.head.querySelector(sel); if (!t) { t = document.createElement(make[0]); make[1].forEach(([k, v]) => t.setAttribute(k, v)); document.head.appendChild(t); } t.setAttribute(make[2], val); };
       put('link[rel="canonical"]', ["link", [["rel", "canonical"]], "href"], url);
       put('meta[name="description"]', ["meta", [["name", "description"]], "content"], p.seo || p.desc);
