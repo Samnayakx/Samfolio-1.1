@@ -265,3 +265,12 @@
 .gld__card--trio .glp-wrap, .gld__card--trioh .glp-wrap, .gld__card--night .glp-wrap { filter: drop-shadow(0 26px 34px rgba(20,8,60,.28)); }
 .gld__fan { padding-left: 7cqw; }
 .gld__fan-i { margin-inline: .4cqw; }
+
+@media (max-width: 759px) {
+  .gld__rowname em { display: none; }
+  .gld__rowhead { margin-bottom: 10px; }
+  .gld__rowhead .gld__btn { width: 44px; height: 44px; }
+  .gld__btn { width: 44px; height: 44px; }
+  .gld__dots { bottom: 16cqw; }
+  .gld__card--bento .gld__toast { font-size: 13px; }
+}

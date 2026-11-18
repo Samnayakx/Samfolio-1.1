@@ -2460,3 +2460,43 @@ html.tuned[data-theme] .arc { --panel: var(--sec-card); }
 /* Locked cards show their headline result before the passcode */
 .lockcard__metric { margin: 6px 0 0; font: 500 12px/1.4 "Geist Mono", ui-monospace, monospace; letter-spacing: .02em; text-transform: uppercase; opacity: .75; }
 .lockcard__metric strong { font-weight: 500; opacity: 1; margin-right: 4px; }
+
+/* ═══ Mobile pass: type floor, thumb-sized targets, calmer rhythm ═══ */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+a, button, [role="button"], summary, .chip, .btn, .seg__item { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+@media (max-width: 767px) {
+  /* nothing set in type is smaller than 12px */
+  :is(.pcard__label, #contact-panel .pcard__label, #contact-panel .pcard__value, .facts__label, .note, .mode__index,
+      .post__tag, .post__tags i, .rd__doc, .essay__flag, .essay__evidence > span, .cs__meta dt, .ph span, .ph__tag, .cs__next small,
+      .case__tags li, .cs__trade-n, .cs__trade dt, .shot figcaption, .cv figcaption, #work-cards .case__kind, .lockcard__area,
+      .flow__start, .flow__tag, .node__idx, .tl, .work__tab sup, .lab__top, .lab__area,
+      .sf__cols, .sf__cols h3, .sf__legal, .sf__hint, .sf__msg, .sf__tip, .sf__axis) { font-size: 12px; }
+  .metric--sm span { font-size: 11px; }
+
+  /* targets: 44px tall, without moving anything around them */
+  .btn { min-height: 44px; }
+  .panel .btn, #contact-panel .btn { height: 44px; }
+  .chip { min-height: 40px; }
+  .work__tab { min-height: 44px; }
+  .study__crumb a, .rd__back, .cs__next a { display: inline-flex; align-items: center; min-height: 44px; }
+  .study__crumb { align-items: center; }
+  .sf__cols ul { gap: 0; }
+  .sf__cols a, .sf__legal a { display: inline-block; padding-block: 12px; }
+  .sf__cols h3 { margin-bottom: var(--space-2); }
+  .post__tags i { padding: 7px 10px; }
+
+  /* reading: a touch more air between lines, and long words never push the page wide */
+  .essay__body p, .cs__body p, .study__p, .study__lead { line-height: 1.55; overflow-wrap: anywhere; hyphens: auto; }
+  :is(h1, h2, h3) { text-wrap: balance; }
+  :is(p, li) { text-wrap: pretty; }
+  img, video, svg { max-width: 100%; }
+  table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  pre, code { overflow-wrap: anywhere; }
+  pre { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (max-width: 767px) {
+  .ab__links { gap: 4px 18px; }
+  .ab__links a { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 2px; }
+  .essay__sources a, .essay__sources li a { display: inline-block; padding-block: 8px; }
+  .study h4, .study__sec h4, .cs h4, [class*="sdia"] h4 { font-size: 12px; }
+}

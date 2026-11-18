@@ -1177,3 +1177,12 @@ body[data-page="case"] { --greyscale-200: 216 216 216; --greyscale-700: 133 133 
 /* Arcade flow demo: its stage is laid out at a fixed width and scaled, so the grid must not grow to fit it on a phone */
 .af { grid-template-columns: minmax(0, 1fr); min-width: 0; }
 .af__stage { min-width: 0; max-width: 100%; }
+
+/* ═══ Mobile pass for case studies: no label below 12px, diagram text stays readable ═══ */
+@media (max-width: 767px) {
+  .stph__tag, .stph__id, .sdia__top, .sdia__tag, .sdia__status, .sdia__sw small, .sdia__sp small, .sdia__auh span, .sdia__au .sdia__auh span:first-child,
+  .study__trio--facts h4, .study__findk, .ui__sc small, .study .qc footer, .dsx__k, .dsx__foot, .dsx__d span, .dsx__d em,
+  .study .study__fig :is(.bt__label, .dt__label, .dt__chip, .bt__chip) { font-size: 12px; }
+  .study h4 { font-size: 12px; }
+  .study .study__fig, .study .study__media { -webkit-overflow-scrolling: touch; }
+}
