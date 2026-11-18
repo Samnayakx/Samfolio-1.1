@@ -11,3 +11,7 @@ assets/images/playground/editorial-tree-v1.jpg
 assets/images/playground/veyra-poster.jpg
 assets/images/playground/veyra-hero.jpg
 assets/images/trailhead/trailhead-user-journey.png
+
+# local duplicate copies (e.g. "work 2.html") must never be served
+*\ 2.*
+**/*\ 2.*

@@ -2456,3 +2456,7 @@ html.tuned[data-theme] .arc { --panel: var(--sec-card); }
 @media (max-width: 767px) { .sf__sign { --fh: clamp(150px, 42vw, 220px); } .sf__flower { right: 4%; } }
 @media (prefers-reduced-motion: no-preference) { .sf__flower { transform-origin: 50% 100%; animation: flower-sway 7s ease-in-out infinite; } }
 @keyframes flower-sway { 0%, 100% { transform: translateY(calc(-100% + var(--mk, 200px) * .8)) rotate(-1.2deg); } 50% { transform: translateY(calc(-100% + var(--mk, 200px) * .8)) rotate(1.2deg); } }
+
+/* Locked cards show their headline result before the passcode */
+.lockcard__metric { margin: 6px 0 0; font: 500 12px/1.4 "Geist Mono", ui-monospace, monospace; letter-spacing: .02em; text-transform: uppercase; opacity: .75; }
+.lockcard__metric strong { font-weight: 500; opacity: 1; margin-right: 4px; }
