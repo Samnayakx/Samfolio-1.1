@@ -2336,7 +2336,6 @@ a.admire__row:active .admire__name { transform: translateX(3px); }
 }
 
 /* ───────── Hero: script heading over an uppercase serif statement, after the "Savoy" reference ───────── */
-.intro .headline .headline__od { font-family: "Noto Sans Oriya", "Kohinoor Odia", "Oriya Sangam MN", sans-serif; font-weight: 400; font-size: 1.02em; position: relative; top: .08em; margin-right: .03em; }
 .intro .headline, .intro .headline * { font-family: "Pinyon Script", "Snell Roundhand", cursive; font-style: normal; font-weight: 400; letter-spacing: 0; font-size: 1em; font-optical-sizing: none; text-transform: none; }
 .intro .headline { font-size: clamp(44px, 9vw, 96px); line-height: 1; margin: 0 0 var(--space-4); text-wrap: balance; }
 .intro .stage__body { font-family: "Instrument Serif", var(--font-serif); text-transform: uppercase; font-size: clamp(16px, 2.4vw, 26px); line-height: 1.1; letter-spacing: 0; max-width: 56ch; margin: 0 auto var(--space-5); text-wrap: balance; }

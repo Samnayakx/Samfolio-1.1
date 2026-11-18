@@ -77,8 +77,8 @@
 
 .gld__nav { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; font: 500 12px/1 "Geist Mono", ui-monospace, monospace; letter-spacing: .04em; text-transform: uppercase; }
 .gld__btns { display: flex; gap: 8px; }
-.gld__btn { all: unset; cursor: pointer; width: 40px; height: 40px; border-radius: 999px; display: grid; place-items: center; border: 1px solid color-mix(in srgb, currentColor 25%, transparent); transition: transform .2s; -webkit-tap-highlight-color: transparent; }
-.gld__btn:active { transform: scale(.92); }
+.gld__btn { all: unset; cursor: pointer; width: 40px; height: 40px; border-radius: 999px; display: grid; place-items: center; border: 1px solid color-mix(in srgb, currentColor 25%, transparent); transition: transform 160ms cubic-bezier(.23,1,.32,1); -webkit-tap-highlight-color: transparent; }
+.gld__btn:active { transform: scale(.95); }
 .gld__btn:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
 .gld__btn[disabled] { opacity: .3; cursor: default; }
 .shot--demo .cs-demo[data-case-demo="gatherlyDeck"] { aspect-ratio: auto; overflow: visible; background: none; border-radius: 0; }
@@ -105,7 +105,6 @@
 .gld__note b { flex: none; width: 2.8cqw; min-width: 22px; height: 2.8cqw; min-height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--fg); color: var(--bg); font: 500 clamp(10px, 1.4cqw, 12px)/1 "Geist Mono", ui-monospace, monospace; }
 .gld__note strong { font-weight: 500; margin-right: .3em; }
 .gld__card[data-bg="canvas"] .gld__note b { background: #5D40D8; color: #fff; }
-.glp-wrap .glp.m-a, .glp-wrap .glp.m-b { will-change: transform; }
 .m-tap { position: absolute; z-index: 5; width: 14%; aspect-ratio: 1; border-radius: 50%; translate: -50% -50%; opacity: 0; pointer-events: none; background: color-mix(in srgb, #7A5AF8 38%, transparent); border: 2px solid rgba(255,255,255,.95); box-shadow: 0 0 0 6px color-mix(in srgb, #7A5AF8 18%, transparent); }
 .gld__card.is-narrow .gld__notes { display: none; }
 .gld__card.is-narrow .glp-wrap { margin-inline: auto; }
@@ -126,17 +125,17 @@
 .gld__card--sq { width: min(1100px, 92%); }
 
 /* colour fields drift behind a phone */
-.gld__blob { position: absolute; z-index: 0; width: 56%; aspect-ratio: 1; border-radius: 50%; filter: blur(46px); opacity: .55; pointer-events: none; will-change: transform; }
-.gld__blob--a { right: -8%; top: -24%; background: var(--blob-a, rgba(255,255,255,.35)); }
-.gld__blob--b { left: -14%; bottom: -36%; background: var(--blob-b, rgba(0,0,0,.18)); }
+.gld__blob { position: absolute; z-index: 0; width: 70%; aspect-ratio: 1; border-radius: 50%; opacity: .7; pointer-events: none; will-change: transform; }
+.gld__blob--a { right: -8%; top: -24%; background: radial-gradient(closest-side, var(--blob-a, rgba(255,255,255,.35)), transparent); }
+.gld__blob--b { left: -14%; bottom: -36%; background: radial-gradient(closest-side, var(--blob-b, rgba(0,0,0,.18)), transparent); }
 .gld__card[data-bg="violet"] { --blob-a: #A58BFF; --blob-b: #4426C8; }
 .gld__card[data-bg="lilac"] { --blob-a: #FFFFFF; --blob-b: #BDA8FF; }
 .gld__card[data-bg="canvas"] { --blob-a: #FFFFFF; --blob-b: #D9CCF5; }
 .gld__card[data-bg="ink"] { --blob-a: #43307F; --blob-b: #2A1F55; }
 
 /* workflow slides: the headline is the caption, set against one phone */
-.gld__title { position: absolute; z-index: 1; left: 6cqw; top: 7cqw; max-width: 40cqw; font: 500 clamp(32px, 7.4cqw, 84px)/.94 var(--font-sans, "Instrument Sans", system-ui, sans-serif); letter-spacing: -.045em; color: var(--fg); pointer-events: none; will-change: translate; }
-.gld__stage { position: absolute; z-index: 2; right: 0; top: 0; bottom: 0; width: 58%; display: grid; place-items: center; will-change: translate; }
+.gld__title { position: absolute; z-index: 1; left: 6cqw; top: 7cqw; max-width: 40cqw; font: 500 clamp(32px, 7.4cqw, 84px)/.94 var(--font-sans, "Instrument Sans", system-ui, sans-serif); letter-spacing: -.045em; color: var(--fg); pointer-events: none; }
+.gld__stage { position: absolute; z-index: 2; right: 0; top: 0; bottom: 0; width: 58%; display: grid; place-items: center; }
 .glp-wrap { transform-style: preserve-3d; }
 .shot .gld__card figcaption.gld__cap { z-index: 6; left: 6cqw; right: auto; bottom: 5cqw; flex-direction: column; gap: 4px; padding: 0; background: none; min-height: 0; font-size: 11px; opacity: .85; color: var(--fg); }
 .shot .gld__card figcaption.gld__cap span { white-space: nowrap; }
@@ -156,7 +155,7 @@
 /* static slide 3: a dense, bleeding wall of light screens */
 .gld__card--wall { background: #E4E3E3; --fg: #1D1B20; --bg: #E4E3E3; }
 .gld__wall { position: absolute; left: -6cqw; right: -6cqw; top: -14cqw; bottom: -14cqw; display: grid; grid-template-columns: repeat(5, 1fr); gap: 2.4cqw; justify-items: center; align-content: start; transform: rotate(-4deg) scale(1.04); }
-.gld__wallcol { display: flex; flex-direction: column; gap: 2.4cqw; will-change: transform; }
+.gld__wallcol { display: flex; flex-direction: column; gap: 2.4cqw; }
 .gld__wallcol:nth-child(even) { margin-top: 10cqw; }
 /* static slide 4: a bento of tiles, after the mixed-fragment reference */
 .gld__card--bento { background: #F2F2F2; --fg: #1D1B20; --bg: #F2F2F2; }
@@ -210,7 +209,7 @@
 .glp-wrap > .gl-isl { position: absolute; z-index: 9; left: 50%; top: calc(11px * var(--k)); translate: -50% 0; width: calc(124px * var(--k)); height: calc(36px * var(--k)); border-radius: 99px; background: #000; pointer-events: none;
   box-shadow: inset 0 0 0 calc(1px * var(--k)) rgba(255,255,255,.04); }
 .glp-wrap > .gl-isl::after { content: ""; position: absolute; right: 18%; top: 50%; translate: 0 -50%; width: 24%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #2b3552 0, #0b0f1c 55%, #000 100%); }
-.glp-wrap > .gl-gl { position: absolute; z-index: 8; inset: 0; border-radius: calc(55px * var(--k)); pointer-events: none; background: linear-gradient(118deg, rgba(255,255,255,.16) 0%, rgba(255,255,255,.05) 22%, rgba(255,255,255,0) 42%); mix-blend-mode: screen; }
+.glp-wrap > .gl-gl { position: absolute; z-index: 8; inset: 0; border-radius: calc(55px * var(--k)); pointer-events: none; background: linear-gradient(118deg, rgba(255,255,255,.16) 0%, rgba(255,255,255,.05) 22%, rgba(255,255,255,0) 42%); }
 .glp-wrap > .gl-sb { position: absolute; z-index: -3; width: calc(5px * var(--k)); border-radius: calc(2px * var(--k)); background: linear-gradient(to right, #5f5f64, #b3b3b8 50%, #5f5f64); }
 .glp-wrap > .gl-sb--a { left: calc(-19px * var(--k)); top: calc(150px * var(--k)); height: calc(32px * var(--k)); }
 .glp-wrap > .gl-sb--v1 { left: calc(-19px * var(--k)); top: calc(212px * var(--k)); height: calc(60px * var(--k)); }
@@ -239,8 +238,9 @@
 
 /* progress dots under a workflow headline: one per screen, the current one stretches */
 .gld__dots { color: var(--fg, #1D1B20); position: absolute; z-index: 3; left: 6cqw; bottom: 14cqw; display: flex; gap: 8px; }
-.gld__dots i { width: 8px; height: 8px; border-radius: 99px; background: currentColor; opacity: .28; transition: width .45s cubic-bezier(.32,.72,0,1), opacity .3s; }
-.gld__dots i.on { width: 28px; opacity: 1; }
+.gld__dots i { position: relative; width: 22px; height: 4px; border-radius: 99px; overflow: hidden; background: color-mix(in srgb, currentColor 25%, transparent); }
+.gld__dots i::after { content: ""; position: absolute; inset: 0; background: currentColor; transform: scaleX(0); transform-origin: 0 50%; transition: transform .45s cubic-bezier(.32,.72,0,1); }
+.gld__dots i.on::after { transform: scaleX(1); }
 
 /* the fan */
 .gld__fan { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding-bottom: 2cqw; }
@@ -262,7 +262,6 @@
 .shot .gld__card--trioh figcaption.gld__cap span + span, .shot .gld__card--night figcaption.gld__cap span + span { display: block; opacity: .6; }
 .shot .gld__card--trio figcaption.gld__cap { left: 6cqw; bottom: 5cqw; padding: 0; background: none; backdrop-filter: none; flex-direction: column; font-size: 11px; }
 .shot .gld__card--trio figcaption.gld__cap span + span { display: block; opacity: .6; }
-.gld__card--trio .glp-wrap, .gld__card--trioh .glp-wrap, .gld__card--night .glp-wrap { filter: drop-shadow(0 26px 34px rgba(20,8,60,.28)); }
 .gld__fan { padding-left: 7cqw; }
 .gld__fan-i { margin-inline: .4cqw; }
 
@@ -274,3 +273,70 @@
   .gld__dots { bottom: 16cqw; }
   .gld__card--bento .gld__toast { font-size: 13px; }
 }
+
+/* ═══ the guest list: people around an event, on a dotted orbit ═══ */
+.gld__card--orbit { background: #FFFFFF; --fg: #1D1B20; --bg: #fff; box-shadow: inset 0 0 0 1px rgba(0,0,0,.06); }
+.gld__orbit { position: absolute; inset: 0; font-family: "Roboto", system-ui, sans-serif; color: #1D1B20; }
+.gld__ring { position: absolute; inset: 0; width: 100%; height: 100%; }
+.gld__o { position: absolute; z-index: 2; }
+.gld__pill { display: flex; align-items: center; gap: 1.8cqw; padding: 1.5cqw 3.4cqw 1.5cqw 1.5cqw; border-radius: 4.2cqw; background: #F0F0F1; white-space: nowrap; }
+.gld__pill b { display: block; font: 500 clamp(12px, 2.1cqw, 22px)/1.2 "Roboto", system-ui, sans-serif; }
+.gld__pill small { display: block; margin-top: .25em; font: 400 clamp(10px, 1.45cqw, 15px)/1.2 "Roboto", system-ui, sans-serif; color: #67636E; }
+.gld__oav { flex: none; display: grid; place-items: center; aspect-ratio: 1; border-radius: 50%; overflow: hidden; }
+.gld__oav svg { width: 80%; height: 80%; }
+.gld__p1 { left: 3%; top: 8%; }
+.gld__p2 { right: 4%; bottom: 7%; }
+.gld__p3 { left: 7%; bottom: 8%; background: #E7F4EC; }
+.gld__p4 { right: 8%; top: 9%; background: #FFF4D6; }
+.gld__host { left: 35%; top: 40%; background: #EEE8FF; padding-right: 4.4cqw; }
+.gld__host b { font-size: clamp(13px, 2.4cqw, 25px); }
+.gld__photo { background-size: cover; background-position: 50%; }
+.gld__ph1 { left: 8%; top: 25%; width: 17%; aspect-ratio: 1; border-radius: 22%; background-image: url(/assets/images/gatherly/photos/rooftop.jpg); }
+.gld__ph2 { right: 6%; top: 47%; width: 15.5%; aspect-ratio: 1; border-radius: 50%; background-image: url(/assets/images/gatherly/photos/cowork.jpg); }
+.gld__badge { position: absolute; z-index: 3; display: grid; place-items: center; width: 7.4%; aspect-ratio: 1; border-radius: 50%; }
+.gld__badge svg { width: 46%; height: 46%; }
+.gld__b1 { left: 19.5%; top: 41%; background: #E6EEFF; }
+.gld__b2 { right: 4.2%; top: 66%; background: #E5F4C8; }
+@media (max-width: 759px) {
+  .gld__pill b { font-size: 12px; } .gld__pill small { font-size: 10px; }
+  .gld__host { left: 18%; top: 44%; } .gld__ph1 { left: 6%; top: 24%; width: 24%; } .gld__b1 { left: 24%; top: 41%; width: 10%; }
+  .gld__ph2 { width: 24%; right: 4%; top: 52%; } .gld__b2 { right: 3%; top: 70%; width: 10%; }
+  .gld__p3 { left: 4%; bottom: 7%; } .gld__p2 { right: 3%; bottom: 14%; } .gld__p4 { right: 3%; top: 8%; }
+}
+.gld__p3 { left: 24%; bottom: 5%; }
+.shot .gld__card--orbit figcaption.gld__cap { left: 3.4cqw; bottom: 3cqw; padding: 6px 12px; border-radius: 99px; background: #F0F0F1; flex-direction: row; gap: 10px; opacity: 1; font-size: 10px; }
+.shot .gld__card--orbit figcaption.gld__cap span + span { display: none; }
+@media (max-width: 759px) { .gld__p3 { left: 4%; bottom: 8%; } }
+@media (max-width: 759px) {
+  .gld__ring { top: 50%; height: auto; aspect-ratio: 740 / 470; translate: 0 -46%; }
+  .gld__p1 { left: 3%; top: 3%; } .gld__p4 { right: 3%; top: 13%; }
+  .gld__ph1 { left: 6%; top: 20%; width: 25%; } .gld__b1 { left: 25%; top: 33%; }
+  .gld__ph2 { right: 5%; top: 33%; width: 25%; } .gld__b2 { right: 3%; top: 49%; }
+  .gld__host { left: 6%; top: 56%; }
+  .gld__p2 { right: 3%; bottom: 20%; } .gld__p3 { left: 4%; bottom: 11%; }
+}
+
+/* a photograph: the Gatherly event page on a phone in a hand, the screen masked into the original shot */
+.gld__card--hand { background: #0E0E0E; --fg: #F2F2F2; --bg: #0E0E0E; }
+.gld__card--hand .gld__title { color: #F2F2F2; max-width: 36cqw; z-index: 3; }
+.shot .gld__card .gld__handimg { max-height: none !important; position: absolute; z-index: 1; right: -2%; top: -23%; height: 136%; width: auto; max-width: none; object-fit: contain; border-radius: 0; opacity: 1; transition: none; }
+.shot .gld__card--hand figcaption.gld__cap { left: 6cqw; bottom: 5cqw; padding: 0; background: none; color: #F2F2F2; flex-direction: column; font-size: 11px; }
+.shot .gld__card--hand figcaption.gld__cap span + span { display: block; opacity: .6; }
+@media (max-width: 759px) { .shot .gld__card .gld__handimg { right: 50%; translate: 50% 0; top: 8%; height: 112%; } .gld__card--hand .gld__title { max-width: 80cqw; } }
+
+/* two more photographs, each with a Gatherly screen masked into the original shot */
+.gld__card--photoe { background: #DDDDDD; --fg: #1D1B20; --bg: #DDDDDD; }
+.gld__card--photoh { background: linear-gradient(180deg, #E7E7E7, #CBC7C6 50%, #AFA7A5); --fg: #1D1B20; --bg: #CBC7C6; }
+.gld__card--photoe .gld__title, .gld__card--photoh .gld__title { color: #1D1B20; z-index: 3; max-width: 38cqw; }
+.shot .gld__card .gld__photoimg { max-height: none !important; position: absolute; z-index: 1; right: -3%; top: -6%; height: 112%; width: auto; max-width: none; object-fit: contain; border-radius: 0; opacity: 1; transition: none; }
+.shot .gld__card .gld__photoimg--h { right: 4%; top: -4%; height: 108%; }
+.shot .gld__card--photoe figcaption.gld__cap, .shot .gld__card--photoh figcaption.gld__cap { left: 6cqw; bottom: 5cqw; padding: 0; background: none; color: #1D1B20; flex-direction: column; font-size: 11px; z-index: 6; }
+.shot .gld__card--photoe figcaption.gld__cap span + span, .shot .gld__card--photoh figcaption.gld__cap span + span { display: block; opacity: .6; }
+@media (max-width: 759px) {
+  .shot .gld__card .gld__photoimg { right: 50%; translate: 50% 0; top: 18%; height: 86%; }
+  .shot .gld__card .gld__photoimg--h { top: 16%; height: 90%; right: 50%; }
+  .gld__card--photoe .gld__title, .gld__card--photoh .gld__title { max-width: 80cqw; }
+}
+.gld__card--photoe .gld__title { max-width: 30cqw; }
+.shot .gld__card .gld__photoimg--h { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 22%); mask-image: linear-gradient(90deg, transparent 0, #000 22%); }
+@media (max-width: 759px) { .gld__card--photoe .gld__title { max-width: 80cqw; } .shot .gld__card .gld__photoimg--h { -webkit-mask-image: none; mask-image: none; } }

@@ -255,7 +255,7 @@ const PROJECTS = [
     title: "A tested AI re-engagement prototype for Trailhead power users.",
     desc: "A team prototype for Salesforce Trailhead: a RAG assistant and proactive prompts tested with 8 power users using public documentation.",
     seo: "Salesforce Trailhead Solve case study: an agentic AI RAG assistant and dashboard redesign built to win back power users who turn to ChatGPT.",
-    metric: { value: "6/8", label: "Preferred Solve in prototype testing" }, thumb: { video: "/assets/images/trailhead/video-trailhead-promo-web.mp4", poster: "/assets/images/trailhead/video-trailhead-promo-web-poster.webp", alt: "Trailhead Solve product video: a power user asks a Salesforce question and gets a plain-language answer drawn from Trailhead's own knowledge", navPoster: "/assets/images/trailhead/video-trailhead-chatbot-poster.webp" }, slug: "trailhead-solve", href: "/work/trailhead-solve", tint: ["#BDCFDE", "#EBDAD3", "#E4EAEE"], accent: "#2F7DC4",
+    metric: { value: "6/8", label: "Preferred Solve in prototype testing" }, thumb: { video: "/assets/images/trailhead/video-trailhead-ipad.mp4", poster: "/assets/images/trailhead/video-trailhead-ipad-poster.webp", alt: "Trailhead Solve product video on an iPad held in two hands against a dark, amber-lit backdrop: a power user asks a Salesforce question and gets a plain-language answer drawn from Trailhead's own knowledge", navPoster: "/assets/images/trailhead/video-trailhead-ipad-nav.webp", bleed: true }, slug: "trailhead-solve", href: "/work/trailhead-solve", tint: ["#BDCFDE", "#EBDAD3", "#E4EAEE"], accent: "#2F7DC4",
     cs: {
       meta: [["Role", "Product Designer (Apprentice)"], ["Timeline", "Aug 2025 – Apr 2026"], ["Skills", "Conversational UX, RAG workflows, power-user research, dashboard design"], ["Team", "Team of five with the Salesforce Trailhead product team"], ["Status", "Prototype, tested with 8 power users"]],
       sections: [
@@ -325,7 +325,7 @@ const PROJECTS = [
     title: "Designing structured, mode-based UX in an AI platform for fashion teams.",
     desc: "End-to-end design of Modes at CotonAI: replacing prompt-heavy AI with structured entry points mapped to real fashion workflows.",
     seo: "CotonAI Modes case study: end-to-end product design of structured, mode-based entry points that replace prompt-heavy AI in a fashion platform.",
-    metric: { value: "225", label: "Mode adoption index, V1=100" }, thumbnail: { src: "/assets/images/cotonai-modes/canvas-hero.webp", alt: "The CotonAI canvas: a board of generated fashion looks with the Modes bar open beneath.", bleed: true }, slug: "cotonai-modes", href: "/work/cotonai-modes", tint: ["#9CB09E", "#E3EAE0", "#C9D5C8"], photo: { src: "/assets/images/case-bg-bloom.jpg", pos: "50% 38%" },
+    metric: { value: "225", label: "Mode adoption index, V1=100" }, thumbnail: { src: "/assets/images/cotonai-modes/thumbnail.webp", alt: "A MacBook on a tan leather sofa, its screen showing the CotonAI canvas: a board of generated fashion looks with the Modes bar open beneath.", bleed: true }, slug: "cotonai-modes", href: "/work/cotonai-modes", tint: ["#9CB09E", "#E3EAE0", "#C9D5C8"], photo: { src: "/assets/images/case-bg-bloom.jpg", pos: "50% 38%" },
     cs: {
       meta: [["Role", "Founding Product Designer"], ["Timeline", "Aug 2025 – Present"], ["Skills", "Interaction architecture, AI UX, design systems, prototyping, analytics"], ["Team", "Co-founder, PM, engineering"], ["Status", "Shipped in CotonAI, converted to a paid enterprise pilot"]],
       sections: [
@@ -566,7 +566,7 @@ const PROJECTS = [
     title: "Designing Gatherly, an events app, from brief to a live MVP in two months.",
     desc: "A request from an early-stage founder: I designed the product and built the iOS app in Swift, from a brief inspired by Airbnb. The founder used it as their MVP.",
     seo: "Gatherly case study: a product design and Swift build for an early-stage founder, an events app for discovery, tickets and hosting, designed and built in two months from an Airbnb-inspired brief. The founder used it as their MVP.",
-    metric: { value: "2 mo", label: "From brief to a founder-used MVP" }, thumbnail: { src: "/assets/images/gatherly/thumb-red-home.webp", alt: "The Gatherly home screen in dark mode on an iPhone, set against a dimly lit, red-washed dinner table: a Find an event search bar, filter chips, and Popular in San Francisco event cards for a rooftop garden social and a garden cowork.", bleed: true, full: true, hero: true }, slug: "gatherly", href: "/work/gatherly", tint: ["#7A5AF8", "#EEE8FF", "#6D4AFF"],
+    metric: { value: "2 mo", label: "From brief to a founder-used MVP" }, thumbnail: { src: "/assets/images/gatherly/thumb-hand.webp", alt: "The Gatherly home screen in dark mode on an iPhone held in two hands in warm, low light: a Find an event search bar, filter chips, and Popular in San Francisco event cards for a rooftop garden social and a garden cowork.", bleed: true, full: true, hero: true }, slug: "gatherly", href: "/work/gatherly", tint: ["#7A5AF8", "#EEE8FF", "#6D4AFF"],
     cs: {
       meta: [["Role", "Product designer and iOS developer (Swift)"], ["Timeline", "Oct – Nov 2026"], ["Client", "An early-stage founder"], ["Status", "Used as the founder's MVP · iOS, light and dark"]],
       structure: ["Final Designs", "Brief", "Outcome"],
@@ -683,7 +683,7 @@ const LOCK_SVG = '<svg class="lockcard__icon" viewBox="0 0 24 24" fill="none" ar
 let lockGroup = null;
 // What each project is filed under. date = when the work last moved (drives "Recent").
 const WORK_META = {
-  "Trailhead Solve": { sectors: ["Enterprise", "AI agents"], featured: false, date: "2026-04" },
+  "Trailhead Solve": { sectors: ["Enterprise", "AI agents"], featured: true, date: "2026-04" },
   "CotonAI Modes": { sectors: ["Fashion & retail", "AI agents"], featured: true, date: "2026-10" },
   "CotonAI Design System": { sectors: ["Fashion & retail"], featured: true, date: "2026-10" },
   "Gap 3D Fit": { sectors: ["Fashion & retail"], featured: true, date: "2025-07" },
@@ -2277,6 +2277,21 @@ function openLightbox(src, alt, opener, board) {
       { code: "INT-15", title: "Empty Sessions", status: "Interaction · Empty state", area: "Dev tools", tag: "interaction", demo: "emptySessions", bg: "#0C0C0C", dark: true, ptr: "none", tall: true,
         scope: "An empty state with some life in it: the windows fan out on hover, the pixel glyphs drift against the pointer, and clicking the stack shuffles it.",
         hint: "Move the pointer over the card, hover a glyph, and click the stack of windows.", tags: ["Empty state", "Parallax", "Pixel art"] },
+      { code: "INT-25", title: "Plant Shop Menu", status: "Interaction · Menu", area: "E-commerce · Web", tag: "interaction", demo: "accountMenu", ptr: "hover", ar: "720 / 880", cover: true, bg: "#F4F4F4",
+        scope: "An account menu that opens from its avatar. One highlight slides between rows instead of each row lighting up, the PLUS badge catches the light once, and the mascot blinks.",
+        hint: "Click the avatar. Hover or use the arrow keys, Enter to choose, Escape to close.", tags: ["Menu", "Origin-aware", "Keyboard"] },
+      { code: "INT-26", title: "Boarding Status", status: "Interaction · Progress", area: "Travel · Web", tag: "interaction", demo: "boardingStatus", ptr: "hover", ar: "1000 / 700", cover: true, bg: "#FAFBFD",
+        scope: "A flight card that works through its checks. A field of dots pulses from the centre while it processes, each step draws its own tick, and everything calms once the flight has boarded.",
+        hint: "It plays by itself. Click the card or Replay to run it again.", tags: ["Progress", "Status", "Dot field"] },
+      { code: "INT-27", title: "Grind Toolbar", status: "Interaction · Control", area: "Coffee · Tool", tag: "interaction", demo: "grindToolbar", ptr: "hover", ar: "900 / 675", cover: true, bg: "#F4F2F2",
+        scope: "A toolbar whose value opens a slider. The ticks lean toward the thumb as you drag, the number settles with each step, and the preset name changes from Turkish to French press.",
+        hint: "Click the number, then drag the slider. Arrow keys step by one, Shift by ten.", tags: ["Slider", "Popover", "Detents"] },
+      { code: "INT-28", title: "Track Queue", status: "Interaction · Input", area: "Music · Mobile", tag: "interaction", demo: "trackQueue", ptr: "hover", ar: "900 / 750", cover: true, bg: "#F4F4F4", dark: false,
+        scope: "A queue bar on a dark phone. Tapping a genre flies it into the field as a token, the plus turns into a tick, and sending counts the batch into UP NEXT.",
+        hint: "Tap genres, type to filter, press Enter or + to queue. Drag the chips sideways.", tags: ["Input", "Tokens", "Mobile"] },
+      { code: "INT-29", title: "Plant Health", status: "Interaction · Segmented", area: "Care · Mobile", tag: "interaction", demo: "plantHealth", ptr: "hover", ar: "900 / 900", cover: true, bg: "#CFE8DA",
+        scope: "A three-state health control. Drag the thumb and the photo drains of colour, the page tints to match, and Water now brings it back with a shower.",
+        hint: "Drag the thumb or tap a label. Arrow keys work too. Press Water now.", tags: ["Segmented", "State", "Mobile"] },
       { code: "UI-01", title: "Profile Collections", status: "Interface study", area: "Web design", tag: "ui", demo: "profileCollections", ptr: "hover", ar: "1024 / 768", alt: "A profile screen with a collections list, a hover card and a grid of photographs and a video thumbnail.", pos: "50% 50%", cover: true, bg: "#DCDBD3",
         scope: "A profile screen with a collections list, a hover card and a grid of photographs and a video thumbnail.", tags: ["Interface", "Web design"] },
       { code: "UI-02", title: "Balance Chart", status: "Interface study", area: "Product design", tag: "ui", demo: "balanceChart", ptr: "hover", ar: "1199 / 872", alt: "A dark balance dashboard with a stacked area chart by asset, avatar markers and a seven-day range selector.", pos: "50% 50%", cover: true, bg: "#111111",
@@ -2987,8 +3002,19 @@ function openLightbox(src, alt, opener, board) {
 // ── Ruler border: number scale on the top and left edges, drawn on canvas (desktop only) ──
 (() => {
   const mq = matchMedia("(min-width: 768px)");
-  const SIZE = 24, FONT = "9px 'Geist Mono', ui-monospace, monospace";
+  const SIZE = 24, FONT = "9px 'Noto Sans Oriya', 'Geist Mono', ui-monospace, monospace";
+  const od = (n) => String(n).replace(/\d/g, (d) => String.fromCharCode(0x0B66 + Number(d)));   // 0-9 → Odia digits ୦-୯
   let cx, cy, gx, gy, raf = 0, t0 = 0, colors;
+
+  // The scale numbers are Odia digits set in Noto Sans Oriya. It is not in the page's font link, so load it here, once, and redraw when it lands
+  const loadFont = () => {
+    if (!document.querySelector("link[data-ruler-font]")) {
+      const l = document.createElement("link");
+      l.rel = "stylesheet"; l.href = "https://fonts.googleapis.com/css2?family=Noto+Sans+Oriya:wght@400&display=swap"; l.setAttribute("data-ruler-font", "");
+      document.head.appendChild(l);
+    }
+    if (document.fonts && document.fonts.load) document.fonts.load("9px 'Noto Sans Oriya'", od(1234567890)).then(() => { if (cx) queue(); }).catch(() => {});
+  };
 
   const readColors = () => {
     // Resolve the CSS variables (rgb with alpha) to concrete colours once per theme change
@@ -3020,7 +3046,7 @@ function openLightbox(src, alt, opener, board) {
       const major = v % 100 === 0, len = major ? 10 : 4;
       gx.globalAlpha = Math.min(1, (ex - v) / 200);
       gx.fillStyle = colors.tick; gx.fillRect(v - sx, SIZE - len, .5, len);
-      if (major) { gx.fillStyle = colors.label; gx.fillText(String(v), v - sx, 12); }
+      if (major) { gx.fillStyle = colors.label; gx.fillText(od(v), v - sx, 12); }
     }
 
     gy.clearRect(0, 0, SIZE, h);
@@ -3033,7 +3059,7 @@ function openLightbox(src, alt, opener, board) {
       gy.fillStyle = colors.tick; gy.fillRect(SIZE - len, y, len, .5);
       if (major) {
         gy.save(); gy.fillStyle = colors.label; gy.font = FONT; gy.textAlign = "center"; gy.textBaseline = "middle";
-        gy.translate(12, y); gy.rotate(-Math.PI / 2); gy.fillText(String(v), 0, 0); gy.restore();
+        gy.translate(12, y); gy.rotate(-Math.PI / 2); gy.fillText(od(v), 0, 0); gy.restore();
       }
     }
     gx.globalAlpha = gy.globalAlpha = 1;
@@ -3049,7 +3075,7 @@ function openLightbox(src, alt, opener, board) {
     document.body.append(x, y, corner);
     cx = x; cy = y; gx = x.getContext("2d"); gy = y.getContext("2d");
     document.documentElement.classList.add("has-ruler");
-    readColors(); size(); t0 = performance.now(); queue();
+    readColors(); size(); t0 = performance.now(); queue(); loadFont();
   };
   const unmount = () => {
     if (!cx) return;

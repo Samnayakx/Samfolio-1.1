@@ -165,6 +165,7 @@
   const ROWS = [
     { name: "Guest", note: "Find it, join it, go", slides: [
       { kind: "trio", title: "Overview", sub: "Explore · event · ticket" },
+      { kind: "hand", title: "One tap to going", sub: "The event page, on a real phone" },
       { bg: "ink", media: "guest", title: "Guest", sub: "The whole trip, recorded" },
       { k: "flow", bg: "ink", title: "Find an event", sub: "Explore · search · event", flow: FLOW.find },
       { k: "flow", bg: "canvas", title: "Get a ticket", sub: "Request · confirmed · ticket", flow: FLOW.ticket },
@@ -172,12 +173,15 @@
     { name: "Host", note: "Create, run, get paid", slides: [
       { kind: "trioh", title: "Overview", sub: "Dashboard · create · review" },
       { bg: "canvas", media: "host", title: "Host", sub: "The whole night, recorded" },
+      { kind: "orbit", k: "orbit", title: "The guest list", sub: "Everyone, around one event" },
       { k: "flow", bg: "lilac", title: "Host an event", sub: "Create · review · publish", flow: FLOW.host },
       { k: "flow", bg: "ink", title: "Check in", sub: "Dashboard · scanner", flow: FLOW.checkin },
     ] },
     { name: "System", note: "How it looks and feels", slides: [
       { kind: "night", title: "After dark", sub: "Dark mode, end to end" },
+      { kind: "photoe", title: "Find a night out", sub: "Explore, on a real phone" },
       { k: "flow", bg: "violet", title: "Sign up", sub: "Log in · confirm code", flow: FLOW.signup },
+      { kind: "photoh", title: "Run the room", sub: "The host dashboard, on a real phone" },
       { kind: "wall", title: "Sixty-four screens", sub: "A slice of the product" },
       { kind: "bento", title: "Moments", sub: "Toast · widget · ticket" },
     ] },
@@ -192,6 +196,26 @@
     trio: { bg: "trio", html: () => fan([[explore, "", 0.8, 5, -3, 1], [event, "", 1, 0, 0, 3], [ticket, "", 0.8, 5, 3, 1]]), s: fanS, fan: true },
     trioh: { bg: "trioh", html: () => fan([[host, "", 0.8, 5, -3, 1], [create, "", 1, 0, 0, 3], [review, "", 0.8, 5, 3, 1]]), s: fanS, fan: true },
     night: { bg: "night", html: () => fan([[explore, "is-dark", 0.8, 5, -3, 1], [event, "is-dark", 1, 0, 0, 3], [host, "is-dark", 0.8, 5, 3, 1]]), s: fanS, fan: true },
+    orbit: { bg: "orbit", s: () => 0, html: () => {
+      const oav = (k, sz) => `<span class="gld__oav" style="width:${sz};background:${AV[k][0]}"><svg viewBox="0 0 48 48" aria-hidden="true">${AV[k][1]}</svg></span>`;
+      const pill = (cls, k, a, b) => `<div class="gld__o gld__pill ${cls}">${oav(k, "3.6cqw")}<span><b>${a}</b>${b ? `<small>${b}</small>` : ""}</span></div>`;
+      const badge = (cls, d) => `<i class="gld__badge ${cls}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${d}" fill="none" stroke="#1D1B20" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></i>`;
+      const path = "M 370 56 A 232 196 0 1 1 369.9 56";
+      return `<div class="gld__orbit">
+        <svg class="gld__ring" viewBox="0 0 740 470" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><ellipse cx="372" cy="252" rx="232" ry="196" fill="none" stroke="#1D1B20" stroke-width="3" stroke-linecap="round" stroke-dasharray="0.1 13"/>
+          <circle class="gld__node" cx="590" cy="144" r="5.5" fill="#1D1B20"/><circle class="gld__node" cx="136" cy="308" r="5.5" fill="#1D1B20"/><circle class="gld__node" cx="372" cy="448" r="0" fill="#1D1B20"/>
+          <circle class="gld__runner" r="4.5" fill="#6D4AFF"><animateMotion dur="16s" repeatCount="indefinite" path="M 372 56 A 232 196 0 1 1 371.9 56"/></circle></svg>
+        ${pill("gld__p1", "cat", "Maya Chen", "Going · 1 ticket")}
+        <div class="gld__o gld__photo gld__ph1"></div>${badge("gld__b1", "M3 8a2 2 0 012-2h14a2 2 0 012 2v2a2 2 0 000 4v2a2 2 0 01-2 2H5a2 2 0 01-2-2v-2a2 2 0 000-4z")}
+        <div class="gld__o gld__pill gld__host"><span class="gld__oav" style="width:5.4cqw;background:#F5C451"><svg viewBox="0 0 48 48" aria-hidden="true">${AV.crown[1].replace(/#fff/gi, "#fff")}</svg></span><span><b>Rooftop Garden Social</b><small>Hosted by Golden Hour Co.</small></span></div>
+        <div class="gld__o gld__photo gld__ph2"></div>${badge("gld__b2", "M16 11a3 3 0 100-6 3 3 0 000 6zM8 12a3 3 0 100-6 3 3 0 000 6zM2 19c.6-3 3-5 6-5s5.4 2 6 5M12 19c.5-2.4 2.3-4 4.6-4 2.3 0 4.2 1.6 4.4 4")}
+        ${pill("gld__p2", "flame", "Daniel Okafor", "Going · 2 tickets")}
+        ${pill("gld__p3", "chef", "Leo Martins", "Checked in · just now")}
+        ${pill("gld__p4", "crown", "Priya Nair", "Pending approval")}
+      </div>`; } },
+    hand: { bg: "hand", s: () => 0, html: () => `<div class="gld__title" aria-hidden="true">One tap to going</div><img class="gld__handimg" src="${P}in-hand.jpg" width="736" height="981" loading="lazy" decoding="async" alt="A hand holding an iPhone that shows the Gatherly event page for Rooftop Garden Social, with its photo, host, date, price and a Register button.">` },
+    photoe: { bg: "photoe", s: () => 0, html: () => `<div class="gld__title" aria-hidden="true">Find a night out</div><img class="gld__photoimg" src="${P}in-hand-explore.jpg" width="1200" height="1200" loading="lazy" decoding="async" alt="A hand tilting an iPhone that shows the Gatherly Explore screen: a search bar, filter chips, and Popular in San Francisco with a rooftop social and a garden cowork.">` },
+    photoh: { bg: "photoh", s: () => 0, html: () => `<div class="gld__title" aria-hidden="true">Run the room</div><img class="gld__photoimg gld__photoimg--h" src="${P}in-hand-host.jpg" width="736" height="981" loading="lazy" decoding="async" alt="A hand holding an iPhone that shows the Gatherly host dashboard for Rooftop Garden Social: 214 registered, 86 spots left, $5.3k revenue, a guest list and a Scan tickets button.">` },
     wall: { bg: "wall", html: () => { const sc = [explore, search, event, request, confirmed, ticket, create, review, host, scanner, login, code, explore, event, ticket]; return `<div class="gld__wall">${[0, 1, 2, 3, 4].map((c) => `<div class="gld__wallcol">${sc.filter((_, i) => i % 5 === c).map((fn) => bare("", fn)).join("")}</div>`).join("")}</div>`; }, s: (W) => (W * 0.155) / 390 },
     bento: { bg: "bento", html: () => `<div class="gld__bento">
       <div class="gld__tile gld__tile--a"><div class="gld__toast"><i></i><div><small>You’re going!</small>Rooftop Garden Social</div></div></div>
@@ -223,9 +247,9 @@
     explore(d, g) {
       const tl = g.timeline({ defaults: { ease: "power3.out" } });
       const w = d.querySelectorAll(".glp-wrap");
-      tl.from(w, { y: 80, opacity: 0, rotation: (i) => (i ? 3 : -3), duration: 1, stagger: 0.18 }, 0)
+      tl.from(w, { y: 80, opacity: 0, rotation: (i) => (i ? 3 : -3), duration: 1, stagger: 0.06 }, 0)
         .from(d.querySelectorAll(".glp .gl-pill"), { opacity: 0, y: 8, duration: 0.5, stagger: 0.04 }, 0.5)
-        .from(d.querySelectorAll(".m-strip > div"), { x: 90, opacity: 0, duration: 0.8, stagger: 0.12 }, 0.6)
+        .from(d.querySelectorAll(".m-strip > div"), { x: 90, opacity: 0, duration: 0.8, stagger: 0.07 }, 0.6)
         .from(d.querySelectorAll(".m-ev"), { y: 24, opacity: 0, duration: 0.7 }, 0.9)
         .from(d.querySelectorAll(".m-city"), { y: 30, opacity: 0, scale: 0.9, duration: 0.7, ease: "back.out(1.8)" }, 1.1);
       tl.to(d.querySelectorAll(".m-strip"), { x: -150, duration: 2.6, ease: "sine.inOut", yoyo: true, repeat: 1, repeatDelay: 0.8 }, 2.2);
@@ -240,6 +264,16 @@
       return tl;
     },
 
+    // the guest list: people settle around the event one by one; a single dot circles the orbit (no screen moves up and down)
+    orbit(d, g) {
+      const tl = g.timeline({ defaults: { ease: "power3.out" } });
+      tl.from(d.querySelector(".gld__ring ellipse"), { opacity: 0, duration: 1.2 }, 0)
+        .from(d.querySelector(".gld__host"), { scale: 0.86, opacity: 0, duration: 0.8, ease: "back.out(1.6)" }, 0.1)
+        .from(d.querySelectorAll(".gld__o:not(.gld__host)"), { scale: 0.8, opacity: 0, duration: 0.7, stagger: 0.08, ease: "back.out(1.7)", transformOrigin: "50% 50%" }, 0.35)
+        .from(d.querySelectorAll(".gld__badge"), { scale: 0.6, opacity: 0, duration: 0.4, stagger: 0.06, ease: "back.out(2)" }, 1.1)
+        .to(d.querySelectorAll(".gld__node"), { scale: 1.8, transformOrigin: "50% 50%", duration: 0.5, yoyo: true, repeat: 3, ease: "sine.inOut", stagger: 0.4 }, 1.6);
+      return tl;
+    },
     // a workflow: one phone completes a flow end to end. `at` is where the finger lands, in % of the screen.
     flow(d, g, c) {
       const f = c.flow, L = [...d.querySelectorAll(".m-l")], wrap = d.querySelector(".glp-wrap"), tap = wrap.querySelector(".m-tap"), tap2 = wrap.querySelector(".m-tap2");
@@ -253,7 +287,7 @@
         g.set(d.querySelectorAll(".m-typed"), { textContent: "" }); g.set(d.querySelectorAll(".m-ph"), { opacity: 1 }); g.set(d.querySelectorAll(".m-caret"), { opacity: 0 });
         g.set(d.querySelectorAll(".m-dash"), { opacity: 1 }); g.set(d.querySelectorAll(".m-digit"), { opacity: 0 }); g.set(d.querySelectorAll(".m-codebox"), { borderColor: "" });
         g.set(d.querySelectorAll(".m-toast"), { opacity: 0, y: -30 }); g.set(d.querySelectorAll(".m-cap"), { textContent: "300 guests" });
-        g.set(d.querySelectorAll(".m-total"), { textContent: "$26.80 USD" });
+        g.set(d.querySelectorAll(".m-total"), { textContent: "$26.80 USD" }); g.set(d.querySelectorAll(".m-bar"), { scaleX: 1 });
         d.querySelectorAll(".m-pending").forEach((p) => { p.textContent = "Pending"; p.style.background = p.style.color = ""; });
         d.querySelectorAll(".m-count").forEach((n) => { n.textContent = "128"; });
         d.querySelectorAll(".m-brk").forEach((b) => b.setAttribute("stroke", "#E31C5F"));
@@ -264,17 +298,17 @@
       // the first screen comes alive as the card arrives
       const intro = (n, t0) => {
         const has = (sel) => L[n].querySelector(sel);
-        if (has(".m-logo")) tl.from(q(n, ".m-logo i"), { scale: 0.4, rotation: -14, opacity: 0, duration: 0.9, ease: "back.out(2)" }, t0).from(q(n, ".m-logo b"), { y: 14, opacity: 0, duration: 0.6 }, t0 + 0.25).to(q(n, ".m-logo i"), { scale: 1.08, duration: 0.5, yoyo: true, repeat: 1, ease: "sine.inOut" }, t0 + 1);
+        if (has(".m-logo")) tl.from(q(n, ".m-logo i"), { scale: 0.8, rotation: -10, opacity: 0, duration: 0.6, ease: "back.out(1.8)" }, t0).from(q(n, ".m-logo b"), { y: 14, opacity: 0, duration: 0.6 }, t0 + 0.25).to(q(n, ".m-logo i"), { scale: 1.08, duration: 0.5, yoyo: true, repeat: 1, ease: "sine.inOut" }, t0 + 1);
         if (has(".m-cover")) tl.from(q(n, ".m-cover"), { y: 22, opacity: 0, duration: 0.6, ease: "power3.out" }, t0).fromTo(q(n, ".m-cover .gl-circ"), { rotation: 0 }, { rotation: 8, duration: 0.3, yoyo: true, repeat: 3, ease: "sine.inOut" }, t0 + 0.6);
-        if (has(".m-field")) tl.from(qa(n, ".m-field"), { y: 18, opacity: 0, duration: 0.5, stagger: 0.09, ease: "power3.out" }, t0 + 0.2);
+        if (has(".m-field")) tl.from(qa(n, ".m-field"), { y: 18, opacity: 0, duration: 0.5, stagger: 0.05, ease: "power3.out" }, t0 + 0.2);
         if (has(".m-strip")) {
-          tl.from(qa(n, ".m-strip > div"), { x: 70, opacity: 0, duration: 0.7, stagger: 0.1 }, t0).to(q(n, ".m-strip"), { x: -90, duration: 2, ease: "sine.inOut", yoyo: true, repeat: 1 }, t0 + 0.6);
+          tl.from(qa(n, ".m-strip > div"), { x: 70, opacity: 0, duration: 0.7, stagger: 0.06 }, t0).to(q(n, ".m-strip"), { x: -90, duration: 2, ease: "sine.inOut", yoyo: true, repeat: 1 }, t0 + 0.6);
           const pills = qa(n, ".gl-pill"); [1, 2, 0].forEach((idx, k) => tl.call(() => pills.forEach((p, j) => p.classList.toggle("gl-on", j === idx)), null, t0 + 0.4 + k * 0.5));
           pop(tl, q(n, ".m-star"), t0 + 1.2, 1.35); tl.to(qa(n, ".m-sell"), { scale: 1.07, transformOrigin: "left center", duration: 0.4, yoyo: true, repeat: 3, ease: "sine.inOut" }, t0);
         }
         if (has(".m-num")) { // host dashboard
           qa(n, ".m-num").forEach((el) => { const to = el.dataset.to, isK = /k$/.test(to), v = parseFloat(to.replace(/[^0-9.]/g, "")), o = { v: 0 }; tl.to(o, { v, duration: 1.2, ease: "power2.out", onUpdate: () => { el.textContent = (to[0] === "$" ? "$" : "") + (isK ? o.v.toFixed(1) + "k" : Math.round(o.v)); } }, t0); });
-          tl.from(qa(n, ".m-guest"), { x: 34, opacity: 0, duration: 0.55, stagger: 0.1, ease: "power3.out" }, t0 + 0.2).from(q(n, ".m-scan"), { y: 70, opacity: 0, duration: 0.6, ease: "back.out(1.5)" }, t0 + 0.5);
+          tl.from(qa(n, ".m-guest"), { x: 34, opacity: 0, duration: 0.55, stagger: 0.06, ease: "power3.out" }, t0 + 0.2).from(q(n, ".m-scan"), { y: 70, opacity: 0, duration: 0.6, ease: "back.out(1.5)" }, t0 + 0.5);
           const pend = q(n, ".m-pending");
           tl.call(() => { pend.textContent = "Going"; pend.style.background = "var(--gl-color-status-success-bg)"; pend.style.color = "var(--gl-color-status-success-fg)"; }, null, t0 + 1.7).fromTo(pend, { scale: 1 }, { scale: 1.3, duration: 0.18, yoyo: true, repeat: 1 }, t0 + 1.7);
         }
@@ -304,22 +338,22 @@
           tl.to(tap, { opacity: 0, scale: 1.7, duration: 0.35 }, t + 0.7); t += 0.75;
         } else t += 0.3;
         // the transition: iOS push, sheet rise or cross-fade, with the screen behind stepping back
-        if (st.type === "up") tl.to(nxt, { yPercent: 0, duration: 0.9, ease: "expo.out" }, t).to(cur, { scale: 0.94, opacity: 0.6, transformOrigin: "50% 100%", duration: 0.9, ease: EASE_IOS }, t);
+        if (st.type === "up") tl.to(nxt, { yPercent: 0, duration: 0.6, ease: "expo.out" }, t).to(cur, { scale: 0.94, opacity: 0.6, transformOrigin: "50% 100%", duration: 0.6, ease: EASE_IOS }, t);
         else if (st.type === "fade") tl.to(nxt, { opacity: 1, duration: 0.5, ease: "power2.out" }, t).to(cur, { opacity: 0, duration: 0.5 }, t);
-        else tl.to(nxt, { xPercent: 0, duration: 0.85, ease: EASE_IOS }, t).to(cur, { xPercent: -26, opacity: 0.55, duration: 0.85, ease: EASE_IOS }, t);
+        else tl.to(nxt, { xPercent: 0, duration: 0.55, ease: EASE_IOS }, t).to(cur, { xPercent: -26, opacity: 0.55, duration: 0.55, ease: EASE_IOS }, t);
         tl.call(() => setDot(i + 1), null, t);
-        t += 0.55;
+        t += 0.4;
         // the new screen settles with its own small moves
         const k = (sel) => nxt.querySelector(sel);
-        if (k(".m-hero")) tl.fromTo(k(".m-hero"), { scale: 1.18 }, { scale: 1, duration: 2.2, ease: "power2.out" }, t - 0.5).from(nxt.querySelectorAll(".m-row"), { y: 16, opacity: 0, duration: 0.5, stagger: 0.1, ease: "power3.out" }, t - 0.1);
+        if (k(".m-hero")) tl.fromTo(k(".m-hero"), { scale: 1.18 }, { scale: 1, duration: 2.2, ease: "power2.out" }, t - 0.5).from(nxt.querySelectorAll(".m-row"), { y: 16, opacity: 0, duration: 0.5, stagger: 0.06, ease: "power3.out" }, t - 0.1);
         if (k(".m-heart")) pop(tl, k(".m-heart"), t + 1.2, 1.3);
-        if (k(".m-recent")) tl.from(nxt.querySelectorAll(".m-recent"), { x: -16, opacity: 0, duration: 0.45, stagger: 0.09 }, t - 0.2).from(nxt.querySelectorAll(".gl-pill"), { scale: 0.8, opacity: 0, duration: 0.4, stagger: 0.06, ease: "back.out(2)" }, t + 0.3);
+        if (k(".m-recent")) tl.from(nxt.querySelectorAll(".m-recent"), { x: -16, opacity: 0, duration: 0.45, stagger: 0.05 }, t - 0.2).from(nxt.querySelectorAll(".gl-pill"), { scale: 0.8, opacity: 0, duration: 0.4, stagger: 0.06, ease: "back.out(2)" }, t + 0.3);
         if (k(".m-dia")) { tl.to(k(".m-dia"), { opacity: 0.35, duration: 0.3, yoyo: true, repeat: 5, ease: "sine.inOut" }, t); }
         if (k(".m-radio")) tl.fromTo(k(".m-radio"), { scale: 1 }, { scale: 1.18, duration: 0.5, yoyo: true, repeat: 3, ease: "sine.inOut" }, t);
         if (k(".m-total")) { const el = k(".m-total"), o = { v: 25 }; tl.to(o, { v: 26.8, duration: 0.9, ease: "power2.out", onUpdate: () => { el.textContent = "$" + o.v.toFixed(2) + " USD"; } }, t - 0.1); }
         if (k(".m-check")) {
           const layer = k(".m-conf-layer");
-          tl.from(k(".m-check"), { scale: 0, duration: 0.6, ease: "back.out(2.4)" }, t - 0.2).from(k(".m-conf"), { y: 16, opacity: 0, duration: 0.5, ease: "power3.out" }, t);
+          tl.from(k(".m-check"), { scale: 0.6, opacity: 0, duration: 0.45, ease: "back.out(2)" }, t - 0.2).from(k(".m-conf"), { y: 16, opacity: 0, duration: 0.5, ease: "power3.out" }, t);
           if (layer) tl.add(confetti(g, layer, 50, 22), t - 0.1);
         }
         if (k(".m-qr")) {
@@ -337,8 +371,8 @@
           tl.fromTo(line, { y: -60 }, { y: 60, duration: 0.9, ease: "sine.inOut", yoyo: true, repeat: 3 }, t)
             .to(k(".m-brk"), { scale: 1.04, transformOrigin: "175px 180px", duration: 0.45, yoyo: true, repeat: 5, ease: "sine.inOut" }, t)
             .call(() => brk.forEach((b) => b.setAttribute("stroke", "#5DD28D")), null, t + 1.1)
-            .from(who, { y: 14, opacity: 0, duration: 0.5, ease: "power3.out" }, t + 1.1).to(bar, { width: "60.5%", duration: 0.5 }, t + 1.1)
-            .call(() => { cnt.textContent = "129"; }, null, t + 1.2).fromTo(cnt, { scale: 1 }, { scale: 1.3, duration: 0.2, yoyo: true, repeat: 1 }, t + 1.2).fromTo(who.querySelector(".gl-circ"), { scale: 0 }, { scale: 1, duration: 0.5, ease: "back.out(2.6)" }, t + 1.2); t += 2.3;
+            .from(who, { y: 14, opacity: 0, duration: 0.5, ease: "power3.out" }, t + 1.1).to(bar, { scaleX: 1.008, transformOrigin: "0 50%", duration: 0.5, ease: "power3.out" }, t + 1.1)
+            .call(() => { cnt.textContent = "129"; }, null, t + 1.2).fromTo(cnt, { scale: 1 }, { scale: 1.3, duration: 0.2, yoyo: true, repeat: 1 }, t + 1.2).fromTo(who.querySelector(".gl-circ"), { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, t + 1.2); t += 2.3;
         }
         t += 0.7;
       });
@@ -346,7 +380,7 @@
       const last = L.length - 1, toast = L[last].querySelector(".m-toast");
       if (toast) {
         const go = L[last].querySelector(".m-go"), layer = L[last].querySelector(".m-conf-layer");
-        tl.from(L[last].querySelectorAll(".m-seg"), { scaleX: 0, transformOrigin: "left", duration: 0.5, stagger: 0.12, ease: "power3.out" }, t - 1.1)
+        tl.from(L[last].querySelectorAll(".m-seg"), { scaleX: 0, transformOrigin: "left", duration: 0.5, stagger: 0.07, ease: "power3.out" }, t - 1.1)
           ;
         g.set([tap, tap2], { left: "50%", top: "90%" });
         tl.set([tap, tap2], { left: "50%", top: "90%" }, t).fromTo(tap, { scale: 0.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" }, t).to(go, { scale: 0.95, duration: 0.1, yoyo: true, repeat: 1 }, t + 0.38)
@@ -355,7 +389,7 @@
         if (layer) tl.add(confetti(g, layer, 50, 28, 26), t + 0.75);
         t += 2.2;
       }
-      tl.to({}, { duration: 1.2 }, t).to(wrap, { opacity: 0, duration: 0.45, ease: "power2.in" }, t + 1.2);
+      tl.to({}, { duration: 1.2 }, t).to(wrap, { opacity: 0, duration: 0.3, ease: "power2.out" }, t + 1.2);
       tl.userData = { reset };
       return tl;
     },
@@ -395,7 +429,7 @@
       let cur = -1;
       const upd = () => {
         const i = index(); count.textContent = `${String(i + 1).padStart(2, "0")} / ${String(N).padStart(2, "0")}`; prev.disabled = i === 0; next.disabled = i === N - 1;
-        if (i !== cur) { cur = i; if (g && !reduce) rc.forEach((c, j) => g.to(c, { scale: j === i ? 1 : 0.965, opacity: j === i ? 1 : 0.6, duration: 0.6, ease: "power3.out", overwrite: "auto" })); }
+        if (i !== cur) { cur = i; if (g && !reduce) rc.forEach((c, j) => g.to(c, { scale: j === i ? 1 : 0.965, opacity: j === i ? 1 : 0.6, duration: 0.35, ease: "power3.out", overwrite: "auto" })); }
       };
       const go = (i) => { const c = rc[Math.max(0, Math.min(N - 1, i))]; track.scrollTo({ left: c.offsetLeft, behavior: reduce ? "auto" : "smooth" }); };
       head.addEventListener("click", (e) => { const b = e.target.closest("[data-d]"); if (b) go(index() + +b.dataset.d); });
@@ -427,7 +461,7 @@
     const build = (d) => { if (!g || reduce || !d._c.k) return null; if (tls.has(d)) return tls.get(d); const fn = MOTION[d._c.k]; if (!fn) return null; const tl = fn(d, g, d._c); tl.pause(0); tls.set(d, tl); return tl; };
     // ambient life is limited to the colour fields behind a workflow slide; no screen moves up or down on its own
     const idle = (d) => {
-      if (!g || reduce || !d._c.k) return null; if (idles.has(d)) return idles.get(d);
+      if (!g || reduce || !d._c.k || !d.querySelector(".gld__blob--a")) return null; if (idles.has(d)) return idles.get(d);
       const tl = g.timeline({ repeat: -1, yoyo: true, defaults: { ease: "sine.inOut", duration: 6 } });
       tl.to(d.querySelector(".gld__blob--a"), { x: 40, y: -26, scale: 1.2 }, 0).to(d.querySelector(".gld__blob--b"), { x: -34, y: 30, scale: 0.9 }, 0);
       tl.pause(); idles.set(d, tl); return tl;
