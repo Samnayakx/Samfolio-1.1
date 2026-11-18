@@ -1,0 +1,13 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Gatherly guest walkthrough</title></head><body>
+<script>
+// Guest flow, 9.4s loop: Explore → Event → Register → Confirmed → Tickets → Ticket, then back to Explore.
+window.CLIP = { T: 9.4, seq: [
+  { id: "explore", src: "l-explore", at: 0, tap: { x: 136, y: 348 } },
+  { id: "event", src: "l-event", at: 1.2, kind: "push", dur: 0.65, tap: { x: 308, y: 785 } },
+  { id: "register", src: "l-register", at: 2.7, kind: "push", dur: 0.65, tap: { x: 195, y: 790 } },
+  { id: "confirmed", src: "l-confirmed", at: 4.1, kind: "fade", dur: 0.5, tap: { x: 195, y: 720 } },
+  { id: "tickets", src: "l-tickets", at: 5.3, kind: "fade", dur: 0.5, tap: { x: 195, y: 340 } },
+  { id: "ticket", src: "l-ticket", at: 6.5, kind: "push", dur: 0.65 },
+  { id: "explore", src: "l-explore", at: 8.8, kind: "fade", dur: 0.6 },
+] };
+</script><script src="../gatherly-flow/engine.js"></script></body></html>

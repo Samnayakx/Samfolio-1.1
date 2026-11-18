@@ -36,4 +36,45 @@
   <div class="card line" style="--x:45;--y:478;--w:640;--h:80"><h3>Mode logic → event → state → render</h3><p>Predictable outcomes, less hallucination, consistent visual logic</p></div>
   <div class="card line" style="--x:700;--y:478;--w:335;--h:80"><h3>An Open mode stays</h3><p>For advanced control</p></div>
 </div>
+<style>
+.wf{position:absolute;left:calc(var(--x)*1px);top:calc(var(--y)*1px);width:235px;height:210px;background:#DEE0E8;padding:10px;display:flex;flex-direction:column;gap:6px}
+.wf .bar{display:flex;justify-content:center;gap:0;font:600 9px/1 Inter;text-transform:uppercase;letter-spacing:.04em}
+.wf .bar span{padding:5px 12px;background:#fff;color:#6B7385}.wf .bar span.on{background:#1F2B3E;color:#fff}
+.wf .body{flex:1;display:flex;gap:6px;min-height:0}
+.wf .stage{flex:1;background:#EFF1F6;position:relative;display:flex;align-items:center;justify-content:center;font:500 9px Inter;color:#6B7385}
+.wf .stage b{width:54px;height:76px;background:#fff;display:flex;align-items:center;justify-content:center;font:500 9px Inter;color:#6B7385}
+.wf .tools{position:absolute;left:6px;top:6px;display:flex;flex-direction:column;gap:3px}
+.wf .tools i,.wf .btn{font:600 8px/1 Inter;font-style:normal;padding:4px 7px;background:#fff;color:#1F2B3E}
+.wf .side{width:78px;display:flex;flex-direction:column;gap:5px}
+.wf .side .tabs{display:flex;flex-wrap:wrap;gap:2px 6px;font:600 7px Inter;color:#6B7385}
+.wf .side .blk{height:46px;background:#fff;display:flex;align-items:center;justify-content:center;font:500 8px Inter;color:#6B7385}
+.wf .side .blk.s{height:20px}
+.wf .foot{display:flex;gap:5px;justify-content:flex-end}
+.wf .foot .btn.go{background:#1F2B3E;color:#fff}
+.wf .thumbs{position:absolute;left:6px;bottom:6px;display:flex;gap:4px}.wf .thumbs i{width:22px;height:22px;background:#fff}
+.wf .note{position:absolute;top:8px;left:0;right:0;text-align:center;font:600 8px Inter;color:#1F2B3E}
+</style>
+
+<div class="board" id="wireframes">
+  <div class="ttl" style="--x:45;--y:36">Four wireframes, before anything shipped</div>
+  <div class="wf" style="--x:45;--y:100"><div class="bar"><span class="on">Sketch</span><span>Render</span></div><div class="body"><div class="stage"><div class="tools"><i>Draw</i><i>Erase</i><i>Size</i></div><b>garment</b></div></div><div class="foot"><span class="btn">Upload</span><span class="btn">Render</span><span class="btn go">Generate</span></div></div>
+  <div class="wf" style="--x:300;--y:100"><div class="bar"><span>Sketch</span><span class="on">Render</span></div><div class="body"><div class="stage"><b>Flat sketch</b></div><div class="side"><div class="tabs"><span>Render</span><span>Colourways</span><span>Material</span></div><div class="blk">Add material</div><div class="blk s">Text</div></div></div><div class="foot"><span class="btn">Sides</span><span class="btn go">Generate</span></div></div>
+  <div class="wf" style="--x:555;--y:100"><div class="bar"><span>Sketch</span><span class="on">Render</span></div><div class="body"><div class="stage"><div class="note">Only to change feature</div><b>Render</b><div class="thumbs"><i></i><i></i><i></i></div></div><div class="side"><div class="tabs"><span>Render</span><span>Colourways</span><span>Material</span></div><div class="blk">Add material</div><div class="blk s">Text</div></div></div><div class="foot"><span class="btn">Sides</span><span class="btn go">Generate</span></div></div>
+  <div class="wf" style="--x:810;--y:100"><div class="bar"><span>Sketch</span><span class="on">Render</span></div><div class="body"><div class="stage"><div class="note">Only to change feature</div><b>Render</b><div class="thumbs"><i></i><i></i><i></i></div></div><div class="side"><div class="tabs"><span>Render</span><span style="color:#1F2B3E">Colourways</span><span>Material</span></div><div class="blk">Add material</div><div class="blk s">Text</div></div></div><div class="foot"><span class="btn">Sides</span><span class="btn go">Generate</span></div></div>
+  <div class="cap" style="--x:45;--y:324;--w:235">1 · Sketch, with draw and erase tools</div>
+  <div class="cap" style="--x:300;--y:324;--w:235">2 · Render, with a side panel</div>
+  <div class="cap" style="--x:555;--y:324;--w:235">3 · Render, with variants below</div>
+  <div class="cap" style="--x:810;--y:324;--w:235">4 · Colourways as a panel tab</div>
+  <div class="card line" style="--x:45;--y:400;--w:990;--h:110"><h3>Initial wireframes while ideating</h3><p>Explored first, then the MVP shipped as a canvas and a prompt box</p></div>
+</div>
+
+<div class="board" id="tokens">
+  <div class="card" style="--x:45;--y:70;--w:270;--h:150"><h4>Step 1</h4><h3>Design tokens in the Figma library</h3></div>
+  <i class="arr" style="--x:332;--y:132">→</i>
+  <div class="card" style="--x:350;--y:70;--w:330;--h:150"><h4>Step 2</h4><h3>Finalise the token spec with dev</h3><p>shadcn as the base layer</p></div>
+  <i class="arr" style="--x:697;--y:132">→</i>
+  <div class="card" style="--x:715;--y:70;--w:320;--h:150"><h4>Step 3</h4><h3>An .md file, pushed as a UI library</h3><p>Created in Cursor, published to GitHub</p></div>
+  <div class="card navy" style="--x:45;--y:260;--w:990;--h:120"><h4>The result</h4><h3>Every new custom UI pulls from the same GitHub repo</h3><p>No redesigning again and again</p></div>
+  <div class="card line" style="--x:45;--y:420;--w:990;--h:100"><h3>Mode buttons are built from those tokens</h3><p>Edit · Render · Colourway · Video, each with default, active and disabled states</p></div>
+</div>
 </body></html>

@@ -1184,6 +1184,8 @@ a.inline:hover { opacity: .7; }
 /* Lightbox: click a screenshot to read it at full size */
 .lb { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: var(--space-5); background: rgb(var(--greyscale-black) / .94); opacity: 0; transition: opacity .2s var(--ease-standard); cursor: zoom-out; overflow: auto; }
 .lb.is-open { opacity: 1; }
+.lb.lb--board { place-items: start; padding-top: calc(var(--space-4) * 3); }
+.lb.lb--board img { max-width: none; max-height: none; }
 .lb img { display: block; max-width: min(96vw, 2000px); max-height: 92vh; width: auto; height: auto; border-radius: 6px; }
 .lb button { position: fixed; top: var(--space-4); right: var(--space-4); height: 40px; padding: 0 var(--space-4); border: 0; border-radius: var(--radius); background: rgb(var(--greyscale-white)); color: rgb(var(--greyscale-black)); font: 400 12px/1 var(--font-mono); text-transform: uppercase; letter-spacing: .04em; cursor: pointer; }
 .lb button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
@@ -2334,6 +2336,7 @@ a.admire__row:active .admire__name { transform: translateX(3px); }
 }
 
 /* ───────── Hero: script heading over an uppercase serif statement, after the "Savoy" reference ───────── */
+.intro .headline .headline__od { font-family: "Noto Sans Oriya", "Kohinoor Odia", "Oriya Sangam MN", sans-serif; font-weight: 400; font-size: 1.02em; position: relative; top: .08em; margin-right: .03em; }
 .intro .headline, .intro .headline * { font-family: "Pinyon Script", "Snell Roundhand", cursive; font-style: normal; font-weight: 400; letter-spacing: 0; font-size: 1em; font-optical-sizing: none; text-transform: none; }
 .intro .headline { font-size: clamp(44px, 9vw, 96px); line-height: 1; margin: 0 0 var(--space-4); text-wrap: balance; }
 .intro .stage__body { font-family: "Instrument Serif", var(--font-serif); text-transform: uppercase; font-size: clamp(16px, 2.4vw, 26px); line-height: 1.1; letter-spacing: 0; max-width: 56ch; margin: 0 auto var(--space-5); text-wrap: balance; }

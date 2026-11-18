@@ -955,6 +955,8 @@ body[data-page="case"] { --greyscale-200: 216 216 216; --greyscale-700: 133 133 
 .tile figcaption { position: absolute; top: 18px; left: 22px; font: 400 12px/1 var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--tfg); opacity: .8; }
 .tile--fill { aspect-ratio: auto; display: block; padding: 0; container-type: normal; background: var(--tbg); }
 .tile--fill > img { width: 100%; height: auto; aspect-ratio: auto; border-radius: 0; box-shadow: none; transform: none; }
+.tile[data-zoom] { cursor: zoom-in; }
+.tile[data-zoom]:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
 .tile--fill figcaption { display: none; }
 .tile[data-bg="violet"] { --tbg: #6D4AFF; --tfg: #fff; }
 .tile[data-bg="ink"] { --tbg: #0F0F11; --tfg: #F4F4F5; }
@@ -967,6 +969,7 @@ body[data-page="case"] { --greyscale-200: 216 216 216; --greyscale-700: 133 133 
 
 /* Flow recordings in a tile: a muted looping video that fills the panel, same ratio as the panel images */
 .tile--video > video { display: block; width: 100%; height: auto; aspect-ratio: 1600 / 950; background: var(--tbg); }
+.tile--sq > video { aspect-ratio: 1 / 1; }
 
 /* ==== Arcade dashboard, live (js/case-demos.js arcadeDash) ==== */
 /* Markup and classes come from assets/arcade-dash/ (exported from Paper). A whole screen: full study width, laid out at 1440px and scaled to fit. */
@@ -1028,6 +1031,47 @@ body[data-page="case"] { --greyscale-200: 216 216 216; --greyscale-700: 133 133 
 .af__cap.is-out { opacity: 0; }
 @media (max-width: 767px) { .af { gap: 18px; } .af__btn { height: 38px; padding: 0 16px; font-size: 13px; } .af__cap { font-size: 14px; } }
 @media (prefers-reduced-motion: reduce) { .af__stage, .af__scr, .af__thumb, .af__cap { transition: none; } .af__scr { transform: none; } }
+
+/* ───────── Gatherly iOS prototype: real Paper screens in an iPhone frame, with iOS push, sheet and edge-swipe transitions ───────── */
+.shot--demo .cs-demo[data-case-demo="gatherlyFlow"] { aspect-ratio: auto; overflow: visible; background: none; border-radius: 0; }
+.study__media:has([data-case-demo="gatherlyFlow"]) { grid-column: 1 / -1; }
+.study__media:has([data-case-demo="gatherlyFlow"]) .shot { width: 100%; }
+.gf { --pw: 340px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: clamp(24px, 5vw, 72px); align-items: center; justify-content: center; padding: clamp(24px, 4vw, 56px); border-radius: var(--radius-lg, 16px); color: #fff; background: radial-gradient(70% 90% at 18% 12%, #7A5AF8, transparent 70%), radial-gradient(80% 80% at 88% 92%, #9C82FF, transparent 72%), #5D40D8; }
+.gf__side { display: grid; gap: 20px; max-width: 440px; }
+.gf__flows { display: grid; gap: 6px; }
+.gf__flow { text-align: left; padding: 14px 18px; border: 0; border-radius: 14px; background: rgb(255 255 255 / .12); color: #fff; font: 500 15px/1.2 var(--font-body, system-ui); cursor: pointer; transition: background .2s ease, color .2s ease; }
+.gf__flow[aria-checked="true"] { background: #fff; color: #3B26A8; }
+.gf__flow:focus-visible, .gf__btn:focus-visible, .gf__act:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) { .gf__flow[aria-checked="false"]:hover { background: rgb(255 255 255 / .2); } }
+.gf__panel { padding: 16px 14px 10px; border-radius: 16px; background: rgb(20 10 70 / .28); }
+.gf__where { margin: 0 6px 10px; font: 500 12px/1 var(--font-mono, ui-monospace, monospace); letter-spacing: .08em; text-transform: uppercase; opacity: .85; }
+.gf__acts { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.gf__act { display: grid; gap: 2px; width: 100%; padding: 10px 12px; border: 0; border-radius: 10px; background: none; color: #fff; text-align: left; cursor: pointer; transition: background .15s ease; }
+.gf__act b { font: 600 14px/1.3 var(--font-body, system-ui); }
+.gf__act span { font: 400 13px/1.4 var(--font-body, system-ui); opacity: .78; }
+.is-primary > .gf__act { background: rgb(255 255 255 / .14); }
+@media (hover: hover) and (pointer: fine) { .gf__act:hover { background: rgb(255 255 255 / .22); } }
+.gf__tools { display: flex; flex-wrap: wrap; gap: 8px; }
+.gf__btn { height: 38px; padding: 0 16px; border: 1px solid rgb(255 255 255 / .4); border-radius: 999px; background: none; color: #fff; font: 500 13px/1 var(--font-body, system-ui); cursor: pointer; }
+.gf__btn[aria-pressed="true"] { background: rgb(255 255 255 / .2); }
+.gf__tip { margin: 0; font: 400 13px/1.5 var(--font-body, system-ui); opacity: .78; }
+.gf__dev { display: grid; justify-items: center; }
+.gf__phone { position: relative; width: calc(var(--pw) + 20px); padding: 10px; border-radius: 58px; background: #101012; box-shadow: inset 0 0 0 2px #2c2c32, 0 40px 70px -24px rgb(15 5 60 / .6); }
+.gf__stage { position: relative; width: 100%; aspect-ratio: 390 / 844; overflow: hidden; border-radius: 48px; background: #fff; isolation: isolate; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.gf__scr { position: absolute; inset: 0; will-change: transform; }
+.gf__scr.is-under-sheet { border-radius: 40px; overflow: hidden; }
+.shot .gf__scr > img, .gf__scr > img { display: block; width: 100%; height: 100%; opacity: 1; border-radius: 0; transition: none; pointer-events: none; }
+.gf__dim { position: absolute; inset: 0; background: rgb(0 0 0 / .22); opacity: 0; pointer-events: none; }
+.gf__hs { position: absolute; padding: 0; border: 0; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.gf__hs::after { content: ""; position: absolute; inset: -2px; border-radius: inherit; border: 2px solid #5D40D8; background: rgb(93 64 216 / .14); opacity: 0; transition: opacity .2s ease; pointer-events: none; }
+.gf:not(.is-plain) .gf__hs::after { opacity: .4; }
+.gf:not(.is-plain) .gf__hs.is-primary::after { opacity: 1; animation: gf-pulse 1.8s ease-out infinite; }
+.gf__hs.is-hot::after, .gf__hs:focus-visible::after { opacity: 1; animation: none; border-color: #3B26A8; background: rgb(93 64 216 / .28); }
+@keyframes gf-pulse { 0% { box-shadow: 0 0 0 0 rgb(93 64 216 / .5); } 70%, 100% { box-shadow: 0 0 0 14px rgb(93 64 216 / 0); } }
+.gf__island { position: absolute; top: 20px; left: 50%; width: 108px; height: 31px; transform: translateX(-50%); border-radius: 20px; background: #000; pointer-events: none; }
+.gf__home { display: none; }
+@media (max-width: 767px) { .gf { grid-template-columns: 1fr; --pw: min(300px, 74vw); } .gf__dev { order: -1; } .gf__side { max-width: none; } }
+@media (prefers-reduced-motion: reduce) { .gf__hs.is-primary::after { animation: none !important; } }
 
 /* Previous / next, restyled to match the top nav: one frosted pill, 48px tall, 4px padding, mono uppercase items with hover and active fills */
 .study__pn { display: flex; align-items: center; justify-content: space-between; gap: 2px; height: 48px; padding: 4px; border-radius: var(--radius-lg); background: var(--frost-nav); box-shadow: var(--seg-edge); -webkit-backdrop-filter: blur(45px); backdrop-filter: blur(45px); }

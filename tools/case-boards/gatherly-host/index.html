@@ -1,0 +1,12 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Gatherly host walkthrough</title></head><body>
+<script>
+// Host flow, 9s loop: Create → Tickets → Review → Invite guests → Dashboard, then back to Create.
+window.CLIP = { T: 9.0, seq: [
+  { id: "create", src: "l-create", at: 0, tap: { x: 195, y: 785 } },
+  { id: "tickets", src: "l-create-tickets", at: 1.2, kind: "push", dur: 0.65, tap: { x: 195, y: 785 } },
+  { id: "review", src: "l-review", at: 2.8, kind: "push", dur: 0.65, tap: { x: 195, y: 761 } },
+  { id: "invite", src: "l-invite", at: 4.4, kind: "push", dur: 0.65, tap: { x: 195, y: 785 } },
+  { id: "host", src: "l-host", at: 6.2, kind: "fade", dur: 0.5 },
+  { id: "create", src: "l-create", at: 8.4, kind: "fade", dur: 0.6 },
+] };
+</script><script src="../gatherly-flow/engine.js"></script></body></html>

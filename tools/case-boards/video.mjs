@@ -1,10 +1,10 @@
-// Usage: node tools/case-boards/video.mjs <folder> [outDir] [fps] [seconds]   (frames only; encode with ffmpeg, see README)
+// Usage: node tools/case-boards/video.mjs <folder> [outDir] [fps] [seconds] [width] [height]   (size defaults to 1920x1080)   (frames only; encode with ffmpeg, see README)
 // <folder>/index.html must expose window.render(t) and set window.__ready = true once fonts are loaded.
 import fs from "node:fs";
 import { openPage, load, sleep } from "./lib.mjs";
-const [folder, out = `${folder}/frames`, fps = "30", dur = "8"] = process.argv.slice(2);
+const [folder, out = `${folder}/frames`, fps = "30", dur = "8", w = "1920", h = "1080"] = process.argv.slice(2);
 fs.rmSync(out, { recursive: true, force: true }); fs.mkdirSync(out, { recursive: true });
-const page = await openPage({ width: 1920, height: 1080, scale: 1 });
+const page = await openPage({ width: +w, height: +h, scale: 1 });
 await load(page, `${folder}/index.html`);
 for (let i = 0; i < 60 && !(await page.ev("!!window.__ready")); i++) await sleep(200);
 const n = +fps * +dur;

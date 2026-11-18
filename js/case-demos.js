@@ -1343,7 +1343,190 @@
     return () => { ro.disconnect(); io.disconnect(); clearTimeout(capT); };
   }
 
-  const DEMOS = { gapQuickFit, dsLive, arcadeDash, arcadeApprovals, arcadeUsage, arcadeFeatures };
+  // ── Gatherly: a clickable iOS prototype built from the real Paper screens ──
+  // Each flow is a small graph of screens. A hotspot is a tap target in the screen's own 390x844 points; `kind` is the iOS transition it triggers.
+  // push: slides in from the right (swipe from the left edge to go back). sheet: rises from the bottom. fade: cross-fades, and replaces the stack.
+  const GF_IMG = "/assets/images/gatherly/";
+  const GF = [
+    { key: "register", label: "Register & ticket", start: "event", screens: {
+      event: { src: "l-event", title: "Event", hs: [
+        { x: 240, y: 753, w: 136, h: 64, r: 32, to: "register", kind: "push", label: "Tap Register", note: "Push, slides in from the right", primary: 1 },
+        { x: 20, y: 66, w: 36, h: 36, r: 18, to: "@root", kind: "fade", label: "Tap back", note: "Returns to Explore (restarts the flow)" } ] },
+      register: { src: "l-register", title: "Request to join", hs: [
+        { x: 20, y: 764, w: 350, h: 52, r: 26, to: "confirmed", kind: "fade", label: "Tap Review", note: "Spinner, then a cross-fade and a success haptic", primary: 1 },
+        { x: 14, y: 68, w: 34, h: 32, r: 16, to: "@back", kind: "pop", label: "Tap back", note: "Pops back to the event" },
+        { x: 342, y: 68, w: 34, h: 32, r: 16, to: "@root", kind: "fade", label: "Tap close", note: "Closes the request" } ] },
+      confirmed: { src: "l-confirmed", title: "You’re going!", hs: [
+        { x: 20, y: 694, w: 350, h: 52, r: 26, to: "tickets", kind: "fade", label: "Tap View ticket", note: "Modal closes, lands on Tickets", primary: 1 },
+        { x: 336, y: 70, w: 36, h: 36, r: 18, to: "@root", kind: "fade", label: "Tap close", note: "Back to the event" } ] },
+      tickets: { src: "l-tickets", title: "Tickets", hs: [
+        { x: 20, y: 226, w: 350, h: 226, r: 22, to: "ticket", kind: "push", label: "Tap the ticket", note: "Push, the QR code fades in", primary: 1 } ] },
+      ticket: { src: "l-ticket", title: "Your ticket", hs: [
+        { x: 14, y: 66, w: 34, h: 34, r: 17, to: "@back", kind: "pop", label: "Tap back", note: "Pops back to Tickets", primary: 1 } ] },
+    } },
+    { key: "onboarding", label: "Onboarding", start: "splash", screens: {
+      splash: { src: "l-splash", title: "Splash", hs: [
+        { x: 0, y: 0, w: 390, h: 844, r: 0, to: "login", kind: "sheet", label: "Tap anywhere", note: "The log-in sheet rises from the bottom", primary: 1 } ] },
+      login: { src: "l-login", title: "Log in or sign up", hs: [
+        { x: 20, y: 390, w: 350, h: 72, r: 18, to: "keyboard", kind: "fade", label: "Tap the field", note: "The keyboard rises and the sheet shifts up", primary: 1 },
+        { x: 340, y: 96, w: 40, h: 40, r: 20, to: "@root", kind: "pop", label: "Tap close", note: "The sheet drops away" } ] },
+      keyboard: { src: "l-keyboard", title: "Typing", hs: [
+        { x: 20, y: 316, w: 350, h: 58, r: 29, to: "code", kind: "push", label: "Tap Continue", note: "Spinner, then the next step slides in", primary: 1 },
+        { x: 340, y: 96, w: 40, h: 40, r: 20, to: "@root", kind: "pop", label: "Tap close", note: "The sheet drops away" } ] },
+      code: { src: "l-code", title: "Confirm it’s you", hs: [
+        { x: 20, y: 272, w: 350, h: 72, r: 18, to: "community", kind: "push", label: "Type 6 digits", note: "Auto-submits on the sixth digit, no button", primary: 1 },
+        { x: 26, y: 102, w: 40, h: 40, r: 20, to: "@back", kind: "pop", label: "Tap back", note: "Pops back" } ] },
+      community: { src: "l-community", title: "Community", hs: [
+        { x: 24, y: 678, w: 342, h: 56, r: 28, to: "notify", kind: "sheet", label: "Tap Agree and continue", note: "A light haptic, then the notifications sheet rises", primary: 1 },
+        { x: 18, y: 98, w: 40, h: 40, r: 20, to: "@back", kind: "pop", label: "Tap back", note: "Pops back" } ] },
+      notify: { src: "l-notify", title: "Turn on notifications", hs: [
+        { x: 24, y: 724, w: 342, h: 56, r: 28, to: "@root", kind: "fade", label: "Tap Yes, notify me", note: "Asks iOS for permission, then lands in the app", primary: 1 },
+        { x: 338, y: 440, w: 36, h: 36, r: 18, to: "@root", kind: "fade", label: "Tap close", note: "Skips, lands in the app" } ] },
+    } },
+    { key: "host", label: "Create event", start: "create", screens: {
+      create: { src: "l-create", title: "Create your event", hs: [
+        { x: 14, y: 753, w: 362, h: 64, r: 32, to: "tickets", kind: "push", label: "Tap Continue", note: "Push left, the progress bar fills to step 2", primary: 1 } ] },
+      tickets: { src: "l-create-tickets", title: "Tickets and visibility", hs: [
+        { x: 14, y: 753, w: 362, h: 64, r: 32, to: "review", kind: "push", label: "Tap Continue", note: "Toggles and tiers update inline; only Continue advances", primary: 1 },
+        { x: 14, y: 66, w: 34, h: 34, r: 17, to: "@back", kind: "pop", label: "Tap back", note: "Pops back to the basics" } ] },
+      review: { src: "l-review", title: "Review & publish", hs: [
+        { x: 14, y: 729, w: 362, h: 64, r: 32, to: "invite", kind: "push", label: "Tap Publish event", note: "Spinner, a check, a success haptic, then the invite step", primary: 1 },
+        { x: 14, y: 66, w: 34, h: 34, r: 17, to: "@back", kind: "pop", label: "Tap back", note: "Pops back to tickets" } ] },
+      invite: { src: "l-invite", title: "Invite guests", hs: [
+        { x: 14, y: 753, w: 362, h: 64, r: 32, to: "@root", kind: "fade", label: "Tap Send 2 invites", note: "Invites go out, then back to the start", primary: 1 },
+        { x: 14, y: 66, w: 34, h: 34, r: 17, to: "@back", kind: "pop", label: "Tap back", note: "Pops back" } ] },
+    } },
+    { key: "discover", label: "Discover", start: "explore", screens: {
+      explore: { src: "l-explore", title: "Explore", hs: [
+        { x: 14, y: 56, w: 298, h: 66, r: 33, to: "search", kind: "fade", label: "Tap search", note: "The bar stays put, content cross-fades, the keyboard rises", primary: 1 },
+        { x: 20, y: 232, w: 232, h: 232, r: 40, to: "event", kind: "push", label: "Tap an event", note: "Push, the photo leads into the event page" } ] },
+      event: { src: "l-event", title: "Event", hs: [
+        { x: 20, y: 66, w: 36, h: 36, r: 18, to: "@back", kind: "pop", label: "Tap back", note: "Pops back to Explore", primary: 1 } ] },
+      search: { src: "l-search", title: "Search", hs: [
+        { x: 14, y: 496, w: 181, h: 104, r: 26, to: "map", kind: "push", label: "Tap a category", note: "The tile scales to 0.96 on press, results open on the map", primary: 1 },
+        { x: 322, y: 86, w: 56, h: 26, r: 13, to: "@root", kind: "fade", label: "Tap Cancel", note: "Back to Explore" } ] },
+      map: { src: "l-map", title: "Events on the map", hs: [
+        { x: 322, y: 58, w: 56, h: 60, r: 30, to: "filters", kind: "sheet", label: "Tap filters", note: "The sheet rises from the bottom, the map dims", primary: 1 },
+        { x: 18, y: 66, w: 44, h: 44, r: 22, to: "@back", kind: "pop", label: "Tap back", note: "Pops back to search" } ] },
+      filters: { src: "l-filters", title: "Filters", hs: [
+        { x: 14, y: 753, w: 362, h: 64, r: 32, to: "@back", kind: "pop", label: "Tap Show 132 events", note: "The sheet drops, the map updates", primary: 1 },
+        { x: 14, y: 66, w: 38, h: 38, r: 19, to: "@back", kind: "pop", label: "Tap close", note: "The sheet drops away" } ] },
+    } },
+  ];
+
+  function gatherlyFlow(host) {
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches, DUR = reduce ? 0 : 380;
+    const root = h("div", "gf");
+    root.innerHTML = `<div class="gf__side"><div class="gf__flows" role="radiogroup" aria-label="Choose a flow"></div><div class="gf__panel"><p class="gf__where" aria-live="polite"></p><ul class="gf__acts"></ul></div><div class="gf__tools"><button type="button" class="gf__btn" data-act="restart">Restart</button><button type="button" class="gf__btn" data-act="taps" aria-pressed="true">Show tap targets</button></div><p class="gf__tip">Tap the highlighted targets. Swipe from the left edge to go back.</p></div><div class="gf__dev"><div class="gf__phone"><div class="gf__stage"></div><i class="gf__island" aria-hidden="true"></i><i class="gf__home" aria-hidden="true"></i></div></div>`;
+    host.appendChild(root);
+    const $ = (s) => root.querySelector(s), stage = $(".gf__stage"), flowsEl = $(".gf__flows"), where = $(".gf__where"), acts = $(".gf__acts");
+    let flow = GF[0], stack = [], busy = false, seen = new Set();
+    const ease = "cubic-bezier(.32,.72,0,1)";
+    const mk = (id, kind) => {
+      const s = flow.screens[id], d = h("div", "gf__scr"); d.dataset.id = id;
+      const im = h("img"); im.src = GF_IMG + s.src + ".webp"; im.alt = ""; im.draggable = false; im.decoding = "async"; d.appendChild(im);
+      s.hs.forEach((p, i) => {
+        const b = h("button", "gf__hs" + (p.primary ? " is-primary" : "")); b.type = "button"; b.setAttribute("aria-label", `${p.label}. ${p.note}`);
+        Object.assign(b.style, { left: (p.x / 3.9) + "%", top: (p.y / 8.44) + "%", width: (p.w / 3.9) + "%", height: (p.h / 8.44) + "%", borderRadius: p.r + "px" });
+        b.addEventListener("click", () => act(p)); d.appendChild(b);
+      });
+      const dim = h("i", "gf__dim"); d.appendChild(dim);
+      return { id, kind, el: d, dim };
+    };
+    const tr = (el, t, v) => { el.style.transition = t ? `transform ${DUR}ms ${ease}, opacity ${DUR}ms ${ease}` : "none"; Object.assign(el.style, v); };
+    const flush = () => stage.offsetWidth;
+    const render = () => {
+      const top = stack[stack.length - 1], s = flow.screens[top.id];
+      stack.forEach((e, i) => { e.el.style.pointerEvents = i === stack.length - 1 ? "auto" : "none"; e.el.inert = i !== stack.length - 1; });
+      where.textContent = s.title; seen.add(flow.key + top.id);
+      acts.innerHTML = "";
+      s.hs.forEach((p) => {
+        const li = h("li", p.primary ? "is-primary" : ""), b = h("button", "gf__act"); b.type = "button";
+        b.innerHTML = `<b>${p.label}</b><span>${p.note}</span>`; b.addEventListener("click", () => act(p));
+        const ring = [...top.el.querySelectorAll(".gf__hs")][s.hs.indexOf(p)];
+        b.addEventListener("pointerenter", () => ring && ring.classList.add("is-hot")); b.addEventListener("pointerleave", () => ring && ring.classList.remove("is-hot"));
+        b.addEventListener("focus", () => ring && ring.classList.add("is-hot")); b.addEventListener("blur", () => ring && ring.classList.remove("is-hot"));
+        li.appendChild(b); acts.appendChild(li);
+      });
+    };
+    const settle = (fn) => { busy = true; setTimeout(() => { busy = false; fn && fn(); }, DUR + 30); };
+    const place = (e, kind) => { // the incoming screen starts off-stage for its transition
+      if (kind === "push") tr(e.el, 0, { transform: "translateX(100%)", opacity: 1 });
+      else if (kind === "sheet") tr(e.el, 0, { transform: "translateY(100%)", opacity: 1 });
+      else tr(e.el, 0, { transform: "none", opacity: 0 });
+    };
+    function go(id, kind) {
+      if (busy) return;
+      if (kind === "fade") { // replace the whole stack
+        const e = mk(id, "fade"), old = stack.slice(); place(e, "fade"); stage.appendChild(e.el); flush(); tr(e.el, 1, { opacity: 1 });
+        stack = [e]; render(); settle(() => old.forEach((o) => o.el.remove())); return;
+      }
+      const below = stack[stack.length - 1], e = mk(id, kind); place(e, kind); stage.appendChild(e.el); flush(); stack.push(e); render();
+      tr(e.el, 1, { transform: "none" });
+      if (kind === "push") { tr(below.el, 1, { transform: "translateX(-28%)" }); below.dim.style.transition = `opacity ${DUR}ms ${ease}`; below.dim.style.opacity = 1; }
+      else { tr(below.el, 1, { transform: "scale(.93) translateY(10px)" }); below.dim.style.transition = `opacity ${DUR}ms ${ease}`; below.dim.style.opacity = 1; below.el.classList.add("is-under-sheet"); }
+      settle();
+    }
+    function back(toRoot) {
+      if (busy || stack.length < 2) { if (toRoot && stack.length === 1) shake(); return; }
+      const n = toRoot ? stack.length - 1 : 1;
+      for (let k = 0; k < n; k++) { // pop one at a time visually: the top leaves, the one beneath returns
+        const top = stack.pop(), below = stack[stack.length - 1];
+        if (k === 0) {
+          tr(top.el, 1, { transform: top.kind === "sheet" ? "translateY(100%)" : "translateX(100%)" });
+          tr(below.el, 1, { transform: "none" }); below.dim.style.opacity = 0; below.el.classList.remove("is-under-sheet");
+          settle(() => top.el.remove());
+        } else { top.el.remove(); }
+        if (k === n - 1) break;
+      }
+      render();
+    }
+    const shake = () => { const t = stack[0].el; t.animate && !reduce && t.animate([{ transform: "translateX(0)" }, { transform: "translateX(-6px)" }, { transform: "translateX(5px)" }, { transform: "translateX(0)" }], { duration: 260 }); };
+    function act(p) {
+      if (busy) return;
+      if (p.to === "@back") back(false);
+      else if (p.to === "@root") { if (stack.length > 1 && p.kind === "pop") back(true); else go(flow.start, "fade"); }
+      else go(p.to, p.kind);
+    }
+    function start(f) {
+      flow = f; busy = false; stage.innerHTML = ""; const e = mk(f.start, "fade"); stage.appendChild(e.el); stack = [e]; render();
+      [...flowsEl.children].forEach((b) => { const on = b.dataset.key === f.key; b.setAttribute("aria-checked", String(on)); b.tabIndex = on ? 0 : -1; });
+      // warm the cache with the rest of this flow once it is idle
+      const warm = () => Object.values(f.screens).forEach((s) => { const i = new Image(); i.src = GF_IMG + s.src + ".webp"; });
+      if (window.requestIdleCallback) requestIdleCallback(warm, { timeout: 800 }); else setTimeout(warm, 400);
+    }
+    GF.forEach((f, i) => {
+      const b = h("button", "gf__flow", f.label); b.type = "button"; b.dataset.key = f.key; b.setAttribute("role", "radio");
+      b.addEventListener("click", () => { start(f); b.focus({ preventScroll: true }); }); flowsEl.appendChild(b);
+    });
+    flowsEl.addEventListener("keydown", (e) => {
+      const d = e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : e.key === "ArrowUp" || e.key === "ArrowLeft" ? -1 : 0; if (!d) return;
+      e.preventDefault(); const i = (GF.indexOf(flow) + d + GF.length) % GF.length; start(GF[i]); flowsEl.children[i].focus({ preventScroll: true });
+    });
+    $('[data-act="restart"]').addEventListener("click", () => start(flow));
+    const tbtn = $('[data-act="taps"]'); tbtn.addEventListener("click", () => { const on = tbtn.getAttribute("aria-pressed") !== "true"; tbtn.setAttribute("aria-pressed", String(on)); root.classList.toggle("is-plain", !on); });
+    // Swipe from the left edge to go back, following the finger like iOS does
+    let drag = null;
+    stage.addEventListener("pointerdown", (e) => {
+      const r = stage.getBoundingClientRect(), top = stack[stack.length - 1];
+      if (busy || stack.length < 2 || top.kind !== "push" || e.clientX - r.left > 28) return;
+      drag = { x: e.clientX, w: r.width, top, below: stack[stack.length - 2], dx: 0 }; stage.setPointerCapture(e.pointerId);
+    });
+    stage.addEventListener("pointermove", (e) => {
+      if (!drag) return; drag.dx = Math.max(0, Math.min(drag.w, e.clientX - drag.x)); const f = drag.dx / drag.w;
+      tr(drag.top.el, 0, { transform: `translateX(${drag.dx}px)` }); tr(drag.below.el, 0, { transform: `translateX(${-28 + 28 * f}%)` }); drag.below.dim.style.opacity = 1 - f;
+    });
+    const end = () => {
+      if (!drag) return; const d = drag; drag = null;
+      if (d.dx > d.w * 0.35) { tr(d.top.el, 1, { transform: "translateX(100%)" }); tr(d.below.el, 1, { transform: "none" }); d.below.dim.style.opacity = 0; stack.pop(); busy = true; render(); settle(() => d.top.el.remove()); }
+      else { tr(d.top.el, 1, { transform: "none" }); tr(d.below.el, 1, { transform: "translateX(-28%)" }); d.below.dim.style.opacity = 1; settle(); }
+    };
+    stage.addEventListener("pointerup", end); stage.addEventListener("pointercancel", end);
+    start(GF[0]);
+    return () => {};
+  }
+
+  const DEMOS = { gapQuickFit, dsLive, arcadeDash, arcadeApprovals, arcadeUsage, arcadeFeatures, gatherlyFlow };
   const mount = (el) => {
     if (el.dataset.on) return;
     el.dataset.on = "1";
